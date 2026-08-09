@@ -5,8 +5,8 @@ repo must follow it exactly.
 
 ## 1. Location and naming
 
-- All prompts live under `<category>_prompts/` at the repo root (e.g. `01_general_prompts`, `pwsh_prompts`).
-- Root prompt folders use underscores (e.g., `01_general_prompts`). Folders and files inside them use: two-digit sequence, hyphen, lowercase slug.
+- All prompts live under `<category>-prompts/` at the repo root (e.g. `01-general-prompts`, `02-pwsh-prompts`).
+- Root prompt folders use underscores (e.g., `01-general-prompts`). Folders and files inside them use: two-digit sequence, hyphen, lowercase slug.
   Examples: `01-prompt-library-setup.md`, `03-fix-login-redirect.md`.
 - Lowercase and hyphens only. No spaces, no camelCase, no uppercase.
 - All readme files are lowercase: `readme.md`.
@@ -15,9 +15,9 @@ repo must follow it exactly.
 ## 2. Routing a new prompt
 
 1. Does the prompt mention a project name?
-   - Yes -> store under `<project-name>_prompts/` (create the folder if it does not exist). Inside, the file is
+   - Yes -> store under `<project-name>-prompts/` (create the folder if it does not exist). Inside, the file is
      `<NN>-<prompt-slug>.md` using the next free sequence in that folder.
-   - No -> it is a general prompt. Store under `01_general_prompts/` inside the
+   - No -> it is a general prompt. Store under `01-general-prompts/` inside the
      matching category folder (see below).
 2. General categories are themselves numbered folders, e.g.
    `01-prompt-library-setup`, `02-bug-fix`, `03-dry-code`, `04-coding-guidelines`.

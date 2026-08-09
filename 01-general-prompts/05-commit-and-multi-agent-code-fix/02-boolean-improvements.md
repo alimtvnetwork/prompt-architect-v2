@@ -1,4 +1,4 @@
-# Commit Fix
+# Boolean Improvements
 
 ## Prompt
 
@@ -8,11 +8,15 @@ Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, y
 
 Look into the entire codebase and follow the code review guidelines from the aspect folder properly. All caught errors must be explicitly logged following the guidelines in the error manage folder. Create a wrapper for queries in PHP/Python/TS that automatically logs failures to reduce scattered logging code. 
 
-Make sure the code quality is strictly maintained:
-1. Do not introduce any magic strings or magic numbers anywhere unless it is explicitly for the logger, and mention that in the typing.
-2. In TypeScript, rather than using strings as sub-items or comparing string union types (pipes) like "pass" | "fail" | "fallback", you must use Enums. Enums are the best.
-3. Every single Enum must end with the suffix "Type".
-4. Always use explicit boolean state checks like response.isFail or explicit checks rather than inverting success booleans like !response.isSuccess.
+Make sure the code quality is strictly maintained. Do not introduce any magic strings or magic numbers anywhere unless it is explicitly for the logger, and mention that in the typing. In TypeScript, rather than using strings as sub-items or comparing string union types (pipes) like "pass" | "fail" | "fallback", you must use Enums. Enums are the best. Furthermore, every single enum must end with the suffix "Type". Enum values must use PascalCase (e.g., `ActiveState`, not `_activeState` or `activeState`) in languages like TypeScript, GoLang, and C#, unless language conventions (like in Rust) dictate otherwise. 
+
+Here are the specific code diff mistakes you made that must be corrected across the codebase:
+
+1. In example you changed `if (response.isFail)` to `if (!response.isSuccess)`. Inverting a success boolean (`!response.isSuccess`) is bad code quality compared to directly using an explicit `isFail` property (`if (response.isFail)`). Reverse this immediately.
+
+2. In example string union `status: "pass" | "fail" | "fallback"` with an Enum called `Status7`. While replacing string unions with enums is required, naming an enum `Status7` violates naming rules. It must end with the `Type` suffix (e.g., `StatusType`).
+
+3. In your PHP reseller query check, replacing `if (!$exists)` with an intermediate assignment `$isFailed = !$exists; if ($isFailed)` is unnecessary overhead when a direct wrapper logic should handle execution state cleaner.
 
 Figure out how many places you messed this up and fix them all. Update the memory regarding this inside the .lovable folder so Next.ai does not make this mistake again.
 
@@ -37,29 +41,34 @@ Commit the codebase first, make the changes, and commit again. Do not commit sin
 - [ ] Find the root cause of the problem first, before applying any fix.
 - [ ] Write the root cause down into memory and into the `.lovable` folder as far memory goes.
 
-### 4. Code standards (non-negotiable)
+### 4. Specific defects to correct across the codebase
+
+- [ ] Revert every inverted success check `!response.isSuccess` back to the direct failure check `response.isFail`.
+- [ ] Rename every badly named Enum to end with the `Type` suffix (e.g. `Status7` -> `StatusType`).
+- [ ] Eliminate TypeScript string unions such as `"pass" | "fail" | "fallback"` and convert them to properly named Enums.
+- [ ] Ensure all Enum values use PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase`, except when standard conventions of the language (like Rust) dictate otherwise.
+- [ ] Remove pointless intermediate negation assignments in PHP (e.g. `$isFailed = !$exists; if ($isFailed)`) — the query wrapper must own the execution-state logic cleanly.
+- [ ] Audit the entire codebase, count every place this query logic and typing was messed up, and fix all of them.
+
+### 5. Code standards (non-negotiable)
 
 - [ ] Follow the code review guidelines from the aspect folder.
 - [ ] Ensure every try-catch block explicitly logs the error according to the error manage folder.
 - [ ] Create a query wrapper for PHP/Python/TS that handles automatic failure logging, so logging is not scattered.
-- [ ] Use explicit `isFail` properties; NEVER use inverted success checks (use `response.isFail`, not `!response.isSuccess`).
 - [ ] Remove all magic strings and magic numbers unless used directly for logging — and state that logger exception in the typing.
-- [ ] Replace TypeScript string union types (e.g. `"pass" | "fail" | "fallback"`) with Enums.
-- [ ] Ensure every Enum name ends with the `Type` suffix (e.g. `StatusType`, never `Status` or `Status7`).
 - [ ] Reuse constants — never duplicate them. Code must always be DRY; never repeat code. This is high priority.
-- [ ] Audit the entire codebase and fix every place where this query logic and typing was messed up — count them and fix all.
 
-### 5. Memory update
+### 6. Memory update
 
 - [ ] Update the `.lovable` folder memory with the wrapper, error management, enum naming and boolean-check rules so the mistake is never repeated.
 
-### 6. Verification
+### 7. Verification
 
 - [ ] Make sure the code runs standalone both locally and in CI/CD.
 - [ ] Run the build, run all unit tests, and check CI/CD.
 - [ ] Fix every failing build or failing unit test — a green run is required, not optional.
 
-### 7. Delivery
+### 8. Delivery
 
 - [ ] Group similar code changes into single commits with nice commit messages; never commit one file at a time.
 - [ ] Push every commit to the remote repository without failure — git is the source of truth.
