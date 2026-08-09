@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+// IMPORTANT: Replace this placeholder. See ./readme.md for routing conventions.
 function Index() {
   return (
     <div
