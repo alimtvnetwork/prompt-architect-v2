@@ -28,7 +28,7 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 | 1 | `.lovable/overview.md` | Project summary, stack, nav map |
 | 2 | `.lovable/strictly-avoid.md` | Hard prohibitions (CODE RED) |
 | 3 | `.lovable/user-preferences` | How the human wants you to behave |
-| 4 | `.lovable/what-to-read.md` | **Authoritative reading order** for this project. If it exists, it overrides the generic order in this prompt. Read it first and follow it. |
+| 4 | `.lovable/what-to-read.md` | Authoritative reading order for this project. If it exists, it overrides the generic order in this prompt. Read it first and follow it. |
 | 5 | `.lovable/prompt.md` + `.lovable/prompts/` | Canonical prompts (Read, Plan, etc.). "Read memory" = run this prompt. |
 | 6 | `.lovable/memory/index.md` | Index of institutional knowledge. Then read every file it references, recursively. |
 | 7 | `.lovable/plans/index.md` | Roll-up of all plans (pending + completed + subtasks). Read this before touching individual plan files. |
