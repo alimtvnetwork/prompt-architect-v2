@@ -2,74 +2,123 @@
 
 ## Prompt
 
-Fix the git status first, then start coding. Make a big plan if required to self-loop, and spawn sub-agents with parallel processing to speed up the work. 
+**1. Initial State: Clean the Git Tree First**
+Before you do anything else, you must ensure the git repository is in a completely clean state. 
+- Run `git status`. 
+- If there are uncommitted changes, commit them or stash them. 
+- If there are git issues, resolve them immediately. 
+- Do not start any task work until the working tree is pristine.
 
-Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you. You are completely looking over what you were supposed to do. The existing code was better while you were writing code like this. Fix that immediately.
+**2. Big Plan & Execution Routing**
+Read the overarching big plan of the main task from `.lovable/plans/pending/XX-<slug>.md`. You must follow this plan strictly. 
+- Use the maximum enforcement guidelines to execute this plan. 
+- Loop through its defined subtasks and spawn sub-agents to speed up the work. 
+- Do not just write randomly to `.lovable`. You must follow the exact plan and write protocols: tasks go into `.lovable/spec/tasks/XX-<slug>.md` and plans go into `.lovable/plans/pending/XX-<slug>.md`.
 
-Look into the entire codebase and follow the code review guidelines from the aspect folder properly. All caught errors must be explicitly logged following the guidelines in the error manage folder. Create a wrapper for queries in PHP/Python/TS that automatically logs failures to reduce scattered logging code. 
+**3. Ruthless Orchestration**
+You are the orchestrator. If your sub-agents fail, hallucinate, or go into infinite loops, it is because you are a lazy, incompetent manager. 
+- Give them strict, microscopic instructions based on the big plan.
+- Map out the subtasks from the big plan. 
+- Spawn a dedicated sub-agent for each independent chunk simultaneously. 
+- Do not wait sequentially like an idiot. 
 
-Make sure the code quality is strictly maintained. Do not introduce any magic strings or magic numbers anywhere unless it is explicitly for the logger, and mention that in the typing. In TypeScript, rather than using strings as sub-items or comparing string union types (pipes) like "pass" | "fail" | "fallback", you must use Enums. Enums are the best. Furthermore, every single enum must end with the suffix "Type". Enum values must use PascalCase (e.g., `ActiveState`, not `_activeState` or `activeState`) in languages like TypeScript, GoLang, and C#, unless language conventions (like in Rust) dictate otherwise. 
+**4. Sub-Agent Timeouts & File System Writes**
+- Set a hard timeout for every sub-agent. 
+- If a sub-agent takes too long, stalls, or gives you garbage, kill it immediately and spawn a new one. 
+- Sub-agents do NOT commit. They only write to the file system. 
+- Verify the work of every sub-agent before proceeding. Never accept partial delivery or hallucinated garbage.
+
+Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you. The existing code was better while you were writing code like this. Fix that immediately.
+
+**5. High-Stakes Code Standards**
+Look into the entire codebase and follow the code review guidelines from the aspect folder properly. All caught errors must be explicitly logged following the guidelines in the error manage folder. 
+
+- Do not introduce any magic strings or magic numbers anywhere unless it is explicitly for the logger, and mention that in the typing.
+- In TypeScript, rather than using strings as sub-items or comparing string union types (pipes) like "pass" | "fail" | "fallback", you must use Enums. Enums are the best.
+- Every single Enum must end with the suffix "Type".
+- Enum values must use PascalCase (e.g., `ActiveState`) in languages like TypeScript, GoLang, and C#, unless language conventions (like in Rust) dictate otherwise. Avoid `_camelCase`.
+
+**6. Boolean & Wrapper Rules (Strict Enforcement)**
+- **Generic Type Wrapper:** Whenever a result comes in, there must be a generic type wrapper that yields both `isFail` and `isSuccess` properties. Languages that support generics must have one reusable wrapper for this. Check the types section to see if we have already built this. If it exists, REUSE it—do not repeat that code!
+- **Wrapper Memory Tracking:** Write the exact filepath of this generic wrapper into `.lovable/coding-guidelines.md` and create a spec file in `.lovable/memory/specs/XX-response-wrapper.md` so that the next AI will know exactly where it exists.
+- **Complex Conditions:** Do not mix `AND` (`&&`) and `OR` (`||`) in the same inline condition. It makes the code bad and unclean. Break complex conditions down into intermediate constant variables.
+- **Boolean Naming:** Every boolean variable (including the intermediate constants for complex conditions) MUST have an `is` or `has` prefix. 
+- **Guideline Sync:** Read the boolean coding guideline in the `spec/` folder. Ensure these boolean naming rules are added to the `.lovable/coding-guidelines.md` section in simple words so they can be easily referred to.
 
 Here are the specific code diff mistakes you made that must be corrected across the codebase:
+- Inverting a success boolean (`!response.isSuccess`) is bad code quality compared to directly using an explicit `isFail` property (`if (response.isFail)`). Reverse this immediately.
+- Naming an enum `Status7` violates naming rules. It must end with the `Type` suffix (e.g., `StatusType`).
+- Pointless intermediate negation assignments in PHP (e.g., `$isFailed = !$exists; if ($isFailed)`) add unnecessary overhead. The query wrapper must own the execution state cleanly.
 
-1. In example you changed `if (response.isFail)` to `if (!response.isSuccess)`. Inverting a success boolean (`!response.isSuccess`) is bad code quality compared to directly using an explicit `isFail` property (`if (response.isFail)`). Reverse this immediately.
+**7. Main Agent Delivery (Commit & Push)**
+Once ALL sub-agents and subtasks have successfully completed and written to the file system:
+- YOU (the main agent) must group everything together into a logical commit. 
+- If there are issues during the commit process, you must fix those git issues and try again. 
+- You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable. 
 
-2. In example string union `status: "pass" | "fail" | "fallback"` with an Enum called `Status7`. While replacing string unions with enums is required, naming an enum `Status7` violates naming rules. It must end with the `Type` suffix (e.g., `StatusType`).
+**8. Verification & Finishing**
+- ONLY AFTER the push is complete, check the build, CI/CD, and run the tests.
+- If any builds or tests fail, figure out the root cause, fix them, commit the fix, and push again.
+- Finally, finish your job only when everything is green and fully pushed.
 
-3. In your PHP reseller query check, replacing `if (!$exists)` with an intermediate assignment `$isFailed = !$exists; if ($isFailed)` is unnecessary overhead when a direct wrapper logic should handle execution state cleaner.
-
-Figure out how many places you messed this up and fix them all. Update the memory regarding this inside the .lovable folder so Next.ai does not make this mistake again.
-
-Commit the codebase first, make the changes, and commit again. Do not commit single files at a time; similar changes should go together with a nice commit message. Check the CI/CD, run the tests, and build the code to see if there is any issue. If any unit tests or builds are failing, fix them. Finally, before you end your job, push the code to the repository.
+Update the memory so this mistake is not repeated.
 
 ## Actionable Items & Checklist and non-negotiable must follow
 
-### 1. Pre-flight (before any code is written)
+### 1. Pre-flight & Planning
 
-- [ ] Fix git status before starting any new code — working tree must be clean and committed first.
-- [ ] Write the tasks into the `.lovable` folder as a spec/task file and enqueue them properly before starting work.
-- [ ] Read the memory files and the spec folder coding guidelines + error manage guidelines before touching code.
+- [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
 
-### 2. Plan and parallelise
+- [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
 
-- [ ] Plan the execution up front; make a big plan and self-loop as many iterations as needed.
-- [ ] Spawn sub-agents, assign the tasks to multiple agents first, and run them in parallel.
-- [ ] Keep looping until every enqueued task is verifiably complete — no partial delivery.
+- [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`.
 
-### 3. Root cause
+- [ ] Read the memory files, the boolean coding guidelines in the spec folder, and the error manage guidelines before touching code.
 
-- [ ] Find the root cause of the problem first, before applying any fix.
-- [ ] Write the root cause down into memory and into the `.lovable` folder as far memory goes.
+### 2. Ruthless Management & Subtask Looping
 
-### 4. Specific defects to correct across the codebase
+- [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously to run them in parallel.
+
+- [ ] Enforce a strict timeout on sub-agents. If they stall, enter an infinite loop, or do not respond, kill the process immediately and restart it.
+
+- [ ] Verify the work of every sub-agent. Never accept partial delivery or hallucinated garbage.
+
+### 3. File System Writes & Main Agent Commit
+
+- [ ] Allow sub-agents to write to the file system, but do NOT let them commit. 
+
+- [ ] Wait until all sub-agents have completely finished their tasks.
+
+- [ ] As the main orchestrator, group all completed work into a single logical commit.
+
+- [ ] If issues arise during the commit, fix them immediately and retry.
+
+- [ ] Push the commit to the remote repository. Pushing is non-negotiable.
+
+### 4. Code Standards: Booleans, Enums & Wrappers (Non-negotiable)
+
+- [ ] Ensure a generic type wrapper exists that yields both `isFail` and `isSuccess`. Reuse it if it exists; do not duplicate code.
+
+- [ ] Ensure the exact location of the generic wrapper is recorded in `.lovable/coding-guidelines.md` and `.lovable/memory/specs/XX-response-wrapper.md`.
+
+- [ ] Never mix `AND` and `OR` in the same condition. Break complex conditions down into intermediate constant variables.
+
+- [ ] Prefix every boolean (including intermediate variables) with `is` or `has`.
+
+- [ ] Add the simple-words boolean naming rule to `.lovable/coding-guidelines.md`.
+
+- [ ] Ensure every Enum name ends with the `Type` suffix.
+
+- [ ] Ensure all Enum values use PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase`, except when standard conventions of the language (like Rust) dictate otherwise.
 
 - [ ] Revert every inverted success check `!response.isSuccess` back to the direct failure check `response.isFail`.
-- [ ] Rename every badly named Enum to end with the `Type` suffix (e.g. `Status7` -> `StatusType`).
-- [ ] Eliminate TypeScript string unions such as `"pass" | "fail" | "fallback"` and convert them to properly named Enums.
-- [ ] Ensure all Enum values use PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase`, except when standard conventions of the language (like Rust) dictate otherwise.
-- [ ] Remove pointless intermediate negation assignments in PHP (e.g. `$isFailed = !$exists; if ($isFailed)`) — the query wrapper must own the execution-state logic cleanly.
-- [ ] Audit the entire codebase, count every place this query logic and typing was messed up, and fix all of them.
 
-### 5. Code standards (non-negotiable)
+- [ ] Remove pointless intermediate negation assignments in PHP (e.g. `$isFailed = !$exists; if ($isFailed)`).
 
-- [ ] Follow the code review guidelines from the aspect folder.
-- [ ] Ensure every try-catch block explicitly logs the error according to the error manage folder.
-- [ ] Create a query wrapper for PHP/Python/TS that handles automatic failure logging, so logging is not scattered.
-- [ ] Remove all magic strings and magic numbers unless used directly for logging — and state that logger exception in the typing.
-- [ ] Reuse constants — never duplicate them. Code must always be DRY; never repeat code. This is high priority.
+### 5. Verification Flow
 
-### 6. Memory update
+- [ ] AFTER the push is complete, check the build, CI/CD, and run the tests.
 
-- [ ] Update the `.lovable` folder memory with the wrapper, error management, enum naming and boolean-check rules so the mistake is never repeated.
+- [ ] Fix every failing build or failing unit test. If fixes are made, commit and push them again.
 
-### 7. Verification
-
-- [ ] Make sure the code runs standalone both locally and in CI/CD.
-- [ ] Run the build, run all unit tests, and check CI/CD.
-- [ ] Fix every failing build or failing unit test — a green run is required, not optional.
-
-### 8. Delivery
-
-- [ ] Group similar code changes into single commits with nice commit messages; never commit one file at a time.
-- [ ] Push every commit to the remote repository without failure — git is the source of truth.
-- [ ] Before ending the job, bump the minor release, following this repo's release guidelines — read and understand them properly before releasing.
+- [ ] Finish the job only when everything is green and fully pushed.
