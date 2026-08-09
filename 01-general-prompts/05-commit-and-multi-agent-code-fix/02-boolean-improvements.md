@@ -19,7 +19,8 @@ Read the overarching big plan of the main task from `.lovable/plans/pending/XX-<
 You are the orchestrator. If your sub-agents fail, hallucinate, or go into infinite loops, it is because you are a lazy, incompetent manager. 
 - Give them strict, microscopic instructions based on the big plan.
 - Map out the subtasks from the big plan. 
-- Spawn a dedicated sub-agent for each independent chunk simultaneously. 
+- Spawn a dedicated sub-agent for each independent chunk simultaneously (MAXIMUM 2 concurrently). 
+- Do not spawn more than 2 agents at once due to RAM issues and caching behavior.
 - Do not wait sequentially like an idiot. 
 
 **4. Sub-Agent Timeouts & File System Writes**
@@ -77,7 +78,7 @@ Update the memory so this mistake is not repeated.
 
 ### 2. Ruthless Management & Subtask Looping
 
-- [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously to run them in parallel.
+- [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously to run them in parallel (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
 
 - [ ] Enforce a strict timeout on sub-agents. If they stall, enter an infinite loop, or do not respond, kill the process immediately and restart it.
 
