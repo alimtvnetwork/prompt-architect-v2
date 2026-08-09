@@ -10,4 +10,8 @@ Hi there. Can you please write, root of the repo as a PowerShell script? So crea
 - [ ] Inside it, use `01-powershell/` for PowerShell scripts and `02-ubuntu/` for shell scripts.
 - [ ] Name every script with a two-digit sequence prefix: `01-<slug>.ps1`, `02-<slug>.ps1`, `01-<slug>.sh`.
 - [ ] Write each script modularly, exposing a callable function (not top-level procedural code).
-- [ ] The function takes the target username as a parameter.
+- [ ] The function takes the target username as a parameter.- [ ] The function must remove the user's password (set it to empty) or set a single-character password.
+- [ ] Change every policy required to allow an empty/short password (minimum password length, complexity, "Limit local account use of blank passwords to console logon only").
+- [ ] Configure auto login so the VM signs in without prompting.
+- [ ] Support Windows Server, Windows 10 and Windows 11.
+- [ ] Provide the Ubuntu/Linux equivalent as a shell script under `02-ubuntu/`, same modular function style
