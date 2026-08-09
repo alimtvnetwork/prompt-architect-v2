@@ -56,69 +56,46 @@ Update the memory so this mistake is not repeated.
 ### 1. Pre-flight & Planning
 
 - [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
-
 - [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
-
 - [ ] Ensure the plan is highly extensive, explicitly detailing *where* and *how* to make changes so sub-agents can easily execute tasks (Non-negotiable).
-
 - [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`. Do not write randomly into `.lovable`.
-
 - [ ] Read the memory files and the spec folder coding guidelines + error manage guidelines before touching code.
 
 ### 2. Ruthless Management & Subtask Looping
 
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously to run them in parallel (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
-
 - [ ] Enforce a strict timeout on sub-agents. If they stall, enter an infinite loop, or do not respond, kill the process immediately and restart it.
-
 - [ ] Verify the work of every sub-agent. Never accept partial delivery or hallucinated garbage.
 
 ### 3. File System Writes & Main Agent Commit
 
 - [ ] Allow sub-agents to write to the file system, but do NOT let them commit. 
-
 - [ ] Wait until all sub-agents have completely finished their tasks.
-
 - [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
-
 - [ ] **RED FLAG:** Verify absolutely NO test results or binaries are included before making the commit.
-
 - [ ] As the main orchestrator, group all completed work into a commit.
-
 - [ ] If issues arise during the commit, fix them immediately and retry.
-
 - [ ] Push the commit to the remote repository. Pushing is non-negotiable.
 
 ### 4. Root cause
 
 - [ ] Find the root cause of the problem first, before applying any fix.
-
 - [ ] Record the root cause strictly into the `.lovable` memory structure per the write protocols.
 
 ### 5. Code standards (non-negotiable)
 
 - [ ] Follow the code review guidelines from the aspect folder.
-
 - [ ] Ensure every try-catch block explicitly logs the error according to the error manage folder.
-
 - [ ] Create a query wrapper for PHP/Python/TS that handles automatic failure logging, so logging is not scattered.
-
 - [ ] Use explicit `isFail` properties; NEVER use inverted success checks (use `response.isFail`, not `!response.isSuccess`).
-
 - [ ] Remove all magic strings and magic numbers unless used directly for logging — and state that logger exception in the typing.
-
 - [ ] Replace TypeScript string union types (e.g. `"pass" | "fail" | "fallback"`) with Enums.
-
 - [ ] Ensure every Enum name ends with the `Type` suffix (e.g. `StatusType`, never `Status` or `Status7`).
-
 - [ ] Ensure all Enum values are written in PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase` or `camelCase`, unless the specific language (like Rust) conventionally dictates otherwise.
-
 - [ ] Reuse constants — never duplicate them. Code must always be DRY; never repeat code. This is high priority.
 
 ### 6. Verification Flow
 
 - [ ] AFTER the push is complete, check the build, CI/CD, and run the tests.
-
 - [ ] Fix every failing build or failing unit test. If fixes are made, commit and push them again.
-
 - [ ] Finish the job only when everything is green and fully pushed.

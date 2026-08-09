@@ -71,63 +71,41 @@ Update the memory so this mistake is not repeated.
 ### 1. Pre-flight & Planning
 
 - [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
-
 - [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
-
 - [ ] Ensure the plan is highly extensive, explicitly detailing *where* and *how* to make changes so sub-agents can easily execute tasks (Non-negotiable).
-
 - [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`.
-
 - [ ] Read the memory files, the boolean coding guidelines in the spec folder, and the error manage guidelines before touching code.
 
 ### 2. Ruthless Management & Subtask Looping
 
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously to run them in parallel (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
-
 - [ ] Enforce a strict timeout on sub-agents. If they stall, enter an infinite loop, or do not respond, kill the process immediately and restart it.
-
 - [ ] Verify the work of every sub-agent. Never accept partial delivery or hallucinated garbage.
 
 ### 3. File System Writes & Main Agent Commit
 
 - [ ] Allow sub-agents to write to the file system, but do NOT let them commit. 
-
 - [ ] Wait until all sub-agents have completely finished their tasks.
-
 - [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
-
 - [ ] **RED FLAG:** Verify absolutely NO test results or binaries are included before making the commit.
-
 - [ ] As the main orchestrator, group all completed work into a single logical commit.
-
 - [ ] If issues arise during the commit, fix them immediately and retry.
-
 - [ ] Push the commit to the remote repository. Pushing is non-negotiable.
 
 ### 4. Code Standards: Booleans, Enums & Wrappers (Non-negotiable)
 
 - [ ] Ensure a generic type wrapper exists that yields both `isFail` and `isSuccess`. Reuse it if it exists; do not duplicate code.
-
 - [ ] Ensure the exact location of the generic wrapper is recorded in `.lovable/coding-guidelines.md` and `.lovable/memory/specs/XX-response-wrapper.md`.
-
 - [ ] Never mix `AND` and `OR` in the same condition. Break complex conditions down into intermediate constant variables.
-
 - [ ] Prefix every boolean (including intermediate variables) with `is` or `has`.
-
 - [ ] Add the simple-words boolean naming rule to `.lovable/coding-guidelines.md`.
-
 - [ ] Ensure every Enum name ends with the `Type` suffix.
-
 - [ ] Ensure all Enum values use PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase`, except when standard conventions of the language (like Rust) dictate otherwise.
-
 - [ ] Revert every inverted success check `!response.isSuccess` back to the direct failure check `response.isFail`.
-
 - [ ] Remove pointless intermediate negation assignments in PHP (e.g. `$isFailed = !$exists; if ($isFailed)`).
 
 ### 5. Verification Flow
 
 - [ ] AFTER the push is complete, check the build, CI/CD, and run the tests.
-
 - [ ] Fix every failing build or failing unit test. If fixes are made, commit and push them again.
-
 - [ ] Finish the job only when everything is green and fully pushed.
