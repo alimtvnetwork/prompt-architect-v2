@@ -63,3 +63,17 @@ Sections, in this order:
 - Read and understand `spec/02`, `spec/03`, `spec/04` before writing code.
 - Error management must be followed.
 - Code must be DRY.
+
+## 7. Readme casing — root cause and standing rule
+
+Root cause: the root readme was renamed `README.md` -> `readme.md`. Git tracks case,
+but macOS/Windows filesystems and editor tabs do not, so both spellings appeared to
+exist at once and the stale entry kept resurfacing.
+
+Standing rule (non-negotiable):
+- Exactly ONE readme at the repo root, named lowercase `readme.md`.
+- Never create `README.md`, never keep both, never reintroduce an uppercase readme
+  anywhere in the repo (including `src/routes/readme.md`).
+- Any readme content additions are merged into the existing lowercase file, kept compact.
+- If a duplicate ever reappears, delete the uppercase file and reopen the editor tab —
+  it is a stale reference, not a real second file.
