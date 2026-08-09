@@ -11,6 +11,7 @@ Before you do anything else, you must ensure the git repository is in a complete
 
 **2. Big Plan & Execution Routing**
 Read the overarching big plan of the main task from `.lovable/plans/pending/XX-<slug>.md`. You must follow this plan strictly. 
+- Make sure the plan is EXTREMELY extensive, explicitly detailing **where** to make changes and **how** to make changes, so that sub-agents can execute their tasks easily. This is non-negotiable.
 - Use the maximum enforcement guidelines to execute this plan. 
 - Loop through its defined subtasks and spawn sub-agents to speed up the work. 
 - Do not just write randomly to `.lovable`. You must follow the exact plan and write protocols: tasks go into `.lovable/spec/tasks/XX-<slug>.md` and plans go into `.lovable/plans/pending/XX-<slug>.md`.
@@ -71,6 +72,8 @@ Update the memory so this mistake is not repeated.
 - [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
 
 - [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
+
+- [ ] Ensure the plan is highly extensive, explicitly detailing *where* and *how* to make changes so sub-agents can easily execute tasks (Non-negotiable).
 
 - [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`.
 
