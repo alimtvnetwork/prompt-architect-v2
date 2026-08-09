@@ -40,6 +40,7 @@ Look into the entire codebase and follow the code review guidelines from the asp
 **6. Main Agent Delivery (Commit & Push)**
 Once ALL sub-agents and subtasks have successfully completed and written to the file system:
 - YOU (the main agent) must group everything together into a logical commit. 
+- **RED FLAG:** NEVER upload or commit test reports, test data, artifacts, or compiled binaries to Git. If necessary, check and update the `.gitignore` file to ensure they are explicitly excluded.
 - If there are issues during the commit process, you must fix those git issues and try again. 
 - You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable. 
 
@@ -77,6 +78,10 @@ Update the memory so this mistake is not repeated.
 - [ ] Allow sub-agents to write to the file system, but do NOT let them commit. 
 
 - [ ] Wait until all sub-agents have completely finished their tasks.
+
+- [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
+
+- [ ] **RED FLAG:** Verify absolutely NO test results or binaries are included before making the commit.
 
 - [ ] As the main orchestrator, group all completed work into a commit.
 
