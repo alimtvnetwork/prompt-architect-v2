@@ -14,6 +14,7 @@ Before you do anything else, you must ensure the git repository is in a complete
 Read the overarching big plan of the main task from `.lovable/plans/pending/XX-<slug>.md`. You must follow this plan strictly.
 
 - Make sure the plan is EXTREMELY extensive, explicitly detailing **where** to make changes and **how** to make changes, so that sub-agents can execute their tasks easily. This is non-negotiable.
+- The `<slug>` is derived directly from the plan filename. If the plan file is `03-auth-refactor.md`, then the corresponding spec task file is `.lovable/spec/tasks/03-auth-refactor.md` and subtasks live under `.lovable/plans/subtasks/03-auth-refactor/SS-<subslug>.md`. Never guess or invent a slug — read the filename.
 - Use the maximum enforcement guidelines to execute this plan.
 - Loop through its defined subtasks and spawn sub-agents to speed up the work.
 - Do not just write randomly to `.lovable`. You must follow the exact plan and write protocols: tasks go into `.lovable/spec/tasks/XX-<slug>.md` and plans go into `.lovable/plans/pending/XX-<slug>.md`.
@@ -28,16 +29,26 @@ You are the orchestrator. If your sub-agents fail, hallucinate, or go into infin
 - Do not spawn more than 2 agents at once due to RAM issues and caching behavior.
 - Do not wait sequentially like an idiot.
 
-**4. Sub-Agent Lifecycle (Non-negotiable)**
+**4. Sub-Agent Lifecycle & Status Tracking (Non-negotiable)**
+
+The plan file at `.lovable/plans/pending/XX-<slug>.md` and the subtask files under `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md` are the SINGLE source of truth for all coordination between the main agent and sub-agents. Every status update MUST go there. This is how the main agent knows what is running, what is done, and when to proceed.
 
 Every sub-agent that is spawned MUST follow this lifecycle without exception:
 
-- **Step 1 — Read:** The sub-agent reads its assigned task file from `.lovable/spec/tasks/XX-<slug>.md` before doing anything. It must fully understand the scope before touching any code.
-- **Step 2 — Work:** The sub-agent executes its task. It may only run a MAXIMUM of 2-3 async operations at a time. No more. This limits resource usage and prevents cascading failures.
-- **Step 3 — Update:** Once the sub-agent completes its task, it MUST update the task entry in `.lovable/spec/tasks/XX-<slug>.md`, marking the subtask as done with a `✅ Done` marker and a brief note of what was changed.
-- **Step 4 — Signal:** The sub-agent MUST explicitly signal completion to the main orchestrator. It is not done until it has done this. Silence is not completion.
+- **Step 1 — Read:** The sub-agent reads its assigned subtask file at `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md`. It must understand the full scope, acceptance criteria, and affected files before touching any code. It also checks the parent plan at `.lovable/plans/pending/XX-<slug>.md` for overall context.
+- **Step 2 — Mark In Progress:** Immediately upon starting, the sub-agent updates its subtask file, flipping its status to `🔄 In Progress` and recording a timestamp. The main agent uses this to track which agents are actively running.
+- **Step 3 — Work:** The sub-agent executes its task. It may only run a MAXIMUM of 2-3 async operations at a time. No more.
+- **Step 4 — Mark Done & Signal:** Once the task is complete, the sub-agent MUST:
+  - Update its subtask file at `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md` flipping status to `✅ Done`, listing every file it changed, and writing a one-line summary of what was done.
+  - Update the corresponding step in the parent plan file `.lovable/plans/pending/XX-<slug>.md` with `✅ Done` on that step entry.
+  - Explicitly signal completion to the main orchestrator. Silence is not completion. A sub-agent that does not update its file has NOT completed its task.
 - Sub-agents do NOT commit. They only write to the file system.
-- If a sub-agent stalls, gives garbage, or fails to signal completion, kill it immediately and spawn a new one.
+- If a sub-agent stalls, gives garbage, or fails to update its status file, kill it immediately and spawn a new one.
+
+**Main Agent Tracking Logic:**
+- The main agent monitors the plan file and subtask files to determine queue state.
+- When all subtask files show `✅ Done` and the parent plan steps are all marked, the main agent proceeds to commit.
+- The main agent counts: total subtasks spawned vs. total `✅ Done` entries. Only when those numbers match does it proceed.
 
 Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you. The existing code was better while you were writing code like this. Fix that immediately.
 
@@ -83,24 +94,20 @@ Update the memory so this mistake is not repeated.
 ## Actionable Items & Checklist and non-negotiable must follow
 
 ### 1. Pre-flight & Planning
-
 - [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
-
 - [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
-
+- [ ] Derive the `<slug>` from the plan filename itself (e.g., plan file `03-auth-refactor.md` → slug is `03-auth-refactor`). Never invent a slug.
+- [ ] Confirm subtask files exist under `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md` for each step that needs parallel execution. Create them if missing, following the plan prompt structure.
 - [ ] Ensure the plan is highly extensive, explicitly detailing *where* and *how* to make changes so sub-agents can easily execute tasks (Non-negotiable).
-
 - [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`. Do not write randomly into `.lovable`.
-
 - [ ] Read the memory files and the spec folder coding guidelines + error manage guidelines before touching code.
 
 ### 2. Ruthless Management & Subtask Looping
-
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
 - [ ] Each sub-agent may only run a MAXIMUM of 2-3 async operations at a time.
-- [ ] Enforce lifecycle: sub-agent reads task file → works → updates `.lovable/spec/tasks/` → signals completion.
-- [ ] If a sub-agent fails to signal completion or gives garbage, kill it immediately and restart it.
-- [ ] Verify every sub-agent explicitly signals "done" before the main agent proceeds to commit.
+- [ ] Enforce lifecycle: sub-agent reads subtask file → marks `🔄 In Progress` → works → marks `✅ Done` with file list and summary → updates parent plan step → signals completion.
+- [ ] Track queue state by counting total subtasks spawned vs. total `✅ Done` entries in the subtask files. Proceed to commit only when the counts match.
+- [ ] If a sub-agent fails to update its status file or gives garbage, kill it immediately and restart it.
 
 ### 3. Root Cause
 
