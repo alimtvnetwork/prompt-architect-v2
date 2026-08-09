@@ -52,6 +52,9 @@ Proofread only: remove filler words, keep the exact wording. Sections in order:
 5. `## Before Writing Code` — code prompts only: read `spec/02`, `spec/03`, `spec/04`;
    error management must be followed; code must be DRY.
 
+If the user says to keep a prompt as is, store the body verbatim — only the checklist
+section may be enhanced (formatting, phase grouping, sharper wording; never drop a rule).
+
 ## Supplied files and links
 
 Assets/images -> `assets/`. Specs -> `spec/` (app spec in `spec/21/`). Ask if unclear.

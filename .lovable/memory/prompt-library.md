@@ -77,3 +77,12 @@ Standing rule (non-negotiable):
 - Any readme content additions are merged into the existing lowercase file, kept compact.
 - If a duplicate ever reappears, delete the uppercase file and reopen the editor tab —
   it is a stale reference, not a real second file.
+
+## 8. "Keep as is" prompts
+
+When the user says to keep a prompt as is (no proofread, do not change anything):
+- Store the prompt body VERBATIM under `## Prompt` — no filler-word removal, no rewording,
+  no reordering, nothing added or removed.
+- Only the "Actionable Items & Checklist and non-negotiable must follow" section may be
+  enhanced: format as a markdown checklist, group into execution phases, sharpen wording
+  into unambiguous instructions, drop literal duplicates. Never drop or invent a rule.
