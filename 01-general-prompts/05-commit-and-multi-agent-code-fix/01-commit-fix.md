@@ -97,65 +97,42 @@ Update the memory so this mistake is not repeated.
 ### 2. Ruthless Management & Subtask Looping
 
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
-
 - [ ] Each sub-agent may only run a MAXIMUM of 2-3 async operations at a time.
-
 - [ ] Enforce lifecycle: sub-agent reads task file → works → updates `.lovable/spec/tasks/` → signals completion.
-
 - [ ] If a sub-agent fails to signal completion or gives garbage, kill it immediately and restart it.
-
 - [ ] Verify every sub-agent explicitly signals "done" before the main agent proceeds to commit.
 
 ### 3. Root Cause
 
 - [ ] Find the root cause of the problem first, before applying any fix.
-
 - [ ] Record the root cause strictly into the `.lovable` memory structure per the write protocols.
 
 ### 4. File System Writes & Main Agent Commit
 
 - [ ] Sub-agents write to the file system and update their task entries. They do NOT commit.
-
 - [ ] Wait until all sub-agents have signaled completion and updated `.lovable/spec/tasks/`.
-
 - [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
-
 - [ ] **RED FLAG:** Verify absolutely NO test results or binaries are staged before making the commit.
-
 - [ ] Group all completed work into a single logical commit.
-
 - [ ] If issues arise during the commit, fix them immediately and retry.
-
 - [ ] Push the commit to the remote repository. Pushing is non-negotiable.
 
 ### 5. Code Standards (non-negotiable)
 
 - [ ] Follow the code review guidelines from the aspect folder.
-
 - [ ] Ensure every try-catch block explicitly logs the error according to the error manage folder.
-
 - [ ] Create a query wrapper for PHP/Python/TS that handles automatic failure logging, so logging is not scattered.
-
 - [ ] Use explicit `isFail` properties; NEVER use inverted success checks (use `response.isFail`, not `!response.isSuccess`).
-
 - [ ] Remove all magic strings and magic numbers unless used directly for logging — and state that logger exception in the typing.
-
 - [ ] Replace TypeScript string union types (e.g. `"pass" | "fail" | "fallback"`) with Enums.
-
 - [ ] Ensure every Enum name ends with the `Type` suffix (e.g. `StatusType`, never `Status` or `Status7`).
-
 - [ ] Ensure all Enum values are written in PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase` or `camelCase`, unless the specific language (like Rust) conventionally dictates otherwise.
-
 - [ ] Reuse constants — never duplicate them. Code must always be DRY; never repeat code. This is high priority.
 
 ### 6. End-of-Loop Final Verification (Once only, at the very end)
 
 - [ ] Check the full build. Fix every build failure, commit, and push.
-
 - [ ] Run all unit tests. Fix every failing test, commit, and push.
-
 - [ ] Check CI/CD status and ensure pipelines pass.
-
 - [ ] Audit that coding guidelines from the aspect folder and error manage folder have been followed across all changed files.
-
 - [ ] Finish the job only when everything is green, pushed, and fully verified.

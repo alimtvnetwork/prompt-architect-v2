@@ -133,81 +133,52 @@ Update the memory so this mistake is not repeated.
 ### 1. Pre-flight & Planning
 
 - [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
-
 - [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
-
 - [ ] Ensure the plan is highly extensive, explicitly detailing *where* and *how* to make changes so sub-agents can easily execute tasks (Non-negotiable).
-
 - [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`.
-
 - [ ] Read the memory files, the boolean coding guidelines in the spec folder, and the error manage guidelines before touching code.
 
 ### 2. Ruthless Management & Subtask Looping
 
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
-
 - [ ] Each sub-agent may only run a MAXIMUM of 2-3 async operations at a time.
-
 - [ ] Enforce lifecycle: sub-agent reads task file → works → updates `.lovable/spec/tasks/` → signals completion.
-
 - [ ] If a sub-agent fails to signal completion or gives garbage, kill it immediately and restart it.
-
 - [ ] Verify every sub-agent explicitly signals "done" before the main agent proceeds to commit.
 
 ### 3. Root Cause
 
 - [ ] Find the root cause of the problem first, before applying any fix.
-
 - [ ] Record the root cause strictly into the `.lovable` memory structure per the write protocols.
 
 ### 4. File System Writes & Main Agent Commit
 
 - [ ] Sub-agents write to the file system and update their task entries. They do NOT commit.
-
 - [ ] Wait until all sub-agents have signaled completion and updated `.lovable/spec/tasks/`.
-
 - [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
-
 - [ ] **RED FLAG:** Verify absolutely NO test results or binaries are staged before making the commit.
-
 - [ ] Group all completed work into a single logical commit.
-
 - [ ] If issues arise during the commit, fix them immediately and retry.
-
 - [ ] Push the commit to the remote repository. Pushing is non-negotiable.
 
 ### 5. Code Standards: Booleans, Enums & Wrappers (Non-negotiable)
 
 - [ ] Ensure a generic result wrapper type exists that exposes both `isFail` and `isSuccess`. Reuse it if it exists; do not duplicate code.
-
 - [ ] Ensure logging happens INSIDE the data-fetching method, not in the caller. The logger must be injected, not globally imported.
-
 - [ ] Ensure the error manage guideline in the `spec/` folder is read and followed precisely for all logging.
-
 - [ ] Ensure the exact location of the generic wrapper is recorded in `.lovable/coding-guidelines.md` and `.lovable/memory/specs/XX-response-wrapper.md`.
-
 - [ ] Never mix `AND` and `OR` in the same condition. Break complex conditions into named intermediate constant variables.
-
 - [ ] Prefix every boolean and intermediate variable with `is` or `has`.
-
 - [ ] Ensure boolean naming rules are written in `.lovable/coding-guidelines.md` in simple, readable language.
-
 - [ ] Ensure every Enum name ends with the `Type` suffix.
-
 - [ ] Ensure all Enum values use PascalCase (e.g., `enum StatusType { ActiveState = "ACTIVE" }`), avoiding `_camelCase`, except when language conventions dictate otherwise (e.g. Rust).
-
 - [ ] Revert every inverted success check `!response.isSuccess` to the direct failure check `response.isFail`.
 
 ### 6. End-of-Loop Final Verification (Once only, at the very end)
 
 - [ ] Check the full build. Fix every build failure, commit, and push.
-
 - [ ] Run all unit tests. Fix every failing test, commit, and push.
-
 - [ ] Check CI/CD status and ensure pipelines pass.
-
 - [ ] Audit that boolean naming conventions, result wrappers, and error logging rules have been properly applied across all changed files.
-
 - [ ] Audit that coding guidelines from the aspect folder and error manage folder have been followed.
-
 - [ ] Finish the job only when everything is green, pushed, and fully verified.
