@@ -6,19 +6,19 @@ One readme only, always lowercase `readme.md`. Never create `README.md`.
 
 1. `.lovable/memory/what-to-read.md` — routing table: which file to read for what.
 2. `.lovable/memory/prompt-library.md` — full prompt storage and formatting rules.
-3. `01-prompts/01-general/01-prompt-library-setup/01-prompt-library-setup.md` — original spec.
+3. `01_general_prompts/01-prompt-library-setup/01-prompt-library-setup.md` — original spec.
 
 ## Folder structure
 
 ```text
-01-prompts/                  prompt archive
-  01-general/                prompts with no project name
-    01-prompt-library-setup/01-prompt-library-setup.md
-    02-bug-fix/              example category (.gitkeep while empty)
-    03-dry-code/
-    04-coding-guidelines/
-  02-<project-name>/         prompts that name a project
-    01-<prompt-slug>.md
+01_general_prompts/          prompts with no project name
+  01-prompt-library-setup/01-prompt-library-setup.md
+  02-bug-fix/              example category (.gitkeep while empty)
+  03-dry-code/
+  04-coding-guidelines/
+pwsh_prompts/                PowerShell specific prompts
+<project_name>_prompts/      prompts that name a project
+  01-<prompt-slug>.md
 assets/                      images and assets supplied with prompts
 spec/
   02/  coding guidelines     03/  error management
@@ -37,8 +37,8 @@ src/                         application code
 
 ## Where a prompt goes
 
-- Project name mentioned -> `01-prompts/<NN>-<project-name>/<NN>-<slug>.md`.
-- No project name -> `01-prompts/01-general/<NN>-<category>/<NN>-<slug>.md`.
+- Project name mentioned -> `<project-name>_prompts/<NN>-<slug>.md`.
+- No project name -> `01_general_prompts/<NN>-<category>/<NN>-<slug>.md`.
 - Use the next free sequence number. Commit after each stored prompt.
 
 ## Prompt file format
