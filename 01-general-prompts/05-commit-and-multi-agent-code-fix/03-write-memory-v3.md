@@ -93,7 +93,9 @@ Target: `.lovable/memory/<topic>/XX-<slug>.md`. Never at the memory root.
 
 3. Create new files under the right topic folder. Immediately add them to `memory/index.md` in the same operation.
 
-4. Update workflow state under `.lovable/memory/workflow/` using markers:
+4. Dump your internal AI memory / cache: Any context, architectural knowledge, code flow understanding, or preferences you have learned during this session MUST be written to `.lovable/memory/learned/XX-<slug>.md` (and added to `memory/index.md`). The project memory must be 100% standalone for the next AI; do not rely on your internal conversation history.
+
+5. Update workflow state under `.lovable/memory/workflow/` using markers:
 
 | Status       | Marker                 |
 
@@ -177,7 +179,7 @@ New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
 
 ## Phase 6, `.lovable/what-to-read.md` (authoritative read-list)
 
-Must exist after this run. Create it if missing, update it (never blindly overwrite) if present.
+Must exist after this run. Create it if missing, update it (never blindly overwrite) if present. Note: This file acts as a dynamic roadmap; both reading phases and writing phases must update it to guide future AI sessions based on current progress.
 
 Required content:
 

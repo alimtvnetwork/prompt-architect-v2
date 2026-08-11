@@ -24,7 +24,8 @@ If you cannot do that, keep reading. Do not start work.
 The `.lovable/` folder, specs, and codebase can be massive. To process this information efficiently:
 - Do NOT spawn sub-agents for reading. Instead, you must self-loop to read large memory banks and codebase files sequentially.
 - You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
-  - Writing summaries of what you read and understood, including the number of files read, to maintain context.
+  - Writing summaries of what you learned and understood into `.lovable/memory/learned/XX-<slug>.md` (or `.lovable/learned.md`), including the number of files read, to maintain context.
+  - Updating `.lovable/what-to-read.md` based on your progress to guide future reading workflows.
   - Documenting any problems or issues you discover in the codebase into `.lovable/issues/` or `.lovable/suggestions.md`.
   - Updating existing memory files, capturing open ambiguities, or updating plans.
 - CRITICAL: You MUST NOT refactor, edit, or write any application source code. This is a read and analysis phase only.
