@@ -31,7 +31,7 @@ The next AI session has full amnesia. If you did it and did not write it, it did
 
 9. Root `README.md` and `.lovable/what-to-read.md` stay in sync. Same file list, same order, no drift. Every write-memory run updates both.
 
-10. Nothing executes this turn beyond file writes and `mv`. No code changes, no installs, no migrations.
+10. Nothing executes this turn beyond writing to the `.lovable` folder and `mv`. No application source code changes, no refactoring, no installs, no migrations.
 
 ## Working stance
 
@@ -93,7 +93,9 @@ Target: `.lovable/memory/<topic>/XX-<slug>.md`. Never at the memory root.
 
 3. Create new files under the right topic folder. Immediately add them to `memory/index.md` in the same operation.
 
-4. Update workflow state under `.lovable/memory/workflow/` using markers:
+4. Dump your internal AI memory / cache: Any context, architectural knowledge, code flow understanding, or preferences you have learned during this session MUST be written to `.lovable/memory/learned/XX-<slug>.md` (and added to `memory/index.md`). The project memory must be 100% standalone for the next AI; do not rely on your internal conversation history.
+
+5. Update workflow state under `.lovable/memory/workflow/` using markers:
 
 | Status       | Marker                 |
 
@@ -177,7 +179,7 @@ New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
 
 ## Phase 6, `.lovable/what-to-read.md` (authoritative read-list)
 
-Must exist after this run. Create it if missing, update it (never blindly overwrite) if present.
+Must exist after this run. Create it if missing, update it (never blindly overwrite) if present. Note: This file acts as a dynamic roadmap; both reading phases and writing phases must update it to guide future AI sessions based on current progress.
 
 Required content:
 
@@ -372,195 +374,3 @@ If any box is unchecked, do not reply. Fix it first.
 ## Must Follow, without negotiation
 
 Listen, past write-memory turns have been sloppy as fuck: memory dumped into chat instead of files, `.lovable/memories/` created by accident, `plans/index.md` and `what-to-read.md` forgotten, `strictly-avoid.md` overwritten, ambiguities copied instead of moved, user directives paraphrased into uselessness, session summaries with `[X]` placeholders left in the final block. WTF. Stop doing that, you stupid fuck. Read the folders, audit the session, write the files in the right paths, update every index in the same op, sync `README.md` with `what-to-read.md`, run the consistency check, emit the final block with real numbers. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless, you stupid, WTF.
-
-All the memories that we have done or all the conversation that we have done, uh, inside the anti-gravity. So you also have your own memory, right? So I want those memories to be condensed and consolidated and put inside that .lovable folder and add this as an instructional disk in terms of filing and what to read so that, uh, when the next time AI reads, they will understand whatever we have done, whatever things that it has completed. Okay, so make a checklist understandable for the, uh, AI memory, for the anti-gravity as well so that your memories are transferred. Is it clear? And put inside the Git. Make sure that you, you commit everything and you also push to the Git. Okay? No errors on the Git
-
-title: Write Memory (end of session, maximum enforcement)
-
-slug: write-memory-v3
-
-Fix the git status first, then start coding. Make a big plan if required to self-loop, and spawn sub-agents with parallel processing to speed up the work. 
-
-Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you. You are completely looking over what you were supposed to do. The existing code was better while you were writing code like this. Fix that immediately.
-
-Look into the entire codebase and follow the code review guidelines from the aspect folder properly. All caught errors must be explicitly logged following the guidelines in the error manage folder. Create a wrapper for queries in PHP/Python/TS that automatically logs failures to reduce scattered logging code. 
-
-Make sure the code quality is strictly maintained:
-
-1. Do not introduce any magic strings or magic numbers anywhere unless it is explicitly for the logger, and mention that in the typing.
-
-2. In TypeScript, rather than using strings as sub-items or comparing string union types (pipes) like "pass" | "fail" | "fallback", you must use Enums. Enums are the best.
-
-3. Every single Enum must end with the suffix "Type".
-
-4. Always use explicit boolean state checks like response.isFail or explicit checks rather than inverting success booleans like !response.isSuccess.
-
-Figure out how many places you messed this up and fix them all. Update the memory regarding this inside the .lovable folder so Next.ai does not make this mistake again.
-
-Commit the codebase first, make the changes, and commit again. Do not commit single files at a time; similar changes should go together with a nice commit message. Check the CI/CD, run the tests, and build the code to see if there is any issue. If any unit tests or builds are failing, fix them. Finally, before you end your job, push the code to the repository.
-
-Actionable Items & Checklist and non-negotiable must follow:
-
-	
-
-- Fix git status before starting any new code.
-
-- Spawn sub agents , do looping as much as needed, first assign the tasks to multiple agents and let those run parallelly, clear??
-
-- First write the tasks in the properly .lovable folder and file as spec and task enqueue the task properly then start working with it.
-
-- Make sure the code runs standalone in the CI CD and locally.
-
-- Make sure the coding guidelines are followed properly from spec folder and error manage are followed properly, read the memory if required to.
-
-- Find the root cause of the problem first, write it down to memory and .lovable folder properly as far memory goes.
-
-- Plan the execution, self-loop, and spawn sub-agents for parallel processing.
-
-- Follow code review guidelines from the aspect folder.
-
-- Ensure all try-catch blocks log errors according to the error manage folder.
-
-- Create a query wrapper for PHP/Python/TS that handles automatic failure logging.
-
-- Use explicit isFail properties; NEVER use inverted isSuccess checks (e.g., use response.isFail instead of !response.isSuccess).
-
-- Remove all magic strings and numbers unless used directly for logging.
-
-- Replace TypeScript string union types with Enums (e.g., avoid "pass" | "fail" | "fallback").
-
-- Ensure all Enum names end with the "Type" suffix (e.g., StatusType instead of Status or Status7).
-
-- Audit the entire codebase to fix all places where this query logic and typing was messed up.
-
-- Update the .lovable folder memory with these new wrapper, error management, and enum rules.
-
-- Run builds, check CI/CD, and ensure all unit tests pass completely.
-
-- Group similar code changes into single commits with nice commit messages.
-
-- Push the final code to the remote Git repository before ending the job.
-
-- Finally when your tasks are done, make sure you made a final bump in the minor release with following proper steps of release for this repo, read things properly before releasing understanding the release guidelines.
-
-- Make sure every commit is pushed to git without a failure. Git should be source of the truth.
-
-## Actionable Items & Checklist and non-negotiable must follow
-
-### Phase 1, pre-flight (read before any write)
-
-- [ ] Walk `.lovable/` recursively; read every Pre-flight file that exists and note the missing ones.
-- [ ] Read `.lovable/memory/index.md`, `.lovable/coding-guidelines.md`, `.lovable/plans/index.md`, `.lovable/plan.md`, `.lovable/suggestions.md`, `.lovable/suggestions/index.md`, `.lovable/strictly-avoid.md`, `.lovable/cicd-index.md`, `.lovable/what-to-read.md`, `.lovable/prompts/index.md`.
-- [ ] Read every file under `cicd-issues/`, `issues/`, `pending-issues/`, `solved-issues/`, `spec/commands/`, `ambiguous-questions/01-new-ambiguity/`, `02-ambiguity-resolved/`, `memory/workflow/`.
-- [ ] Read the relevant `spec/` folders, including error management (`spec/03-error-manage/` or its fallback).
-- [ ] Fix git status first, working tree clean and committed, before anything else.
-
-### Phase 2, session audit (internal, not chat)
-
-- [ ] Done: features, fixes, refactors, files created / modified / deleted, decisions and why.
-- [ ] Pending: started-not-finished, discussed-not-started, blockers, dependencies.
-- [ ] Learned: patterns, conventions, gotchas, explicit and implicit user preferences.
-- [ ] Wrong: bugs, root causes, failed approaches, things never to repeat.
-
-### Phase 3, write memory files
-
-- [ ] Every memory file goes to `.lovable/memory/<topic>/XX-<slug>.md`, never the memory root.
-- [ ] Use `.lovable/memory/`, `.lovable/plans/`, `.lovable/ambiguous-questions/`, never `memories/`, `plan/`, `ambiguity/`.
-- [ ] Filenames lowercase-hyphenated with a 2-digit prefix, next free sequence in that folder.
-- [ ] Update `memory/index.md` in the SAME operation as every file created or moved.
-- [ ] Update `.lovable/memory/workflow/` with the status markers (Done, In Progress, Pending, Blocked, Avoid).
-- [ ] Anything to skip or avoid goes to `.lovable/memory/avoid/XX-<slug>.md` and is referenced from `strictly-avoid.md` (append, never overwrite).
-- [ ] Condense and transfer the anti-gravity conversation memories into `.lovable/` so the next AI inherits full context.
-
-### Phase 4, plans, suggestions, issues
-
-- [ ] Plans: roll-up `plans/index.md`, active `plans/pending/`, history `plans/completed/`, depth `plans/subtasks/`.
-- [ ] Complete a plan by `mv` from `pending/` to `completed/`, flip `Status: completed`, update `plans/index.md`. Never copy, never delete.
-- [ ] Suggestions tracker `.lovable/suggestions.md`; verbatim captures `.lovable/suggestions/XX-<slug>.md` with `index.md`. No duplicated content.
-- [ ] Issues routed to `pending-issues/` or `solved-issues/`; solved files get `## Solution`, `## Iteration Count`, `## Learning`, `## What NOT to Repeat`.
-- [ ] CI/CD issues to `cicd-issues/XX-<slug>.md`, indexed in `cicd-index.md`, no duplicates.
-
-### Phase 5, verbatim capture and read-list
-
-- [ ] Every sizeable user directive, decision, or spec saved verbatim to `.lovable/memory/specs/XX-<slug>.md`. Quote, never paraphrase.
-- [ ] New user commands / conventions to `.lovable/spec/commands/XX-<slug>.md`.
-- [ ] Ambiguities `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/` with a `## Resolution` block and `Status: resolved`.
-- [ ] `.lovable/what-to-read.md` exists, changelog entry prepended with a UTC ISO 8601 timestamp, list synced with Pre-flight.
-- [ ] Root `README.md` updated in the same operation: folder structure plus pointer to `what-to-read.md`, zero drift.
-- [ ] Create `coding-guidelines.md` and `prompts/index.md` with starters if missing.
-
-### Phase 6, code standards (when code is touched)
-
-- [ ] Follow the code review guidelines from the aspect folder and the error-manage folder.
-- [ ] Every caught error is explicitly logged per the error-management guidelines.
-- [ ] Create a query wrapper for PHP/Python/TS that logs failures automatically, so logging is not scattered.
-- [ ] No magic strings or magic numbers, except explicitly for the logger, and state that exception in the typing.
-- [ ] Replace TypeScript string unions such as `"pass" | "fail" | "fallback"` with Enums.
-- [ ] Every Enum name ends with the `Type` suffix.
-- [ ] Use explicit boolean checks like `response.isFail`; never invert success booleans (`!response.isSuccess`).
-- [ ] Audit the entire codebase, count every place this was messed up, and fix all of them.
-- [ ] Code must be DRY; reuse constants, never duplicate.
-- [ ] Plan the execution, self-loop, and spawn sub-agents to run tasks in parallel.
-- [ ] Find and record the root cause before applying any fix.
-
-### Phase 7, validation
-
-- [ ] Every file under `.lovable/memory/` is listed in `memory/index.md`.
-- [ ] Every `✅ Done` has evidence: memory entry, solved issue, or code change.
-- [ ] Every actionable pending item is in a plan or in `suggestions.md`.
-- [ ] No file in both `pending-issues/` and `solved-issues/`, or both `plans/pending/` and `plans/completed/`.
-- [ ] No orphans: no unindexed memory file, no evidence-free "Implemented" suggestion, no solved issue missing `## Solution`.
-- [ ] `what-to-read.md` matches Pre-flight and root `README.md`; timestamp updated this session.
-- [ ] Every open ambiguity is surfaced in the final response.
-- [ ] Build runs, CI/CD checked, all unit tests pass; fix every failure.
-
-### Phase 8, delivery
-
-- [ ] Group similar changes into single commits with good messages; never commit one file at a time.
-- [ ] Push every commit to the remote without failure. Git is the source of truth, no git errors.
-- [ ] Bump the minor release following this repo's release guidelines, read them properly first.
-- [ ] Emit the final response block verbatim with real numbers, no `[X]` placeholders.
-- [ ] No em dashes, no softened wording, no execution beyond file writes and `mv` for the memory phase.
-
-## Folder Structure
-
-```text
-.lovable/
-  memory/
-    index.md
-    <topic>/XX-<slug>.md
-    avoid/XX-<slug>.md
-    specs/XX-<slug>.md
-    workflow/
-  coding-guidelines.md
-  what-to-read.md
-  strictly-avoid.md
-  plan.md                      # legacy single-file variant
-  plans/
-    index.md
-    pending/XX-<slug>.md
-    completed/XX-<slug>.md
-    subtasks/XX-<slug>/SS-<subslug>.md
-  suggestions.md
-  suggestions/
-    index.md
-    XX-<slug>.md
-  issues/ | pending-issues/ | solved-issues/
-    XX-<slug>.md
-  cicd-index.md
-  cicd-issues/XX-<slug>.md
-  spec/commands/XX-<slug>.md
-  ambiguous-questions/
-    01-new-ambiguity/
-    02-ambiguity-resolved/
-  prompts/index.md
-README.md                      # stays in sync with .lovable/what-to-read.md
-spec/
-  02/  03/  04/  21/
-```
-
-## Before Writing Code
-
-- Read and understand `spec/02`, `spec/03` and `spec/04` before writing any code.
-- Error management must be followed.
-- Code must be DRY.
