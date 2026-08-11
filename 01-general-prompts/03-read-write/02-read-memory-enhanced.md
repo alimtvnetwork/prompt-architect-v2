@@ -20,11 +20,14 @@ You are done reading when you can, without guessing:
 - point at the exact file that justifies any rule you enforce.
 If you cannot do that, keep reading. Do not start work.
 
-## Reading Strategy & Sub-agents (Strictly Read-Only)
-The `.lovable/` folder and memory specs can be massive. To process this information efficiently:
-- You may spawn sub-agents to read different folders in parallel, or self-loop to read large memory banks sequentially.
-- You are allowed to write to the `.lovable/` directory (e.g., updating memory files, capturing open ambiguities, updating plans or issues).
-- CRITICAL: You MUST NOT refactor, edit, or write any application source code. This is a read and analysis phase only. Your sub-agents must also be strictly instructed to remain read-only regarding the codebase.
+## Reading Strategy (Strictly Read-Only)
+The `.lovable/` folder, specs, and codebase can be massive. To process this information efficiently:
+- Do NOT spawn sub-agents for reading. Instead, you must self-loop to read large memory banks and codebase files sequentially.
+- You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
+  - Writing summaries of what you read and understood, including the number of files read, to maintain context.
+  - Documenting any problems or issues you discover in the codebase into `.lovable/issues/` or `.lovable/suggestions.md`.
+  - Updating existing memory files, capturing open ambiguities, or updating plans.
+- CRITICAL: You MUST NOT refactor, edit, or write any application source code. This is a read and analysis phase only.
 ---
 ## Phase 1 - Load the project
 ### 1.1 Read the whole `.lovable/` folder
@@ -170,7 +173,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Checked whether the repo contains explicit tone, strictly-avoid, or prior-stupidity instructions and applied them without softening
 - [ ] Did not replace hard user wording with polite generic language
 - [ ] Emitted the Completion Confirmation block verbatim, then stopped
-- [ ] Confirmed that all sub-agents and reading loops remained strictly read-only regarding the codebase (no source code refactored)
+- [ ] Confirmed that self-looping remained strictly read-only regarding the codebase (no source code refactored, only memory updated)
 ## Tone and stance
 Past runs of this prompt have been stupid. The AI behaved like a stupid fuck by skimming folders, ignoring ambiguity files, forgetting CI/CD issues, half-filling the Completion Confirmation block with "[N]" placeholders, and softening explicit user instructions after being told not to. That stupidity must not repeat.
 Read aggressively and defensively. Assume the previous AI failed because it was lazy, vague, and too polite to enforce the actual rules. Your job is to load the repo's memory exactly, cite the file behind every rule, and refuse to guess. If you finish this prompt and cannot cite the file behind a rule you enforce, you failed the prompt. Read more. Then reply.
