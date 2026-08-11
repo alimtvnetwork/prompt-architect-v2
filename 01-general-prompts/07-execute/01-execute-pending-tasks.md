@@ -20,7 +20,7 @@ Your objective is to read all pending tasks from the `.lovable/` folder, allocat
 
 ## Phase 2: Allocate & Execute (Continuous Loop)
 1. **Spawn Sub-Agents:** Assign sub-tasks to multiple sub-agents and run them in parallel to speed up the work. Give them explicit instructions based on the subtask `.md` files.
-2. **Continuous Self-Looping:** As sub-agents complete their work, you must loop yourself to review their progress, update the plan trackers, and spawn new agents for the next tasks. Do not stop until every task in `.lovable/plans/pending/` is complete.
+2. **Continuous Self-Looping:** As sub-agents complete their work, you must loop yourself to review their progress, update the plan trackers, and spawn new agents for the next tasks. Do not stop until every task in `.lovable/plans/pending/` is complete. **Crucially, at the end of every while loop iteration, you must execute the Commit Fix (Phase 5) before spinning up the next loop.**
 3. **Error Handling:** If a sub-agent fails or a build breaks, find the root cause, write it into memory (`.lovable/issues/`), and fix it. If the pipeline completely halts, pause and explicitly ask the user to say "continue" to resume the loop.
 
 ## Phase 3: Code Quality & Commit Fix (Non-Negotiable)
@@ -39,7 +39,8 @@ As tasks are completed, you must update the memory structure exactly as follows:
 3. **Update Indexes:** Immediately update `.lovable/plans/index.md` to reflect the completed status and the new file location.
 4. **Memory Writes:** If you or your sub-agents learn new architectural patterns, discover bugs, or establish new conventions, write them to `.lovable/memory/<topic>/XX-<slug>.md` and update `memory/index.md`.
 
-## Phase 5: Verification & Delivery
+## Phase 5: End-of-Loop Commit Fix & Delivery
+At the end of *every single iteration* of your execution loop (when a batch of tasks completes), you must perform this Commit Fix before continuing:
 1. **Run Tests:** Make sure the code runs standalone locally and in CI/CD. Run builds and unit tests. If any fail, fix them before proceeding.
 2. **Commit Strategy:** Do not commit single files at a time. Group similar code changes into a single commit with a clear, descriptive commit message. Commit frequently after logical milestones.
 3. **Push:** Make sure every commit is pushed to the remote Git repository without failure. Git is the source of truth.
