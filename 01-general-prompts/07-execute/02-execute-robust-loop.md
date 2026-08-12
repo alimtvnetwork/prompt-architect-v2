@@ -10,27 +10,29 @@
 ## Goal
 Your objective is to read pending tasks from the `.lovable/` folder, allocate small micro-portions of work to sub-agents, and execute them in a continuous self-loop. You must manage sub-agent crashes gracefully, strictly restrict concurrent agents to a maximum of 3, and ensure continuous execution without halting the entire pipeline. Avoid running any end-to-end tests that make live API calls.
 
-## Phase 1: Load & Prepare Tasks
+## Phase 1: Load, Clean, & Prepare Tasks
 1. **Check Git Status:** Fix the git status first. The working tree must be clean.
-2. **Git Ignore Temp:** Ensure `.lovable/temp/` is added to your project's `.gitignore` file. This folder is strictly for local sub-agent crash logging and must not be committed.
-3. **Read the Queue:** Read `.lovable/plans/index.md` and load tasks from `.lovable/plans/pending/XX-<slug>.md`. 
-4. **Micro-Tasking:** Ensure that tasks are broken down so that each agent only does a small portion of the work at a time. Do not assign massive monolithic tasks to a single agent.
+2. **Git Ignore Temp:** Ensure `.lovable/temp/` is added to your project's `.gitignore` file.
+3. **Garbage Collection:** Wipe any old, orphaned state files in `.lovable/temp/` from previous incomplete runs before you start fresh.
+4. **Read the Queue:** Read `.lovable/plans/index.md` and load tasks from `.lovable/plans/pending/XX-<slug>.md`. 
+5. **Dependency Check:** Do not start a task if its prerequisite tasks are not marked `Status: completed`.
+6. **Micro-Tasking:** Break tasks down so each agent does a small portion. Do not assign massive monolithic tasks.
 
 ## Phase 2: Resilient Allocation & Execution Loop
-1. **Agent Limit (Strict):** You may spawn a maximum of 2 to 3 sub-agents concurrently. Never exceed this limit.
-2. **Pre-Flight Logging (Mandatory):** Before spawning a sub-agent, you must write a state file in `.lovable/temp/XX-agent-state.md` documenting exactly:
-   - Which sub-agent is running.
-   - The specific micro-task it was assigned.
-   - How it is expected to execute it.
-3. **Continuous Self-Looping:** As agents run, loop yourself to monitor their progress. 
-4. **Crash Recovery (Revamp & Restart):** 
-   - If a sub-agent crashes, fails, or hangs, it MUST NOT crash your main loop. 
-   - Read its state from `.lovable/temp/XX-agent-state.md` to understand exactly what it was doing and how it failed. 
-   - Reason about the failure, fix the underlying issue or adjust the instructions, and restart the task with a new agent.
-5. **End-to-End Tests Ban:** Do not run end-to-end tests that make live API calls. Only run local, isolated unit tests.
+1. **Agent Limit (Strict):** Spawn a maximum of 2 to 3 sub-agents concurrently. Never exceed this limit.
+2. **Disjoint Assignment (No Conflicts):** When assigning tasks in parallel, ensure the tasks touch **completely different files or components**. If two tasks must edit the same core file, run them sequentially to avoid git merge conflicts.
+3. **Pre-Flight Logging:** Before spawning a sub-agent, write `.lovable/temp/XX-agent-state.md` documenting:
+   - Which sub-agent is running, its assigned micro-task, and instructions.
+4. **Continuous Self-Looping:** Loop yourself to monitor progress. 
+5. **Crash Recovery, Deadlocks & The 3-Strike Rule:** 
+   - **Deadlocks:** If an agent hangs without updating its state for an extended period, assume it is deadlocked. Terminate it and retry.
+   - **Revamp & Restart:** If an agent crashes, read its state from `.lovable/temp/`. Reason about the failure, fix the issue, and restart.
+   - **3-Strike Rule:** If a specific micro-task fails or crashes 3 times, **STOP retrying**. Mark the task as `Status: blocked`.
+   - **Persistent Failure Log:** Whenever a task hits 3 strikes or causes a catastrophic pipeline halt, you MUST write the exact failure context to `.lovable/memory/last-failure.md`. This ensures that when the user later types "continue" or "go", you or the next AI can read this file, immediately understand what blew up last time, and attempt to fix it before proceeding.
+6. **End-to-End Tests Ban:** Do not run end-to-end tests that make live API calls. Only run local, isolated unit tests.
 
 ## Phase 3: Code Quality & Commit Fix (Non-Negotiable)
-While executing tasks and instructing sub-agents, you and your agents MUST adhere to these strict coding guidelines:
+While executing tasks, you and your agents MUST adhere to these strict coding guidelines:
 - **Code Review & Logging:** Follow guidelines in `spec/02-coding-guidelines/` and `spec/03-error-manage/`. Use automated query wrappers for failure logging.
 - **No Magic Strings/Numbers:** Do not introduce any magic strings or numbers anywhere unless it is explicitly for the logger (and state that in the typing).
 - **TypeScript Enums:** Never use string union types (e.g., `"pass" | "fail"`). You must use Enums. Every single Enum must end with the suffix `Type` (e.g., `StatusType`).
@@ -52,9 +54,12 @@ At the end of *every single iteration* of your execution loop (when a batch of t
 4. **List Completed Tasks:** At the end of the loop iteration, explicitly list out all the tasks that were successfully completed during that run.
 
 ## Pre-Reply / Loop Checklist (Must verify every loop iteration)
-- [ ] `.lovable/temp/` is verified to be in `.gitignore`.
+- [ ] `.lovable/temp/` is verified to be in `.gitignore` and garbage collection was run.
+- [ ] Dependencies were verified before starting tasks.
+- [ ] Parallel assignments were disjoint (no file conflicts).
 - [ ] Maximum of 2-3 sub-agents spawned at any given time.
 - [ ] Pre-flight state written to `.lovable/temp/` for every agent before it started.
+- [ ] 3-Strike rule was honored, and any catastrophic failures were logged to `.lovable/memory/last-failure.md`.
 - [ ] Crashes were handled gracefully via revamp and restart without breaking the main loop.
 - [ ] No end-to-end API tests were executed.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `.lovable/plans/index.md` was updated.
