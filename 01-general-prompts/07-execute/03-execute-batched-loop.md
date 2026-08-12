@@ -3,6 +3,8 @@
 - slug: execute-batched-loop
 - status: active
 
+Run if again if said, go , continue or next
+
 ## Prompt
 
 # Execute Batched Loop (3 Agents, Chunked Commits)
