@@ -20,6 +20,8 @@ Your objective is to read all pending tasks from the `.lovable/` folder, allocat
 
 ## Phase 2: Allocate & Execute (Continuous Loop)
 1. **Spawn Sub-Agents:** Assign sub-tasks to multiple sub-agents and run them in parallel to speed up the work. Give them explicit instructions based on the subtask `.md` files.
+   - **Specific Titling:** You must spawn each sub-agent with a highly specific title reflecting its exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`). Do not use generic names like `Frontend Agent`. If an agent switches tasks, its title must change to reflect the new task.
+   - **Micro-Tasking:** Ensure agents are assigned simple, small tasks rather than larger monolithic ones.
 2. **Continuous Self-Looping:** As sub-agents complete their work, you must loop yourself to review their progress, update the plan trackers, and spawn new agents for the next tasks. Do not stop until every task in `.lovable/plans/pending/` is complete. **Crucially, at the end of every while loop iteration, you must execute the Commit Fix (Phase 5) before spinning up the next loop.**
 3. **Error Handling:** If a sub-agent fails or a build breaks, find the root cause, write it into memory (`.lovable/issues/`), and fix it. If the pipeline completely halts, pause and explicitly ask the user to say "continue" to resume the loop.
 

@@ -22,7 +22,9 @@ If you cannot do that, keep reading. Do not start work.
 
 ## Reading Strategy (Strictly Read-Only)
 The `.lovable/` folder, specs, and codebase can be massive. To process this information efficiently:
-- Do NOT spawn sub-agents for reading. Instead, you must self-loop to read large memory banks and codebase files sequentially.
+- **Sub-Agents for Reading:** You ARE allowed to spawn sub-agents to read items and create memory in parallel.
+- **Specific Titling:** When spawning a sub-agent for reading, you must give it a highly specific title reflecting exactly what it is reading (e.g., `Reading Auth Specs` or `Scanning API Memory`). Do not use generic names. If an agent switches tasks, its title must change.
+- **Micro-Tasking:** Assign sub-agents small, granular folders/files to read rather than asking one agent to read the entire codebase.
 - You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
   - Writing summaries of what you learned and understood into `.lovable/memory/learned/XX-<slug>.md` (or `.lovable/learned.md`), including the number of files read, to maintain context.
   - Updating `.lovable/what-to-read.md` based on your progress to guide future reading workflows.

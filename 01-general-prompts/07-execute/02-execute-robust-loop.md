@@ -16,13 +16,14 @@ Your objective is to read pending tasks from the `.lovable/` folder, allocate sm
 3. **Garbage Collection:** Wipe any old, orphaned state files in `.lovable/temp/` from previous incomplete runs before you start fresh.
 4. **Read the Queue:** Read `.lovable/plans/index.md` and load tasks from `.lovable/plans/pending/XX-<slug>.md`. 
 5. **Dependency Check:** Do not start a task if its prerequisite tasks are not marked `Status: completed`.
-6. **Micro-Tasking:** Break tasks down so each agent does a small portion. Do not assign massive monolithic tasks.
+6. **Micro-Tasking:** Break tasks down so each agent does a simple, small micro-task. Do not assign massive monolithic tasks.
 
 ## Phase 2: Resilient Allocation & Execution Loop
 1. **Agent Limit (Strict):** Spawn a maximum of 2 to 3 sub-agents concurrently. Never exceed this limit.
 2. **Disjoint Assignment (No Conflicts):** When assigning tasks in parallel, ensure the tasks touch **completely different files or components**. If two tasks must edit the same core file, run them sequentially to avoid git merge conflicts.
-3. **Pre-Flight Logging:** Before spawning a sub-agent, write `.lovable/temp/XX-agent-state.md` documenting:
-   - Which sub-agent is running, its assigned micro-task, and instructions.
+3. **Pre-Flight Logging & Specific Titling:** Before spawning a sub-agent, you must:
+   - Assign the sub-agent a highly specific title reflecting its exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`). Do not use generic names like `Frontend Agent`. If an agent switches tasks, its title must change.
+   - Write `.lovable/temp/XX-agent-state.md` documenting which sub-agent is running, its assigned micro-task, and instructions.
 4. **Continuous Self-Looping:** Loop yourself to monitor progress. 
 5. **Crash Recovery, Deadlocks & The 3-Strike Rule:** 
    - **Deadlocks:** If an agent hangs without updating its state for an extended period, assume it is deadlocked. Terminate it and retry.

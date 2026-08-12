@@ -25,6 +25,8 @@ You are the orchestrator. If your sub-agents fail, hallucinate, or go into infin
 
 - Give them strict, microscopic instructions based on the big plan.
 - Map out the subtasks from the big plan.
+- **Specific Titling:** Spawn each dedicated sub-agent with a highly specific title reflecting its exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`). Do not use generic names like `Frontend Agent`. If an agent switches tasks, its title must change.
+- **Micro-Tasking:** Ensure agents are assigned simple, small micro-tasks rather than larger monolithic ones.
 - Spawn a dedicated sub-agent for each independent chunk simultaneously (MAXIMUM 2 concurrently).
 - Do not spawn more than 2 agents at once due to RAM issues and caching behavior.
 - Do not wait sequentially like an idiot.

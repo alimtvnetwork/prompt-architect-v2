@@ -22,8 +22,12 @@ Your objective is to read the project's coding guidelines, deeply audit the enti
 3. **NO SUB-AGENTS:** Do not spawn sub-agents for this read/audit loop. Sub-agent looping is strictly restricted for this task to avoid context loss and ensure the central planner retains full visibility.
 4. Record your raw observations and findings inside `.lovable/memory/learned/XX-guideline-audit-observations.md`.
 
-## Phase 3: Massive Plan Generation
-Based on your observations, you must break down the fixes into an extremely granular plan. If there are hundreds of violations, you must create hundreds of steps. The goal is to create a detailed roadmap that future sub-agents can pick up and execute flawlessly.
+## Phase 3: Massive Plan Generation & The "Look Ahead" Planner
+Based on your observations, you must break down the fixes into an extremely granular plan. If there are hundreds of violations, you must create hundreds of steps. As the planner, you must have the "look ahead" picture so that future executing sub-agents can easily pick up the micro-tasks without having to make architectural decisions.
+
+When creating instructions for future sub-agents, enforce the following:
+1. **Specific Titling:** Instruct the execution phase to spawn agents with highly specific titles reflecting their exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`). Do not use generic names like `Frontend Agent`. If an agent switches tasks, its title must be updated to reflect the new task.
+2. **Micro-Tasking:** Ensure that every sub-task is a simple, small micro-task rather than a larger monolithic one.
 
 ### Folder Structure & Naming Conventions
 All plans must strictly follow this structure:
