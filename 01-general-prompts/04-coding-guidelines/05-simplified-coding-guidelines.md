@@ -1,59 +1,28 @@
-# Plan: Coding Guideline Audit & Enforcement (v3)
+# Simplified Coding Guidelines (AI Blind-Follow)
 
-- slug: plan-coding-guideline-audit-v3
+- slug: simplified-coding-guidelines
 - status: active
 
 ## Prompt
 
-# Plan: Coding Guideline Audit & Enforcement
-
-## Goal
-Perform an exhaustive, repo-wide audit of the codebase against the **Compiled Simple Coding Guidelines** (embedded below). Your job is to find EVERY single discrepancy, find the root cause, determine the fallout (where CI/CD might fail due to the change), and plan a massive execution list (100-200 steps) to fix them. You will then enqueue these tasks so that 3 sub-agents can be spawned in a later execution turn to apply the fixes in parallel.
-
-## 1. Context & File Paths to Scan
-Before planning, you must read the following locations (if they exist) to build your context:
-- `.lovable/coding-guidelines.md`
-- `spec/02-coding-guidelines/` or `spec/coding-guidelines/`
-- `spec/03-error-manage/` or `spec/XX-error-manage/`
-- `.lovable/plans/index.md`
-- `.lovable/memory/index.md`
-
-## 2. Planning Loop (50 Steps of Analysis -> 100+ Execution Steps)
-This is not a quick glance. You must deeply read the codebase, looping yourself as much as needed (taking at least 50 steps of internal planning and reading) to uncover:
-- Every inverted boolean (`!isSuccess`).
-- Every magic string or number.
-- Every swallowed error or generic `catch {}`.
-- Every missing Enum or `Type` suffix.
-- Every monolithic function exceeding 15 lines.
-- Every nested `if` statement.
-
-If there are NO discrepancies, explicitly state: "There are no coding guideline issues or discrepancies." However, assume the codebase is a mess until proven otherwise.
-
-## 3. Root Cause & Fallout Analysis
-For every issue found:
-- What is the root cause? Why was it written this way?
-- How many places does it need to be fixed?
-- **Fallout Check:** If we change this, what else breaks? Will it break the CI/CD pipeline? Will it break tests? Map the entire blast radius.
-
-## 4. Enqueueing Tasks for Sub-Agents
-Your final output must be a massively detailed plan stored at `.lovable/plans/pending/XX-coding-guideline-fixes.md` and explicit spec tasks written to `.lovable/spec/tasks/XX-coding-guideline-fixes.md`.
-The plan must break the work down so granularly (100 to 200 steps) that **3 concurrent sub-agents** can be spawned later to safely execute the fixes.
-- Step 1..100+: Exact file, exact line, exact boolean to rename, exact enum to extract.
-- Do NOT fix the code in this turn. Your job is ONLY to plan, audit, and enqueue.
-
----
-
-## Compiled Simple Coding Guidelines (AI Blind-Follow)
+# Coding Guidelines (AI Blind-Follow)
 
 Version: 1.4.5
 
 This is a standalone file. Follow every rule below without consulting any other document. If a `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.
 
-### Must Follow and without negotiation
+## Agents & Self-Looping
+When finding issues or auditing the codebase against these guidelines, the AI must self-loop extensively to read files and identify root causes. Furthermore, you must enqueue tasks to spawn sub-agents to fix these issues in parallel.
+
+---
+
+## Must Follow and without negotiation
 
 Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missing remaining-tasks list, symptom patches sold as fixes, coding guidelines ignored, version bump forgotten, logs never checked. WTF. Stop doing that, you stupid fuck. Read the code, find the root cause in one sentence, apply the minimum correct fix, verify it in the logs, list EVERY remaining task, bump the version, update changelog and release notes. Going deep IS the job. If you are not going deep, you are not doing the job. This section is a MUST. Violating it is auto-reject on the same tier as RULE 0. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
 
-### Hard Rules (Zero Tolerance)
+---
+
+## Hard Rules (Zero Tolerance)
 
 1. Function length: 8 lines preferred, 15 lines hard cap. Skip blank lines and comments when counting. Waiver only via inline comment `// lint-allow: function-length reason="..." max=N`.
 2. No nested `if`. Flatten with early returns and guard clauses.
@@ -70,7 +39,9 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 13. Restricted short identifiers are banned everywhere: `arr`, `cb`, `fn`, `el`, `msg`, `ctx`, `obj`, `val`. Use names that explain intent: `items`, `callback`, `handler`, `element`, `message`, `context`, `record`, `value`, or domain names like `menuItem`, `actionElement`, `popoverPanel`.
 14. Function names must describe the exact domain action. The hard cap is 15 body lines (8 preferred); when a function reaches 12 lines, split first, then add. Apply one of the 8 canonical refactor patterns before adding new logic: (1) Shell + Wire, (2) Async pipeline, (3) Guard clauses first, (4) Config-object params, (5) Table dispatch, (6) Event-handler extraction, (7) Error surface via `DiagnosticError`, (8) Test arrange/act/assert. See `.lovable/memory/standards/restricted-identifiers-and-function-size.md` and `.lovable/spec/commands/06-function-size-cap-15-lines.md`.
 
-### Boolean Naming
+---
+
+## Boolean Naming
 
 1. Every boolean starts with one of these prefixes: `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`.
 2. Positive framing only. `isEnabled` yes, `isNotDisabled` no. `hasAccess` yes, `hasNoAccess` no.
@@ -81,7 +52,9 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 7. No boolean flag parameters on functions. Split into two named functions instead. `render(true)` is wrong, `renderExpanded()` and `renderCollapsed()` are right.
 8. Booleans that come back from questions to the user or from external systems get normalized to the same prefix rules at the boundary, never leak the raw name into internal code.
 
-### Line-Gap and Whitespace Style
+---
+
+## Line-Gap and Whitespace Style
 
 1. One blank line before every `return` or `throw`, unless it is the only statement in the block.
 2. One blank line after a closing `}`, unless the next line is another `}`, `else`, `case`, or `catch`.
@@ -92,7 +65,9 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 7. Trailing newline at end of file. No trailing whitespace on any line.
 8. If you feel the need for section-separator blank lines inside a single function, the function is too long. Refactor before adding whitespace.
 
-### Error Management (One-Liner Digest)
+---
+
+## Error Management (One-Liner Digest)
 
 If this repository has a `spec/xx-error-manage/` folder, that folder is binding and overrides any conflict here. Otherwise follow these rules directly.
 
@@ -108,7 +83,9 @@ If this repository has a `spec/xx-error-manage/` folder, that folder is binding 
 - Retrospective on repeats. If the same error class hits twice, write a short retrospective note explaining root cause and prevention.
 - Frontend errors flow through a global error store and a single error modal. No per-component alert boxes.
 
-### Data and Schema Rules
+---
+
+## Data and Schema Rules
 
 1. Tables, types, entities: PascalCase.
 2. Fields and columns: camelCase.
@@ -119,7 +96,9 @@ If this repository has a `spec/xx-error-manage/` folder, that folder is binding 
 7. Default database is SQLite. Prefer an ORM. Define joins, primary keys, and foreign keys explicitly.
 8. Any pull request that touches the database includes a Mermaid ERD.
 
-### React Specific
+---
+
+## React Specific
 
 1. `useEffect` conditions must be highly readable. Extract every guard into a positively named boolean (`isReadyToSync`, `hasFreshData`) and use that boolean inside the effect. No inline `!x && y` or nested ternaries in the effect body or its dependency guard.
 2. No negative conditions inside `useEffect`. If the natural check is negative, invert it into a positive boolean above the effect and early-return on the positive path.
@@ -137,7 +116,9 @@ If this repository has a `spec/xx-error-manage/` folder, that folder is binding 
 14. As the author (human or AI), invent the clearest domain name for each type. If you cannot name it, you do not understand it yet. Split until you can.
 15. In TypeScript tests, never use banned short callback names while filtering or iterating DOM nodes. `childElement`, `actionElement`, and `menuItem` are acceptable. `el`, `fn`, `cb`, `arr`, and `msg` are not.
 
-### Method Documentation (When To Write, When Not To)
+---
+
+## Method Documentation (When To Write, When Not To)
 
 Must-follow rule: simple methods do NOT require documentation. Do not write verbose comments. Comments lie, code does not. Names and signatures are the primary documentation. If you feel the need to explain what a method does in prose, first rename it or split it until the code explains itself.
 
@@ -185,7 +166,9 @@ Decision checklist before writing any doc comment:
 
 The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only the comment syntax changes.
 
-### Language One-Liners
+---
+
+## Language One-Liners
 
 - Go: use a result type, not `(T, error)`. Wrap errors with an operation label. Enums are `type X byte` plus `iota`, never string constants.
 - TypeScript: `Promise.all` for independent async, never sequential `await`. No `any`. `readonly` on interface fields by default.
@@ -195,7 +178,9 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 - C#: PascalCase methods and properties, `_camelCase` private fields, `I`-prefix interfaces.
 - Python: `snake_case` functions and variables, `PascalCase` classes, type hints on every public function, `dataclass` or `pydantic` for structured records.
 
-### Workflow
+---
+
+## Workflow
 
 1. Read the code before writing the fix. Find the root cause in one sentence.
 2. Apply the minimum correct fix. No drive-by refactors.
