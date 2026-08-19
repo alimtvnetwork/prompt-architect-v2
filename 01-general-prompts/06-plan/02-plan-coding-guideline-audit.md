@@ -30,6 +30,9 @@ When creating instructions for future sub-agents, enforce the following:
 2. **Micro-Tasking:** Ensure that every sub-task is a simple, small micro-task rather than a larger monolithic one.
 3. **Agent Delegation (Mandatory):** Each group or subtask MUST explicitly mention that it will be executed by a separate standalone agent.
 
+## Subtask Naming Correction (Non-Negotiable)
+If you find any existing subtasks in the .lovable/plans/subtasks/ folder that start with SS- or SS-XX-, you MUST correct them and rename them to strictly follow the XX-<subslug>.md format (where XX is the zero-padded sequence). You must also find and update any references to these files in parent plans, index files, and memory files.
+
 ## End-of-Loop Commit Fix (Non-Negotiable)
 You must instruct the executing agents that each step or group that completes MUST immediately commit and fix the Git. Instruct them to follow these exact rules:
 - Group all completed work for the subtask into a single logical commit.
@@ -69,7 +72,9 @@ Inside each `XX...` subtask file, detail exactly:
 - [ ] Subtask files named strictly XX-<subslug>.md where XX is the sequence
 - [ ] Included explicit instructions for the standalone agent execution of each group
 - [ ] Included explicit instructions for the end-of-loop commit fix for each completed step/group
+- [ ] Corrected any existing SS- or SS-XX- subtask filenames and their references
 - [ ] Updated `.lovable/plans/index.md`.
 - [ ] Confirmed absolutely zero application source code was modified.
+
 
 

@@ -69,6 +69,9 @@ When your plan dictates that a sub-agent should be spawned, you must enforce the
 2. **Micro-Tasking:** Sub-agents must only be assigned simple, small micro-tasks rather than larger monolithic ones.
 3. **Agent Delegation (Mandatory):** Each group or subtask MUST explicitly mention that it will be executed by a separate standalone agent.
 
+## Subtask Naming Correction (Non-Negotiable)
+If you find any existing subtasks in the .lovable/plans/subtasks/ folder that start with SS- or SS-XX-, you MUST correct them and rename them to strictly follow the XX-<subslug>.md format (where XX is the zero-padded sequence). You must also find and update any references to these files in parent plans, index files, and memory files.
+
 ## End-of-Loop Commit Fix (Non-Negotiable)
 
 You must instruct the executing agents that each step or group that completes MUST immediately commit and fix the Git. Instruct them to follow these exact rules:
@@ -172,6 +175,7 @@ Coding tasks (Go, Python, PHP, TS, any backend):
 - [ ] Subtask files named strictly XX-<subslug>.md where XX is the sequence
 - [ ] Included explicit instructions for the standalone agent execution of each group
 - [ ] Included explicit instructions for the end-of-loop commit fix for each completed step/group
+- [ ] Corrected any existing SS- or SS-XX- subtask filenames and their references
 - [ ] `.lovable/plans/index.md` updated (created if missing)
 - [ ] Nothing executed; no `plan--create`; no approval tool; no "should I proceed?"
 - [ ] No em dashes; no softened wording; no silently guessed ambiguity
@@ -222,5 +226,6 @@ Never leave a copy behind. If a plan is blocked by an open ambiguity, still writ
 
 - [ ] Save this prompt exactly as provided, preserving all formatting and wording.
 - [ ] Apply all rules when planning tasks in the codebase.
+
 
 
