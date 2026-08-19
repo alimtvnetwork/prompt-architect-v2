@@ -26,8 +26,17 @@ Your objective is to read the project's coding guidelines, deeply audit the enti
 Based on your observations, you must break down the fixes into an extremely granular plan. If there are hundreds of violations, you must create hundreds of steps. As the planner, you must have the "look ahead" picture so that future executing sub-agents can easily pick up the micro-tasks without having to make architectural decisions.
 
 When creating instructions for future sub-agents, enforce the following:
-1. **Specific Titling:** Instruct the execution phase to spawn agents with highly specific titles reflecting their exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`). Do not use generic names like `Frontend Agent`. If an agent switches tasks, its title must be updated to reflect the new task.
+1. **Specific Titling:** Instruct the execution phase to spawn agents with highly specific titles reflecting their exact task (e.g., Refactoring Auth or Fixing DB Connection). Do not use generic names like Frontend Agent. If an agent switches tasks, its title must be updated to reflect the new task.
 2. **Micro-Tasking:** Ensure that every sub-task is a simple, small micro-task rather than a larger monolithic one.
+3. **Agent Delegation (Mandatory):** Each group or subtask MUST explicitly mention that it will be executed by a separate standalone agent.
+
+## End-of-Loop Commit Fix (Non-Negotiable)
+You must instruct the executing agents that each step or group that completes MUST immediately commit and fix the Git. Instruct them to follow these exact rules:
+- Group all completed work for the subtask into a single logical commit.
+- RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.
+- Ensure .gitignore explicitly excludes them.
+- If issues arise during the commit process, fix those git issues and try again.
+- They MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
 
 ### Folder Structure & Naming Conventions
 All plans must strictly follow this structure:
@@ -40,7 +49,7 @@ All plans must strictly follow this structure:
    - Do not use any other naming convention for the subtasks. Maintain this `01, 02, 03...` sequence everywhere.
 
 ### Subtask Content
-Inside each `01...` subtask file, detail exactly:
+Inside each `SS-XX...` subtask file, detail exactly:
 - The target file.
 - The specific lines violating the guideline.
 - The guideline rule being broken.
@@ -56,6 +65,10 @@ Inside each `01...` subtask file, detail exactly:
 - [ ] Self-looped to audit the entire codebase (without spawning sub-agents).
 - [ ] Recorded observations in `.lovable/memory/learned/XX-<slug>.md`.
 - [ ] Created a massive, detailed parent plan in `.lovable/plans/pending/`.
-- [ ] Created granular subtask files in `.lovable/plans/subtasks/` using strictly `01`, `02`, `03` sequential naming.
+- [ ] Created granular subtask files in .lovable/plans/subtasks/ using strictly SS-XX-<subslug>.md sequential naming.
+- [ ] Subtask files named strictly SS-XX-<subslug>.md where XX is the sequence
+- [ ] Included explicit instructions for the standalone agent execution of each group
+- [ ] Included explicit instructions for the end-of-loop commit fix for each completed step/group
 - [ ] Updated `.lovable/plans/index.md`.
 - [ ] Confirmed absolutely zero application source code was modified.
+

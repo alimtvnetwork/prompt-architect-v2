@@ -64,10 +64,21 @@ Your self-loop must strictly follow this structure:
 ## 5. Must Follow, without negotiation
 Listen, past planning turns have been sloppy as fuck: wrong step count, plans dumped into chat instead of files, plan-mode tool fired when the user explicitly said not to, user commands and bug reports forgotten by the next turn. WTF. Stop doing that, you stupid fuck. Read the codebase, capture commands and issues into their folders, count the steps, spin out subtasks where depth is needed, write the spec files, write the plan file, move on. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
 
+## 6. End-of-Loop Commit Fix (Non-Negotiable)
+Each step or group that completes MUST immediately commit and fix the Git. Follow these exact rules from the commit-fix prompt:
+- Group all completed work for the subtask into a single logical commit.
+- RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.
+- Ensure .gitignore explicitly excludes them.
+- If issues arise during the commit process, fix those git issues and try again.
+- You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
+
 ## Action Items — Must Follow (Non-Negotiable)
 - [ ] Read the user-provided "X Steps" variable.
 - [ ] Write the X steps in groups, ensuring each group contains full context for a standalone sub-agent.
 - [ ] Ensure each group can work and commit standalone.
 - [ ] Self-loop to create the brain, tasks, and subtask files for the defined groups.
+- [ ] Ensure subtask files are named exactly SS-XX-<subslug>.md where XX is the sequence.
 - [ ] Audit the plan against the Master Consolidated Guide, Code Style, Boolean Conditions, and Variable Naming rules.
-- [ ] Update `.lovable/plans/index.md` and populate `.lovable/plans/pending/` and `.lovable/plans/subtasks/`.
+- [ ] Ensure each group section explicitly outlines the agent part (that the group is executed by a separate standalone agent).
+- [ ] Ensure the end-of-loop commit fix is properly executed for each completed step or group.
+- [ ] Update .lovable/plans/index.md and populate .lovable/plans/pending/ and .lovable/plans/subtasks/.

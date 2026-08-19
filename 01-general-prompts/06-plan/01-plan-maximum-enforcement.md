@@ -57,16 +57,26 @@ sub-plan that leaves siblings pending.
 
 If a step needs more than ~3 lines, touches multiple files, has non-obvious sequencing, or needs its own verification:
 
-- File: `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md` with `Parent: XX-<slug>` in frontmatter.
-- Main plan links to it: `See ./subtasks/XX-<slug>/SS-<subslug>.md`.
+- File: `.lovable/plans/subtasks/XX-<slug>/SS-XX-<subslug>.md (where XX is the sequence)` with `Parent: XX-<slug>` in frontmatter.
+- Main plan links to it: `See ./subtasks/XX-<slug>/SS-XX-<subslug>.md (where XX is the sequence)`.
 - Completed subtasks: either move to `subtasks/XX-<slug>/completed/` or flip `Status:` in place, one convention per parent plan.
 
 ## Sub-Agent Orchestration & The "Look Ahead" Planner
 
 When you (the planner agent) are creating this plan, you must have the bigger "look ahead" picture. Your plan must be highly detailed and granular so that downstream sub-agents can execute easily and faster without having to make architectural decisions themselves. 
 When your plan dictates that a sub-agent should be spawned, you must enforce the following:
-1. **Specific Titling:** The sub-agent must be spawned with a highly specific title reflecting its exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`). Do not use generic names like `Frontend Agent`. If an agent switches tasks, its title/reference must be updated to reflect the new task.
+1. **Specific Titling:** The sub-agent must be spawned with a highly specific title reflecting its exact task (e.g., Refactoring Auth or Fixing DB Connection). Do not use generic names like Frontend Agent. If an agent switches tasks, its title/reference must be updated to reflect the new task.
 2. **Micro-Tasking:** Sub-agents must only be assigned simple, small micro-tasks rather than larger monolithic ones.
+3. **Agent Delegation (Mandatory):** Each group or subtask MUST explicitly mention that it will be executed by a separate standalone agent.
+
+## End-of-Loop Commit Fix (Non-Negotiable)
+
+You must instruct the executing agents that each step or group that completes MUST immediately commit and fix the Git. Instruct them to follow these exact rules:
+- Group all completed work for the subtask into a single logical commit.
+- RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.
+- Ensure .gitignore explicitly excludes them.
+- If issues arise during the commit process, fix those git issues and try again.
+- They MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
 
 ## Capture during planning (never drop user input)
 
@@ -158,7 +168,10 @@ Coding tasks (Go, Python, PHP, TS, any backend):
 - [ ] Plan saved to `.lovable/plans/pending/XX-<slug>.md`; Context links every spec / command / issue / resolved ambiguity / attachment
 - [ ] EXACTLY `5` steps, counted twice; each concrete, verifiable, referencing its spec task file; no filler
 - [ ] Verification section describes how each step is confirmed
-- [ ] Subtask files under `.lovable/plans/subtasks/XX-<slug>/` where depth was needed
+- [ ] Subtask files under .lovable/plans/subtasks/XX-<slug>/ where depth was needed
+- [ ] Subtask files named strictly SS-XX-<subslug>.md where XX is the sequence
+- [ ] Included explicit instructions for the standalone agent execution of each group
+- [ ] Included explicit instructions for the end-of-loop commit fix for each completed step/group
 - [ ] `.lovable/plans/index.md` updated (created if missing)
 - [ ] Nothing executed; no `plan--create`; no approval tool; no "should I proceed?"
 - [ ] No em dashes; no softened wording; no silently guessed ambiguity
@@ -209,3 +222,4 @@ Never leave a copy behind. If a plan is blocked by an open ambiguity, still writ
 
 - [ ] Save this prompt exactly as provided, preserving all formatting and wording.
 - [ ] Apply all rules when planning tasks in the codebase.
+
