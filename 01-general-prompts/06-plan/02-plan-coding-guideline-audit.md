@@ -49,7 +49,7 @@ All plans must strictly follow this structure:
    - Do not use any other naming convention for the subtasks. Maintain this `01, 02, 03...` sequence everywhere.
 
 ### Subtask Content
-Inside each `SS-XX...` subtask file, detail exactly:
+Inside each `XX...` subtask file, detail exactly:
 - The target file.
 - The specific lines violating the guideline.
 - The guideline rule being broken.
@@ -65,10 +65,11 @@ Inside each `SS-XX...` subtask file, detail exactly:
 - [ ] Self-looped to audit the entire codebase (without spawning sub-agents).
 - [ ] Recorded observations in `.lovable/memory/learned/XX-<slug>.md`.
 - [ ] Created a massive, detailed parent plan in `.lovable/plans/pending/`.
-- [ ] Created granular subtask files in .lovable/plans/subtasks/ using strictly SS-XX-<subslug>.md sequential naming.
-- [ ] Subtask files named strictly SS-XX-<subslug>.md where XX is the sequence
+- [ ] Created granular subtask files in .lovable/plans/subtasks/ using strictly XX-<subslug>.md sequential naming.
+- [ ] Subtask files named strictly XX-<subslug>.md where XX is the sequence
 - [ ] Included explicit instructions for the standalone agent execution of each group
 - [ ] Included explicit instructions for the end-of-loop commit fix for each completed step/group
 - [ ] Updated `.lovable/plans/index.md`.
 - [ ] Confirmed absolutely zero application source code was modified.
+
 

@@ -77,8 +77,9 @@ Each step or group that completes MUST immediately commit and fix the Git. Follo
 - [ ] Write the X steps in groups, ensuring each group contains full context for a standalone sub-agent.
 - [ ] Ensure each group can work and commit standalone.
 - [ ] Self-loop to create the brain, tasks, and subtask files for the defined groups.
-- [ ] Ensure subtask files are named exactly SS-XX-<subslug>.md where XX is the sequence.
+- [ ] Ensure subtask files are named exactly XX-<subslug>.md where XX is the sequence.
 - [ ] Audit the plan against the Master Consolidated Guide, Code Style, Boolean Conditions, and Variable Naming rules.
 - [ ] Ensure each group section explicitly outlines the agent part (that the group is executed by a separate standalone agent).
 - [ ] Ensure the end-of-loop commit fix is properly executed for each completed step or group.
 - [ ] Update .lovable/plans/index.md and populate .lovable/plans/pending/ and .lovable/plans/subtasks/.
+

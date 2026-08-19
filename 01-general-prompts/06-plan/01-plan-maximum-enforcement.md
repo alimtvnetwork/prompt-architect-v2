@@ -57,8 +57,8 @@ sub-plan that leaves siblings pending.
 
 If a step needs more than ~3 lines, touches multiple files, has non-obvious sequencing, or needs its own verification:
 
-- File: `.lovable/plans/subtasks/XX-<slug>/SS-XX-<subslug>.md (where XX is the sequence)` with `Parent: XX-<slug>` in frontmatter.
-- Main plan links to it: `See ./subtasks/XX-<slug>/SS-XX-<subslug>.md (where XX is the sequence)`.
+- File: `.lovable/plans/subtasks/XX-<slug>/XX-<subslug>.md (where XX is the sequence)` with `Parent: XX-<slug>` in frontmatter.
+- Main plan links to it: `See ./subtasks/XX-<slug>/XX-<subslug>.md (where XX is the sequence)`.
 - Completed subtasks: either move to `subtasks/XX-<slug>/completed/` or flip `Status:` in place, one convention per parent plan.
 
 ## Sub-Agent Orchestration & The "Look Ahead" Planner
@@ -169,7 +169,7 @@ Coding tasks (Go, Python, PHP, TS, any backend):
 - [ ] EXACTLY `5` steps, counted twice; each concrete, verifiable, referencing its spec task file; no filler
 - [ ] Verification section describes how each step is confirmed
 - [ ] Subtask files under .lovable/plans/subtasks/XX-<slug>/ where depth was needed
-- [ ] Subtask files named strictly SS-XX-<subslug>.md where XX is the sequence
+- [ ] Subtask files named strictly XX-<subslug>.md where XX is the sequence
 - [ ] Included explicit instructions for the standalone agent execution of each group
 - [ ] Included explicit instructions for the end-of-loop commit fix for each completed step/group
 - [ ] `.lovable/plans/index.md` updated (created if missing)
@@ -222,4 +222,5 @@ Never leave a copy behind. If a plan is blocked by an open ambiguity, still writ
 
 - [ ] Save this prompt exactly as provided, preserving all formatting and wording.
 - [ ] Apply all rules when planning tasks in the codebase.
+
 
