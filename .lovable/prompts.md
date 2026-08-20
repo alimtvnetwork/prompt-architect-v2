@@ -35,3 +35,4 @@
 
 
 | Commit & Fix | [insult-code-fix.md](../01-general-prompts/05-commit-and-multi-agent-code-fix/08-insult-code-fix.md) | `insult-code-fix` | Fix git status, create wrapper, parallel subagents |
+| CI/CD | [fix-ci-cd-and-run-scripts.md](../01-general-prompts/08-ci-cd/03-fix-ci-cd-and-run-scripts.md) | `fix-ci-cd-and-run-scripts` | Fix CI/CD, run scripts, create query wrappers |
