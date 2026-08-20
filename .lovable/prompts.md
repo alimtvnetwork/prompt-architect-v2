@@ -34,3 +34,4 @@
 | Prompt Engineering | [conversation-log.md](../01-general-prompts/07-prompt-engineering/01-conversation-log.md) | `conversation-log` | Store session discussion before generating follow-up plan |
 
 
+| Commit & Fix | [insult-code-fix.md](../01-general-prompts/05-commit-and-multi-agent-code-fix/08-insult-code-fix.md) | `insult-code-fix` | Fix git status, create wrapper, parallel subagents |
