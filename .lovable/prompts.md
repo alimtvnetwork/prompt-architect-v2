@@ -1,6 +1,6 @@
 # Prompts Index
 
-> Canonical index of all saved prompts in the prompt-architect repository.
+> Canonical index of all saved prompts in the prompt-architect-v2 repository.
 
 | Category | File | Slug | Purpose |
 |----------|------|------|---------|
