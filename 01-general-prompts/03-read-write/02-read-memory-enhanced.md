@@ -6,13 +6,18 @@
 ## Prompt
 
 # Read Memory (Enhanced)
+
 ## Ambiguity folder path (non-negotiable)
+
 - Open questions: `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md`
 - Answered questions: `.lovable/ambiguous-questions/02-ambiguity-resolved/XX-<slug>.md`
 Read both folders in full during Phase 1. Surface open-ambiguity counts and slugs in the Completion Confirmation block. Treat resolved-ambiguity files as binding project decisions, do not re-litigate them. If an open ambiguity is relevant to the incoming task, stop and surface it before doing work; never guess past it.
+
 ## Goal
-Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
-The specs and the `.lovable/` folder are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
+
+/goal Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
+The specs and the `.lovable/` folder are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time. Read whole code base, especially spec folder and all codes.
+
 You are done reading when you can, without guessing:
 - name the CODE RED rules,
 - name the naming, error-handling, and DB conventions,
