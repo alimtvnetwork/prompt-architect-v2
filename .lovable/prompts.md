@@ -4,9 +4,9 @@
 
 | Category | File | Slug | Purpose |
 |----------|------|------|---------|
+| Read & Write | [read-memory-enhanced.md](../01-general-prompts/03-read-write/01-read-memory-enhanced.md) | `read-memory-enhanced` | Authoritative onboarding: loads memory identity & pending tasks |
+| Read & Write | [write-memory.md](../01-general-prompts/03-read-write/02-write-memory.md) | `write-memory` | Authoritative end-of-session memory persist & audit |
 | Core Workflow | [unified-ai-prompt-v4.md](../01-general-prompts/01-core-workflow/05-unified-ai-prompt-v4.md) | `unified-ai-prompt-v4` | Initial repository analysis and prep |
-| Core Workflow | [read-memory-enhanced.md](../01-general-prompts/01-core-workflow/04-read-memory-enhanced.md) | `read-memory-enhanced` | Loads the project's memory identity & pending tasks |
-| Core Workflow | [write-memory.md](../01-general-prompts/01-core-workflow/06-write-memory.md) | `write-memory` | Persists session history / updates to memory |
 | Core Workflow | [next-steps.md](../01-general-prompts/01-core-workflow/01-next-steps.md) | `next-steps` | Deliver the EXACT {{n}} next steps for execution |
 | Core Workflow | [plan-steps.md](../01-general-prompts/01-core-workflow/03-plan-steps.md) | `plan-steps` | Detailed execution plan generator |
 | Core Workflow | [pending-tasks.md](../01-general-prompts/01-core-workflow/02-pending-tasks.md) | `pending-tasks` | Inventory of all pending items in the repo |
@@ -14,6 +14,7 @@
 | Execution | [execute-pending-tasks.md](../01-general-prompts/07-execute/01-execute-pending-tasks.md) | `execute-pending-tasks` | Continuous loop & multi-agent execution |
 | Execution | [execute-robust-loop.md](../01-general-prompts/07-execute/02-execute-robust-loop.md) | `execute-robust-loop` | Resilient 3-agent maximum execution loop |
 | Execution | [execute-batched-loop.md](../01-general-prompts/07-execute/03-execute-batched-loop.md) | `execute-batched-loop` | Batch-loop task execution |
+| Planning | [plan-maximum-enforcement-v5.md](../01-general-prompts/06-plan/05-plan-maximum-enforcement-v5.md) | `plan-maximum-enforcement-v5` | Comprehensive plan generator with subtask extraction |
 | Coding Standards | [coding-guidelines.md](../01-general-prompts/02-coding-standards/01-coding-guidelines.md) | `coding-guidelines` | Blind-follow hard rules and code best practices |
 | Coding Standards | [theming-guidelines.md](../01-general-prompts/02-coding-standards/02-theming-guidelines.md) | `theming-guidelines` | Design tokens and CSS var requirements |
 | Coding Standards | [update-theming.md](../01-general-prompts/02-coding-standards/03-update-theming.md) | `update-theming` | Instructions for updating theme tokens |
