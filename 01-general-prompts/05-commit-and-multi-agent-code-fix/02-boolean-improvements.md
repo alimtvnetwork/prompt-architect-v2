@@ -26,7 +26,7 @@ Read the overarching big plan of the main task from `.lovable/plans/pending/01-<
 - Use the maximum enforcement guidelines to execute this plan.
 - Loop through its defined subtasks and spawn sub-agents to speed up the work.
 - Do not write randomly into `.lovable`. Plans live exclusively in `.lovable/plans/pending/01-<slug>.md` and subtasks under `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`.
-- **Anti-Hallucination:** If any referenced spec or file is missing, do NOT guess. Stop and ask clarifying questions.
+- Anti-Hallucination: If any referenced spec or file is missing, do NOT guess. Stop and ask clarifying questions.
 
 ## 3. Ruthless Orchestration
 
@@ -34,10 +34,10 @@ You are the orchestrator. If your sub-agents fail, hallucinate, or go into infin
 
 - Give them strict, microscopic instructions based on the big plan.
 - Map out the subtasks from the big plan.
-- **Specific Titling:** Spawn each dedicated sub-agent with a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service` or `Fixing DB Connection`). Do not use generic names. If an agent switches tasks, its title must change.
-- **Micro-Tasking:** Ensure agents are assigned simple, small micro-tasks rather than larger monolithic ones.
+- Specific Titling: Spawn each dedicated sub-agent with a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service` or `Fixing DB Connection`). Do not use generic names. If an agent switches tasks, its title must change.
+- Micro-Tasking: Ensure agents are assigned simple, small micro-tasks rather than larger monolithic ones.
 - Spawn a dedicated sub-agent for each independent chunk simultaneously (MAXIMUM 2-3 concurrently).
-- **File Collision Locking Matrix (`active-locks.json`):** Check `.lovable/temp/active-locks.json` so parallel subagents touch completely disjoint files.
+- File Collision Locking Matrix (`active-locks.json`): Check `.lovable/temp/active-locks.json` so parallel subagents touch completely disjoint files.
 - Do not wait sequentially like an idiot.
 
 ## 4. Sub-Agent Lifecycle & Status Tracking (Non-negotiable)
@@ -69,9 +69,10 @@ Every sub-agent that is spawned MUST follow this lifecycle without exception:
 Once ALL sub-agents have signaled completion and updated their subtask files in `.lovable/plans/subtasks/`:
 
 - YOU (the main agent) must group everything together into a logical commit.
-- **Artifact Sanitizer:** RED FLAG: NEVER upload or commit test reports, test data, artifact zips, temporary scripts, or compiled binaries to Git. Purge them before making the commit.
-- **Lovable Git History Guard:** Never rewrite published history (no force push, no rebase, no squash).
+- Artifact Sanitizer: RED FLAG: NEVER upload or commit test reports, test data, artifact zips, temporary scripts, or compiled binaries to Git. Purge them before making the commit.
+- Lovable Git History Guard: Never rewrite published history (no force push, no rebase, no squash).
 - You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
+- **Commit the changes on the current branch only** (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 
 ## 7. End-of-Loop Final Verification
 

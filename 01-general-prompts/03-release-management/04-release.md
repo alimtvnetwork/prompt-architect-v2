@@ -1,6 +1,6 @@
 # Release, MINOR bump, MUST enforcement
 
-**Trigger phrases:** `release`, `bump version`, `bump version + add changelog + pin to root readme`, `abump version ...` (typo variants count).
+Trigger phrases: `release`, `bump version`, `bump version + add changelog + pin to root readme`, `abump version ...` (typo variants count).
 
 No variables. No prompts to the user. Discover the current version from disk, bump it, do the full ceremony in one turn.
 
@@ -8,7 +8,7 @@ No variables. No prompts to the user. Discover the current version from disk, bu
 
 ## RULE 0, MUST, NON-NEGOTIABLE
 
-1. Read the **canonical version source** for THIS repo (discover it: `version.json`, `package.json` `"version"`, or whatever single file the repo treats as the version of record). Do not guess.
+1. Read the canonical version source for THIS repo (discover it: `version.json`, `package.json` `"version"`, or whatever single file the repo treats as the version of record). Do not guess.
 
 2. Bump MINOR only: `MAJOR.MINOR.PATCH` becomes `MAJOR.(MINOR+1).0`. PATCH MUST reset to `0`.
 
@@ -18,9 +18,9 @@ No variables. No prompts to the user. Discover the current version from disk, bu
 
 Deviations (only when the trigger explicitly says so):
 
-- **MAJOR** = `(MAJOR+1).0.0` if the user said the change is breaking (storage schema, prompt schema, public SDK, extension contract).
+- MAJOR = `(MAJOR+1).0.0` if the user said the change is breaking (storage schema, prompt schema, public SDK, extension contract).
 
-- **PATCH** = `MAJOR.MINOR.(PATCH+1)` only if the user literally said `patch bump` or `patch release`.
+- PATCH = `MAJOR.MINOR.(PATCH+1)` only if the user literally said `patch bump` or `patch release`.
 
 When in doubt: MINOR.
 
@@ -32,7 +32,7 @@ When in doubt: MINOR.
 
 - Changelog entry under the new version heading is MANDATORY. A release without one is INVALID.
 
-- **All markdown filenames MUST be lowercase**: `readme.md`, `changelog.md`, `release_notes.md`, every audit / issue / plan / spec `.md`. Rename any `README.md`, `CHANGELOG.md`, `ReadMe.md`, etc. in the same turn with `mv` (or `git mv` if tracked), and update every reference.
+- All markdown filenames MUST be lowercase: `readme.md`, `changelog.md`, `release_notes.md`, every audit / issue / plan / spec `.md`. Rename any `README.md`, `CHANGELOG.md`, `ReadMe.md`, etc. in the same turn with `mv` (or `git mv` if tracked), and update every reference.
 
 - If ANY step fails or is flagged, log it under `.lovable/release/issues/xx-<new-version>-<slug>.md` AND add an `### Issues` bullet under the new changelog entry linking to that file. Never hide failures.
 
@@ -50,19 +50,19 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
 ## Pre-flight (before step 1)
 
-- **Idempotency guard:** if the canonical version file already equals the computed new version, STOP. Someone half-ran a release. Detect what is already done, resume from the first incomplete step, do NOT double-bump.
+- Idempotency guard: if the canonical version file already equals the computed new version, STOP. Someone half-ran a release. Detect what is already done, resume from the first incomplete step, do NOT double-bump.
 
-- **Placeholder guard:** if the previous version's changelog entry is empty or a placeholder (`TBD`, `WIP`, no bullets), refuse to release until it is filled or the user overrides.
+- Placeholder guard: if the previous version's changelog entry is empty or a placeholder (`TBD`, `WIP`, no bullets), refuse to release until it is filled or the user overrides.
 
-- **Date source:** the release date is UTC today. Get it from `date -u +%Y-%m-%d`. Do not invent it.
+- Date source: the release date is UTC today. Get it from `date -u +%Y-%m-%d`. Do not invent it.
 
-- **Git Sync & Clean State:** Run `git status`. If there are pending uncommitted changes, fix them and `git commit` them first. Then run `git pull` to fetch and merge upstream changes. Resolve any issues before starting the release steps.
+- Git Sync & Clean State: Run `git status`. If there are pending uncommitted changes, fix them and `git commit` them first. Then run `git pull` to fetch and merge upstream changes. Resolve any issues before starting the release steps.
 
 ## Mandatory steps (in order, fail-fast)
 
-1. **Read the current version** from the canonical version source. Print previous and new version. Confirm PATCH digit is `0`.
+1. Read the current version from the canonical version source. Print previous and new version. Confirm PATCH digit is `0`.
 
-2. **Discover pin sites**, then update every one to the new version in lock-step. Use a single canonical search:
+2. Discover pin sites, then update every one to the new version in lock-step. Use a single canonical search:
 
    ```
    rg -n "\b<PREV_MAJOR>\.<PREV_MINOR>\.<PREV_PATCH>\b" -g '!node_modules' -g '!*.lock' -g '!.git'
@@ -85,9 +85,9 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
    A pin site missed here breaks installs.
 
-3. **Pin the new version in `readme.md`** (lowercase filename, MUST). Rewrite every occurrence of the previous version (`vX.Y.Z` and bare `X.Y.Z`) in badges, install snippets, "current version" lines, release-branch examples, zip filenames, inline references. After this step, `rg "<previous-version>" readme.md` MUST return nothing.
+3. Pin the new version in `readme.md` (lowercase filename, MUST). Rewrite every occurrence of the previous version (`vX.Y.Z` and bare `X.Y.Z`) in badges, install snippets, "current version" lines, release-branch examples, zip filenames, inline references. After this step, `rg "<previous-version>" readme.md` MUST return nothing.
 
-4. **Add a changelog entry** at the top of `changelog.md`, directly under `# Changelog`. Replace `X.Y.Z` with the actual new version and `YYYY-MM-DD` with `date -u +%Y-%m-%d` output:
+4. Add a changelog entry at the top of `changelog.md`, directly under `# Changelog`. Replace `X.Y.Z` with the actual new version and `YYYY-MM-DD` with `date -u +%Y-%m-%d` output:
 
    ```
    ## [vX.Y.Z] YYYY-MM-DD <short headline>
@@ -103,15 +103,15 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
    Use only the subheadings that apply. `### Issues` is REQUIRED whenever any step surfaced a problem, even if worked around.
 
-5. **Rewrite remaining pin sites via the project's stale-version helper if one exists** (discover: `scripts/update-stale-version-refs.*`, `scripts/bump-version.*`, `tools/update-versions.*`). Run it with previous and new version. If no helper exists, use the `rg` output from step 2 and rewrite each match by hand.
+5. Rewrite remaining pin sites via the project's stale-version helper if one exists (discover: `scripts/update-stale-version-refs.*`, `scripts/bump-version.*`, `tools/update-versions.*`). Run it with previous and new version. If no helper exists, use the `rg` output from step 2 and rewrite each match by hand.
 
-6. **Regenerate bundled / aggregated artifacts** (aggregated prompts, generated docs, compiled manifests) if their sources changed this turn. Use whatever generation script the project ships.
+6. Regenerate bundled / aggregated artifacts (aggregated prompts, generated docs, compiled manifests) if their sources changed this turn. Use whatever generation script the project ships.
 
-7. **Verify version sync**. Run the project's version-sync check script if one exists (discover: `scripts/check-version-sync.*`, `scripts/verify-versions.*`). It MUST exit 0. Non-zero = release is INVALID: log an issue, fix, re-run. If no such script exists, re-run the step 2 `rg` and confirm only historic files (see Hard rules allow-list) still reference the previous version.
+7. Verify version sync. Run the project's version-sync check script if one exists (discover: `scripts/check-version-sync.*`, `scripts/verify-versions.*`). It MUST exit 0. Non-zero = release is INVALID: log an issue, fix, re-run. If no such script exists, re-run the step 2 `rg` and confirm only historic files (see Hard rules allow-list) still reference the previous version.
 
-8. **Tag, commit, and push** (if git-tracked). Commit message: `release: vX.Y.Z <headline>`. Tag: `git tag vX.Y.Z`. You MUST push the commit and tag to the remote repository (e.g., `git push` followed by `git push origin vX.Y.Z`). Because you synced and committed pending changes in Pre-flight, the working tree should only contain release-related file changes.
+8. Tag, commit, and push (if git-tracked). Commit message: `release: vX.Y.Z <headline>`. Tag: `git tag vX.Y.Z`. You MUST push the commit and tag to the remote repository (e.g., `git push` followed by `git push origin vX.Y.Z`). Because you synced and committed pending changes in Pre-flight, the working tree should only contain release-related file changes.
 
-9. **Report** previous version, new version, bump tier, and the exact files changed. No filler.
+9. Report previous version, new version, bump tier, and the exact files changed. No filler.
 
 ## Issue logging (MUST, when anything goes wrong)
 
@@ -208,3 +208,13 @@ Blocking: release {{version}}
 ```
 
 When answered: `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/`, flip `Status: resolved`, and append a `## Resolution` block (`Answered:`, `Answer:`, `Applied solution:`). Never leave a copy behind. Do NOT confuse ambiguities with release issues: unknown version source, unclear bump policy, or missing changelog target = ambiguity; a failed step during the release run = `.lovable/release/issues/`.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

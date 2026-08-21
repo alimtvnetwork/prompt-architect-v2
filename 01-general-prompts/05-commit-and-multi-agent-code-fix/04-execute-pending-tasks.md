@@ -14,31 +14,31 @@ Before starting execution, you must ensure the queue of pending tasks is properl
 - Verify root readme is strictly lowercase `readme.md`.
 - Read the `.lovable/plans/pending/` directory and `.lovable/plans/index.md`.
 - Count exactly how many pending tasks exist.
-- **Naming Correction**: Check if the pending task files are correctly sequenced with a 2-digit numerical prefix (e.g., `01-<slug>.md`, `02-<slug>.md`).
-- If naming is incorrect or missing prefixes, **fix it immediately**. Rename the files to follow sequential `01-`, `02-` format and update `.lovable/plans/index.md` to match in the same operation.
-- **Execution Waves**: Group tasks into Execution Waves (Wave 1: Schemas/DB/wrappers; Wave 2: Business services; Wave 3: UI & docs).
+- Naming Correction: Check if the pending task files are correctly sequenced with a 2-digit numerical prefix (e.g., `01-<slug>.md`, `02-<slug>.md`).
+- If naming is incorrect or missing prefixes, fix it immediately. Rename the files to follow sequential `01-`, `02-` format and update `.lovable/plans/index.md` to match in the same operation.
+- Execution Waves: Group tasks into Execution Waves (Wave 1: Schemas/DB/wrappers; Wave 2: Business services; Wave 3: UI & docs).
 
 ## 2. Uninterrupted Autonomous Execution (Self-Looping & Locking Matrix)
 
 You are the sole orchestrator. Your job is to complete ALL pending tasks without stopping.
 
-- **Make a Great Plan**: Analyze all pending tasks and devise a comprehensive execution plan. Tasks exceeding 7 steps must be decomposed into `plans/subtasks/XX-<slug>/`.
-- **Do NOT Ask Questions**: Do not stop to ask the user for permission. Do not stop to ask clarifying questions.
-- **File Collision Locking Matrix (`active-locks.json`):** Register active target files in `.lovable/temp/active-locks.json` so parallel tasks touch completely disjoint files.
-- **Self-Loop**: Self-loop continuously until every single pending task in the queue is verifiably completed.
-- **3-Strike Rollback:** If an agent fails unit tests or builds 3 consecutive times, automatically rollback dirty working tree (`git checkout -- <files>`), log failure context to `.lovable/memory/last-failure.md`, and advance to the next disjoint task.
+- Make a Great Plan: Analyze all pending tasks and devise a comprehensive execution plan. Tasks exceeding 7 steps must be decomposed into `plans/subtasks/XX-<slug>/`.
+- Do NOT Ask Questions: Do not stop to ask the user for permission. Do not stop to ask clarifying questions.
+- File Collision Locking Matrix (`active-locks.json`): Register active target files in `.lovable/temp/active-locks.json` so parallel tasks touch completely disjoint files.
+- Self-Loop: Self-loop continuously until every single pending task in the queue is verifiably completed.
+- 3-Strike Rollback: If an agent fails unit tests or builds 3 consecutive times, automatically rollback dirty working tree (`git checkout -- <files>`), log failure context to `.lovable/memory/last-failure.md`, and advance to the next disjoint task.
 
 ## 3. High-Stakes Code Standards & Root Cause Analysis
 
 While executing the pending tasks, you must adhere strictly to the project's code standards and root cause protocols:
 
-- **Root Cause First**: Find the root cause of every problem before applying any fix. Record the root cause into `.lovable/` memory before touching code.
-- **Error Management**: All caught errors must be explicitly logged following guidelines in `spec/03-error-manage/`. Use the established query wrapper that automatically logs failures.
-- **No Magic Values**: Do not introduce any magic strings or magic numbers anywhere unless explicitly for the logger.
-- **Enums Over Unions**: Replace TypeScript string union types (e.g., `"pass" | "fail"`) with Enums.
-- **Enum Naming**: Every Enum name must end with the `Type` suffix (e.g., `StatusType`). Enum values must use `PascalCase` (e.g., `ActiveState`).
-- **Boolean State Checks**: Always use explicit boolean state checks like `response.isFail`. NEVER use inverted success booleans like `!response.isSuccess`.
-- **DRY Code**: Reuse constants; never duplicate them.
+- Root Cause First: Find the root cause of every problem before applying any fix. Record the root cause into `.lovable/` memory before touching code.
+- Error Management: All caught errors must be explicitly logged following guidelines in `spec/03-error-manage/`. Use the established query wrapper that automatically logs failures.
+- No Magic Values: Do not introduce any magic strings or magic numbers anywhere unless explicitly for the logger.
+- Enums Over Unions: Replace TypeScript string union types (e.g., `"pass" | "fail"`) with Enums.
+- Enum Naming: Every Enum name must end with the `Type` suffix (e.g., `StatusType`). Enum values must use `PascalCase` (e.g., `ActiveState`).
+- Boolean State Checks: Always use explicit boolean state checks like `response.isFail`. NEVER use inverted success booleans like `!response.isSuccess`.
+- DRY Code: Reuse constants; never duplicate them.
 
 ## 4. Sub-Agent Orchestration
 
@@ -53,10 +53,10 @@ To speed up the work, you may spawn sub-agents to handle independent chunks of t
 
 Once ALL pending tasks have been completed and marked `✅ Done`:
 
-- **Final Verification**: Check full build, run all local unit tests, and check CI/CD status. Fix any build failures or failing tests immediately.
-- **Artifact Sanitizer & Git History Guard**: Ensure no zip archives, temporary scratch files, test data, or binaries are committed. Never rewrite published Git history (no force push, no rebase, no squash) to protect Lovable editor synchronization.
-- **Commit**: Group all completed work into a single logical Git commit with a clear, descriptive message summarizing executed tasks.
-- **Push**: Push the commit to the remote GitHub repository. Pushing after the commit is non-negotiable.
+- Final Verification: Check full build, run all local unit tests, and check CI/CD status. Fix any build failures or failing tests immediately.
+- Artifact Sanitizer & Git History Guard: Ensure no zip archives, temporary scratch files, test data, or binaries are committed. Never rewrite published Git history (no force push, no rebase, no squash) to protect Lovable editor synchronization.
+- Commit: Group all completed work into a single logical Git commit with a clear, descriptive message summarizing executed tasks.
+- Push: Push the commit to the remote GitHub repository. Pushing after the commit is non-negotiable.
 
 ---
 

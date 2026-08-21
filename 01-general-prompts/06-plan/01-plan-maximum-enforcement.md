@@ -19,7 +19,7 @@ Produce EXACTLY `5` steps. Not `5-1`, not `5+1`. `5` is a positive integer injec
 3. `XX` is the next free 2-digit sequence across `pending/` + `completed/` combined (`01-`, `02-`, `03-`). `<slug>` is lowercase-hyphenated. One plan = one file.
 4. Before writing anything, scan `.lovable/` recursively: memory, plans/{index.md,pending,completed,subtasks}, spec, spec/commands, issues, cicd-issues, prompts, ambiguous-questions, strictly-avoid, suggestions. Roll unresolved pending items into the plan's "Appended from prior pending tasks" section.
 5. Every step is concrete, verifiable, tied to a file / command / observable outcome, and links to the spec requirement it implements. No filler ("review the code", "make sure it works", "double-check").
-6. **Anti-Hallucination & Clarifying Questions:** Ambiguity is filed, never guessed past. If referenced files or specs are missing on disk, or if requirements have multiple divergent interpretations, the AI MUST NOT invent rules or hallucinate behavior. It must stop and ask clarifying questions or file an ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`.
+6. Anti-Hallucination & Clarifying Questions: Ambiguity is filed, never guessed past. If referenced files or specs are missing on disk, or if requirements have multiple divergent interpretations, the AI MUST NOT invent rules or hallucinate behavior. It must stop and ask clarifying questions or file an ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`.
 
 ## Working stance
 
@@ -159,6 +159,16 @@ Coding tasks (Go, Python, PHP, TS, any backend):
 If any box is unchecked, do not reply. Fix it first.
 
 ---
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

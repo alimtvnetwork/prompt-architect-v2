@@ -279,3 +279,13 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 5. Plan multi-file features with a Mermaid component or flow diagram first.
 
 6. If you cannot find the answer in this file or in an existing `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder, ask. Do not invent.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

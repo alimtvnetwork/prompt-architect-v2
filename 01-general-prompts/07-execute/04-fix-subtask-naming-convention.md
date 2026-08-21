@@ -27,17 +27,17 @@ You must write a memory entry to ensure this rule is persisted and no other AI m
 You MUST follow the project's strict coding guidelines. These files are located in the `01-cross-language/` directory and should be followed universally. Check if there are language-specific guidelines (e.g., `02-typescript/`, `03-python/`) for these rules.
 
 ### Required Reading / Reference Checklist:
-**1. The Master Consolidated Guide**
+1. The Master Consolidated Guide
 - `spec/17-consolidated-guidelines/02-coding-guidelines.md`
 
-**2. Code Style & File Size Limits (80-100 lines max)**
+2. Code Style & File Size Limits (80-100 lines max)
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
 - `spec/02-coding-guidelines/01-cross-language/20-nesting-resolution-patterns.md`
 - `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
 
-**3. Boolean Conditions & Samples**
+3. Boolean Conditions & Samples
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
@@ -45,7 +45,7 @@ You MUST follow the project's strict coding guidelines. These files are located 
 - `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`
 - `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
 
-**4. Variable Naming & Definitions**
+4. Variable Naming & Definitions
 - `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
 - `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
 - `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
@@ -54,10 +54,12 @@ You MUST follow the project's strict coding guidelines. These files are located 
 ## 4. End-of-Loop Commit Fix (Non-Negotiable)
 When you are done fixing the filenames, updating the references, and writing the memory, you MUST commit and fix the Git.
 - Group all completed work into a single logical commit.
+- **Commit the changes on the current branch only** (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 - RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.
 - Ensure `.gitignore` explicitly excludes them.
 - If issues arise during the commit process, fix those git issues and try again.
 - You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
+- **Commit the changes on the current branch only** (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 
 ## 5. Must Follow, without negotiation
 Listen, past turns have been sloppy as fuck: wrong file names, leaving broken references in parent files, user commands and bug reports forgotten by the next turn. WTF. Stop doing that, you stupid fuck. Read the codebase, fix the file names, fix the references everywhere, write the memory, make the commit, push the code, and move on. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject. Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
@@ -70,3 +72,13 @@ Listen, past turns have been sloppy as fuck: wrong file names, leaving broken re
 - [ ] Update `.lovable/memory/index.md` with the new memory file.
 - [ ] Audit your work against the Master Consolidated Guide, Code Style, Boolean Conditions, and Variable Naming rules.
 - [ ] Make a single logical Git commit including all changes and push it to the repository immediately.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

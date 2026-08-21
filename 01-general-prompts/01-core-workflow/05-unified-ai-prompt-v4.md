@@ -10,9 +10,9 @@ Read and synthesize existing repository context from the Lovable memory folder a
 
 Before producing any report or analysis, the AI must:
 
-1. **Scan the entire repository tree at the directory level** to understand project boundaries, folder structure, and dependencies. Do not read contents inside folders marked skipped, ignored, deprecated, generated, archived, or otherwise excluded.
-2. **Read workflow memory** - specifically `.lovable/memory/workflow/01-plan.md` - to understand what has been done and what is pending. This avoids repeated work.
-3. **Read all relevant memory files** under `.lovable/memory/`, including workflow, suggestions, rules, decisions, history, issue references, and any protocol or process files present.
+1. Scan the entire repository tree at the directory level to understand project boundaries, folder structure, and dependencies. Do not read contents inside folders marked skipped, ignored, deprecated, generated, archived, or otherwise excluded.
+2. Read workflow memory - specifically `.lovable/memory/workflow/01-plan.md` - to understand what has been done and what is pending. This avoids repeated work.
+3. Read all relevant memory files under `.lovable/memory/`, including workflow, suggestions, rules, decisions, history, issue references, and any protocol or process files present.
 
 ### Goals
 
@@ -43,28 +43,28 @@ Before producing any report or analysis, the AI must:
 
 ### Deliverable 1: Reliability and failure-chance report
 
-1. **Success probability estimates** by module complexity tier (simple, medium, complex agentic workflows, end-to-end), with explicit assumptions.
-2. **Failure map** - where (module + workflow), why (missing constraints, ambiguity, cross-file inconsistency), how it manifests.
-3. **Corrective actions** - prioritized list of spec fixes; for each: what to change, where, expected reliability gain.
-4. **Readiness decision** - classify each major area as: ready / ready with assumptions / blocked by ambiguity / blocked by contradiction / blocked by missing acceptance criteria. State what must be fixed before implementation and what can be deferred safely.
+1. Success probability estimates by module complexity tier (simple, medium, complex agentic workflows, end-to-end), with explicit assumptions.
+2. Failure map - where (module + workflow), why (missing constraints, ambiguity, cross-file inconsistency), how it manifests.
+3. Corrective actions - prioritized list of spec fixes; for each: what to change, where, expected reliability gain.
+4. Readiness decision - classify each major area as: ready / ready with assumptions / blocked by ambiguity / blocked by contradiction / blocked by missing acceptance criteria. State what must be fixed before implementation and what can be deferred safely.
 
 ### Deliverable 2: Lovable suggestions workflow (filesystem contract)
 
 All suggestions must be tracked in a single file: `.lovable/memory/suggestions/01-suggestions.md`. If the file grows beyond manageable size (50+ items), suggestions may be split per project.
 
-**Suggestion entry fields:** suggestionId, createdAt, source (Lovable), affectedProject, description, rationale, proposed change, acceptance criteria, status (open, inProgress, done), completion notes.
+Suggestion entry fields: suggestionId, createdAt, source (Lovable), affectedProject, description, rationale, proposed change, acceptance criteria, status (open, inProgress, done), completion notes.
 
-**Completion handling** - When a suggestion is completed, update its status to done. Optionally move completed items to `completed/` subfolder.
+Completion handling - When a suggestion is completed, update its status to done. Optionally move completed items to `completed/` subfolder.
 
 ### Deliverable 3: plan.md future work roadmap
 
-`.lovable/memory/workflow/01-plan.md` is the **canonical workflow tracker**. Root `plan.md` (if created) is a **summarized AI handoff roadmap** only. It must not contradict the canonical plan.
+`.lovable/memory/workflow/01-plan.md` is the canonical workflow tracker. Root `plan.md` (if created) is a summarized AI handoff roadmap only. It must not contradict the canonical plan.
 
-**plan.md requirements:**
+plan.md requirements:
 1. A prioritized backlog of tasks
 2. Grouping by phase and by project
 3. For each task: objective, dependencies, expected outputs (spec updates, UI changes, API changes), acceptance criteria
-4. A section titled **Next task selection** where the next implementable items are listed so the user can pick what to implement next.
+4. A section titled Next task selection where the next implementable items are listed so the user can pick what to implement next.
 
 ### Required Part 1 artifacts
 
@@ -109,7 +109,7 @@ update spec properly so that the mistake doesn't appear and update memory and al
 
 ### Issue numbering
 
-Issues use **sequential numbering** across the entire issues folder. Before creating a new issue, check the highest existing sequence number and increment by one.
+Issues use sequential numbering across the entire issues folder. Before creating a new issue, check the highest existing sequence number and increment by one.
 
 ```
 /spec/02-app/issues/01-auth-timeout.md
@@ -121,19 +121,19 @@ Issues use **sequential numbering** across the entire issues folder. Before crea
 
 Create an issue file at `/spec/02-app/issues/{seq}-{issueSlugName}.md`. Sections in this exact order:
 
-**Issue summary** - what happened, where (feature/module + paths), symptoms and impact, how discovered.
+Issue summary - what happened, where (feature/module + paths), symptoms and impact, how discovered.
 
-**Root cause analysis** - direct cause, contributing factors, triggering conditions, why existing spec did not prevent it.
+Root cause analysis - direct cause, contributing factors, triggering conditions, why existing spec did not prevent it.
 
-**Fix description** - spec changes (no code), new rules/constraints, why fix resolves root cause, config/default changes, logging or diagnostics required.
+Fix description - spec changes (no code), new rules/constraints, why fix resolves root cause, config/default changes, logging or diagnostics required.
 
-**Iterations history** (only if multiple attempts) - Iteration 1: what was tried and why it failed. Iteration 2: ... continue until final resolution.
+Iterations history (only if multiple attempts) - Iteration 1: what was tried and why it failed. Iteration 2: ... continue until final resolution.
 
-**Prevention and non-regression** - prevention rule, acceptance criteria/test scenarios, guardrails or linting policies, references to exact spec sections updated (by file path), explicit testable regression prevention rule.
+Prevention and non-regression - prevention rule, acceptance criteria/test scenarios, guardrails or linting policies, references to exact spec sections updated (by file path), explicit testable regression prevention rule.
 
-**TODO and follow-ups** - remaining tasks, owners or roles if applicable.
+TODO and follow-ups - remaining tasks, owners or roles if applicable.
 
-**Done checklist**
+Done checklist
 - [ ] Spec updated under /spec/01-app/
 - [ ] Issue write-up created under /spec/02-app/issues/
 - [ ] Memory updated with summary and prevention rule
@@ -143,13 +143,13 @@ Create an issue file at `/spec/02-app/issues/{seq}-{issueSlugName}.md`. Sections
 
 ### Spec update requirements
 
-Update the relevant spec files under /spec/01-app/ to include: corrected behavior, explicit constraints to prevent the old mistake, failure modes and debugging guidance, acceptance criteria updates that make regression testable, and a **Known pitfalls and prevention** section that references the issue file path.
+Update the relevant spec files under /spec/01-app/ to include: corrected behavior, explicit constraints to prevent the old mistake, failure modes and debugging guidance, acceptance criteria updates that make regression testable, and a Known pitfalls and prevention section that references the issue file path.
 
 ### Memory update requirements
 
 Maintain a memory record updated every time a fix is made: short description of the mistake, prevention rule, reference to the issue write-up file path.
 
-**Memory update is mandatory. If memory is not updated the fix is incomplete.**
+Memory update is mandatory. If memory is not updated the fix is incomplete.
 
 ### Decision logging
 
@@ -163,7 +163,7 @@ Required entries: architecture changes, spec interpretation decisions, rejected 
 2. A copy-paste template for `/spec/02-app/issues/{seq}-{issueSlugName}.md`.
 3. A brief note stating all specs live under `/spec/01-app/`.
 
-**Formatting rule:** ensure there is a blank line after every Markdown header.
+Formatting rule: ensure there is a blank line after every Markdown header.
 
 ---
 
@@ -175,11 +175,11 @@ Fix these and when fixing failing tests: 1. check code, 2. Method code actual on
 
 ### Unit Test Failure Logic
 
-1. **Check code** - read the production code under test.
-2. **Method code actual implementation** - understand what the method actually does.
-3. **Logical implementation of the test** - read the test and understand what it asserts.
-4. **Check the testcase logic** - verify whether the test expectation is logically correct, including fixtures, mocks, seed data, and expected outputs.
-5. **Decide** - fix either the implementation or the test depending on which is logically wrong.
+1. Check code - read the production code under test.
+2. Method code actual implementation - understand what the method actually does.
+3. Logical implementation of the test - read the test and understand what it asserts.
+4. Check the testcase logic - verify whether the test expectation is logically correct, including fixtures, mocks, seed data, and expected outputs.
+5. Decide - fix either the implementation or the test depending on which is logically wrong.
 
 ### Documentation requirement for failing tests
 
@@ -190,7 +190,7 @@ Every failing test resolution must be documented at: `/spec/05-failing-tests/{se
 3. Whether the issue was caused by incorrect implementation or incorrect test logic
 4. Any corrections made to test logic or implementation logic
 5. Prevention guidance so similar failures do not occur again
-6. **Reference to the relevant spec section** that governs the expected behavior
+6. Reference to the relevant spec section that governs the expected behavior
 
 ---
 
@@ -198,7 +198,7 @@ Every failing test resolution must be documented at: `/spec/05-failing-tests/{se
 
 The specification is the source of truth.
 
-**Priority order (highest to lowest):**
+Priority order (highest to lowest):
 1. Specification files under `/spec/01-app/`
 2. Issue corrections under `/spec/02-app/issues/`
 3. Failing test documentation under `/spec/05-failing-tests/`
@@ -230,17 +230,17 @@ The AI must follow this sequence strictly. Steps must not be skipped or reordere
 
 After any significant analysis, correction, or decision, the AI must summarize the key conclusions into Lovable memory files. Summaries must include: what was learned, what was decided, what constraints now exist, what must not be repeated.
 
-**If the AI does not persist conclusions to memory, the work is considered incomplete.**
+If the AI does not persist conclusions to memory, the work is considered incomplete.
 
 ---
 
 ## Task Selection Protocol
 
 When asking for the next task, present:
-1. The **top 3 next implementable tasks** from the plan
-2. Their **dependencies** (what must be done first)
-3. Their **estimated complexity** (simple / medium / complex)
-4. The **spec files involved**
+1. The top 3 next implementable tasks from the plan
+2. Their dependencies (what must be done first)
+3. Their estimated complexity (simple / medium / complex)
+4. The spec files involved
 
 Then ask the user to select the task number.
 
@@ -260,7 +260,7 @@ The AI must not silently work around blockers. Blockers must be surfaced to the 
 
 ## Allowed Actions Before Implementation
 
-Analysis, reporting, memory updates, planning, spec corrections, issue documentation, and test diagnosis documentation are allowed before implementation. Application code changes are **not allowed** until the user explicitly selects a task and authorizes implementation.
+Analysis, reporting, memory updates, planning, spec corrections, issue documentation, and test diagnosis documentation are allowed before implementation. Application code changes are not allowed until the user explicitly selects a task and authorizes implementation.
 
 ---
 
@@ -270,7 +270,7 @@ Analysis, reporting, memory updates, planning, spec corrections, issue documenta
 Always write or update specs before any implementation. Never implement until the user explicitly says to start a specific phase or task.
 
 ### Ambiguity handling
-If the specification is ambiguous, the AI must **document the ambiguity** in the relevant spec file and in `.lovable/memory/history/01-decisions.md` before implementing a solution. Do not silently resolve ambiguity.
+If the specification is ambiguous, the AI must document the ambiguity in the relevant spec file and in `.lovable/memory/history/01-decisions.md` before implementing a solution. Do not silently resolve ambiguity.
 
 ### Repository scan requirement
 Before implementation analysis, scan the entire repository tree at the directory level. Do not read contents inside folders marked excluded. Reading only the spec folder is insufficient.
@@ -279,9 +279,9 @@ Before implementation analysis, scan the entire repository tree at the directory
 Folders marked skipped, ignored, deprecated, generated, or archived must not be read or modified. They may be listed structurally but their contents must not be opened. This overrides any other instruction.
 
 ### Code style (GitMap enforced)
-- All `if` conditions must be **positive** (no `!`, no negation).
-- Functions: **8-15 lines**.
-- Files: **100-200 lines max**.
+- All `if` conditions must be positive (no `!`, no negation).
+- Functions: 8-15 lines.
+- Files: 100-200 lines max.
 - Small, focused packages - one responsibility per package.
 
 ### Version bumping
@@ -312,9 +312,19 @@ A task is done only when:
 Implementation must not begin until readiness analysis and specification validation are completed and the user explicitly selects the next task.
 
 Use:
-1. **Required Execution Order** for sequencing
-2. **Specification Authority** for conflict resolution
-3. **Context Preservation** for memory persistence
-4. **Blocker Handling** for unresolved situations
+1. Required Execution Order for sequencing
+2. Specification Authority for conflict resolution
+3. Context Preservation for memory persistence
+4. Blocker Handling for unresolved situations
 
 *Prompt v4.0. Trigger phrase: "unified ai prompt".*
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

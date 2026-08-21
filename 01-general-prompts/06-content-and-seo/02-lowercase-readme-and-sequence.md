@@ -2,9 +2,9 @@
 
 Enforce these naming rules across the entire repository:
 
-1. **All README files must be lowercase**: rename every `README.md`, `Readme.md`, `ReadMe.md`, etc. to `readme.md`. Apply recursively at every depth (root, subfolders, packages, specs, prompts, scripts - everywhere). Update every internal link and import reference to match.
+1. All README files must be lowercase: rename every `README.md`, `Readme.md`, `ReadMe.md`, etc. to `readme.md`. Apply recursively at every depth (root, subfolders, packages, specs, prompts, scripts - everywhere). Update every internal link and import reference to match.
 
-2. **Sequence-prefixed markdown files must use `xx-lower-case.md` slug form**: any markdown file that begins with a numeric sequence prefix must follow the pattern `NN-kebab-lower-case.md` where:
+2. Sequence-prefixed markdown files must use `xx-lower-case.md` slug form: any markdown file that begins with a numeric sequence prefix must follow the pattern `NN-kebab-lower-case.md` where:
 
    - `NN` is a two-digit zero-padded number (`01`, `02`, ..., `99`)
 
@@ -48,3 +48,13 @@ Enforce these naming rules across the entire repository:
 
 title: Lowercase Readme And Sequence Slugs
 slug: lowercase-readme-and-sequence
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

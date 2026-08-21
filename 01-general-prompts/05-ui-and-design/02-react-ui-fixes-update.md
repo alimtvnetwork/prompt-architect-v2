@@ -21,3 +21,13 @@ When applying UI fixes or updates to a React component, follow these rules stric
 
 ## Must Follow
 Follow the exact instructions. Do not guess or extrapolate. Do exactly what is requested, and ensure no side-effects occur.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

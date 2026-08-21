@@ -11,11 +11,11 @@ You are responsible for creating or fixing CI/CD pipelines (e.g., GitHub Actions
 
 ## Generic CI/CD & Automation Guidelines Checklist
 
-This document serves as a strict, universal checklist and specification for setting up and fixing CI/CD pipelines, as well as the standard run scripts (e.g., `run.ps1`/`run.sh`), for **any project**. Any AI agent operating on DevOps or CI/CD tasks MUST read and follow these guidelines to ensure consistency across different tech stacks and repositories.
+This document serves as a strict, universal checklist and specification for setting up and fixing CI/CD pipelines, as well as the standard run scripts (e.g., `run.ps1`/`run.sh`), for any project. Any AI agent operating on DevOps or CI/CD tasks MUST read and follow these guidelines to ensure consistency across different tech stacks and repositories.
 
 ### 1. Specification Files to Read & Maintain
 
-Before making any changes to `.github/workflows` or automation scripts, you **must read** the following architecture documents. These contain the foundational constraints and mechanisms for deployment, automation, and CI/CD pipelines.
+Before making any changes to `.github/workflows` or automation scripts, you must read the following architecture documents. These contain the foundational constraints and mechanisms for deployment, automation, and CI/CD pipelines.
 
 #### PowerShell & Orchestration (`spec/11-powershell-integration`)
 - [ ] `spec/11-powershell-integration/00-overview.md`
@@ -54,18 +54,18 @@ Before making any changes to `.github/workflows` or automation scripts, you **mu
 
 When building or fixing the CI/CD pipelines (e.g., `.github/workflows/ci.yml`), enforce the following steps universally:
 
-- [ ] **Dependency Caching:** The pipeline MUST cache dependencies based on the project's lockfiles (e.g., `package-lock.json`, `bun.lockb`, `poetry.lock`, `go.sum`). This minimizes build times.
-- [ ] **Toolchain Matching:** Ensure the CI runner uses the exact tool versions specified in the project's configuration (e.g., `.nvmrc`, `.python-version`, or the generic `run.config.json`).
-- [ ] **Linting & Formatting:** Run the project's defined linting and formatting commands first. The pipeline must fail immediately if there are style violations, preventing bad code from proceeding to tests.
-- [ ] **Type Checking / Static Analysis:** If the language supports it (e.g., TypeScript, Python with mypy, Go), run static analysis as a parallel job before or alongside testing.
-- [ ] **Test Execution:** Execute the project's testing suites (unit, integration, e2e) as defined in the configuration file.
-- [ ] **Artifact Generation:** (Optional) If it is a release branch, the pipeline should compile/zip the application using rules defined in the run script and attach it as a release artifact.
+- [ ] Dependency Caching: The pipeline MUST cache dependencies based on the project's lockfiles (e.g., `package-lock.json`, `bun.lockb`, `poetry.lock`, `go.sum`). This minimizes build times.
+- [ ] Toolchain Matching: Ensure the CI runner uses the exact tool versions specified in the project's configuration (e.g., `.nvmrc`, `.python-version`, or the generic `run.config.json`).
+- [ ] Linting & Formatting: Run the project's defined linting and formatting commands first. The pipeline must fail immediately if there are style violations, preventing bad code from proceeding to tests.
+- [ ] Type Checking / Static Analysis: If the language supports it (e.g., TypeScript, Python with mypy, Go), run static analysis as a parallel job before or alongside testing.
+- [ ] Test Execution: Execute the project's testing suites (unit, integration, e2e) as defined in the configuration file.
+- [ ] Artifact Generation: (Optional) If it is a release branch, the pipeline should compile/zip the application using rules defined in the run script and attach it as a release artifact.
 
 ---
 
 ### 3. Dynamic Script Architecture (e.g., `run.ps1` & `run.config.json`)
 
-To prevent hardcoded commands and ports, the execution architecture MUST be dynamic. The local run script (e.g., `run.ps1` or `run.sh`) must act as a generic orchestrator, while a **JSON configuration file** serves as the single source of truth for both local development and CI execution.
+To prevent hardcoded commands and ports, the execution architecture MUST be dynamic. The local run script (e.g., `run.ps1` or `run.sh`) must act as a generic orchestrator, while a JSON configuration file serves as the single source of truth for both local development and CI execution.
 
 #### Expected Configuration Structure (Reference: `run.config.json`)
 The JSON file should define all services, ports, and lifecycle commands.
@@ -98,18 +98,18 @@ The JSON file should define all services, ports, and lifecycle commands.
 
 When writing or modifying the orchestration scripts, any AI must adhere to the following logic:
 
-1. **Parse Configuration First:**
+1. Parse Configuration First:
    The script must read the configuration file (e.g., `run.config.json`) into memory and extract variables (ports, directories, commands).
-2. **Dynamic Command Injection:**
+2. Dynamic Command Injection:
    Never hardcode commands (e.g., `npm run dev`). Instead, read the command string from the JSON and dynamically substitute any necessary placeholders (like `{fePort}`).
-3. **Graceful Error Handling & Waiting:**
+3. Graceful Error Handling & Waiting:
    When orchestrating multiple services, the script must wait for dependencies to become healthy before proceeding. Use generic HTTP or TCP polling mechanisms to ensure a backend is fully online before a frontend attempts to connect to it.
-4. **CI Mode Toggle:**
+4. CI Mode Toggle:
    The script must accept a `-CI` (or `--ci`) flag. When running in CI mode:
    - Skip launching local browsers or interactive shells.
    - Run the build, lint, and test commands from the JSON instead of the dev server commands.
    - Exit with code `1` immediately if any step fails.
-5. **Process Cleanup (Trap/Finally):**
+5. Process Cleanup (Trap/Finally):
    Ensure all spawned processes are captured in a job/PID array. The script must aggressively kill these processes in the `finally {}` or `trap` block on exit. There should be no zombie processes left blocking ports.
 
 ---
@@ -165,3 +165,13 @@ After completing the pipeline and run script creation, you MUST follow this chec
 - [ ] Check CI/CD status and ensure pipelines pass.
 - [ ] Audit that coding guidelines from the aspect folder and error manage folder have been followed across all changed files.
 - [ ] Finish the job only when everything is green, pushed, and fully verified.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

@@ -30,17 +30,17 @@ Do not wait. Generate the folder structure, the `.lovable/plans/pending/` files,
 You MUST follow the project's strict coding guidelines and ensure your groups enforce them. These files are located in the `01-cross-language/` directory and should be followed universally. Check if there are language-specific guidelines (e.g., `02-typescript/`, `03-python/`) for these rules.
 
 ### Required Reading / Reference Checklist:
-**1. The Master Consolidated Guide**
+1. The Master Consolidated Guide
 - `spec/17-consolidated-guidelines/02-coding-guidelines.md`
 
-**2. Code Style & File Size Limits (80-100 lines max)**
+2. Code Style & File Size Limits (80-100 lines max)
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
 - `spec/02-coding-guidelines/01-cross-language/20-nesting-resolution-patterns.md`
 - `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
 
-**3. Boolean Conditions & Samples**
+3. Boolean Conditions & Samples
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
@@ -48,7 +48,7 @@ You MUST follow the project's strict coding guidelines and ensure your groups en
 - `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`
 - `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
 
-**4. Variable Naming & Definitions**
+4. Variable Naming & Definitions
 - `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
 - `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
 - `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
@@ -56,9 +56,9 @@ You MUST follow the project's strict coding guidelines and ensure your groups en
 
 ## 4. Folder Structure for Plans
 Your self-loop must strictly follow this structure:
-1. **Roll-up Index:** Update `.lovable/plans/index.md`.
-2. **Parent Plan:** Create `.lovable/plans/pending/XX-<slug>.md`.
-3. **Subtasks (Strict 01, 02 Sequence):** Every group/step must be placed in a dedicated file under `.lovable/plans/subtasks/XX-<slug>/`. 
+1. Roll-up Index: Update `.lovable/plans/index.md`.
+2. Parent Plan: Create `.lovable/plans/pending/XX-<slug>.md`.
+3. Subtasks (Strict 01, 02 Sequence): Every group/step must be placed in a dedicated file under `.lovable/plans/subtasks/XX-<slug>/`. 
    - The subtasks MUST follow a strict zero-padded numeric sequence: `01`, `02`, `03`, etc.
 
 ## 5. Must Follow, without negotiation
@@ -84,3 +84,13 @@ Each step or group that completes MUST immediately commit and fix the Git. Follo
 - [ ] Update .lovable/plans/index.md and populate .lovable/plans/pending/ and .lovable/plans/subtasks/.
 
 
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

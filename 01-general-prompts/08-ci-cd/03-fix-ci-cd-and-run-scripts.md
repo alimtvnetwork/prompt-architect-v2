@@ -26,3 +26,13 @@ Please have a look into all the code base, try to make the Git commits properly,
 ## Before Writing Code
 
 Read and follow spec folders `02`, `03` and `04` before writing any code. Error management must be followed. Code must be DRY.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

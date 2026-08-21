@@ -9,3 +9,13 @@ Bump the MAJOR version (MAJOR.MINOR.PATCH to (MAJOR+1).0.0, MINOR and PATCH both
 2. If publishing is requested, create the matching `vX.0.0` Git tag after the `version.json` change is present on the target branch. The tag triggers the release workflow.
 
 Release trigger rule: the user phrase "major bump" or "major release" means update `version.json` only unless publishing is explicitly requested. Do not edit `readme.md`, `changelog.md`, `manifest.json`, constants, instruction files, or fallback copies only to propagate a version. Do not run stale-version, version-sync, release-readiness, or asset-manifest checkers.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

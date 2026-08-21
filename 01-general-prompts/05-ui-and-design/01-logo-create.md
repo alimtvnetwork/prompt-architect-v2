@@ -4,7 +4,7 @@ Please instruct Lovable to create a logo for me. The instruction should be saved
 
 ## Coding Guidelines Reminder
 
-Read `.lovable/coding-guidelines.md`, plus boolean, language-specific, enum, and error-management guidelines from `/spec/**` before any implementation. Apply all hard rules: functions ≤ 8 lines, files ≤ 100 lines, no nested or negative ifs, strict types (no `any` / `unknown` / `interface{}`), no swallowed errors, no magic strings, definitions in their own files, `is` / `has` boolean prefixes, DRY first.
+Read `.lovable/coding-guidelines.md`, plus boolean, language-specific, enum, and error-management guidelines from `/spec/` before any implementation. Apply all hard rules: functions ≤ 8 lines, files ≤ 100 lines, no nested or negative ifs, strict types (no `any` / `unknown` / `interface{}`), no swallowed errors, no magic strings, definitions in their own files, `is` / `has` boolean prefixes, DRY first.
 
 ## Breakdown
 
@@ -234,3 +234,13 @@ Not applicable for this task (asset generation only). If a registry of generated
 All Animations and designs in one shot as much as possible.
 
 If you have any question and confusion, feel free to ask
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

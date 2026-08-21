@@ -45,7 +45,7 @@ Walk each of these recursively. Missing = note it, continue.
 - Small change (one or two files, one verify step): 2-3 steps.
 - Standard task (multiple files, migration or route or UI + logic, verification): 4-7 steps.
 - Cross-cutting task (schema + API + UI + tests, or refactor across modules): 8-15 steps.
-- **Decomposition Alert:** If a task exceeds 7 steps, flag it with `[DECOMPOSITION REQUIRED]` to split it into `.lovable/plans/subtasks/01-<slug>/`.
+- Decomposition Alert: If a task exceeds 7 steps, flag it with `[DECOMPOSITION REQUIRED]` to split it into `.lovable/plans/subtasks/01-<slug>/`.
 
 ## Output shape
 
@@ -98,7 +98,7 @@ Walk each of these recursively. Missing = note it, continue.
 ---
 
 ## Blocking Ambiguities (Ranked by Blast Radius)
-- **[HIGH/MED/LOW]** <slug>: <question> (blocks task #<n>, #<n>)
+- [HIGH/MED/LOW] <slug>: <question> (blocks task #<n>, #<n>)
 
 ## Nothing pending
 (only if the inventory is truly empty; list the folders scanned to prove it)
@@ -131,6 +131,16 @@ Walk each of these recursively. Missing = note it, continue.
 If any box is unchecked, do not reply. Fix it first.
 
 ---
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

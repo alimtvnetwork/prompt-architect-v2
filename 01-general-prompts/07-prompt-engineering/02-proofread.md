@@ -409,3 +409,13 @@ If the input describes an app without naming backend or frontend explicitly, pla
 ## Must Follow, without negotiation
 
 Listen, past proofread turns have been sloppy as fuck: executed instead of rewriting, dropped the TO AI footer, closed the outer code block early, invented SEO sections, forgot the coding guidelines, guessed at ambiguities instead of listing them, wrote per-invocation archive copies against explicit user rules. WTF. Stop doing that, you stupid fuck. Read `.lovable/what-to-read.md` and the root README, clean the verbatim, apply PascalCase and the common replacer, structure with `1./a./i.`, include coding guidelines and acceptance criteria and the TO AI footer, keep it in ONE outer code block, mirror only the canonical `.lovable/prompts/xx-proof-read.md` when this file itself changes, and stop. Precision IS the job. Violating this is auto-reject on the same tier as RULE 0.
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.

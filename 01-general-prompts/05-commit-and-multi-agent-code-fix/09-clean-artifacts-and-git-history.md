@@ -23,16 +23,16 @@ Scan the entire repository, untracked files, and recent commit history for:
 - Extraneous auto-generated code, intermediate build artifacts, or temporary caches.
 
 For EVERY detected candidate file, compile an explicit report detailing:
-1. **File Path & Name**: Exact location in the workspace.
-2. **File Size**: Size in bytes / KB / MB.
-3. **Creation Step & Origin**: Exactly how and at which step/command it was generated.
-4. **Purpose & Context**: Why the file was originally created during the task.
+1. File Path & Name: Exact location in the workspace.
+2. File Size: Size in bytes / KB / MB.
+3. Creation Step & Origin: Exactly how and at which step/command it was generated.
+4. Purpose & Context: Why the file was originally created during the task.
 
 ---
 
 ### Step 2: Present Positively Framed Questions to Developer
 
-Present the itemized list to the developer. All questions MUST be framed with **strictly positive phrasing** (following the project's boolean and coding standards in `spec/02`, with zero negative words, no `!`, no double negatives, and no inverted questions).
+Present the itemized list to the developer. All questions MUST be framed with strictly positive phrasing (following the project's boolean and coding standards in `spec/02`, with zero negative words, no `!`, no double negatives, and no inverted questions).
 
 Example positive review format:
 
@@ -56,9 +56,9 @@ Never ask negative or inverted questions such as "Do you want to avoid not delet
 ### Step 3: Dual Removal (Filesystem + Git History Purge)
 
 When the developer indicates that a file should be removed:
-1. **Filesystem Removal**: Delete the file from the local working tree.
-2. **Git History Purge**: Remove and purge the file from Git history and index (e.g., using `git rm --cached` or Git history filtering) so that large binary blobs or unwanted scripts are not permanently bloating the repository's git object database (`.git` size).
-3. **Verify Clean Repository State**: Verify `git status` and repository size to confirm the files are completely eradicated.
+1. Filesystem Removal: Delete the file from the local working tree.
+2. Git History Purge: Remove and purge the file from Git history and index (e.g., using `git rm --cached` or Git history filtering) so that large binary blobs or unwanted scripts are not permanently bloating the repository's git object database (`.git` size).
+3. Verify Clean Repository State: Verify `git status` and repository size to confirm the files are completely eradicated.
 
 ---
 
@@ -83,6 +83,16 @@ When the developer indicates that a file should be removed:
 - [ ] Push the clean state to the Git repository before finalizing the task.
 
 ---
+
+
+## Actionable Items & Checklist
+
+- [ ] Read the overarching main task plan.
+- [ ] Ensure the git repository starts completely clean.
+- [ ] Complete all work on the current branch only.
+- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+- [ ] Group all completed work into a single logical commit.
+- [ ] Push the commit to the remote repository.
 
 ## MUST FOLLOW NON-NEGOTIABLE
 
