@@ -122,6 +122,11 @@ These guidelines are STRICTLY NON-NEGOTIABLE:
   - NEVER use negative naming like `isNot`.
   - ALWAYS use inverse naming. For example, if something is dishonest, use `isDishonest` instead of `isNotHonest`. Use `isHonest` and `isDishonest`.
 - **Golang Wrapped Booleans:** In Go, functions MUST NOT return raw booleans. They MUST return a generic wrapped `Result` object containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
+  Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
+  ```go
+  paymentStatus := ProcessPayment(100)
+  if paymentStatus.IsFailed { /* handle */ } else if paymentStatus.IsSuccess { /* handle */ }
+  ```
 - **Anti-Hallucination:** Do not guess the existence of files, enums, or functions. If they are not found in the codebase during your read loops, ask the user.
 
 ## Actionable Items & Checklist

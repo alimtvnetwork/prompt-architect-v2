@@ -18,6 +18,12 @@ You are to execute the coding‑guideline fixes that were identified by the plan
   - Style: Ensure a blank line before every `return` statement.
   - Golang Wrapped Booleans: No raw booleans returned in Go. Return a Result struct with two flags (`IsSuccess` and `IsFailed`) managed by a constructor (`NewSuccess`/`NewFailure`).
 
+  - Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
+    ```go
+    paymentStatus := ProcessPayment(100)
+    if paymentStatus.IsFailed { /* handle */ } else if paymentStatus.IsSuccess { /* handle */ }
+    ```
+
 ### Checklist (execute phase)
 1. Read pending tasks from the `.lovable/plans/subtasks/01-coding-guideline-fixes/` folder.
 2. For each task:

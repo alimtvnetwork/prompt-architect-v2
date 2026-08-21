@@ -74,11 +74,11 @@ func ProcessPayment(amount int) result.Result[PaymentReceipt] {
 }
 
 // Checking the status:
-res := ProcessPayment(100)
-if res.IsFailed {
-    log.Println("Payment failed:", res.Error)
-} else if res.IsSuccess {
-    log.Println("Payment cleared:", res.Data)
+paymentStatus := ProcessPayment(100)
+if paymentStatus.IsFailed {
+    log.Println("Payment failed:", paymentStatus.Error)
+} else if paymentStatus.IsSuccess {
+    log.Println("Payment cleared:", paymentStatus.Data)
 }
 ```
 
