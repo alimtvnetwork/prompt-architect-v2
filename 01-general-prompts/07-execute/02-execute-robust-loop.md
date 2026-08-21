@@ -9,63 +9,104 @@
 
 ## Goal
 
-Your objective is to read pending tasks from the `.lovable/` folder, allocate small micro-portions of work to sub-agents, and execute them in a continuous self-loop. You must manage sub-agent crashes gracefully, strictly restrict concurrent agents to a maximum of 3, enforce file collision safety through a locking matrix, sanitize artifacts before commits, and ensure continuous execution without halting the pipeline. Avoid running any end-to-end tests that make live API calls.
+/goal Read all pending tasks from `.lovable/`, allocate small micro-portions of work to sub-agents, and execute them in a continuous self-loop. Manage sub-agent crashes gracefully, enforce file collision safety, sanitize artifacts before commits, and ensure the pipeline runs without halting until the queue is empty.
 
-## Phase 1: Load, Clean, & Prepare Tasks
+/learn Capture every pattern, convention, fix, and correction discovered during execution into `.lovable/memory/learned/01-<slug>.md` and `.lovable/strictly-avoid.md`. Never repeat a mistake that was logged.
 
-1. **Check Git Status & Casing:** Fix git status first. The working tree must be clean. Confirm root readme is strictly lowercase `readme.md`.
-2. **Git Ignore Temp:** Ensure `.lovable/temp/` is added to your project's `.gitignore` file.
-3. **Garbage Collection:** Wipe any old, orphaned state files in `.lovable/temp/` from previous incomplete runs before starting fresh.
-4. **Read the Queue & Waves:** Read `.lovable/plans/index.md` and load tasks from `.lovable/plans/pending/XX-<slug>.md`. Sequence them into Execution Waves (Wave 1: Schemas/DB/wrappers; Wave 2: Core logic; Wave 3: UI/docs).
-5. **Dependency Check:** Do not start a task if its prerequisite tasks are not marked `Status: completed`.
-6. **Micro-Tasking:** Break tasks down so each agent handles a simple, small micro-task (under 15 lines per function). Monolithic tasks with >7 steps must be decomposed into `.lovable/plans/subtasks/XX-<slug>/`.
+## Non-Negotiable Rules (Auto-Reject on Violation)
 
-## Phase 2: Resilient Allocation & Execution Loop
+1. Maximum 3 sub-agents may run concurrently at any time. Never exceed this limit.
+2. No end-to-end tests that make live API calls. Only run local, isolated unit tests.
+3. Violation of any rule below is auto-reject on the same tier as RULE 0.
 
-1. **Agent Limit (Strict):** Spawn a maximum of 2 to 3 sub-agents concurrently. Never exceed this limit.
-2. **File Collision Locking Matrix (`active-locks.json`):**
-   - Register active target files in `.lovable/temp/active-locks.json` before spawning an agent.
-   - When assigning tasks in parallel, ensure the tasks touch **completely different files or components**. If two tasks share a dependency or file, sequence them sequentially to eliminate git merge conflicts.
-3. **Pre-Flight Logging & Specific Titling:** Before spawning a sub-agent, you must:
-   - Assign the sub-agent a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service` or `Fixing DB Query Wrapper`). Do not use generic names. If an agent switches tasks, its title must change.
-   - Write `.lovable/temp/XX-agent-state.md` documenting which sub-agent is running, its assigned micro-task, and instructions.
-4. **Continuous Self-Looping:** Loop yourself to monitor sub-agent progress.
-5. **Crash Recovery, Deadlocks & The 3-Strike Rollback Rule:**
-   - **Deadlocks:** If an agent hangs without updating its state for an extended period, terminate it and retry.
-   - **Revamp & Restart:** If an agent crashes, read its state from `.lovable/temp/`. Reason about the failure, fix the issue, and restart.
-   - **3-Strike Rule & Automatic Rollback:** If a specific micro-task fails unit tests or crashes 3 times, **STOP retrying**. Automatically rollback the dirty files (`git checkout -- <modified_files>`), mark the task as `Status: blocked` in `plans/pending/`, and proceed to the next disjoint task.
-   - **Persistent Failure Log:** Whenever a task hits 3 strikes, write the exact failure context, stack traces, and attempted fixes to `.lovable/memory/last-failure.md` and `.lovable/issues/`. When the user later says "continue", read this file first to resume recovery.
-6. **End-to-End Tests Ban:** Do not run end-to-end tests that make live API calls. Only run local, isolated unit tests.
+## Anti-Hallucination Rules
 
-## Phase 3: Code Quality & Commit Fix (Non-Negotiable)
-
-While executing tasks, you and your agents MUST adhere to these strict coding guidelines:
-- **Code Review & Logging:** Follow guidelines in `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/`. Use automated query wrappers for failure logging.
-- **No Magic Strings/Numbers:** Do not introduce any magic strings or numbers anywhere unless explicitly for the logger.
-- **TypeScript Enums:** Never use string union types (e.g., `"pass" | "fail"`). You must use Enums ending with the suffix `Type` (e.g., `StatusType`).
-- **Explicit Booleans:** Always use explicit boolean state checks (e.g., `response.isFail`). Never invert success booleans (e.g., `!response.isSuccess`).
-- **DRY Code:** Code must be DRY. Reuse constants and wrappers.
-
-## Phase 4: Memory Update & File Moving
-
-As tasks are completed, you must update the memory structure:
-1. **Move on Success:** When a task completes successfully, use `mv` to move the file from `.lovable/plans/pending/` to `.lovable/plans/completed/`.
-2. **Status Flip:** Flip `Status: pending` to `Status: completed` inside the moved file.
-3. **Update Indexes:** Immediately update `.lovable/plans/index.md` to reflect the completed status and the new file location.
-4. **Clear Temp & Locks:** Once an agent successfully finishes its task and you have verified it, remove its entry from `.lovable/temp/active-locks.json` and delete its state file from `.lovable/temp/`.
-
-## Phase 5: End-of-Loop Commit Fix, Artifact Purge & Delivery
-
-At the end of *every single iteration* of your execution loop (when a batch of tasks completes), execute this Commit Fix before continuing:
-1. **Artifact Sanitizer:** Audit staged files and working tree. Purge unapproved artifact zip archives, temporary scratch files, or test outputs before committing.
-2. **Run Tests:** Run local unit tests (NO live API end-to-end tests). Fix failures before proceeding.
-3. **Lovable Git History Guard:** Group similar code changes into a single commit with a clear, descriptive message. Never rewrite published git history (no force push, no rebasing, no squash) to protect Lovable synchronization.
-4. **Push:** Push to the remote Git repository.
-5. **List Completed Tasks:** Explicitly list out all the tasks that were successfully completed during that run.
+- If a spec file, folder, or task is missing or ambiguous, do NOT guess or invent a rule.
+- Ask a clarifying question or log an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` before proceeding.
+- Never invent step counts. Read the actual files and count from them.
 
 ---
 
-## Pre-Reply / Loop Checklist (Must verify every loop iteration)
+## Phase 1: Load, Clean, & Prepare Tasks
+
+1. Check git status first. The working tree must be clean. Confirm root readme is strictly lowercase `readme.md`.
+2. Ensure `.lovable/temp/` is added to your project's `.gitignore` file.
+3. Wipe any old, orphaned state files in `.lovable/temp/` from previous incomplete runs before starting fresh.
+4. Read `.lovable/plans/index.md` and load tasks from `.lovable/plans/pending/XX-<slug>.md`. Sequence them into Execution Waves:
+   - Wave 1: Schemas, DB, and query wrappers
+   - Wave 2: Core logic
+   - Wave 3: UI and documentation
+5. Do not start a task if its prerequisite tasks are not marked `Status: completed`.
+6. Break tasks down so each agent handles a simple, small micro-task (under 15 lines per function). Monolithic tasks with more than 7 steps must be decomposed into `.lovable/plans/subtasks/XX-<slug>/`.
+
+---
+
+## Phase 2: Resilient Allocation & Execution Loop
+
+1. Agent limit (strict):
+   - Spawn a maximum of 2 to 3 sub-agents concurrently. Never exceed this limit.
+
+2. File collision locking matrix (`active-locks.json`):
+   - Register active target files in `.lovable/temp/active-locks.json` before spawning an agent.
+   - When assigning tasks in parallel, ensure the tasks touch completely different files or components.
+   - If two tasks share a dependency or file, sequence them sequentially to eliminate git merge conflicts.
+
+3. Pre-flight logging and specific titling:
+   - Before spawning a sub-agent, assign it a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service` or `Fixing DB Query Wrapper`). Do not use generic names. If an agent switches tasks, its title must change.
+   - Write `.lovable/temp/XX-agent-state.md` documenting which sub-agent is running, its assigned micro-task, and instructions.
+
+4. Continuous self-looping:
+   - Loop yourself to monitor sub-agent progress.
+   - Do not stop until the queue is empty.
+
+5. Crash recovery, deadlocks & the 3-strike rollback rule:
+   - Deadlocks: If an agent hangs without updating its state for an extended period, terminate it and retry.
+   - Revamp and restart: If an agent crashes, read its state from `.lovable/temp/`. Reason about the failure, fix the issue, and restart.
+   - 3-strike rule and automatic rollback: If a specific micro-task fails unit tests or crashes 3 times, STOP retrying. Automatically rollback the dirty files (`git checkout -- <modified_files>`). Mark the task as `Status: blocked` in `plans/pending/`. Proceed to the next disjoint task.
+   - Persistent failure log: Whenever a task hits 3 strikes, write the exact failure context, stack traces, and attempted fixes to `.lovable/memory/last-failure.md` and `.lovable/issues/`. When the user later says "continue", read this file first to resume recovery.
+
+6. End-to-end tests are banned:
+   - Do not run end-to-end tests that make live API calls.
+   - Only run local, isolated unit tests.
+
+---
+
+## Phase 3: Code Quality & Commit Fix (Non-Negotiable)
+
+While executing tasks, you and your agents must adhere to these strict coding guidelines without exception:
+
+- Read and follow guidelines in `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/`. Use automated query wrappers for failure logging.
+- No magic strings or numbers. Do not introduce any unless explicitly for the logger.
+- Never use string union types (e.g., `"pass" | "fail"`). Use TypeScript Enums with the suffix `Type` (e.g., `StatusType`).
+- Always use explicit boolean state checks (e.g., `response.isFail`). Never invert success booleans (e.g., `!response.isSuccess`).
+- Code must be DRY. Reuse constants and wrappers.
+
+---
+
+## Phase 4: Memory Update & File Moving
+
+As tasks are completed:
+
+1. Use `mv` to move the completed task file from `.lovable/plans/pending/` to `.lovable/plans/completed/`.
+2. Open the moved file and flip `Status: pending` to `Status: completed`.
+3. Immediately update `.lovable/plans/index.md` to reflect the completed status and new file location.
+4. Once an agent successfully finishes its task and you have verified it, remove its entry from `.lovable/temp/active-locks.json` and delete its state file from `.lovable/temp/`.
+
+---
+
+## Phase 5: End-of-Loop Commit Fix, Artifact Purge & Delivery
+
+At the end of every single iteration of your execution loop:
+
+1. Artifact sanitizer: Audit staged files and working tree. Purge unapproved artifact zip archives, temporary scratch files, or test outputs before committing.
+2. Run tests: Run local unit tests (no live API end-to-end tests). Fix failures before proceeding.
+3. Lovable git history guard: Group similar code changes into a single commit with a clear, descriptive message. Never rewrite published git history (no force push, no rebasing, no squash) to protect Lovable synchronization.
+4. Push to the remote git repository.
+5. Explicitly list out all the tasks that were successfully completed during that run.
+
+---
+
+## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
 - [ ] `.lovable/temp/` verified in `.gitignore` and orphaned state garbage-collected.
 - [ ] Dependencies and prerequisites verified before starting tasks.
@@ -77,7 +118,7 @@ At the end of *every single iteration* of your execution loop (when a batch of t
 - [ ] No live-API end-to-end tests executed.
 - [ ] Completed tasks `mv`'d to `plans/completed/` and `.lovable/plans/index.md` updated.
 - [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
-- [ ] Fast-forward commits created and pushed without rewriting Git history.
+- [ ] Fast-forward commits created and pushed without rewriting git history.
 - [ ] Completed tasks listed out explicitly in the response.
 
 ---
