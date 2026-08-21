@@ -9,7 +9,9 @@
 
 ## Goal
 
-Persist what happened this turn so the next AI knows everything without guessing. Every decision, plan change, unresolved ambiguity, newly discovered pattern, and fixed bug must be written to `.lovable/` before this turn ends.
+/goal Persist what happened this turn so the next AI knows everything without guessing. Every decision, plan change, unresolved ambiguity, newly discovered pattern, and fixed bug must be written to `.lovable/` before this turn ends.
+
+/learn Persist all user corrections, resolved setups, directives, learned architectural decisions, and mistakes avoided into `.lovable/memory/learned/01-<slug>.md` and `.lovable/strictly-avoid.md` so Antigravity learns permanently and never repeats past errors.
 
 Memory in chat is lost the moment the turn finishes. Memory in `.lovable/` is permanent. If you did not write it down, it did not happen.
 
@@ -113,7 +115,7 @@ Resolved ambiguities are binding decisions. You will never ask about them again.
 
 ## Phase 5, verbatim spec capture and consolidation rules
 
-1. **Verbatim Spec Capture**: Every sizeable user directive, decision, architectural rule, or spec from the session is saved verbatim under `.lovable/memory/specs/01-<slug>.md`, referenced from `memory/index.md`, and reflected in `plan.md` / `plans/index.md` if it changes the roadmap. Never paraphrase. Quote the user.
+1. **Verbatim Spec Capture & Learning Persistence**: Every sizeable user directive, decision, architectural rule, or spec from the session is saved verbatim under `.lovable/memory/specs/01-<slug>.md` or `.lovable/memory/learned/01-<slug>.md`, referenced from `memory/index.md`, and reflected in `plan.md` / `plans/index.md` if it changes the roadmap. Never paraphrase. Quote the user.
 2. **Consolidation Policy**:
    - *Simple / Minor Tasks*: Consolidation is encouraged for simple, repetitive, or ephemeral tasks into existing logs or overarching session files to prevent cluttering the repository.
    - *Detailed / High-Value Specs*: **STRICTLY FORBIDDEN TO CONSOLIDATE**. Any spec containing detailed requirements, edge cases, domain architecture (`spec/21-app/`), error-handling matrices (`spec/03-error-manage/`), coding rules (`spec/02-coding-guidelines/`), or user instructions must NEVER be merged, summarized, or shortened.

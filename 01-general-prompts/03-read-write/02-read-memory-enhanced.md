@@ -18,6 +18,8 @@ Read both folders in full during Phase 1. Surface open-ambiguity counts and slug
 
 /goal Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
 
+/learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/specs/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.
+
 The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
 
 Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), and **recursively traverse every single folder, subfolder, and nested markdown file in the `spec/` directory**—specifically `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/` (or any domain-specific app folder)—and **read every pending task** across `.lovable/plans/pending/01-<slug>.md`, `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
