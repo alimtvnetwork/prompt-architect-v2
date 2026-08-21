@@ -66,9 +66,17 @@ These guidelines are STRICTLY NON-NEGOTIABLE:
   Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
   ```go
   paymentStatus := ProcessPayment(100)
-  if paymentStatus.IsFailed { /* handle */ } else if paymentStatus.IsSuccess { /* handle */ }
+  if paymentStatus.IsFailed {
+      // handle error
+  } else if paymentStatus.IsSuccess {
+      // handle success
+  }
   ```
 - **Anti-Hallucination:** Do not guess the existence of files, enums, or functions. If they are not found in the codebase during your read loops, ask the user.
+
+## Must Follow and without negotiation
+
+Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missing remaining-tasks list, symptom patches sold as fixes, coding guidelines ignored, version bump forgotten, logs never checked. WTF. Stop doing that, you stupid fuck. Read the code, find the root cause in one sentence, apply the minimum correct fix, verify it in the logs, list EVERY remaining task, bump the version, update changelog and release notes. Going deep IS the job. If you are not going deep, you are not doing the job. This section is a MUST. Violating it is auto-reject on the same tier as RULE 0. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
 
 ## Actionable Items & Checklist
 

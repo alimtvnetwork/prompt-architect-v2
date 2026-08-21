@@ -21,7 +21,11 @@ You are to execute the coding‑guideline fixes that were identified by the plan
   - Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
     ```go
     paymentStatus := ProcessPayment(100)
-    if paymentStatus.IsFailed { /* handle */ } else if paymentStatus.IsSuccess { /* handle */ }
+    if paymentStatus.IsFailed {
+        // handle error
+    } else if paymentStatus.IsSuccess {
+        // handle success
+    }
     ```
 
 ### Checklist (execute phase)
