@@ -82,6 +82,16 @@ Inside each `XX...` subtask file, detail exactly:
 
 
 
+
+### Top-Notch Anti-Hallucination & Non-Negotiable Guidelines
+These guidelines are STRICTLY NON-NEGOTIABLE:
+- **Function Size:** Functions MUST be strictly less than 8 lines.
+- **Style Guideline (Returns):** There MUST be a blank line before every `return` statement.
+- **Boolean Naming:** Every boolean MUST start with `has` or `is`. 
+  - NEVER use negative naming like `isNot`.
+  - ALWAYS use inverse naming. For example, if something is dishonest, use `isDishonest` instead of `isNotHonest`. Use `isHonest` and `isDishonest`.
+- **Anti-Hallucination:** Do not guess the existence of files, enums, or functions. If they are not found in the codebase during your read loops, ask the user.
+
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.
@@ -91,7 +101,9 @@ Inside each `XX...` subtask file, detail exactly:
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
 - [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
-- [ ] Describe all issues and files that need to be tested against for each file.
+- [ ] Describe all issues found for each file.
+- [ ] List all files that need to be tested against.
+- [ ] Ensure the detailed plan specifies the target output folder as `.lovable/plans/subtasks/01-coding-guideline-fixes/`.
 - [ ] Make a detailed plan/task for each file.
 
 

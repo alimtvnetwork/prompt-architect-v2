@@ -11,13 +11,14 @@ You are to execute the coding‑guideline fixes that were identified by the plan
 - Enforce non‑negotiable rules:
   - DRY – eliminate duplicated logic.
   - Use typed enums instead of magic strings or numbers.
-  - Functions must be ≤ 8 lines (hard cap 15).
+  - Functions must be strictly < 8 lines. (NON-NEGOTIABLE)
   - Source files must be ≤ 80 lines.
   - No code mutation – only apply fixes, never introduce new bugs.
-  - Positive boolean naming, no nested `if`s, no magic values.
+  - Positive boolean naming (`is` / `has`). No `isNot`. Use inverse naming (e.g., `isHonest` / `isDishonest` instead of `isNotHonest`). No nested `if`s, no magic values.
+  - Style: Ensure a blank line before every `return` statement.
 
 ### Checklist (execute phase)
-1. Read pending tasks from the `spec/04-coding‑guidelines/pending/` folder.
+1. Read pending tasks from the `.lovable/plans/subtasks/01-coding-guideline-fixes/` folder.
 2. For each task:
    - Locate the affected source file.
    - Verify the file size ≤ 80 lines; if > 80, split into logical modules.
