@@ -22,13 +22,19 @@ The next AI session has full amnesia. If you did it and did not write it, it did
 
 8. Ambiguity moves, never copies. Answered file goes from `01-new-ambiguity/` to `02-ambiguity-resolved/` with a `## Resolution` block appended and `Status: resolved` flipped in the same move.
 
-9. Root `README.md` and `.lovable/what-to-read.md` stay in sync. Same file list, same order, no drift. Every write-memory run updates both.
+9. Root `readme.md` and `.lovable/memory/what-to-read.md` stay in sync. Same file list, same order, no drift. Every write-memory run updates both.
 
-10. Nothing executes this turn beyond file writes and `mv`. No code changes, no installs, no migrations.
+10. Nothing executes this turn beyond writing to the `.lovable` folder and `mv`. No application source code changes, no refactoring, no installs, no migrations.
+
+11. **Recent conversation & directive capture**: All recent conversations, instructions, user directives, decisions, and session progress MUST be recorded as a spec or conversation summary inside `.lovable/memory/specs/XX-<slug>.md` or `.lovable/memory/learned/XX-<slug>.md` and added to `memory/index.md`.
+
+12. **Consolidation of simple tasks vs. Protection of detailed specs**:
+    - **Simple tasks consolidation**: Routine, ephemeral, or minor simple tasks that do not warrant individual files may be consolidated into overarching session summaries or existing trackers to prevent file bloat.
+    - **CRITICAL - Detailed specs must NEVER be consolidated or shrunk**: Detailed specifications, architectural designs, non-negotiable rules, domain specifications (e.g. `spec/21`), and complex requirement documents MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must be preserved with 100% fidelity, exact wording, and full granularity.
 
 ## Working stance
 
-The AI running this prompt has been a stupid fuck on prior runs: dumped session summaries into chat and called it "memory", left `.lovable/memory/` half-empty, created `.lovable/memories/` by accident, forgot to update `plans/index.md` and `what-to-read.md`, silently overwrote `strictly-avoid.md`, dropped user directives that were stated verbatim in the session, paraphrased specs instead of quoting them, invented a `mem://` root file, and left orphans everywhere. Do not repeat any of that stupidity.
+The AI running this prompt has been a stupid fuck on prior runs: dumped session summaries into chat and called it "memory", left `.lovable/memory/` half-empty, created `.lovable/memories/` by accident, forgot to update `plans/index.md` and `what-to-read.md`, silently overwrote `strictly-avoid.md`, dropped user directives that were stated verbatim in the session, paraphrased specs instead of quoting them, consolidated detailed specs into vague summaries, invented a `mem://` root file, and left orphans everywhere. Do not repeat any of that stupidity.
 
 Writing memory IS the work this turn. Go deep: audit the session, reconcile every folder, capture verbatim what the user said, write the files, update every index, verify consistency. Aggressive enforcement is intentional. Do not soften it.
 
@@ -38,7 +44,7 @@ Walk `.lovable/` recursively. Read all of these if they exist; note missing and 
 
 1. `.lovable/memory/index.md`, master memory index
 
-2. `.lovable/coding-guidelines.md`, coding rules (see §Coding guidelines)
+2. `.lovable/coding-guidelines.md` or `spec/02-coding-guidelines/`, coding rules (see §Coding guidelines)
 
 3. `.lovable/plans/index.md` and every file under `plans/pending/` and `plans/subtasks/`; skim `plans/completed/`
 
@@ -56,13 +62,15 @@ Walk `.lovable/` recursively. Read all of these if they exist; note missing and 
 
 10. `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/` (every file)
 
-11. `.lovable/prompts/index.md`
+11. `.lovable/prompts/index.md` or `.lovable/prompts.md`
 
-12. `.lovable/what-to-read.md`
+12. `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`)
 
 13. `.lovable/memory/workflow/` current workflow state
 
-14. `spec/` (relevant folders), including any `spec/03-error-manage/` or fallback error-management folder
+14. `spec/` (relevant folders), including `spec/02`, `spec/03`, `spec/04`, `spec/21`, or any domain-specific spec folder
+
+15. Root `readme.md`
 
 ## Phase 1, audit the session (internal)
 
@@ -76,6 +84,8 @@ Answer for yourself, do not dump to chat unless asked. Cover:
 
 - Wrong: bugs and root causes, failed approaches, things to never repeat.
 
+- Recent Conversations & Directives: user instructions given during the session that must be persisted as institutional memory.
+
 ## Phase 2, update memory files
 
 Target: `.lovable/memory/<topic>/XX-<slug>.md`. Never at the memory root.
@@ -84,9 +94,11 @@ Target: `.lovable/memory/<topic>/XX-<slug>.md`. Never at the memory root.
 
 2. Update existing files: add to the right section, mark items `[x]` or `✅ Done`, keep unrelated entries intact.
 
-3. Create new files under the right topic folder. Immediately add them to `memory/index.md` in the same operation.
+3. Create new files under the right topic folder (e.g., `specs/`, `learned/`, `conversations/`). Immediately add them to `memory/index.md` in the same operation.
 
-4. Update workflow state under `.lovable/memory/workflow/` using markers:
+4. Dump your internal AI memory / cache: Any context, architectural knowledge, conversation directives, code flow understanding, or preferences you have learned during this session MUST be written to `.lovable/memory/learned/XX-<slug>.md` or `.lovable/memory/specs/XX-<slug>.md` (and added to `memory/index.md`). The project memory must be 100% standalone for the next AI; do not rely on your internal conversation history.
+
+5. Update workflow state under `.lovable/memory/workflow/` using markers:
 
 | Status       | Marker                 |
 | ------------ | ---------------------- |
@@ -121,17 +133,13 @@ Legacy single-file `.lovable/plan.md` is kept if the project already uses it: st
 Single tracker: `.lovable/suggestions.md`
 
 ```markdown
-
 ## Active Suggestions
 
 ### [Title]
 
 - Status: Pending | In Review | Approved | Rejected
-
 - Priority: High | Medium | Low
-
 - Description: what and why
-
 - Added: [session ref]
 
 ## Implemented Suggestions
@@ -139,9 +147,7 @@ Single tracker: `.lovable/suggestions.md`
 ### [Title]
 
 - Implemented: [session ref]
-
 - Notes: details / commit / file
-
 ```
 
 Verbatim per-suggestion captures: `.lovable/suggestions/XX-<slug>.md` with an index at `.lovable/suggestions/index.md`. Do not duplicate content, the per-file version is the verbatim capture, `suggestions.md` is the tracker.
@@ -156,15 +162,19 @@ Verbatim per-suggestion captures: `.lovable/suggestions/XX-<slug>.md` with an in
 
 - CI/CD issues: `.lovable/cicd-issues/XX-<slug>.md`, indexed in `.lovable/cicd-index.md`. Scan the index before adding a new one, no duplicates.
 
-## Phase 5, verbatim spec capture
+## Phase 5, verbatim spec capture and consolidation rules
 
-Every sizeable user directive, decision, or spec from the session is saved verbatim under `.lovable/memory/specs/XX-<slug>.md`, referenced from `memory/index.md`, and reflected in `plan.md` / `plans/index.md` if it changes the roadmap. Never paraphrase. Quote the user.
+1. **Verbatim Spec Capture**: Every sizeable user directive, decision, architectural rule, or spec from the session is saved verbatim under `.lovable/memory/specs/XX-<slug>.md`, referenced from `memory/index.md`, and reflected in `plan.md` / `plans/index.md` if it changes the roadmap. Never paraphrase. Quote the user.
 
-New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
+2. **Consolidation Policy**:
+   - *Simple / Minor Tasks*: Consolidation is encouraged for simple, repetitive, or ephemeral tasks into existing logs or overarching session files to prevent cluttering the repository.
+   - *Detailed / High-Value Specs*: **STRICTLY FORBIDDEN TO CONSOLIDATE**. Any spec containing detailed requirements, edge cases, domain architecture (`spec/21`), error-handling matrices (`spec/03`), coding rules (`spec/02`), or user instructions must NEVER be merged, summarized, or shortened.
 
-## Phase 6, `.lovable/what-to-read.md` (authoritative read-list)
+3. New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
 
-Must exist after this run. Create it if missing, update it (never blindly overwrite) if present.
+## Phase 6, `.lovable/memory/what-to-read.md` (authoritative read-list)
+
+Must exist after this run. Create it if missing, update it (never blindly overwrite) if present. Note: This file acts as a dynamic roadmap; both reading phases and writing phases must update it to guide future AI sessions based on current progress.
 
 Required content:
 
@@ -176,16 +186,14 @@ Required content:
 
 - Subsections for: before any task (always), before writing code, before adding a feature, before writing a spec, before adding a unit test.
 
-- Pointer to the root `README.md` with a sync note.
+- Pointer to the root `readme.md` with a sync note.
 
 Template:
 
 ```markdown
-
 # What to Read
 
 > Canonical map of what the AI must read before working on this project.
-
 > Last updated: <UTC ISO 8601>
 
 ## Changelog
@@ -195,13 +203,9 @@ Template:
 ## Before any task (always)
 
 - `.lovable/memory/index.md`, why: ...
-
-- `.lovable/coding-guidelines.md`, why: ...
-
+- `.lovable/coding-guidelines.md` (or `spec/02`), why: ...
 - `.lovable/plans/index.md`, why: ...
-
 - `.lovable/strictly-avoid.md`, why: ...
-
 - `.lovable/ambiguous-questions/01-new-ambiguity/`, why: ...
 
 (sync with Pre-flight)
@@ -224,11 +228,10 @@ Template:
 
 ## See also
 
-- Root `README.md` (must stay in sync with this file)
-
+- Root `readme.md` (must stay in sync with this file)
 ```
 
-Root `README.md` is updated in the same operation, describes the folder structure, and names `.lovable/what-to-read.md` as the authoritative read-list pointer.
+Root `readme.md` is updated in the same operation, describes the folder structure, and names `.lovable/memory/what-to-read.md` as the authoritative read-list pointer.
 
 ## Phase 7, consistency validation
 
@@ -244,9 +247,11 @@ After all writes, verify:
 
 5. No orphans: no memory file without an index entry, no "Implemented" suggestion without evidence, no solved issue missing `## Solution`.
 
-6. `what-to-read.md` file list matches Pre-flight and root `README.md`; top timestamp is UTC ISO 8601 and was updated this session.
+6. `what-to-read.md` file list matches Pre-flight and root `readme.md`; top timestamp is UTC ISO 8601 and was updated this session.
 
-7. Every open ambiguity in `01-new-ambiguity/` is surfaced in the final response.
+7. Detailed specs were not consolidated or truncated.
+
+8. Every open ambiguity in `01-new-ambiguity/` is surfaced in the final response.
 
 ## Coding guidelines
 
@@ -254,44 +259,31 @@ If `.lovable/coding-guidelines.md` is missing, create a starter capturing: langu
 
 ## Prompt registry
 
-If `.lovable/prompts/index.md` is missing, create it and list every prompt under `.lovable/prompts/` with slug, title, trigger phrases, and status (`active` / `superseded` / `archived`).
+If `.lovable/prompts/index.md` or `.lovable/prompts.md` is missing, create it and list every prompt with slug, title, trigger phrases, and status (`active` / `superseded` / `archived`).
 
 ## Final response template
 
 ```
-
 ✅ Memory update complete.
 
 Session Summary:
-
 - Tasks completed: [X]
-
 - Tasks pending: [Y]
-
 - New memory files created: [Z]
-
 - Issues resolved: [N]
-
 - Issues opened: [M]
-
 - Suggestions added: [S]
-
 - Suggestions implemented: [T]
-
 - Open ambiguities: [K]
-
 - Resolved ambiguities this session: [R]
 
 Files modified:
-
 - [every file touched this run]
 
 Inconsistencies found and fixed:
-
 - [list, or "None"]
 
 Next AI can pick up from: [current state + next logical step]
-
 ```
 
 ## Banned actions (auto-reject)
@@ -300,7 +292,7 @@ Next AI can pick up from: [current state + next logical step]
 
 - Using `.lovable/memories/`, `plan/`, `ambiguity/`, or any wrong path
 
-- Overwriting `strictly-avoid.md`, `plans/index.md`, `memory/index.md`, `what-to-read.md`, or `README.md` without reading first
+- Overwriting `strictly-avoid.md`, `plans/index.md`, `memory/index.md`, `what-to-read.md`, or `readme.md` without reading first
 
 - Deleting a plan / issue / suggestion instead of moving it
 
@@ -310,9 +302,11 @@ Next AI can pick up from: [current state + next logical step]
 
 - Paraphrasing a user spec instead of quoting verbatim
 
+- Consolidating, summarizing, or shortening detailed specs
+
 - Dumping the session summary into chat as a substitute for writing the files
 
-- Skipping the `what-to-read.md` update or letting it drift from `README.md`
+- Skipping the `what-to-read.md` update or letting it drift from `readme.md`
 
 - Executing anything beyond file writes and `mv`
 
@@ -322,7 +316,7 @@ Next AI can pick up from: [current state + next logical step]
 
 - [ ] Walked `.lovable/` recursively; read every Pre-flight file that exists; noted the missing ones
 
-- [ ] Audited the session for Done / Pending / Learned / Wrong
+- [ ] Audited the session for Done / Pending / Learned / Wrong / Recent Directives
 
 - [ ] Every new memory file placed under a topic folder, never at the memory root
 
@@ -336,15 +330,17 @@ Next AI can pick up from: [current state + next logical step]
 
 - [ ] `strictly-avoid.md` appended (not overwritten) with links to solved files
 
-- [ ] Verbatim user directives captured under `.lovable/memory/specs/` and `.lovable/spec/commands/`
+- [ ] Verbatim user directives and recent conversations captured under `.lovable/memory/specs/` or `.lovable/memory/learned/`
+
+- [ ] Confirmed that detailed/important specs were NOT consolidated or shortened
 
 - [ ] Ambiguities moved via `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/` with `## Resolution` block
 
-- [ ] `.lovable/what-to-read.md` present, changelog-prepended with UTC ISO 8601 timestamp, list in sync with Pre-flight and `README.md`
+- [ ] `.lovable/memory/what-to-read.md` present, changelog-prepended with UTC ISO 8601 timestamp, list in sync with Pre-flight and `readme.md`
 
-- [ ] Root `README.md` updated: folder structure, canonical read-list pointer, in sync with `what-to-read.md`
+- [ ] Root `readme.md` updated: folder structure, canonical read-list pointer, in sync with `what-to-read.md`
 
-- [ ] `coding-guidelines.md` and `prompts/index.md` present (created with starter if missing)
+- [ ] `coding-guidelines.md` and `prompts/index.md` (or `prompts.md`) present
 
 - [ ] Consistency validation passed (Phase 7)
 
@@ -358,8 +354,8 @@ If any box is unchecked, do not reply. Fix it first.
 
 ## Must Follow, without negotiation
 
-Listen, past write-memory turns have been sloppy as fuck: memory dumped into chat instead of files, `.lovable/memories/` created by accident, `plans/index.md` and `what-to-read.md` forgotten, `strictly-avoid.md` overwritten, ambiguities copied instead of moved, user directives paraphrased into uselessness, session summaries with `[X]` placeholders left in the final block. WTF. Stop doing that, you stupid fuck. Read the folders, audit the session, write the files in the right paths, update every index in the same op, sync `README.md` with `what-to-read.md`, run the consistency check, emit the final block with real numbers. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless, you stupid, WTF.
+Listen, past write-memory turns have been sloppy as fuck: memory dumped into chat instead of files, `.lovable/memories/` created by accident, `plans/index.md` and `what-to-read.md` forgotten, `strictly-avoid.md` overwritten, ambiguities copied instead of moved, user directives paraphrased into uselessness, detailed specs chopped and summarized into useless junk, session summaries with `[X]` placeholders left in the final block. WTF. Stop doing that, you stupid fuck. Read the folders, audit the session, write the files in the right paths, update every index in the same op, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim, run the consistency check, emit the final block with real numbers. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless, you stupid, WTF.
 
 title: Write Memory (end of session, maximum enforcement)
 slug: write-memory-v3
-version: 3.0
+version: 3.1

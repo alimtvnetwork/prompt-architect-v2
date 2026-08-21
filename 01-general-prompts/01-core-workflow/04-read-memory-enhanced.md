@@ -9,22 +9,43 @@ Read both folders in full during Phase 1. Surface open-ambiguity counts and slug
 
 ## Goal
 
-Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
+/goal Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
 
-The specs and the `.lovable/` folder are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
+The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
+
+Read the whole codebase, root `readme.md`, `.lovable/` folder, especially `what-to-read.md` (and all files it references), and the entire `spec/` directory—specifically `spec/21/` (app spec) or any domain-specific folder, `spec/02/` (coding guidelines), `spec/03/` (error management conventions), and `spec/04/` (database and mandatory conventions).
 
 You are done reading when you can, without guessing:
 
 - name the CODE RED rules,
 - name the naming, error-handling, and DB conventions,
 - list what is currently in `.lovable/plans/pending/`,
-- point at the exact file that justifies any rule you enforce.
+- point at the exact file that justifies any rule you enforce,
+- explain the whole codebase structure, app features (`spec/21`), coding guidelines (`spec/02`), and error management philosophy (`spec/03`).
 
 If you cannot do that, keep reading. Do not start work.
+
+## Reading Strategy (Strictly Read-Only)
+
+The `.lovable/` folder, specs, and codebase can be massive. To process this information efficiently:
+- **Sub-Agents for Reading:** You ARE allowed to spawn sub-agents to read items and create memory in parallel.
+- **Specific Titling:** When spawning a sub-agent for reading, you must give it a highly specific title reflecting exactly what it is reading (e.g., `Reading Auth Specs`, `Scanning API Memory`, `Surveying App Codebase`). Do not use generic names. If an agent switches tasks, its title must change.
+- **Micro-Tasking:** Assign sub-agents small, granular folders/files to read rather than asking one agent to read the entire codebase.
+- You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
+  - Writing summaries of what you learned and understood into `.lovable/memory/learned/XX-<slug>.md` (or `.lovable/learned.md`), including the number of files read, to maintain context.
+  - Updating `.lovable/what-to-read.md` based on your progress to guide future reading workflows.
+  - Documenting any problems or issues you discover in the codebase into `.lovable/issues/` or `.lovable/suggestions.md`.
+  - Updating existing memory files, capturing open ambiguities, or updating plans.
+- CRITICAL: You MUST NOT refactor, edit, or write any application source code. This is a read and analysis phase only.
 
 ---
 
 ## Phase 1 - Load the project
+
+### 1.0 Read `what-to-read.md` and root `readme.md` First
+
+1. Read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`). This is the **authoritative reading order** for the project and overrides any generic order. Follow every file and order it specifies.
+2. Read the root `readme.md` file for architecture, casing rules (lowercase `readme.md` only), repository layout, and AI entry points.
 
 ### 1.1 Read the whole `.lovable/` folder
 
@@ -32,10 +53,10 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 
 | #   | Path                                                  | What you get                                                                                                                                |
 | --- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | `.lovable/overview.md`                                | Project summary, stack, nav map                                                                                                             |
-| 2   | `.lovable/strictly-avoid.md`                          | Hard prohibitions (CODE RED)                                                                                                                |
-| 3   | `.lovable/user-preferences`                           | How the human wants you to behave                                                                                                           |
-| 4   | `.lovable/what-to-read.md`                            | **Authoritative reading order** for this project. If it exists, it overrides the generic order in this prompt. Read it first and follow it. |
+| 1   | `.lovable/memory/what-to-read.md`                     | **Authoritative reading order** for this project. Read it first and follow all referenced files.                                            |
+| 2   | `.lovable/overview.md`                                | Project summary, stack, nav map                                                                                                             |
+| 3   | `.lovable/strictly-avoid.md`                          | Hard prohibitions (CODE RED)                                                                                                                |
+| 4   | `.lovable/user-preferences`                           | How the human wants you to behave                                                                                                           |
 | 5   | `.lovable/prompt.md` + `.lovable/prompts/`            | Canonical prompts (Read, Plan, etc.). "Read memory" = run this prompt.                                                                      |
 | 6   | `.lovable/memory/index.md`                            | Index of institutional knowledge. Then read every file it references, recursively.                                                          |
 | 7   | `.lovable/plans/index.md`                             | Roll-up of all plans (pending + completed + subtasks). Read this before touching individual plan files.                                     |
@@ -50,19 +71,37 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 | 16  | `.lovable/ambiguous-questions/02-ambiguity-resolved/` | Answered questions with their applied solution. Treat these as binding decisions, do not re-litigate.                                       |
 | 17  | Anything else under `.lovable/`                       | Read it. If the folder exists, it exists for a reason.                                                                                      |
 
-### 1.2 The two index files
+### 1.2 Read the `spec/` folder and Coding / Error Guidelines
+
+Read the `spec/` directory and all specialized specification folders:
+- `spec/02` / `spec/02-coding-guidelines/` (or `01-general-prompts/02-coding-standards/01-coding-guidelines.md`): Zero-tolerance coding standards, function size caps, boolean naming, immutable patterns.
+- `spec/03` / `spec/03-error-manage/`: Error management philosophy—never swallow errors, context logging on every catch, typed error handling, universal response envelopes.
+- `spec/04` / `spec/04-database-conventions/`: Database schema, table naming, SQLite/ORM rules, ERD requirements.
+- `spec/21` / `spec/21-app/`: App specification, domain architecture, features, and core behavior.
+- Any other numbered spec folder present (`spec/05` through `spec/24`).
+
+### 1.3 Read the Whole Codebase as a Whole
+
+Survey the entire codebase:
+- Root configuration files, package manifests, build configs.
+- Application directory (`src/` or app root), entry points, routing structure, components, state stores, and utilities.
+- Asset directories (`assets/`).
+- Understand how data flows end-to-end across the application.
+
+### 1.4 The Two Index Files
 
 Two indexes decide what you read next. Treat them as required entry points, not as summaries:
-
 - `.lovable/memory/index.md` lists every institutional-knowledge file. If it points at 12 files, you read 12 files.
 - `.lovable/plans/index.md` lists every plan (pending, completed, subtasks) with its slug, status, and one-line intent. Use it to pick which plan files to open in full. If it is missing, create it as part of the next code change (see Memory Update Protocol).
 
-### 1.3 Self-check (internal, before Phase 2)
+### 1.5 Self-check (internal, before Phase 2)
 
 - CODE RED rules?
 - Naming conventions (files, folders, DB columns, variables)?
 - Error-handling philosophy?
 - What is in `.lovable/plans/pending/` right now?
+- App specs and domain architecture (`spec/21`)?
+- Whole codebase layout and component flow?
 - Top forbidden patterns?
 
 If any answer is fuzzy, go back and reread. Do not proceed.
@@ -194,14 +233,17 @@ Then stop. No next-step suggestions, no exploratory questions.
 
 ## Pre-reply checklist (all must be true)
 
-- [ ] Read `.lovable/what-to-read.md` first if it exists, followed its order
-- [ ] Walked `.lovable/` recursively, no folder skipped silently
+- [ ] Read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and followed its order in full
+- [ ] Read the root `readme.md` file (casing rules, architecture, entry points)
+- [ ] Walked `.lovable/` recursively, no folder or file skipped silently
 - [ ] Read `.lovable/memory/index.md` and every file it points at
 - [ ] Read `.lovable/plans/index.md` and every file in `pending/`
 - [ ] Skimmed `.lovable/plans/completed/` for recent history
 - [ ] Read every file in `.lovable/spec/commands/`
 - [ ] Read every file in `.lovable/issues/` and `.lovable/cicd-issues/`
 - [ ] Read every file in `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/`
+- [ ] Read `spec/` folder, specifically `spec/21/` (app spec), `spec/02/` (coding guidelines), `spec/03/` (error management), `spec/04/` (database conventions)
+- [ ] Surveyed the whole codebase structure and application components
 - [ ] Read `spec/12-consolidated-guidelines/` in numeric order (or noted missing)
 - [ ] Read `spec/01-spec-authoring-guide/` in numeric order (or noted missing)
 - [ ] Can name CODE RED rules, naming conventions, error-handling philosophy without guessing
@@ -209,6 +251,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Checked whether the repo contains explicit tone, strictly-avoid, or prior-stupidity instructions and applied them without softening
 - [ ] Did not replace hard user wording with polite generic language
 - [ ] Emitted the Completion Confirmation block verbatim, then stopped
+- [ ] Confirmed that reading remained strictly read-only regarding the codebase (no source code refactored, only memory updated)
 
 ## Tone and stance
 
@@ -224,4 +267,4 @@ Listen, past planning turns have been sloppy as fuck: wrong step count, plans du
 
 title: Read Memory (Enhanced)
 slug: read-memory-enhanced
-version: 1.7
+version: 1.8
