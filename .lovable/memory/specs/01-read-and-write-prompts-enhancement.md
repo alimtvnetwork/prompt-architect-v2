@@ -11,13 +11,14 @@
 - Explicitly mandate reading the entire codebase as a whole (full structure, architecture, and files).
 - Read the entire `.lovable/` folder recursively.
 - Most importantly, read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and follow all referenced files in full.
-- Read the root `readme.md` file for architecture and casing rules.
+- **Root `readme.md` Lowercase Enforcement & Auto-Fix**: Confirm that the root readme is strictly named lowercase `readme.md`. If an uppercase `README.md` or incorrectly cased file is detected during read or write time, immediately fix it to `readme.md`, delete any uppercase duplicate, commit the change, and push to git without second-guessing or waiting for confirmation.
 - Read the `spec/` folder, specifically `spec/21/` (app spec) or any domain-specific spec folder, `spec/02/` (coding guidelines), `spec/03/` (error management conventions to understand error handling), and `spec/04/` (database and mandatory conventions).
 
 ### 2. Write Memory Directive
 - Capture recent conversations, instructions, directives, and decisions from the current session as a spec or memory summary inside `.lovable/memory/specs/` or `.lovable/memory/learned/`.
 - Permit consolidation of simple, routine, or ephemeral tasks that do not warrant separate files, avoiding unnecessary repo clutter.
 - **CRITICAL NON-NEGOTIABLE RULE**: Highly detailed and important specs (e.g. `spec/21`, domain architecture, detailed requirements, complex error handling, coding standards) MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must remain 100% complete, granular, and verbatim.
+- Verify and enforce lowercase root `readme.md` during write-memory time as well, auto-fixing and committing/pushing if needed.
 
 ### 3. Execution & Workflow Rules
 - Synchronize `.lovable/memory/index.md`, `.lovable/plans/index.md`, `.lovable/memory/what-to-read.md`, and root `readme.md`.

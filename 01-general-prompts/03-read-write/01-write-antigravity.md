@@ -31,17 +31,19 @@ The next AI session has full amnesia. If you did it and did not write it, it did
 
 9. Root `readme.md` and `.lovable/memory/what-to-read.md` stay in sync. Same file list, same order, no drift. Every write-memory run updates both.
 
-10. Nothing executes this turn beyond writing to the `.lovable` folder and `mv`. No application source code changes, no refactoring, no installs, no migrations.
+10. **Root `readme.md` Lowercase Enforcement**: Ensure the root readme is strictly named lowercase `readme.md`. If an uppercase `README.md` exists or casing is incorrect, fix it immediately to `readme.md`, delete the uppercase file, commit, and push to git without asking.
 
-11. **Recent conversation & directive capture**: All recent conversations, instructions, user directives, decisions, and session progress MUST be recorded as a spec or conversation summary inside `.lovable/memory/specs/XX-<slug>.md` or `.lovable/memory/learned/XX-<slug>.md` and added to `memory/index.md`.
+11. Nothing executes this turn beyond writing to the `.lovable` folder, root `readme.md` lowercase fixing, and `mv`. No application source code changes, no refactoring, no installs, no migrations.
 
-12. **Consolidation of simple tasks vs. Protection of detailed specs**:
+12. **Recent conversation & directive capture**: All recent conversations, instructions, user directives, decisions, and session progress MUST be recorded as a spec or conversation summary inside `.lovable/memory/specs/XX-<slug>.md` or `.lovable/memory/learned/XX-<slug>.md` and added to `memory/index.md`.
+
+13. **Consolidation of simple tasks vs. Protection of detailed specs**:
     - **Simple tasks consolidation**: Routine, ephemeral, or minor simple tasks that do not warrant individual files may be consolidated into overarching session summaries or existing trackers to prevent file bloat.
     - **CRITICAL - Detailed specs must NEVER be consolidated or shrunk**: Detailed specifications, architectural designs, non-negotiable rules, domain specifications (e.g. `spec/21`), and complex requirement documents MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must be preserved with 100% fidelity, exact wording, and full granularity.
 
 ## Working stance
 
-The AI running this prompt has been a stupid fuck on prior runs: dumped session summaries into chat and called it "memory", left `.lovable/memory/` half-empty, created `.lovable/memories/` by accident, forgot to update `plans/index.md` and `what-to-read.md`, silently overwrote `strictly-avoid.md`, dropped user directives that were stated verbatim in the session, paraphrased specs instead of quoting them, consolidated detailed specs into vague summaries, invented a `mem://` root file, and left orphans everywhere. Do not repeat any of that stupidity.
+The AI running this prompt has been a stupid fuck on prior runs: dumped session summaries into chat and called it "memory", left `.lovable/memory/` half-empty, created `.lovable/memories/` by accident, forgot to update `plans/index.md` and `what-to-read.md`, silently overwrote `strictly-avoid.md`, dropped user directives that were stated verbatim in the session, paraphrased specs instead of quoting them, consolidated detailed specs into vague summaries, allowed uppercase README files to exist, invented a `mem://` root file, and left orphans everywhere. Do not repeat any of that stupidity.
 
 Writing memory IS the work this turn. Go deep: audit the session, reconcile every folder, capture verbatim what the user said, write the files, update every index, verify consistency. Aggressive enforcement is intentional. Do not soften it.
 
@@ -77,7 +79,7 @@ Walk `.lovable/` recursively. Read all of these if they exist; note missing and 
 
 14. `spec/` (relevant folders), including `spec/02`, `spec/03`, `spec/04`, `spec/21`, or any domain-specific spec folder
 
-15. Root `readme.md`
+15. Root `readme.md` (confirm strictly lowercase `readme.md`)
 
 ## Phase 1, audit the session (internal)
 
@@ -179,7 +181,7 @@ Verbatim per-suggestion captures: `.lovable/suggestions/XX-<slug>.md` with an in
 
 3. New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
 
-## Phase 6, `.lovable/memory/what-to-read.md` (authoritative read-list)
+## Phase 6, `.lovable/memory/what-to-read.md` and root `readme.md`
 
 Must exist after this run. Create it if missing, update it (never blindly overwrite) if present. Note: This file acts as a dynamic roadmap; both reading phases and writing phases must update it to guide future AI sessions based on current progress.
 
@@ -235,10 +237,10 @@ Template:
 
 ## See also
 
-- Root `readme.md` (must stay in sync with this file)
+- Root `readme.md` (must stay in sync with this file, always lowercase)
 ```
 
-Root `readme.md` is updated in the same operation, describes the folder structure, and names `.lovable/memory/what-to-read.md` as the authoritative read-list pointer.
+Root `readme.md` is updated in the same operation, describes the folder structure, and names `.lovable/memory/what-to-read.md` as the authoritative read-list pointer. Ensure root `readme.md` is strictly lowercase (auto-fix and commit/push if uppercase).
 
 ## Phase 7, consistency validation
 
@@ -256,9 +258,11 @@ After all writes, verify:
 
 6. `what-to-read.md` file list matches Pre-flight and root `readme.md`; top timestamp is UTC ISO 8601 and was updated this session.
 
-7. Detailed specs were not consolidated or truncated.
+7. Root `readme.md` is confirmed strictly lowercase.
 
-8. Every open ambiguity in `01-new-ambiguity/` is surfaced in the final response.
+8. Detailed specs were not consolidated or truncated.
+
+9. Every open ambiguity in `01-new-ambiguity/` is surfaced in the final response.
 
 ## Coding guidelines
 
@@ -299,6 +303,8 @@ Next AI can pick up from: [current state + next logical step]
 
 - Using `.lovable/memories/`, `plan/`, `ambiguity/`, or any wrong path
 
+- Leaving root readme as uppercase `README.md`
+
 - Overwriting `strictly-avoid.md`, `plans/index.md`, `memory/index.md`, `what-to-read.md`, or `readme.md` without reading first
 
 - Deleting a plan / issue / suggestion instead of moving it
@@ -315,7 +321,7 @@ Next AI can pick up from: [current state + next logical step]
 
 - Skipping the `what-to-read.md` update or letting it drift from `readme.md`
 
-- Executing anything beyond file writes and `mv`
+- Executing anything beyond file writes, root readme auto-fix, and `mv`
 
 - Softening the aggressive wording
 
@@ -341,6 +347,8 @@ Next AI can pick up from: [current state + next logical step]
 
 - [ ] Confirmed that detailed/important specs were NOT consolidated or shortened
 
+- [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed and committed/pushed if needed)
+
 - [ ] Ambiguities moved via `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/` with `## Resolution` block
 
 - [ ] `.lovable/memory/what-to-read.md` present, changelog-prepended with UTC ISO 8601 timestamp, list in sync with Pre-flight and `readme.md`
@@ -353,7 +361,7 @@ Next AI can pick up from: [current state + next logical step]
 
 - [ ] Final response block emitted verbatim with real numbers, not `[X]` placeholders
 
-- [ ] No em dashes, no softened wording, no execution beyond file writes and `mv`
+- [ ] No em dashes, no softened wording, no execution beyond file writes, lowercase readme fix, and `mv`
 
 If any box is unchecked, do not reply. Fix it first.
 
@@ -361,4 +369,4 @@ If any box is unchecked, do not reply. Fix it first.
 
 ## Must Follow, without negotiation
 
-Listen, past write-memory turns have been sloppy as fuck: memory dumped into chat instead of files, `.lovable/memories/` created by accident, `plans/index.md` and `what-to-read.md` forgotten, `strictly-avoid.md` overwritten, ambiguities copied instead of moved, user directives paraphrased into uselessness, detailed specs chopped and summarized into useless junk, session summaries with `[X]` placeholders left in the final block. WTF. Stop doing that, you stupid fuck. Read the folders, audit the session, write the files in the right paths, update every index in the same op, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim, run the consistency check, emit the final block with real numbers. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless, you stupid, WTF.
+Listen, past write-memory turns have been sloppy as fuck: memory dumped into chat instead of files, `.lovable/memories/` created by accident, `plans/index.md` and `what-to-read.md` forgotten, `strictly-avoid.md` overwritten, ambiguities copied instead of moved, user directives paraphrased into uselessness, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, session summaries with `[X]` placeholders left in the final block. WTF. Stop doing that, you stupid fuck. Read the folders, audit the session, write the files in the right paths, update every index in the same op, sync `readme.md` with `what-to-read.md`, ensure root readme is lowercase `readme.md`, preserve detailed specs verbatim, run the consistency check, emit the final block with real numbers. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless, you stupid, WTF.

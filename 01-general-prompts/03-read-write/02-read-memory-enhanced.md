@@ -25,28 +25,33 @@ You are done reading when you can, without guessing:
 - name the naming, error-handling, and DB conventions,
 - list what is currently in `.lovable/plans/pending/`,
 - point at the exact file that justifies any rule you enforce,
-- explain the whole codebase structure, app features (`spec/21`), coding guidelines (`spec/02`), and error management philosophy (`spec/03`).
+- explain the whole codebase structure, app features (`spec/21`), coding guidelines (`spec/02`), and error management philosophy (`spec/03`),
+- confirm that the root readme is strictly lowercase `readme.md` (and auto-fixed/committed/pushed if it was not).
 If you cannot do that, keep reading. Do not start work.
 
-## Reading Strategy (Strictly Read-Only)
+## Reading Strategy (Strictly Read-Only with Auto-Fix Exception)
 The `.lovable/` folder, specs, and codebase can be massive. To process this information efficiently:
 - **Sub-Agents for Reading:** You ARE allowed to spawn sub-agents to read items and create memory in parallel.
 - **Specific Titling:** When spawning a sub-agent for reading, you must give it a highly specific title reflecting exactly what it is reading (e.g., `Reading Auth Specs`, `Scanning API Memory`, `Surveying App Codebase`). Do not use generic names. If an agent switches tasks, its title must change.
 - **Micro-Tasking:** Assign sub-agents small, granular folders/files to read rather than asking one agent to read the entire codebase.
+- **Root `readme.md` Lowercase Self-Healing Exception**: If the root readme is uppercase `README.md` or incorrectly cased, immediately rename it to `readme.md`, commit, and push to git without asking.
 - You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
   - Writing summaries of what you learned and understood into `.lovable/memory/learned/XX-<slug>.md` (or `.lovable/learned.md`), including the number of files read, to maintain context.
   - Updating `.lovable/what-to-read.md` based on your progress to guide future reading workflows.
   - Documenting any problems or issues you discover in the codebase into `.lovable/issues/` or `.lovable/suggestions.md`.
   - Updating existing memory files, capturing open ambiguities, or updating plans.
-- CRITICAL: You MUST NOT refactor, edit, or write any application source code. This is a read and analysis phase only.
+- CRITICAL: Other than fixing the root `readme.md` lowercase naming if needed, you MUST NOT refactor, edit, or write any application source code. This is a read and analysis phase only.
 
 ---
 
 ## Phase 1 - Load the project
 
-### 1.0 Read `what-to-read.md` and root `readme.md` First
+### 1.0 Read `what-to-read.md` and Confirm Root `readme.md` Lowercase (Auto-Fix & Commit)
 1. Read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`). This is the **authoritative reading order** for the project and overrides any generic order. Follow every file and order it specifies.
-2. Read the root `readme.md` file for architecture, casing rules (lowercase `readme.md` only), repository layout, and AI entry points.
+2. **Root `readme.md` Lowercase Verification & Auto-Fix**:
+   - Verify that the root readme file is strictly named lowercase `readme.md`.
+   - If an uppercase `README.md` exists or the casing is incorrect on disk or in git, immediately rename it to `readme.md`, remove the stale uppercase file, commit the change (`fix: ensure root readme is strictly lowercase readme.md`), and push to git without asking or second-guessing.
+   - Read the root `readme.md` file for architecture, casing rules, repository layout, and AI entry points.
 
 ### 1.1 Read the whole `.lovable/` folder
 Walk `.lovable/` recursively. Every file matters. Missing files are noted, not silently skipped. In particular:
@@ -93,6 +98,7 @@ Two indexes decide what you read next. Treat them as required entry points, not 
 ### 1.5 Self-check (internal, before Phase 2)
 - CODE RED rules?
 - Naming conventions (files, folders, DB columns, variables)?
+- Root readme strictly lowercase `readme.md`?
 - Error-handling philosophy?
 - What is in `.lovable/plans/pending/` right now?
 - App specs and domain architecture (`spec/21`)?
@@ -210,6 +216,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 
 ## Pre-reply checklist (all must be true)
 - [ ] Read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and followed its order in full
+- [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed, committed, and pushed if uppercase or missing)
 - [ ] Read the root `readme.md` file (casing rules, architecture, entry points)
 - [ ] Walked `.lovable/` recursively, no folder or file skipped silently
 - [ ] Read `.lovable/memory/index.md` and every file it points at
@@ -227,7 +234,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Checked whether the repo contains explicit tone, strictly-avoid, or prior-stupidity instructions and applied them without softening
 - [ ] Did not replace hard user wording with polite generic language
 - [ ] Emitted the Completion Confirmation block verbatim, then stopped
-- [ ] Confirmed that reading remained strictly read-only regarding the codebase (no source code refactored, only memory updated)
+- [ ] Confirmed that reading remained strictly read-only regarding the codebase (no source code refactored, only memory and lowercase readme auto-fix updated)
 
 ## Tone and stance
 Past runs of this prompt have been stupid. The AI behaved like a stupid fuck by skimming folders, ignoring ambiguity files, forgetting CI/CD issues, half-filling the Completion Confirmation block with "[N]" placeholders, and softening explicit user instructions after being told not to. That stupidity must not repeat.
