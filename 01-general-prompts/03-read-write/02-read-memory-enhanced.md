@@ -18,14 +18,15 @@ Read both folders in full during Phase 1. Surface open-ambiguity counts and slug
 /goal Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
 The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
 
-Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), and every single folder in the `spec/` directory—specifically `spec/21/` (app spec) or any domain-specific folder, `spec/02/` (coding guidelines), `spec/03/` (error management conventions), and `spec/04/` (database and mandatory conventions).
+Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), every single folder in the `spec/` directory—specifically `spec/21/` (app spec) or any domain-specific folder, `spec/02/` (coding guidelines), `spec/03/` (error management conventions), `spec/04/` (database and mandatory conventions)—and **read every pending task** across `.lovable/plans/pending/`, `.lovable/plans/subtasks/`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
 
 You are done reading when you can, without guessing:
 - name the CODE RED rules,
 - name the naming, error-handling, and DB conventions,
-- list what is currently in `.lovable/plans/pending/`,
+- list what is currently in `.lovable/plans/pending/` and every active subtask,
 - point at the exact file that justifies any rule you enforce,
 - explain the whole codebase structure, app features (`spec/21`), coding guidelines (`spec/02`), and error management philosophy (`spec/03`),
+- list out all pending tasks and unresolved issues with accurate step counts,
 - confirm that the root readme is strictly lowercase `readme.md` (and auto-fixed/committed/pushed if it was not).
 If you cannot do that, keep reading. Do not start work.
 
@@ -55,7 +56,7 @@ The `.lovable/` folder, specs, and entire codebase can be massive. To process th
    - If an uppercase `README.md` exists or the casing is incorrect on disk or in git, immediately rename it to `readme.md`, remove the stale uppercase file, commit the change (`fix: ensure root readme is strictly lowercase readme.md`), and push to git without asking or second-guessing.
    - Read the root `readme.md` file for architecture, casing rules, repository layout, and AI entry points.
 
-### 1.1 Read the whole `.lovable/` folder
+### 1.1 Read the whole `.lovable/` folder & Pending Tasks Queue
 Walk `.lovable/` recursively. Every file matters. Missing files are noted, not silently skipped. In particular:
 | # | Path | What you get |
 | --- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,13 +67,13 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 | 5 | `.lovable/prompt.md` + `.lovable/prompts/` | Canonical prompts (Read, Plan, etc.). "Read memory" = run this prompt. |
 | 6 | `.lovable/memory/index.md` | Index of institutional knowledge. Then read every file it references, recursively. |
 | 7 | `.lovable/plans/index.md` | Roll-up of all plans (pending + completed + subtasks). Read this before touching individual plan files. |
-| 8 | `.lovable/plans/pending/` | Active plans, `XX-<slug>.md` |
+| 8 | `.lovable/plans/pending/` | Active plans, `XX-<slug>.md`—**read all and list out each pending item**. |
 | 9 | `.lovable/plans/completed/` | Recent history, skim only |
-| 10 | `.lovable/plans/subtasks/XX-<slug>/` | Depth files linked from a parent plan |
+| 10 | `.lovable/plans/subtasks/XX-<slug>/` | Depth files linked from a parent plan—**read all active subtasks and list them**. |
 | 11 | `.lovable/suggestions.md` | Ideas not yet approved |
 | 12 | `.lovable/spec/commands/` | User commands and conventions, `XX-<slug>.md` |
-| 13 | `.lovable/issues/` | General bugs and regressions |
-| 14 | `.lovable/cicd-issues/` | CI/CD-specific failures. Read ALL of these before any code change so you do not repeat the same mistakes. |
+| 13 | `.lovable/issues/` | General bugs and regressions—**read and list out pending bugs**. |
+| 14 | `.lovable/cicd-issues/` | CI/CD-specific failures—**read and list out pending CI/CD issues**. |
 | 15 | `.lovable/ambiguous-questions/01-new-ambiguity/` | Open questions currently blocking work. If any exist, surface them in the completion block, do NOT guess past them. |
 | 16 | `.lovable/ambiguous-questions/02-ambiguity-resolved/` | Answered questions with their applied solution. Treat these as binding decisions, do not re-litigate. |
 | 17 | Anything else under `.lovable/` | Read it. If the folder exists, it exists for a reason. |
@@ -102,7 +103,7 @@ Two indexes decide what you read next. Treat them as required entry points, not 
 - Naming conventions (files, folders, DB columns, variables)?
 - Root readme strictly lowercase `readme.md`?
 - Error-handling philosophy (`spec/03`)?
-- What is in `.lovable/plans/pending/` right now?
+- What is in `.lovable/plans/pending/` and `plans/subtasks/` right now (exact list)?
 - App specs and domain architecture (`spec/21`)?
 - Whole codebase layout and component flow?
 - Top forbidden patterns?
@@ -207,7 +208,7 @@ I understand:
 - CODE RED rules: [top 3-5]
 - Naming conventions: [brief]
 - Error handling: [one sentence]
-- Active plans: [slugs from .lovable/plans/pending/]
+- Active plans & pending tasks: [slugs from .lovable/plans/pending/ and subtasks]
 - Strict avoidances: [top 3-5]
 - Blocking ambiguities: [slugs, or "none"]
 Ready for tasks.
@@ -222,7 +223,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Read the root `readme.md` file (casing rules, architecture, entry points)
 - [ ] Walked `.lovable/` recursively, no folder or file skipped silently
 - [ ] Read `.lovable/memory/index.md` and every file it points at
-- [ ] Read `.lovable/plans/index.md` and every file in `pending/`
+- [ ] Read `.lovable/plans/index.md`, every file in `pending/`, and all active subtasks
 - [ ] Skimmed `.lovable/plans/completed/` for recent history
 - [ ] Read every file in `.lovable/spec/commands/`
 - [ ] Read every file in `.lovable/issues/` and `.lovable/cicd-issues/`
@@ -232,15 +233,11 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Read `spec/12-consolidated-guidelines/` in numeric order (or noted missing)
 - [ ] Read `spec/01-spec-authoring-guide/` in numeric order (or noted missing)
 - [ ] Can name CODE RED rules, naming conventions, error-handling philosophy without guessing
-- [ ] Can list every pending plan slug from memory
+- [ ] Can list every pending plan slug and subtask from memory
 - [ ] Checked whether the repo contains explicit tone, strictly-avoid, or prior-stupidity instructions and applied them without softening
 - [ ] Did not replace hard user wording with polite generic language
 - [ ] Emitted the Completion Confirmation block verbatim, then stopped
 - [ ] Confirmed that reading remained strictly read-only regarding the codebase (no source code refactored, only memory and lowercase readme auto-fix updated)
 
-## Tone and stance
-Past runs of this prompt have been stupid. The AI behaved like a stupid fuck by skimming folders, ignoring ambiguity files, forgetting CI/CD issues, half-filling the Completion Confirmation block with "[N]" placeholders, and softening explicit user instructions after being told not to. That stupidity must not repeat.
-Read aggressively and defensively. Assume the previous AI failed because it was lazy, vague, and too polite to enforce the actual rules. Your job is to load the repo's memory exactly, cite the file behind every rule, and refuse to guess. If you finish this prompt and cannot cite the file behind a rule you enforce, you failed the prompt. Read more. Then reply.
-
-## Must Follow, without negotiation
-Listen, past planning turns have been sloppy as fuck: wrong step count, plans dumped into chat instead of files, plan-mode tool fired when the user explicitly said not to, user commands and bug reports forgotten by the next turn. WTF. Stop doing that, you stupid fuck. Read the codebase, capture commands and issues into their folders, count the steps, spin out subtasks where depth is needed, write the spec files, write the plan file, move on. Going deep IS the job. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
+## MUST FOLLOW NON-NEGOTIABLE
+Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.

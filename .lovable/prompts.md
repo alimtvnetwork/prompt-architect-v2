@@ -5,7 +5,7 @@
 | Category | File | Slug | Purpose |
 |----------|------|------|---------|
 | Core Workflow | [unified-ai-prompt-v4.md](../01-general-prompts/01-core-workflow/05-unified-ai-prompt-v4.md) | `unified-ai-prompt-v4` | Initial repository analysis and prep |
-| Core Workflow | [read-memory-enhanced.md](../01-general-prompts/01-core-workflow/04-read-memory-enhanced.md) | `read-memory-enhanced` | Loads the project's memory identity |
+| Core Workflow | [read-memory-enhanced.md](../01-general-prompts/01-core-workflow/04-read-memory-enhanced.md) | `read-memory-enhanced` | Loads the project's memory identity & pending tasks |
 | Core Workflow | [write-memory.md](../01-general-prompts/01-core-workflow/06-write-memory.md) | `write-memory` | Persists session history / updates to memory |
 | Core Workflow | [next-steps.md](../01-general-prompts/01-core-workflow/01-next-steps.md) | `next-steps` | Deliver the EXACT {{n}} next steps for execution |
 | Core Workflow | [plan-steps.md](../01-general-prompts/01-core-workflow/03-plan-steps.md) | `plan-steps` | Detailed execution plan generator |
@@ -39,4 +39,5 @@
 | Commit & Fix | [insult-code-fix.md](../01-general-prompts/05-commit-and-multi-agent-code-fix/08-insult-code-fix.md) | `insult-code-fix` | Fix git status, create wrapper, parallel subagents |
 | Commit & Fix | [clean-artifacts-and-git-history.md](../01-general-prompts/05-commit-and-multi-agent-code-fix/09-clean-artifacts-and-git-history.md) | `clean-artifacts-and-git-history` | Artifact detection, positive review, filesystem and git history purge |
 | CI/CD | [fix-ci-cd-and-run-scripts.md](../01-general-prompts/08-ci-cd/03-fix-ci-cd-and-run-scripts.md) | `fix-ci-cd-and-run-scripts` | Fix CI/CD, run scripts, create query wrappers |
-| Insults | [raw-insults.md](../01-general-prompts/09-insults/01-raw-insults.md) | `raw-insults` | Consolidated unsoftened stance and enforcement texts |
+| Insults | [raw-insults.md](../01-general-prompts/09-insults/01-raw-insults.md) | `raw-insults` | Raw section-by-section insults compilation |
+| Insults | [consolidated-insults-v2.md](../01-general-prompts/09-insults/02-consolidated-insults-v2.md) | `consolidated-insults-v2` | Unified single-block MUST FOLLOW NON-NEGOTIABLE enforcement text |
