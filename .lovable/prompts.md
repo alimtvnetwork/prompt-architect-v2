@@ -4,8 +4,9 @@
 
 | Category | File | Slug | Purpose |
 |----------|------|------|---------|
-| Read & Write | [read-memory-enhanced.md](../01-general-prompts/03-read-write/01-read-memory-enhanced.md) | `read-memory-enhanced` | Authoritative onboarding: loads memory identity & pending tasks |
-| Read & Write | [write-memory.md](../01-general-prompts/03-read-write/02-write-memory.md) | `write-memory` | Authoritative end-of-session memory persist & audit |
+| Read & Write | [write-antigravity.md](../01-general-prompts/03-read-write/01-write-antigravity.md) | `write-antigravity` | Authoritative write memory prompt for session persistence & audit |
+| Read & Write | [read-memory-enhanced.md](../01-general-prompts/03-read-write/02-read-memory-enhanced.md) | `read-memory-enhanced` | Authoritative onboarding: loads memory identity & pending tasks |
+| Read & Write | [write-memory.md](../01-general-prompts/03-read-write/03-write-memory.md) | `write-memory` | Standard end-of-session memory persist prompt |
 | Core Workflow | [unified-ai-prompt-v4.md](../01-general-prompts/01-core-workflow/05-unified-ai-prompt-v4.md) | `unified-ai-prompt-v4` | Initial repository analysis and prep |
 | Core Workflow | [next-steps.md](../01-general-prompts/01-core-workflow/01-next-steps.md) | `next-steps` | Deliver the EXACT {{n}} next steps for execution |
 | Core Workflow | [plan-steps.md](../01-general-prompts/01-core-workflow/03-plan-steps.md) | `plan-steps` | Detailed execution plan generator |

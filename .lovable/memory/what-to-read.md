@@ -1,11 +1,11 @@
 # What To Read
 
 > Authoritative routing map indicating which file an AI must open for what purpose.
-> Last updated: 2026-08-21T18:18:00Z
+> Last updated: 2026-08-21T18:20:00Z
 
 ## Changelog
 
-- 2026-08-21T18:18:00Z, Deduplicated Read & Write memory prompts into `01-general-prompts/03-read-write/` (`01-read-memory-enhanced.md`, `02-write-memory.md`), eliminating redundant copies in `01-core-workflow/` and `05-commit-and-multi-agent-code-fix/`.
+- 2026-08-21T18:20:00Z, Preserved and structured all Read & Write prompts in `01-general-prompts/03-read-write/` (`01-write-antigravity.md`, `02-read-memory-enhanced.md`, `03-write-memory.md`).
 
 ## Reading Map
 
@@ -16,8 +16,9 @@
 | Master institutional knowledge index | `.lovable/memory/index.md` |
 | Execution plans roll-up & pending plans | `.lovable/plans/index.md` and `.lovable/plans/pending/` |
 | Repo folder structure overview & casing rules | `readme.md` (repo root) |
-| Authoritative Read Memory prompt | `01-general-prompts/03-read-write/01-read-memory-enhanced.md` |
-| Authoritative Write Memory prompt | `01-general-prompts/03-read-write/02-write-memory.md` |
+| Authoritative Write Memory (Antigravity) prompt | `01-general-prompts/03-read-write/01-write-antigravity.md` |
+| Authoritative Read Memory prompt | `01-general-prompts/03-read-write/02-read-memory-enhanced.md` |
+| Standard Write Memory prompt | `01-general-prompts/03-read-write/03-write-memory.md` |
 | Canonical prompt registry | `.lovable/prompts.md` |
 | The original prompt library specification | `01-general-prompts/01-prompt-library-setup/01-prompt-library-setup.md` |
 | Pending tasks read-only scan & inventory | `01-general-prompts/07-execute/04-inventory-pending-tasks.md` |
@@ -34,7 +35,7 @@
 
 ## Non-negotiable rules
 
-1. **Authoritative Read & Write Location**: Read Memory and Write Memory prompts live strictly in `01-general-prompts/03-read-write/`.
+1. **Authoritative Read & Write Location**: Read Memory and Write Memory prompts live in `01-general-prompts/03-read-write/` (`01-write-antigravity.md`, `02-read-memory-enhanced.md`, `03-write-memory.md`).
 2. **Autonomous Self-Looping & Full Codebase Survey**: Before touching the project, autonomously loop through the whole codebase, root `readme.md`, entire `.lovable/` folder (especially `what-to-read.md`), and every single spec folder in `spec/` (`spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, etc.), reading and listing all pending tasks.
 3. **Root `readme.md` Lowercase Enforcement**: Both Read and Write times must verify that the root readme is strictly named lowercase `readme.md`. If uppercase `README.md` exists or casing is incorrect, fix it immediately, commit, and push to git without asking.
 4. **Artifact Cleanup & Git History Purge**: Prevent artifact zips, test data, temporary scripts, and unwanted code from bloating the repository. Present candidate files with positive question framing, and on removal execute dual removal (filesystem + Git history purge).
