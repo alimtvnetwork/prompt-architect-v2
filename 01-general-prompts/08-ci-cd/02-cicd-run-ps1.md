@@ -124,8 +124,9 @@ After completing the pipeline and run script creation, you MUST follow this chec
 - [ ] Derive the `<slug>` from the plan filename itself (e.g., plan file `03-auth-refactor.md` → slug is `03-auth-refactor`). Never invent a slug.
 - [ ] Confirm subtask files exist under `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md` for each step that needs parallel execution. Create them if missing, following the plan prompt structure.
 - [ ] Ensure the plan is highly extensive, explicitly detailing where and how to make changes so sub-agents can easily execute tasks (Non-negotiable).
-- [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`. Do not write randomly into `.lovable`.
+- [ ] Direct subtasks to `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md` and update plans in `.lovable/plans/pending/01-<slug>.md`. Do not write randomly into `.lovable`.
 - [ ] Read the memory files and the spec folder coding guidelines + error manage guidelines before touching code.
+- [ ] Anti-Hallucination: If referenced files are missing or ambiguous, stop and ask clarifying questions.
 
 ### 4.2. Ruthless Management & Subtask Looping
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
@@ -140,7 +141,7 @@ After completing the pipeline and run script creation, you MUST follow this chec
 
 ### 4.4. File System Writes & Main Agent Commit
 - [ ] Sub-agents write to the file system and update their task entries. They do NOT commit.
-- [ ] Wait until all sub-agents have signaled completion and updated `.lovable/spec/tasks/`.
+- [ ] Wait until all sub-agents have signaled completion and updated their subtask files under `.lovable/plans/subtasks/`.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
 - [ ] RED FLAG: Verify absolutely NO test results or binaries are staged before making the commit.
 - [ ] Group all completed work into a single logical commit.

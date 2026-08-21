@@ -18,7 +18,7 @@ Memory in chat is lost the moment the turn finishes. Memory in `.lovable/` is pe
 1. Folder is `.lovable/memory/`, NEVER `.lovable/memories/` or `memories/`. A single file written to `memories/` is an immediate failure.
 2. Every new memory file under `.lovable/memory/` MUST be registered in `.lovable/memory/index.md` in the same operation.
 3. Every plan added, moved, or completed MUST update `.lovable/plans/index.md` in the same operation.
-4. Ambiguity files are NEVER duplicated. Open questions go to `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md`. When answered, the file is MOVED (`mv`) to `.lovable/ambiguous-questions/02-ambiguity-resolved/XX-<slug>.md` with a `## Resolution` block appended. Never copy. Never leave a resolved question in `01-new-ambiguity/`.
+4. Ambiguity files are NEVER duplicated. Open questions go to `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`. When answered, the file is MOVED (`mv`) to `.lovable/ambiguous-questions/02-ambiguity-resolved/01-<slug>.md` with a `## Resolution` block appended. Never copy. Never leave a resolved question in `01-new-ambiguity/`.
 5. Never overwrite `.lovable/strictly-avoid.md`. Append only. If a rule was already there, do not duplicate it.
 6. When updating existing files (especially indexes, `strictly-avoid.md`, `suggestions.md`), preserve all unrelated content. No silent truncation.
 7. Output the completion block with real, audited numbers. Placeholders like `[X]` or `[N]` in the final response are auto-reject.
@@ -26,10 +26,12 @@ Memory in chat is lost the moment the turn finishes. Memory in `.lovable/` is pe
 9. Root `readme.md` and `.lovable/memory/what-to-read.md` stay in sync. Same file list, same order, no drift. Every write-memory run updates both.
 10. **Root `readme.md` Lowercase Enforcement**: Ensure the root readme is strictly named lowercase `readme.md`. If an uppercase `README.md` exists or casing is incorrect, fix it immediately to `readme.md`, delete the uppercase file, commit, and push to git without asking.
 11. Nothing executes this turn beyond writing to the `.lovable` folder, root `readme.md` lowercase fixing, and `mv`. No application source code changes, no refactoring, no installs, no migrations.
-12. **Recent conversation & directive capture**: All recent conversations, instructions, user directives, decisions, and session progress MUST be recorded as a spec or conversation summary inside `.lovable/memory/specs/XX-<slug>.md` or `.lovable/memory/learned/XX-<slug>.md` and added to `memory/index.md`.
-13. **Consolidation of simple tasks vs. Protection of detailed specs**:
+12. **Recent conversation & directive capture**: All recent conversations, instructions, user directives, decisions, and session progress MUST be recorded as a spec or conversation summary inside `.lovable/memory/specs/01-<slug>.md` or `.lovable/memory/learned/01-<slug>.md` and added to `memory/index.md`.
+13. **Pending Tasks Single Source of Truth**: All active plans and pending tasks are consolidated strictly under `.lovable/plans/pending/01-<slug>.md` (with two-digit sequence prefixes `01-`, `02-`, etc.) and `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`.
+14. **Consolidation of simple tasks vs. Protection of detailed specs**:
     - **Simple tasks consolidation**: Routine, ephemeral, or minor simple tasks that do not warrant individual files may be consolidated into overarching session summaries or existing trackers to prevent file bloat.
     - **CRITICAL - Detailed specs must NEVER be consolidated or shrunk**: Detailed specifications, architectural designs, non-negotiable rules, domain specifications (e.g. `spec/21-app/`), and complex requirement documents MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must be preserved with 100% fidelity, exact wording, and full granularity.
+15. **Anti-Hallucination & Clarifying Questions**: If any file, spec, or user intent is ambiguous or missing, the AI MUST NOT guess or hallucinate. It must ask clarifying questions or record an open ambiguity in `01-new-ambiguity/01-<slug>.md`.
 
 ## Working stance
 
@@ -43,7 +45,7 @@ Walk `.lovable/` recursively. Read all of these if they exist; note missing and 
 
 1. `.lovable/memory/index.md`, master memory index
 2. `.lovable/coding-guidelines.md` or `spec/02-coding-guidelines/`, coding rules (see §Coding guidelines)
-3. `.lovable/plans/index.md` and every file under `plans/pending/` and `plans/subtasks/`; skim `plans/completed/`
+3. `.lovable/plans/index.md` and every file under `plans/pending/` (`01-<slug>.md`) and `plans/subtasks/`; skim `plans/completed/`
 4. `.lovable/plan.md` if the project uses the single-file variant
 5. `.lovable/suggestions.md` and `.lovable/suggestions/index.md`
 6. `.lovable/strictly-avoid.md`
@@ -72,7 +74,7 @@ Answer for yourself, do not dump to chat unless asked. Cover:
 
 For every plan finished this turn:
 ```sh
-mv .lovable/plans/pending/XX-<slug>.md .lovable/plans/completed/XX-<slug>.md
+mv .lovable/plans/pending/01-<slug>.md .lovable/plans/completed/01-<slug>.md
 ```
 Inside the moved file, edit:
 ```diff
@@ -85,7 +87,7 @@ Then edit `.lovable/plans/index.md` so the table lists the file under `completed
 
 For every ambiguity answered by the user this turn:
 ```sh
-mv .lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md .lovable/ambiguous-questions/02-ambiguity-resolved/XX-<slug>.md
+mv .lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md .lovable/ambiguous-questions/02-ambiguity-resolved/01-<slug>.md
 ```
 Inside the moved file, append:
 ```markdown
@@ -104,18 +106,18 @@ Resolved ambiguities are binding decisions. You will never ask about them again.
 
 ## Phase 4, issues and CI/CD logging
 
-- General bugs: `.lovable/issues/XX-<slug>.md`.
-- Solved bugs: `.lovable/solved-issues/XX-<slug>.md` with root cause and fix diff.
-- Strictly-avoid entries in `.lovable/strictly-avoid.md` reference the solved file: `- [Pattern]: [why forbidden]. See: .lovable/solved-issues/XX-<slug>.md`.
-- CI/CD issues: `.lovable/cicd-issues/XX-<slug>.md`, indexed in `.lovable/cicd-index.md`. Scan the index before adding a new one, no duplicates.
+- General bugs: `.lovable/issues/01-<slug>.md`.
+- Solved bugs: `.lovable/solved-issues/01-<slug>.md` with root cause and fix diff.
+- Strictly-avoid entries in `.lovable/strictly-avoid.md` reference the solved file: `- [Pattern]: [why forbidden]. See: .lovable/solved-issues/01-<slug>.md`.
+- CI/CD issues: `.lovable/cicd-issues/01-<slug>.md`, indexed in `.lovable/cicd-index.md`. Scan the index before adding a new one, no duplicates.
 
 ## Phase 5, verbatim spec capture and consolidation rules
 
-1. **Verbatim Spec Capture**: Every sizeable user directive, decision, architectural rule, or spec from the session is saved verbatim under `.lovable/memory/specs/XX-<slug>.md`, referenced from `memory/index.md`, and reflected in `plan.md` / `plans/index.md` if it changes the roadmap. Never paraphrase. Quote the user.
+1. **Verbatim Spec Capture**: Every sizeable user directive, decision, architectural rule, or spec from the session is saved verbatim under `.lovable/memory/specs/01-<slug>.md`, referenced from `memory/index.md`, and reflected in `plan.md` / `plans/index.md` if it changes the roadmap. Never paraphrase. Quote the user.
 2. **Consolidation Policy**:
    - *Simple / Minor Tasks*: Consolidation is encouraged for simple, repetitive, or ephemeral tasks into existing logs or overarching session files to prevent cluttering the repository.
    - *Detailed / High-Value Specs*: **STRICTLY FORBIDDEN TO CONSOLIDATE**. Any spec containing detailed requirements, edge cases, domain architecture (`spec/21-app/`), error-handling matrices (`spec/03-error-manage/`), coding rules (`spec/02-coding-guidelines/`), or user instructions must NEVER be merged, summarized, or shortened.
-3. New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
+3. New user command / convention: `.lovable/spec/commands/01-<slug>.md`.
 
 ## Phase 6, `.lovable/memory/what-to-read.md` and root `readme.md`
 

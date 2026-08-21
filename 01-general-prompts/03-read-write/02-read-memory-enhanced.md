@@ -9,8 +9,8 @@
 
 ## Ambiguity folder path (non-negotiable)
 
-- Open questions: `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md`
-- Answered questions: `.lovable/ambiguous-questions/02-ambiguity-resolved/XX-<slug>.md`
+- Open questions: `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`
+- Answered questions: `.lovable/ambiguous-questions/02-ambiguity-resolved/01-<slug>.md`
 
 Read both folders in full during Phase 1. Surface open-ambiguity counts and slugs in the Completion Confirmation block. Treat resolved-ambiguity files as binding project decisions, do not re-litigate them. If an open ambiguity is relevant to the incoming task, stop and surface it before doing work; never guess past it.
 
@@ -20,14 +20,14 @@ Read both folders in full during Phase 1. Surface open-ambiguity counts and slug
 
 The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
 
-Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), and **recursively traverse every single folder, subfolder, and nested markdown file in the `spec/` directory**—specifically `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/` (or any domain-specific app folder)—and **read every pending task** across `.lovable/plans/pending/`, `.lovable/plans/subtasks/`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
+Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), and **recursively traverse every single folder, subfolder, and nested markdown file in the `spec/` directory**—specifically `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/` (or any domain-specific app folder)—and **read every pending task** across `.lovable/plans/pending/01-<slug>.md`, `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
 
 *(Note on spec folder naming: Spec folders follow the hyphenated pattern `spec/<NN>-<slug>/` where `<NN>` is a sequence prefix and `<slug>` is the descriptive name. These numbers and folder placements are not rigidly fixed and may switch or be reorganized between projects, but this canonical layout represents the general architecture the AI must dynamically discover, inspect, and read in full).*
 
 You are done reading when you can, without guessing:
 - name the CODE RED rules,
 - name the naming, error-handling, and DB conventions,
-- list what is currently in `.lovable/plans/pending/` and every active subtask,
+- list what is currently in `.lovable/plans/pending/` (sequenced as `01-`, `02-`) and every active subtask,
 - point at the exact file that justifies any rule you enforce,
 - explain the whole codebase structure, active DB schemas, API route contracts, app features (`spec/21-app/`), coding guidelines (`spec/02-coding-guidelines/`), and error management philosophy (`spec/03-error-manage/`),
 - list out all pending tasks and unresolved issues with accurate step counts,
@@ -42,7 +42,7 @@ If you cannot do that, keep reading. Do not start work.
 The `.lovable/` folder, specs, and entire codebase can be massive. To process this information with zero blind spots:
 - **Autonomous Looping Enforcement:** The AI agent MUST autonomously loop through all directories and files across `spec/`, `.lovable/`, and application source trees. Do not stop after one high-level glance; systematically iterate through each directory layer.
 - **Deep Recursive Spec Traversal:** The AI must recursively inspect every subfolder and all nested `.md` files in `spec/` (`00-overview.md`, numbered specs `01-*.md`, `99-consistency-report.md`, `spec-index.md`, subdirectories).
-- **Broken Link & Missing Spec Detection:** Scan internal markdown references across `.lovable/` and `spec/`. If a referenced spec or issue file is missing on disk, automatically log it as an open question in `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md` or ask the user directly, never guessing past missing documentation.
+- **Anti-Hallucination & Clarifying Questions:** Scan internal markdown references across `.lovable/` and `spec/`. If a referenced spec or issue file is missing on disk, or if requirements are ambiguous, the AI MUST NOT guess or assume. It must automatically log an open question in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` or ask the user directly to ensure alignment.
 - **Active Schema & API Contract Mapping:** Ingest and maintain an in-memory map of active DB tables/schemas (`spec/04-database-conventions/`, `spec/23-app-db/`), API endpoints, and global state stores so downstream tasks have zero assumptions on field names or parameter shapes.
 - **Tooling & Runtime Compatibility Check:** Inspect package manifests (`package.json`, `tsconfig.json`, build configs) to catalog runtime targets, linter rules, and banned packages before completing onboarding.
 - **Parallel Subagents for Deep Reading:** You ARE allowed and strongly encouraged to spawn dedicated sub-agents to read items and synthesize memory in parallel.
@@ -50,9 +50,9 @@ The `.lovable/` folder, specs, and entire codebase can be massive. To process th
 - **Micro-Tasking:** Assign sub-agents small, granular folders/files to read rather than asking one agent to read the entire codebase in a single pass.
 - **Root `readme.md` Lowercase Self-Healing Exception:** If the root readme is uppercase `README.md` or incorrectly cased, immediately rename it to `readme.md`, commit, and push to git without asking.
 - **Memory Persistence:** You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
-  - Writing summaries of what you learned into `.lovable/memory/learned/XX-<slug>.md` (or `.lovable/memory/specs/XX-<slug>.md`), including file counts, to maintain context.
+  - Writing summaries of what you learned into `.lovable/memory/learned/01-<slug>.md` (or `.lovable/memory/specs/01-<slug>.md`), including file counts, to maintain context.
   - Updating `.lovable/memory/what-to-read.md` based on your progress to guide future reading workflows.
-  - Documenting any discovered bugs into `.lovable/issues/` or `.lovable/suggestions.md`.
+  - Documenting any discovered bugs into `.lovable/issues/01-<slug>.md` or `.lovable/suggestions.md`.
   - Capturing open ambiguities or updating execution plans.
 - **Missing Spec File Protocol:** If a spec folder contains only `.gitkeep` or missing reference files, check the full names in `01-general-prompts/02-coding-standards/01-coding-guidelines.md` or existing plans, use available guidelines in the prompt library, and if critical information is absent, explicitly ask the user for the file.
 - CRITICAL: Other than fixing the root `readme.md` lowercase naming if needed, you MUST NOT refactor, edit, or write any application source code. This is a strictly read and analysis phase.
@@ -82,11 +82,11 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 | 5   | `.lovable/prompt.md` + `.lovable/prompts/`            | Canonical prompts (Read, Plan, etc.). "Read memory" = run this prompt.                                                                      |
 | 6   | `.lovable/memory/index.md`                            | Index of institutional knowledge. Then read every file it references, recursively.                                                          |
 | 7   | `.lovable/plans/index.md`                             | Roll-up of all plans (pending + completed + subtasks). Read this before touching individual plan files.                                     |
-| 8   | `.lovable/plans/pending/`                             | Active plans, `XX-<slug>.md`—**read all and list out each pending item**.                                                                   |
+| 8   | `.lovable/plans/pending/`                             | Active plans, `01-<slug>.md`—**read all and list out each pending item**.                                                                   |
 | 9   | `.lovable/plans/completed/`                           | Recent history, skim only                                                                                                                   |
-| 10  | `.lovable/plans/subtasks/XX-<slug>/`                  | Depth files linked from a parent plan—**read all active subtasks and list them**.                                                           |
+| 10  | `.lovable/plans/subtasks/01-<slug>/`                  | Depth files linked from a parent plan—**read all active subtasks and list them**.                                                           |
 | 11  | `.lovable/suggestions.md`                             | Ideas not yet approved                                                                                                                      |
-| 12  | `.lovable/spec/commands/`                             | User commands and conventions, `XX-<slug>.md`                                                                                               |
+| 12  | `.lovable/spec/commands/`                             | User commands and conventions, `01-<slug>.md`                                                                                               |
 | 13  | `.lovable/issues/`                                    | General bugs and regressions—**read and list out pending bugs**.                                                                            |
 | 14  | `.lovable/cicd-issues/`                               | CI/CD-specific failures—**read and list out pending CI/CD issues**.                                                                          |
 | 15  | `.lovable/ambiguous-questions/01-new-ambiguity/`      | Open questions currently blocking work. If any exist, surface them in the completion block, do NOT guess past them.                         |
@@ -126,7 +126,7 @@ Two indexes decide what you read next. Treat them as required entry points, not 
 - Naming conventions (files, folders, DB columns, variables)?
 - Root readme strictly lowercase `readme.md`?
 - Error-handling philosophy (`spec/03-error-manage/`)?
-- What is in `.lovable/plans/pending/` and `plans/subtasks/` right now (exact list)?
+- What is in `.lovable/plans/pending/` (sequenced as `01-`, `02-`) and `plans/subtasks/` right now (exact list)?
 - Active DB schemas, table columns, and API contracts?
 - App specs and domain architecture (`spec/21-app/`)?
 - Whole codebase layout and component flow?
@@ -187,7 +187,7 @@ Fallbacks when the canonical numbered folder is absent: `.lovable/coding-guideli
 1. If the specs are silent on a rule, that rule does not exist. Do not invent one.
 2. Specs beat training data. Always.
 3. Cite the file and section when you enforce a rule.
-4. When a spec is ambiguous, ask. Do not "use best judgement".
+4. When a spec is ambiguous or missing, ask questions. Do not "use best judgement".
 5. Do not blend this project's conventions with conventions from other projects you have seen.
 6. No filler. No "hope this helps", no "let me know".
 
@@ -198,21 +198,21 @@ Fallbacks when the canonical numbered folder is absent: `.lovable/coding-guideli
 ```
 New info discovered
 ├─ Institutional knowledge (pattern / convention / decision)?
-│   YES → .lovable/memory/<slug>.md  +  update .lovable/memory/index.md
+│   YES → .lovable/memory/01-<slug>.md  +  update .lovable/memory/index.md
 ├─ Must never happen again?
 │   YES → .lovable/strictly-avoid.md
 ├─ Idea, not yet approved?
 │   YES → .lovable/suggestions.md
 ├─ New user command / convention?
-│   YES → .lovable/spec/commands/XX-<slug>.md
+│   YES → .lovable/spec/commands/01-<slug>.md
 ├─ Bug / regression?
-│   YES → .lovable/issues/XX-<slug>.md   (or .lovable/cicd-issues/ if CI/CD)
+│   YES → .lovable/issues/01-<slug>.md   (or .lovable/cicd-issues/ if CI/CD)
 ├─ New or changed plan?
-│   YES → .lovable/plans/pending/XX-<slug>.md  +  update .lovable/plans/index.md
+│   YES → .lovable/plans/pending/01-<slug>.md  +  update .lovable/plans/index.md
 ├─ Ambiguity / unclear requirement blocking progress?
-│   YES → .lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md
+│   YES → .lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md
 ├─ User just answered a previously-open ambiguity?
-│   YES → mv the file to .lovable/ambiguous-questions/02-ambiguity-resolved/XX-<slug>.md,
+│   YES → mv the file to .lovable/ambiguous-questions/02-ambiguity-resolved/01-<slug>.md,
 │         append `## Resolution` (answer + applied solution), flip Status: resolved
 └─ None of the above → do not persist.
 ```
@@ -267,7 +267,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Read the root `readme.md` file (casing rules, architecture, entry points)
 - [ ] Walked `.lovable/` recursively, no folder or file skipped silently
 - [ ] Read `.lovable/memory/index.md` and every file it points at
-- [ ] Read `.lovable/plans/index.md`, every file in `pending/`, and all active subtasks
+- [ ] Read `.lovable/plans/index.md`, every file in `pending/` (sequenced as `01-`, `02-`), and all active subtasks
 - [ ] Skimmed `.lovable/plans/completed/` for recent history
 - [ ] Read every file in `.lovable/spec/commands/`
 - [ ] Read every file in `.lovable/issues/` and `.lovable/cicd-issues/`

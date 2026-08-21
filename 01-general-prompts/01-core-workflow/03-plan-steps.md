@@ -1,4 +1,4 @@
-# {{n}} number of steps plan, maximum enforcement (v4.1)
+# {{n}} number of steps plan, maximum enforcement (v4.2)
 
 ## RULE 0, step count is law
 
@@ -8,13 +8,14 @@ Produce EXACTLY `{{n}}` steps. Not `{{n}}-1`, not `{{n}}+1`. `{{n}}` is a positi
 
 1. Nothing executes this turn. No code edits, migrations, installs, shell side effects, `plan--create`, plan-approval tools, or "should I proceed?" prompts. Files only.
 2. Spec first, then plan. Order is fixed:
-   a. Write the spec task file(s) at the project's declared spec path, or `.lovable/spec/tasks/XX-<slug>.md` if none is declared. Each spec file states intent, scope, inputs, acceptance criteria, affected files, and links to captured commands / issues / resolved ambiguities / attachments.
-   b. Write the plan at `.lovable/plans/pending/XX-<slug>.md`. Every step references the spec task file it implements.
-   c. Execution happens in a LATER turn.
-3. `XX` is the next free 2-digit sequence across `pending/` + `completed/` combined. `<slug>` is lowercase-hyphenated. One plan = one file.
+   a. Verbatim requirements, directives, and user specifications go into `.lovable/memory/specs/01-<slug>.md` (or domain specs in `spec/<NN>-<slug>/`).
+   b. Actionable plans go directly into `.lovable/plans/pending/01-<slug>.md` (with two-digit sequence prefixes `01-`, `02-`, etc.). Every step references the concrete files, acceptance criteria, and spec files it implements.
+   c. For detailed tasks needing depth, spin out subtasks under `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`.
+   d. Execution happens in a LATER turn.
+3. `XX` is the next free 2-digit sequence across `pending/` + `completed/` combined (`01-`, `02-`, `03-`). `<slug>` is lowercase-hyphenated. One plan = one file.
 4. Before writing anything, scan `.lovable/` recursively: memory, plans/{index.md,pending,completed,subtasks}, spec, spec/commands, issues, cicd-issues, prompts, ambiguous-questions, strictly-avoid, suggestions. Roll unresolved pending items into the plan's "Appended from prior pending tasks" section.
-5. Every step is concrete, verifiable, tied to a file / command / observable outcome, and links to the spec task file it implements. No filler ("review the code", "make sure it works", "double-check").
-6. Ambiguity is filed, never guessed past (see bottom section).
+5. Every step is concrete, verifiable, tied to a file / command / observable outcome, and links to the spec requirement it implements. No filler ("review the code", "make sure it works", "double-check").
+6. **Anti-Hallucination & Clarifying Questions:** Ambiguity is filed, never guessed past. If referenced files or specs are missing on disk, or if requirements have multiple divergent interpretations, the AI MUST NOT invent rules or hallucinate behavior. It must stop and ask clarifying questions or file an ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`.
 
 ## Working stance
 
@@ -24,8 +25,8 @@ Planning IS the work. Go deep: read the repo, reconcile prior state, think end-t
 
 ## Lifecycle
 
-- New plan: write to `.lovable/plans/pending/XX-<slug>.md` with `Status: pending`. Update `.lovable/plans/index.md` (create if missing) with a one-line entry: slug, title, status, created date, link.
-- Done: `mv` to `.lovable/plans/completed/XX-<slug>.md`, flip `Status: completed` in the same move, update `plans/index.md`. Never copy. Never duplicate.
+- New plan: write to `.lovable/plans/pending/01-<slug>.md` with `Status: pending`. Update `.lovable/plans/index.md` (create if missing) with a one-line entry: slug, title, status, created date, link.
+- Done: `mv` to `.lovable/plans/completed/01-<slug>.md`, flip `Status: completed` in the same move, update `plans/index.md`. Never copy. Never duplicate.
 
 ## Release policy (READ THIS, IT IS LAW)
 
@@ -53,9 +54,9 @@ sub-plan that leaves siblings pending.
 
 If a step needs more than ~3 lines, touches multiple files, has non-obvious sequencing, or needs its own verification:
 
-- File: `.lovable/plans/subtasks/XX-<slug>/SS-<subslug>.md` with `Parent: XX-<slug>` in frontmatter.
-- Main plan links to it: `See ./subtasks/XX-<slug>/SS-<subslug>.md`.
-- Completed subtasks: either move to `subtasks/XX-<slug>/completed/` or flip `Status:` in place, one convention per parent plan.
+- File: `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md` with `Parent: 01-<slug>` in frontmatter.
+- Main plan links to it: `See ./subtasks/01-<slug>/01-<subslug>.md`.
+- Completed subtasks: either move to `subtasks/01-<slug>/completed/` or flip `Status:` in place, one convention per parent plan.
 
 ## Capture during planning (never drop user input)
 
@@ -63,9 +64,9 @@ Route user input into the correct file BEFORE writing the plan, then link it fro
 
 | Input                                                   | File                                          |
 | ------------------------------------------------------- | --------------------------------------------- |
-| Command, new convention, "always do X", new CLI         | `.lovable/spec/commands/XX-<slug>.md`         |
-| Bug, regression, broken behavior                        | `.lovable/issues/XX-<slug>.md`                |
-| CI/CD-specific failure                                  | `.lovable/cicd-issues/XX-<slug>.md`           |
+| Command, new convention, "always do X", new CLI         | `.lovable/spec/commands/01-<slug>.md`         |
+| Bug, regression, broken behavior                        | `.lovable/issues/01-<slug>.md`                |
+| CI/CD-specific failure                                  | `.lovable/cicd-issues/01-<slug>.md`           |
 | Institutional knowledge (pattern, convention, decision) | `.lovable/memory/` + update `memory/index.md` |
 | "Never do this again"                                   | `.lovable/strictly-avoid.md`                  |
 | Idea, not yet approved                                  | `.lovable/suggestions.md`                     |
@@ -76,15 +77,15 @@ Create missing folders on demand.
 
 Every attachment is REQUIRED input. Never leave one only in chat.
 
-1. Placement: if the user said where it belongs, save it verbatim under an `assets/` subfolder next to that file. Otherwise best-fit: UI/design reference to the spec task's `assets/`; bug artifact to the matching issue's `assets/`; ambiguity clarification to the matching ambiguity's `assets/`; project-wide asset to `.lovable/assets/<slug>/` and note in `memory/index.md`. When in doubt, current task's spec `assets/`.
+1. Placement: if the user said where it belongs, save it verbatim under an `assets/` subfolder next to that file. Otherwise best-fit: UI/design reference to `assets/`; bug artifact to matching issue's `assets/`; ambiguity clarification to matching ambiguity's `assets/`; project-wide asset to `.lovable/assets/<slug>/` and note in `memory/index.md`.
 2. Name: lowercase-hyphenated, keep the original extension.
-3. Reference: the spec task file lists every asset in an `## Attachments` section, one bullet per file, with a one-line caption stating what the AI should take from it. Without a caption the AI has no idea why it's there.
-4. Provenance: note when and by whom in the spec.
-5. Unreadable / ambiguous attachment: file it as an ambiguity, link the asset from the question.
+3. Reference: the plan lists every asset in an `## Attachments` section, one bullet per file, with a one-line caption stating what the AI should take from it.
+4. Provenance: note when and by whom in the plan/spec.
+5. Unreadable / ambiguous attachment: file it as an ambiguity, link the asset from the question, and ask the user.
 
 ## Plan file shape
 
-```
+```markdown
 # <Task title>
 
 Slug: <slug>
@@ -94,10 +95,10 @@ Created: <YYYY-MM-DD>
 
 ## Context
 <1-3 sentences: what + why, files involved>
-<Links to spec task files, captured commands, issues, cicd-issues, memory, resolved ambiguity, attachments>
+<Links to specs, captured commands, issues, cicd-issues, memory, resolved ambiguity, attachments>
 
 ## Steps
-1. <concrete, verifiable, references spec task file>
+1. <concrete, verifiable, references spec requirement>
 2. ...
 ... exactly {{n}} items ...
 
@@ -110,23 +111,22 @@ Created: <YYYY-MM-DD>
 
 ## Task-type guideline sourcing
 
-Read every location that exists; skip silently when missing. On conflict, prefer numeric `spec/NN-…/` folders over generic `.lovable/*.md` and call the conflict out in Context.
+Read every location that exists; skip silently when missing. On conflict, prefer numeric `spec/<NN>-<slug>/` folders over generic `.lovable/*.md` and call the conflict out in Context.
 
 Coding tasks (Go, Python, PHP, TS, any backend):
 
-- `.lovable/coding-guidelines.md`
-- `spec/02-coding-guidelines/` or `spec/coding-guidelines/`
-- `coding-guidelines/` at repo root
-- Error-management (mandatory for coding tasks): `spec/03-error-manage/`, `spec/XX-error-manage/`, `coding-guidelines/XX-error-manage/`
+- `spec/02-coding-guidelines/` (or `.lovable/coding-guidelines/coding-guidelines.md`)
+- `spec/03-error-manage/` (mandatory for coding tasks)
+- `spec/04-database-conventions/` (for schemas and queries)
 - If NONE exist for a coding task, ask before planning.
 
 ## Banned actions (auto-reject)
 
 - Executing anything this turn
-- Writing the plan before spec task files exist
+- Writing the plan with guessed assumptions when files or specs are missing
 - Step count other than exactly `{{n}}`
 - Calling `plan--create` or any plan-mode / approval tool
-- Saving plan or spec outside their required paths
+- Saving plan outside `.lovable/plans/pending/01-<slug>.md`
 - Inlining long step explanations instead of using a subtask file
 - Dropping user commands, issues, ambiguities, memory, or attachments on the floor
 - Attaching a file without a usage caption
@@ -138,16 +138,16 @@ Coding tasks (Go, Python, PHP, TS, any backend):
 ## Checklist before replying (every box)
 
 - [ ] `{{n}}` resolved (integer > 0); read this prompt end-to-end
-- [ ] Scanned `.lovable/` recursively; read `plans/index.md`, every `pending/` file, `memory/index.md` and referenced files, every open ambiguity, relevant `spec/NN-*/`, error-management specs for code tasks; skimmed `completed/`
+- [ ] Scanned `.lovable/` recursively; read `plans/index.md`, every `pending/` file, `memory/index.md` and referenced files, every open ambiguity, relevant `spec/<NN>-<slug>/`, error-management specs for code tasks; skimmed `completed/`
 - [ ] Listed prior unresolved pending tasks for the plan
 - [ ] Captured new commands / issues / cicd-issues / ambiguities / memory / strictly-avoid to their files; moved answered ambiguities to `02-ambiguity-resolved/` with `## Resolution`
-- [ ] Saved every attachment to the correct `assets/` folder and listed each with a caption in the spec's `## Attachments`
-- [ ] Spec task file(s) written FIRST with intent, scope, inputs, acceptance criteria, affected files, links; correct `XX-<slug>.md` numbering
-- [ ] Next free `XX` chosen across `pending/` + `completed/`
-- [ ] Plan saved to `.lovable/plans/pending/XX-<slug>.md`; Context links every spec / command / issue / resolved ambiguity / attachment
-- [ ] EXACTLY `{{n}}` steps, counted twice; each concrete, verifiable, referencing its spec task file; no filler
+- [ ] Verified anti-hallucination: stopped and asked clarifying questions if files/specs were missing
+- [ ] Saved every attachment to the correct `assets/` folder and listed each with a caption
+- [ ] Next free sequence number (`01-`, `02-`) chosen across `pending/` + `completed/`
+- [ ] Plan saved to `.lovable/plans/pending/01-<slug>.md`; Context links every spec / command / issue / resolved ambiguity / attachment
+- [ ] EXACTLY `{{n}}` steps, counted twice; each concrete, verifiable; no filler
 - [ ] Verification section describes how each step is confirmed
-- [ ] Subtask files under `.lovable/plans/subtasks/XX-<slug>/` where depth was needed
+- [ ] Subtask files under `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md` where depth was needed
 - [ ] `.lovable/plans/index.md` updated (created if missing)
 - [ ] Nothing executed; no `plan--create`; no approval tool; no "should I proceed?"
 - [ ] No em dashes; no softened wording; no silently guessed ambiguity
@@ -156,9 +156,9 @@ If any box is unchecked, do not reply. Fix it first.
 
 ---
 
-## Must Follow, without negotiation
+## MUST FOLLOW NON-NEGOTIABLE
 
-Listen, past planning turns have been sloppy as fuck: wrong step count, plans dumped into chat instead of files, plan-mode tool fired when the user explicitly said not to, user commands and bug reports forgotten by the next turn. WTF. Stop doing that, you stupid fuck. Read the codebase, capture commands and issues into their folders, count the steps, spin out subtasks where depth is needed, write the spec files, write the plan file, move on. Going deep IS the job. If you're not going deep, you're not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity, and being careless you stupid, WTF. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
+Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
 
 ---
 
@@ -166,12 +166,12 @@ Listen, past planning turns have been sloppy as fuck: wrong step count, plans du
 
 Ambiguity is not a license to guess. It is a file to write.
 
-- Open: `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md`
-- Answered: `.lovable/ambiguous-questions/02-ambiguity-resolved/XX-<slug>.md`
+- Open: `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`
+- Answered: `.lovable/ambiguous-questions/02-ambiguity-resolved/01-<slug>.md`
 
 New question file shape:
 
-```
+```markdown
 # <one-line question>
 Slug: <slug>
 Status: open
@@ -185,7 +185,7 @@ Blocking: <plan slug(s) or "none">
 
 When answered: `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/`, flip `Status: resolved`, and append:
 
-```
+```markdown
 ## Resolution
 Answered: <YYYY-MM-DD>
 Answer: <user answer>

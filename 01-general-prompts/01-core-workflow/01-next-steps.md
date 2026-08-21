@@ -1,4 +1,4 @@
-# Next {{n}} steps or tasks (v3.3)
+# Next {{n}} steps or tasks (v3.4)
 
 ## RULE 0 - EXACTLY `{{n}}` NEXT STEPS (MUST)
 
@@ -14,7 +14,7 @@ in the root README. Do NOT run the release prompt. Do NOT invent a
 "minor bump because this felt important" step.
 
 The release happens ONLY when the ENTIRE plan is finished, meaning every
-task in `.lovable/plans/pending/XX-<slug>.md` for that plan (and every
+task in `.lovable/plans/pending/01-<slug>.md` for that plan (and every
 subtask) has been moved to `.lovable/plans/completed/` with
 `Status: completed`. Detection is mechanical:
 
@@ -50,11 +50,11 @@ Releasing mid-plan is auto-reject on the same tier as RULE 0.
 
 When a task is completed this turn:
 
-- `mv .lovable/plans/pending/XX-<slug>.md .lovable/plans/completed/XX-<slug>.md`
+- `mv .lovable/plans/pending/01-<slug>.md .lovable/plans/completed/01-<slug>.md`
 - Flip `Status: completed` in the same move.
 - Update `.lovable/plans/index.md` in the same op.
 - Subtasks follow the parent plan's convention (move to
-  `subtasks/XX-<slug>/completed/` or flip `Status:` in place).
+  `subtasks/01-<slug>/completed/` or flip `Status:` in place).
 
 `mv`, never `cp`, never `rm`. Leaving a done task in `pending/` is
 auto-reject. That is the only file this prompt is allowed to move
@@ -79,6 +79,7 @@ You are NOT done until all of these are true:
 
 - [ ] You actually read the relevant files AND the project memories, and
       can name the exact files, functions, and lines involved.
+- [ ] Anti-Hallucination: If any spec, reference, or file is missing, stopped and asked clarifying questions rather than guessing.
 - [ ] The root cause is written in ONE sentence, before any fix.
 - [ ] The fix is the minimum correct change tied to that root cause, not
       a symptom patch.
@@ -126,38 +127,15 @@ You are NOT done until all of these are true:
 
 Before touching code, verify guideline sources and follow them:
 
-1. Check `.lovable/coding-guidelines.md`. If present, follow it.
-2. Check `spec/coding-guidelines/`. If present, follow every file inside.
-3. Also check any language-specific folder if it exists
-   (`spec/coding-guidelines/go/`, `.../python/`, `.../php/`,
-   `.../typescript/`, etc.) and apply the relevant one.
-4. Error-management specs are mandatory for coding tasks when they exist:
-   `spec/03-error-manage/`, `spec/XX-error-manage/`,
-   `coding-guidelines/XX-error-manage/`.
-
-Rules:
-
-- Verify each file/folder exists before citing it. Skip silently if missing.
-- If multiple guidelines apply, follow ALL of them.
-- On conflict, prefer the folder-level spec (`spec/coding-guidelines/`)
-  over the flat `.lovable/coding-guidelines.md`, and call out the conflict
-  in the reply.
-- If this IS a coding task and NEITHER location has guidelines, STOP and
-  ask the user to provide one before writing code. Do not invent a house
-  style.
+1. Check `.lovable/coding-guidelines.md` or `spec/02-coding-guidelines/`. If present, follow it.
+2. Check `spec/03-error-manage/` for error management rules.
+3. Check `spec/04-database-conventions/` for schemas.
+4. If multiple guidelines apply, follow ALL of them.
+5. On conflict, prefer the folder-level spec (`spec/02-coding-guidelines/`) over flat summaries.
+6. If this IS a coding task and guidelines are missing, STOP and ask the user to clarify before writing code. Do not invent a house style.
 
 ---
 
-## Must Follow and without negotiation
+## MUST FOLLOW NON-NEGOTIABLE
 
-Listen, past next-tasks turns have been sloppy as fuck: wrong step count,
-missing remaining-tasks list, symptom patches sold as fixes, coding
-guidelines ignored, logs never checked, prompt files getting mirrored
-into `.lovable/prompts/` when nobody asked, and worst of all releasing
-mid-plan because a single task felt shippable. WTF. Stop doing that, you
-stupid fuck. Read the code, find the root cause in one sentence, apply
-the minimum correct fix, verify it in the logs, list EVERY remaining
-task, `mv` finished plans from `pending/` to `completed/`, then run the
-plan-completion check. Release ONLY when the plan is 100% done, never
-before. Nothing else moves. Nothing else gets saved. Going deep IS the
-job. Violating this is auto-reject on the same tier as RULE 0. If you're not going deep, you're not doing the job. Are you stupid? You were supposed to do the task properly. Where is this, are you stupid fuck? Where? Tell me. Your stupidity is going on top of my head. I mean, where did you learn this stupidity? If I could find you, I could slap you.
+Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
