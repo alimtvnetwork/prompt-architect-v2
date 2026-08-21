@@ -92,4 +92,4 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ## Before Writing Code
 
-Read and follow spec folders 02, 03 and 04 before writing any code. Error management must be followed. Code must be DRY.
+Read and follow spec folders `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/` before writing any code. Error management must be followed. Code must be DRY.

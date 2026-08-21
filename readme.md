@@ -26,15 +26,20 @@ One readme only, always lowercase `readme.md`. Never create `README.md`.
 <project-name>-prompts/         prompts that name a project
   01-<prompt-slug>.md
 assets/                         images and assets supplied with prompts
-spec/
-  02/  coding guidelines        03/  error management
-  04/  mandatory rules          21/  app spec
+spec/                           specifications (hyphenated: spec/<NN>-<slug>/)
+  01-spec-authoring-guide/      spec authoring standards
+  02-coding-guidelines/         coding standards & rules
+  03-error-manage/              error management conventions
+  04-database-conventions/      database schema & query rules
+  21-app/                       app domain specifications & routes
 .lovable/                       configuration, memory, and indexes
   memory/                       what-to-read.md, prompt-library.md
   prompts.md                    canonical index of all saved prompts
 readme.md                       this file
 src/                            application code
 ```
+
+*(Note: Spec folder sequence numbers and placements follow `spec/<NN>-<slug>/` but can switch between projects; AI agents dynamically discover and read all nested markdown files).*
 
 ## Naming rules
 
@@ -58,15 +63,14 @@ Proofread only: remove filler words, keep the exact wording. Sections in order:
 2. `## Action Items — Must Follow (Non-Negotiable)` — checklist of every stated rule.
 3. `## Folder Structure` — only if discussed.
 4. `## Database` — only if discussed.
-5. `## Before Writing Code` — code prompts only: read `spec/02`, `spec/03`, `spec/04`;
-   error management must be followed; code must be DRY.
+5. `## Before Writing Code` — code prompts only: read `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`; error management must be followed; code must be DRY.
 
 If the user says to keep a prompt as is, store the body verbatim — only the checklist
 section may be enhanced (formatting, phase grouping, sharper wording; never drop a rule).
 
 ## Supplied files and links
 
-Assets/images -> `assets/`. Specs -> `spec/` (app spec in `spec/21/`). Ask if unclear.
+Assets/images -> `assets/`. Specs -> `spec/` (app spec in `spec/21-app/`). Ask if unclear.
 
 ## Application
 

@@ -41,10 +41,12 @@ To ensure zero blind spots, the AI must systematically inspect the following aut
   suggestions.md                                # Suggestions tracker
   prompts.md                                    # Canonical prompt registry
 spec/
-  02/ (or 02-coding-guidelines/)                # Coding standards & zero-tolerance rules
-  03/ (or 03-error-manage/)                     # Error management & logging philosophy
-  04/ (or 04-database-conventions/)             # Database conventions
-  21/ (or 21-app/)                              # App specification & feature requirements
+  01-spec-authoring-guide/                      # Spec authoring conventions & required files
+  02-coding-guidelines/                         # Coding standards & zero-tolerance rules
+  03-error-manage/                              # Error management & logging philosophy
+  04-database-conventions/                      # Database schema & query rules
+  21-app/                                       # App specification & feature requirements
+  (note: numbers in spec/<NN>-<slug>/ can switch between projects; dynamically traverse all nested .md files)
 readme.md                                       # Root repository guide (strictly lowercase)
 ```
 
@@ -146,4 +148,4 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ## Before Writing Code
 
-Read and follow spec folders 02, 03 and 04 before writing any code. Error management must be followed. Code must be DRY.
+Read and follow spec folders `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/` before writing any code. Error management must be followed. Code must be DRY.

@@ -13,7 +13,9 @@ Read both folders in full during Phase 1. Surface open-ambiguity counts and slug
 
 The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
 
-Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), every single folder in the `spec/` directory—specifically `spec/21/` (app spec) or any domain-specific folder, `spec/02/` (coding guidelines), `spec/03/` (error management conventions), `spec/04/` (database and mandatory conventions)—and **read every pending task** across `.lovable/plans/pending/`, `.lovable/plans/subtasks/`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
+Autonomously self-loop and read the entire codebase as a whole, the root `readme.md`, the entire `.lovable/` folder (especially `what-to-read.md` and all files it references), and **recursively traverse every single folder, subfolder, and nested markdown file in the `spec/` directory**—specifically `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/` (or any domain-specific app folder)—and **read every pending task** across `.lovable/plans/pending/`, `.lovable/plans/subtasks/`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
+
+*(Note on spec folder naming: Spec folders follow the hyphenated pattern `spec/<NN>-<slug>/` where `<NN>` is a sequence prefix and `<slug>` is the descriptive name. These numbers and folder placements are not rigidly fixed and may switch or be reorganized between projects, but this canonical layout represents the general architecture the AI must dynamically discover, inspect, and read in full).*
 
 You are done reading when you can, without guessing:
 
@@ -21,8 +23,9 @@ You are done reading when you can, without guessing:
 - name the naming, error-handling, and DB conventions,
 - list what is currently in `.lovable/plans/pending/` and every active subtask,
 - point at the exact file that justifies any rule you enforce,
-- explain the whole codebase structure, app features (`spec/21`), coding guidelines (`spec/02`), and error management philosophy (`spec/03`),
+- explain the whole codebase structure, app features (`spec/21-app/`), coding guidelines (`spec/02-coding-guidelines/`), and error management philosophy (`spec/03-error-manage/`),
 - list out all pending tasks and unresolved issues with accurate step counts,
+- confirm that every nested markdown file in `spec/` has been inspected,
 - confirm that the root readme is strictly lowercase `readme.md` (and auto-fixed/committed/pushed if it was not).
 
 If you cannot do that, keep reading. Do not start work.
@@ -31,8 +34,9 @@ If you cannot do that, keep reading. Do not start work.
 
 The `.lovable/` folder, specs, and entire codebase can be massive. To process this information with zero blind spots:
 - **Autonomous Looping Enforcement:** The AI agent MUST autonomously loop through all directories and files across `spec/`, `.lovable/`, and application source trees. Do not stop after one high-level glance; systematically iterate through each directory layer.
+- **Deep Recursive Spec Traversal:** The AI must recursively inspect every subfolder and all nested `.md` files in `spec/` (`00-overview.md`, numbered specs `01-*.md`, `99-consistency-report.md`, `spec-index.md`, subdirectories).
 - **Parallel Subagents for Deep Reading:** You ARE allowed and strongly encouraged to spawn dedicated sub-agents to read items and synthesize memory in parallel.
-- **Specific Titling:** When spawning a sub-agent for reading, you must give it a highly specific title reflecting exactly what it is reading (e.g., `Reading Auth Specs`, `Scanning Error Management Spec 03`, `Surveying App Codebase Tree`, `Ingesting Coding Guidelines Spec 02`). Do not use generic names. If an agent switches tasks, its title must change.
+- **Specific Titling:** When spawning a sub-agent for reading, you must give it a highly specific title reflecting exactly what it is reading (e.g., `Reading Auth Specs in spec/21-app`, `Scanning Error Management in spec/03-error-manage`, `Surveying App Codebase Tree`, `Ingesting Coding Guidelines in spec/02-coding-guidelines`). Do not use generic names. If an agent switches tasks, its title must change.
 - **Micro-Tasking:** Assign sub-agents small, granular folders/files to read rather than asking one agent to read the entire codebase in a single pass.
 - **Root `readme.md` Lowercase Self-Healing Exception:** If the root readme is uppercase `README.md` or incorrectly cased, immediately rename it to `readme.md`, commit, and push to git without asking.
 - **Memory Persistence:** You are allowed to write to the `.lovable/` directory to enhance project memory after reading. This includes:
@@ -79,14 +83,17 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 | 16  | `.lovable/ambiguous-questions/02-ambiguity-resolved/` | Answered questions with their applied solution. Treat these as binding decisions, do not re-litigate.                                       |
 | 17  | Anything else under `.lovable/`                       | Read it. If the folder exists, it exists for a reason.                                                                                      |
 
-### 1.2 Loop Through the Entire `spec/` Directory and Guidelines
+### 1.2 Loop Through the Entire `spec/` Directory, Subfolders, and Nested Files
 
-Systematically loop through the `spec/` folder, matching canonical names found in `01-general-prompts/02-coding-standards/01-coding-guidelines.md` and active plans:
-- `spec/02` / `spec/02-coding-guidelines/` (or `01-general-prompts/02-coding-standards/01-coding-guidelines.md`): Zero-tolerance coding standards, function size caps (8 lines preferred, 15 max), boolean naming (`is*`, `has*`, positive framing), immutable patterns, DRY priority 1.
-- `spec/03` / `spec/03-error-manage/`: Error management philosophy—never swallow errors, log operation name and key inputs on every catch, wrap errors without losing cause, typed errors only, universal response envelopes (`{ data, errors[], meta }`).
-- `spec/04` / `spec/04-database-conventions/`: Database schema, table naming (PascalCase), columns (camelCase), primary keys (`{Table}Id`), SQLite/ORM rules, ERD requirements.
-- `spec/21` / `spec/21-app/`: App specification, domain architecture, core capabilities, routes, and business rules.
-- Loop through any other present spec folders (`spec/01` through `spec/24`). If a folder only has `.gitkeep`, fallback to the corresponding guideline in prompt library or ask the user.
+Systematically loop through the `spec/` folder, dynamically matching canonical hyphenated names (numbers may vary between projects):
+- `spec/01-spec-authoring-guide/`: Spec authoring conventions, required files, format requirements.
+- `spec/02-coding-guidelines/` (or `01-general-prompts/02-coding-standards/01-coding-guidelines.md`): Zero-tolerance coding standards, function size caps (8 lines preferred, 15 max), boolean naming (`is*`, `has*`, positive framing), immutable patterns, DRY priority 1.
+- `spec/03-error-manage/`: Error management philosophy—never swallow errors, log operation name and key inputs on every catch, wrap errors without losing cause, typed errors only, universal response envelopes (`{ data, errors[], meta }`).
+- `spec/04-database-conventions/`: Database schema, table naming (PascalCase), columns (camelCase), primary keys (`{Table}Id`), SQLite/ORM rules, ERD requirements.
+- `spec/05-split-db-architecture/` through `spec/19-main-worker-service/`: Architectural specs for config, design system, docs viewer, code blocks, CLI, workflows, and release.
+- `spec/21-app/`: App specification, domain architecture, core capabilities, routes, and business rules.
+- `spec/22-app-issues/`, `spec/23-app-db/`, `spec/24-app-ui-design-system/`: App-specific issues, schemas, and design systems.
+- Recursively read all nested markdown files (`*.md`), overview documents (`00-overview.md`), consistency reports (`99-consistency-report.md`), and `spec-index.md`. If a folder contains only `.gitkeep`, fallback to the prompt library guideline or ask the user.
 
 ### 1.3 Loop Through the Entire Codebase as a Whole
 
@@ -107,9 +114,9 @@ Two indexes decide what you read next. Treat them as required entry points, not 
 - CODE RED rules?
 - Naming conventions (files, folders, DB columns, variables)?
 - Root readme strictly lowercase `readme.md`?
-- Error-handling philosophy (`spec/03`)?
+- Error-handling philosophy (`spec/03-error-manage/`)?
 - What is in `.lovable/plans/pending/` and `plans/subtasks/` right now (exact list)?
-- App specs and domain architecture (`spec/21`)?
+- App specs and domain architecture (`spec/21-app/`)?
 - Whole codebase layout and component flow?
 - Top forbidden patterns?
 
@@ -119,7 +126,7 @@ If any answer is fuzzy, go back and reread by looping through the files again. D
 
 ## Phase 2 - Consolidated guidelines
 
-Read `spec/12-consolidated-guidelines/` in numeric order (`01-*.md` through `18-*.md`). Each file is a self-contained policy document. Missing folder: note it and continue.
+Read `spec/17-consolidated-guidelines/` (or `spec/12-consolidated-guidelines/`) in numeric order (`01-*.md` through `18-*.md`). Each file is a self-contained policy document. Missing folder: note it and continue.
 
 ---
 
@@ -127,7 +134,7 @@ Read `spec/12-consolidated-guidelines/` in numeric order (`01-*.md` through `18-
 
 Read `spec/01-spec-authoring-guide/` in numeric order. You should come out knowing:
 
-- file and folder naming conventions,
+- file and folder naming conventions (`<NN>-<slug>/`),
 - required files per spec folder (`00-overview.md`, `99-consistency-report.md`),
 - the `.lovable/` layout (see Phase 1.1),
 - the linter infrastructure.
@@ -148,14 +155,14 @@ Only open a spec folder when the current task needs it.
 | UI theming, CSS variables, design tokens | `spec/07-design-system/`                |
 | Documentation viewer features            | `spec/08-docs-viewer-ui/`               |
 | Code block rendering                     | `spec/09-code-block-system/`            |
-| PowerShell scripts                       | `spec/10-powershell-integration/`       |
-| CI/CD pipelines                          | `spec/13-cicd-pipeline-workflows/`      |
-| CLI self-update                          | `spec/14-self-update-app-update/`       |
-| WordPress plugins                        | `spec/15-wp-plugin-how-to/`             |
+| PowerShell scripts                       | `spec/11-powershell-integration/`       |
+| CI/CD pipelines                          | `spec/12-cicd-pipeline-workflows/`      |
+| CLI self-update                          | `spec/14-update/`                       |
+| WordPress plugins                        | `spec/18-wp-plugin-how-to/`             |
 | App-specific features                    | `spec/21-app/`                          |
 | Known app bugs                           | `spec/22-app-issues/`                   |
-| App-specific DB schema                   | `spec/23-app-database/`                 |
-| App-specific UI + design system          | `spec/24-app-design-system-and-ui/`     |
+| App-specific DB schema                   | `spec/23-app-db/`                       |
+| App-specific UI + design system          | `spec/24-app-ui-design-system/`         |
 
 Inside each folder: `00-overview.md` → numbered files → `99-consistency-report.md`.
 
@@ -252,9 +259,9 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Read every file in `.lovable/spec/commands/`
 - [ ] Read every file in `.lovable/issues/` and `.lovable/cicd-issues/`
 - [ ] Read every file in `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/`
-- [ ] Looped through the entire `spec/` folder, specifically `spec/21/` (app spec), `spec/02/` (coding guidelines), `spec/03/` (error management), `spec/04/` (database conventions)
-- [ ] Autonomously surveyed the whole codebase structure and application components via self-looping
-- [ ] Read `spec/12-consolidated-guidelines/` in numeric order (or noted missing)
+- [ ] Recursively traversed and read every subfolder, nested markdown file (*.md), overview, and consistency report within `spec/` (e.g. `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, etc.)
+- [ ] Autonomously surveyed and looped through the entire codebase as a whole (all application code, entry points, routes, components, state stores, utilities, and configuration files)
+- [ ] Read `spec/17-consolidated-guidelines/` (or `spec/12-consolidated-guidelines/`) in numeric order (or noted missing)
 - [ ] Read `spec/01-spec-authoring-guide/` in numeric order (or noted missing)
 - [ ] Can name CODE RED rules, naming conventions, error-handling philosophy without guessing
 - [ ] Can list every pending plan slug and subtask from memory
@@ -271,4 +278,4 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 title: Read Memory (Enhanced)
 slug: read-memory-enhanced
-version: 2.1
+version: 2.2

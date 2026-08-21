@@ -39,7 +39,7 @@ The next AI session has full amnesia. If you did it and did not write it, it did
 
 13. **Consolidation of simple tasks vs. Protection of detailed specs**:
     - **Simple tasks consolidation**: Routine, ephemeral, or minor simple tasks that do not warrant individual files may be consolidated into overarching session summaries or existing trackers to prevent file bloat.
-    - **CRITICAL - Detailed specs must NEVER be consolidated or shrunk**: Detailed specifications, architectural designs, non-negotiable rules, domain specifications (e.g. `spec/21`), and complex requirement documents MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must be preserved with 100% fidelity, exact wording, and full granularity.
+    - **CRITICAL - Detailed specs must NEVER be consolidated or shrunk**: Detailed specifications, architectural designs, non-negotiable rules, domain specifications (e.g. `spec/21-app/`), and complex requirement documents MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must be preserved with 100% fidelity, exact wording, and full granularity.
 
 ## Working stance
 
@@ -77,7 +77,7 @@ Walk `.lovable/` recursively. Read all of these if they exist; note missing and 
 
 13. `.lovable/memory/workflow/` current workflow state
 
-14. `spec/` (relevant folders), including `spec/02`, `spec/03`, `spec/04`, `spec/21`, or any domain-specific spec folder
+14. `spec/` (recursively traverse all subfolders and nested `.md` files), including `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-management/`, `spec/04-database-conventions/`, `spec/21-app/`, or any domain-specific spec folder (note: sequence numbers and folder placements in `spec/<NN>-<slug>/` may switch across projects)
 
 15. Root `readme.md` (confirm strictly lowercase `readme.md`)
 
@@ -177,7 +177,7 @@ Verbatim per-suggestion captures: `.lovable/suggestions/XX-<slug>.md` with an in
 
 2. **Consolidation Policy**:
    - *Simple / Minor Tasks*: Consolidation is encouraged for simple, repetitive, or ephemeral tasks into existing logs or overarching session files to prevent cluttering the repository.
-   - *Detailed / High-Value Specs*: **STRICTLY FORBIDDEN TO CONSOLIDATE**. Any spec containing detailed requirements, edge cases, domain architecture (`spec/21`), error-handling matrices (`spec/03`), coding rules (`spec/02`), or user instructions must NEVER be merged, summarized, or shortened.
+   - *Detailed / High-Value Specs*: **STRICTLY FORBIDDEN TO CONSOLIDATE**. Any spec containing detailed requirements, edge cases, domain architecture (`spec/21-app/`), error-handling matrices (`spec/03-error-manage/`), coding rules (`spec/02-coding-guidelines/`), or user instructions must NEVER be merged, summarized, or shortened.
 
 3. New user command / convention: `.lovable/spec/commands/XX-<slug>.md`.
 
