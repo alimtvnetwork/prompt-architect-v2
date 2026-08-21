@@ -14,6 +14,7 @@ Before planning, you must read the following locations (if they exist) to build 
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/` (Style Guidelines, including return statement rules)
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md` (Function Guidelines: functions MUST be < 8 lines)
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/` (Boolean Naming: 'has'/'is' prefixes, inverse naming like isHonest/isDishonest)
+- `spec/02-coding-guidelines/03-golang/09-wrapped-boolean-results.md` (Golang Wrapped Booleans)
 
 - `spec/02-coding-guidelines/` or `spec/coding-guidelines/`
 - `spec/03-error-manage/` or `spec/XX-error-manage/`
@@ -61,6 +62,7 @@ These guidelines are STRICTLY NON-NEGOTIABLE:
 - **Boolean Naming:** Every boolean MUST start with `has` or `is`. 
   - NEVER use negative naming like `isNot`.
   - ALWAYS use inverse naming. For example, if something is dishonest, use `isDishonest` instead of `isNotHonest`. Use `isHonest` and `isDishonest`.
+- **Golang Wrapped Booleans:** In Go, functions MUST NOT return raw booleans. They MUST return a generic wrapped `Result` object containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
 - **Anti-Hallucination:** Do not guess the existence of files, enums, or functions. If they are not found in the codebase during your read loops, ask the user.
 
 ## Actionable Items & Checklist

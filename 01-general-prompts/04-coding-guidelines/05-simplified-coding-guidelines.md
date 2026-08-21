@@ -29,6 +29,7 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 2. No nested `if`. Flatten with early returns and guard clauses.
 3. `if` conditions must be positive and simple. No `!`, no double negatives. If you need a negation, extract a positively named boolean and use that.
 4. No swallowed errors. Every `catch` logs with context (operation name + key inputs) and then rethrows or handles explicitly. Silent `catch {}` is a build-fail.
+5. Golang Wrapped Booleans: Functions in Go MUST NOT return raw booleans. Return a generic Result object with `IsSuccess` and `IsFailed` flags, instantiated via `NewSuccess()` or `NewFailure()` so the inverse is automatically set.
 5. Narrow types only. No `any`, `unknown`, `interface{}`, `object`, `dynamic`, or other catch-all types. Exception: at trust boundaries (a `catch` block, external JSON, third-party libraries) narrow immediately with a type guard. `Generic<T>` is the only wide-scope tool.
 6. File size caps: any file 300 lines max, any React component file (.tsx) 100 lines max, any class or struct 120 lines max.
 7. No magic strings or numbers. Use an enum or a typed constant. Every comparison must be against a named symbol.
