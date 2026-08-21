@@ -122,6 +122,7 @@ Every time you return a response or complete a loop iteration, explicitly output
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.
+- [ ] Self Loop until all pending tasks are done.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
