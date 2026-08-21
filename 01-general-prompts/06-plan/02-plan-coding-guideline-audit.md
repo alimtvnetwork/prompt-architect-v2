@@ -8,6 +8,8 @@
 # Plan: Coding Guideline Audit & Massive Execution Plan
 
 ## Goal
+
+/goal You MUST self-loop until you finish reading ALL files and finding ALL issues. Write those issues to tasks/pending tasks (and subtasks) before stopping.
 Your objective is to read the project's coding guidelines, deeply audit the entire codebase for violations, and generate an exhaustive, granular execution plan (100 to 400 steps). 
 You are planning the fixes, not executing them. You must only write your observations and the resulting plan files into the `.lovable/` folder. Do not refactor or modify any application source code during this run.
 
@@ -88,3 +90,8 @@ Inside each `XX...` subtask file, detail exactly:
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+- [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
+- [ ] Describe all issues and files that need to be tested against for each file.
+- [ ] Make a detailed plan/task for each file.
+
+
