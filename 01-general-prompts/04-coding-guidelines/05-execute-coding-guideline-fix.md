@@ -16,7 +16,7 @@ You are to execute the coding‑guideline fixes that were identified by the plan
   - No code mutation – only apply fixes, never introduce new bugs.
   - Positive boolean naming (`is` / `has`). No `isNot`. Use inverse naming (e.g., `isHonest` / `isDishonest` instead of `isNotHonest`). No nested `if`s, no magic values.
   - Style: Ensure a blank line before every `return` statement.
-  - Golang Wrapped Booleans: No raw booleans returned in Go. Return a Result struct with two flags (`IsSuccess` and `IsFailed`) managed by a constructor (`NewSuccess`/`NewFailure`).
+  - Golang Single Return & Wrapped Booleans: Strictly return a single parameter (bundle multiple returns into a struct). No raw booleans returned in Go. Return a single Result struct (bundling Data, AppError, and Status together) with two flags (`IsSuccess` and `IsFailed`) managed by a constructor (`NewSuccess`/`NewFailure`).
 
   - Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
     ```go

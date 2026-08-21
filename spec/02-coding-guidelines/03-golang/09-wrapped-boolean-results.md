@@ -1,7 +1,13 @@
-# Golang Wrapped Boolean Results (No Raw Booleans)
+# Golang Single Return Parameter & Wrapped Results
 
 > **Parent:** [Golang Overview](./00-overview.md)
 > **Version:** 1.0.0
+
+## The Rule: Single Return Parameter
+
+In Go, we **strictly recommend returning a single parameter**. 
+If a function needs to return multiple values (e.g., a value and an error, or multiple pieces of data), they **must be bundled into a struct** or a generic wrapper. 
+The standard generic `Result` wrapper (described below) is the required pattern, as it bundles the `Data`, an `AppError`, and the `Status` together into a single return object.
 
 ## The Rule: No Raw Boolean Returns
 
@@ -23,7 +29,7 @@ type Result[T any] struct {
 	IsSuccess bool
 	IsFailed  bool
 	Data      T
-	Error     error
+	AppError  error // Or a custom AppError struct
 }
 ```
 
@@ -46,7 +52,7 @@ func NewFailure[T any](err error) Result[T] {
 	return Result[T]{
 		IsSuccess: false, // Automatically set as the inverse
 		IsFailed:  true,
-		Error:     err,
+		AppError: err,
 	}
 }
 ```
@@ -76,7 +82,7 @@ func ProcessPayment(amount int) result.Result[PaymentReceipt] {
 // Checking the status:
 paymentStatus := ProcessPayment(100)
 if paymentStatus.IsFailed {
-    log.Println("Payment failed:", paymentStatus.Error)
+    log.Println("Payment failed:", paymentStatus.AppError)
 } else if paymentStatus.IsSuccess {
     log.Println("Payment cleared:", paymentStatus.Data)
 }
@@ -86,3 +92,5 @@ if paymentStatus.IsFailed {
 1. **Clarity**: It forces explicit checking of `.IsSuccess` or `.IsFailed` instead of a cryptic `if ok { ... }`.
 2. **Extensibility**: You can add metadata, logging contexts, or payload data (`T`) without changing the function signature.
 3. **Safety**: By forcing the use of `NewSuccess()` or `NewFailure()`, it is structurally impossible for a developer to accidentally set `IsSuccess = true` and `IsFailed = true` at the same time.
+
+4. **Single Return:** Bundling data and errors into a single struct (like `Result`) strictly adheres to the single return parameter rule, keeping function signatures clean and predictable.

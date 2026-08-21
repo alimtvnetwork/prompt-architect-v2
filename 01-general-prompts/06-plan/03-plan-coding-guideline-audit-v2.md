@@ -121,7 +121,7 @@ These guidelines are STRICTLY NON-NEGOTIABLE:
 - **Boolean Naming:** Every boolean MUST start with `has` or `is`. 
   - NEVER use negative naming like `isNot`.
   - ALWAYS use inverse naming. For example, if something is dishonest, use `isDishonest` instead of `isNotHonest`. Use `isHonest` and `isDishonest`.
-- **Golang Wrapped Booleans:** In Go, functions MUST NOT return raw booleans. They MUST return a generic wrapped `Result` object containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
+- **Golang Single Return & Wrapped Booleans:** In Go, strictly recommend passing a single return parameter. If multiple are needed, bundle them into a struct. Functions MUST NOT return raw booleans. Instead, return a single generic wrapped `Result` object (bundling `Data`, `AppError`, and status together) containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
   Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
   ```go
   paymentStatus := ProcessPayment(100)

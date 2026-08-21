@@ -29,7 +29,7 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 2. No nested `if`. Flatten with early returns and guard clauses.
 3. `if` conditions must be positive and simple. No `!`, no double negatives. If you need a negation, extract a positively named boolean and use that.
 4. No swallowed errors. Every `catch` logs with context (operation name + key inputs) and then rethrows or handles explicitly. Silent `catch {}` is a build-fail.
-5. Golang Wrapped Booleans: Functions in Go MUST NOT return raw booleans. Return a generic Result object with `IsSuccess` and `IsFailed` flags, instantiated via `NewSuccess()` or `NewFailure()` so the inverse is automatically set.
+5. Golang Single Return & Wrapped Booleans: Strictly recommend passing a single return parameter in Go (bundle multiple returns in a struct). Functions MUST NOT return raw booleans. Return a single generic Result object (bundling Data, AppError, and Status together) with `IsSuccess` and `IsFailed` flags, instantiated via `NewSuccess()` or `NewFailure()` so the inverse is automatically set.
   Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
   ```go
   paymentStatus := ProcessPayment(100)
