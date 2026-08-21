@@ -1,16 +1,12 @@
-# Plan: Coding Guideline Audit & Enforcement (v3)
-
-- slug: plan-coding-guideline-audit-v3
+# Plan: Coding Guideline Audit & Enforcement (v4)
+- slug: plan-coding-guideline-audit-v4
 - status: active
 
 ## Prompt
 
-# Plan: Coding Guideline Audit & Enforcement
+# Planning Prompt for Coding Guidelines
 
 ## Goal
-Perform an exhaustive, repo-wide audit of the codebase against the **Compiled Simple Coding Guidelines** (embedded below). Your job is to find EVERY single discrepancy, find the root cause, determine the fallout (where CI/CD might fail due to the change), and plan a massive execution list (100-200 steps) to fix them. You will then enqueue these tasks so that 3 sub-agents can be spawned in a later execution turn to apply the fixes in parallel.
-
-## 1. Context & File Paths to Scan
 Before planning, you must read the following locations (if they exist) to build your context:
 - `.lovable/coding-guidelines.md`
 - `spec/02-coding-guidelines/` or `spec/coding-guidelines/`
