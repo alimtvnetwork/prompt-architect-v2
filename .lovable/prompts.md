@@ -32,7 +32,7 @@
 | Content & SEO | [lowercase-readme-and-sequence.md](../01-general-prompts/06-content-and-seo/02-lowercase-readme-and-sequence.md) | `lowercase-readme-and-sequence` | Auto-renaming markdown files to proper lowercase structure |
 | Prompt Engineering | [proofread.md](../01-general-prompts/07-prompt-engineering/02-proofread.md) | `proofread` | Rewrite raw instruction sets into strict canonical format |
 | Prompt Engineering | [conversation-log.md](../01-general-prompts/07-prompt-engineering/01-conversation-log.md) | `conversation-log` | Store session discussion before generating follow-up plan |
-
-
 | Commit & Fix | [insult-code-fix.md](../01-general-prompts/05-commit-and-multi-agent-code-fix/08-insult-code-fix.md) | `insult-code-fix` | Fix git status, create wrapper, parallel subagents |
+| Commit & Fix | [clean-artifacts-and-git-history.md](../01-general-prompts/05-commit-and-multi-agent-code-fix/09-clean-artifacts-and-git-history.md) | `clean-artifacts-and-git-history` | Artifact detection, positive review, filesystem and git history purge |
 | CI/CD | [fix-ci-cd-and-run-scripts.md](../01-general-prompts/08-ci-cd/03-fix-ci-cd-and-run-scripts.md) | `fix-ci-cd-and-run-scripts` | Fix CI/CD, run scripts, create query wrappers |
+| Insults | [raw-insults.md](../01-general-prompts/09-insults/01-raw-insults.md) | `raw-insults` | Consolidated unsoftened stance and enforcement texts |

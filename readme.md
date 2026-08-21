@@ -16,9 +16,12 @@ One readme only, always lowercase `readme.md`. Never create `README.md`.
   02-coding-standards/          prompts for coding guidelines and theming
   03-release-management/        prompts for version bumps and releases
   04-testing-and-qa/            prompts for unit tests, code coverage, issues
+  05-commit-and-multi-agent-code-fix/ prompts for code fix, wrappers, artifact purge
   05-ui-and-design/             prompts for UI components, SVG, logo creation
   06-content-and-seo/           prompts for README, SEO, social media, jokes
   07-prompt-engineering/        prompts for proofreading and prompt creation
+  08-ci-cd/                     prompts for CI/CD workflow & script fixes
+  09-insults/                   consolidated unsoftened stance and enforcement texts
 02-pwsh-prompts/                PowerShell specific prompts
 <project-name>-prompts/         prompts that name a project
   01-<prompt-slug>.md
@@ -46,6 +49,7 @@ src/                            application code
 - General reusable prompt -> `01-general-prompts/<NN>-<category>/<slug>.md`.
 - Use the next free sequence number when generating a new category or new project folder.
 - All prompts must be indexed in `.lovable/prompts.md` per the canonical prompt architecture.
+
 ## Prompt file format
 
 Proofread only: remove filler words, keep the exact wording. Sections in order:

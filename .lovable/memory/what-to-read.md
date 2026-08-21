@@ -1,11 +1,11 @@
 # What To Read
 
 > Authoritative routing map indicating which file an AI must open for what purpose.
-> Last updated: 2026-08-21T17:47:00Z
+> Last updated: 2026-08-21T17:58:00Z
 
 ## Changelog
 
-- 2026-08-21T17:47:00Z, Updated Read and Write prompt specifications: enforced autonomous self-looping across all spec folders and the entire codebase; mandated root readme lowercase verification with immediate auto-fix, git commit, and git push; added conversation spec memory capture, task consolidation rules, and detailed spec protection.
+- 2026-08-21T17:58:00Z, Added Clean Artifacts & Git History Purge prompt (`05-commit-and-multi-agent-code-fix/09-clean-artifacts-and-git-history.md`) and consolidated insults collection (`09-insults/01-raw-insults.md`). Enforced positive question framing and dual filesystem/git history purge.
 
 ## Reading Map
 
@@ -23,13 +23,16 @@
 | Error management / handling conventions | `spec/03` |
 | Database conventions & schema rules | `spec/04` |
 | App specification & feature requirements | `spec/21` |
+| Artifact detection & Git history purge | `01-general-prompts/05-commit-and-multi-agent-code-fix/09-clean-artifacts-and-git-history.md` |
+| Consolidated unsoftened insults collection | `01-general-prompts/09-insults/01-raw-insults.md` |
 | Assets and images | `assets/` |
 
 ## Non-negotiable rules
 
 1. **Autonomous Self-Looping & Full Codebase Survey**: Before touching the project, autonomously loop through the whole codebase, root `readme.md`, entire `.lovable/` folder (especially `what-to-read.md`), and every single spec folder in `spec/` (`spec/21`, `spec/02`, `spec/03`, `spec/04`, etc.).
 2. **Root `readme.md` Lowercase Enforcement**: Both Read and Write times must verify that the root readme is strictly named lowercase `readme.md`. If uppercase `README.md` exists or casing is incorrect, fix it immediately, commit, and push to git without asking.
-3. **Write Memory & Spec Protection**: All session conversations and directives must be captured in `.lovable/memory/specs/` or `.lovable/memory/learned/`. While simple tasks may be consolidated into summaries, **detailed, important, and architectural specs MUST NEVER be consolidated, summarized, or truncated**.
-4. **Prompt Archiving**: Follow `.lovable/memory/prompt-library.md` exactly: proofread only (remove filler words, keep exact wording) unless marked "keep as is" (body verbatim), add action items checklist, save under `<category>-prompts/` with two-digit sequence prefix, lowercase slug.
-5. **Code Standards**: Read `spec/02`, `spec/03`, `spec/04` before writing any code. Error management must be followed (never swallow errors, always log operation name and key inputs). Code must be DRY.
-6. **Naming & Casing**: Two-digit sequence, hyphen, lowercase slug. Exactly one lowercase root `readme.md`, never create `README.md`. Empty folders keep a `.gitkeep`.
+3. **Artifact Cleanup & Git History Purge**: Prevent artifact zips, test data, temporary scripts, and unwanted code from bloating the repository. Present candidate files with positive question framing, and on removal execute dual removal (filesystem + Git history purge).
+4. **Write Memory & Spec Protection**: All session conversations and directives must be captured in `.lovable/memory/specs/` or `.lovable/memory/learned/`. While simple tasks may be consolidated into summaries, **detailed, important, and architectural specs MUST NEVER be consolidated, summarized, or truncated**.
+5. **Prompt Archiving**: Follow `.lovable/memory/prompt-library.md` exactly: proofread only (remove filler words, keep exact wording) unless marked "keep as is" (body verbatim), add action items checklist, save under `<category>-prompts/` with two-digit sequence prefix, lowercase slug.
+6. **Code Standards**: Read `spec/02`, `spec/03`, `spec/04` before writing any code. Error management must be followed (never swallow errors, always log operation name and key inputs). Code must be DRY.
+7. **Naming & Casing**: Two-digit sequence, hyphen, lowercase slug. Exactly one lowercase root `readme.md`, never create `README.md`. Empty folders keep a `.gitkeep`.

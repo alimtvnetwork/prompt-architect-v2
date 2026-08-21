@@ -20,7 +20,15 @@
 - **CRITICAL NON-NEGOTIABLE RULE**: Highly detailed and important specs (e.g. `spec/21`, domain architecture, detailed requirements, complex error handling, coding standards) MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must remain 100% complete, granular, and verbatim.
 - Verify and enforce lowercase root `readme.md` during write-memory time as well, auto-fixing and committing/pushing if needed.
 
-### 3. Execution & Workflow Rules
+### 3. Artifact Clean & Git History Purge Directive
+- Detect and prevent committing artifact zips, test data, temporary scripts, or unwanted generated code.
+- Itemize candidate files with full path, size, creation step, and origin/purpose.
+- Present questions to the developer using strictly **positive framing** (no negative words, double negatives, or inverted questions).
+- On removal choice, execute **dual removal**: delete from the local filesystem AND purge from Git history to prevent repository bloat.
+- Finalize with combined unsoftened insults from Read Memory and Insult Code Fix prompts.
+- Maintain dedicated consolidated insults collection under `01-general-prompts/09-insults/01-raw-insults.md`.
+
+### 4. Execution & Workflow Rules
 - Synchronize `.lovable/memory/index.md`, `.lovable/plans/index.md`, `.lovable/memory/what-to-read.md`, and root `readme.md`.
-- Ensure all prompt copies across categories (`01-core-workflow/`, `03-read-write/`, `05-commit-and-multi-agent-code-fix/`) remain updated and consistent.
+- Ensure all prompt copies across categories remain updated and consistent.
 - Perform clean git commit and push.
