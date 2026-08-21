@@ -8,11 +8,11 @@
 ## User Directives & Specifications
 
 ### 1. Read Memory (Enhanced) Directive
-- Explicitly mandate reading the entire codebase as a whole (full structure, architecture, and files).
-- Read the entire `.lovable/` folder recursively.
+- **Autonomous Self-Looping Enforcement**: The AI agent must systematically and autonomously loop through the entire codebase and all spec folders in `spec/` (e.g. `spec/01`, `spec/02`, `spec/03`, `spec/04`, `spec/21`, etc.), either directly or via dedicated parallel subagents with explicit titles.
+- Read the entire `.lovable/` folder recursively without omitting any file.
 - Most importantly, read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and follow all referenced files in full.
 - **Root `readme.md` Lowercase Enforcement & Auto-Fix**: Confirm that the root readme is strictly named lowercase `readme.md`. If an uppercase `README.md` or incorrectly cased file is detected during read or write time, immediately fix it to `readme.md`, delete any uppercase duplicate, commit the change, and push to git without second-guessing or waiting for confirmation.
-- Read the `spec/` folder, specifically `spec/21/` (app spec) or any domain-specific spec folder, `spec/02/` (coding guidelines), `spec/03/` (error management conventions to understand error handling), and `spec/04/` (database and mandatory conventions).
+- Read all domain specifications (`spec/21/` app spec), coding guidelines (`spec/02/`), error management (`spec/03/`), and database rules (`spec/04/`). If folders contain only `.gitkeep`, fallback to guidelines in `01-general-prompts/` or request the files from the user.
 
 ### 2. Write Memory Directive
 - Capture recent conversations, instructions, directives, and decisions from the current session as a spec or memory summary inside `.lovable/memory/specs/` or `.lovable/memory/learned/`.
