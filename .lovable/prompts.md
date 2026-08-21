@@ -10,6 +10,10 @@
 | Core Workflow | [next-steps.md](../01-general-prompts/01-core-workflow/01-next-steps.md) | `next-steps` | Deliver the EXACT {{n}} next steps for execution |
 | Core Workflow | [plan-steps.md](../01-general-prompts/01-core-workflow/03-plan-steps.md) | `plan-steps` | Detailed execution plan generator |
 | Core Workflow | [pending-tasks.md](../01-general-prompts/01-core-workflow/02-pending-tasks.md) | `pending-tasks` | Inventory of all pending items in the repo |
+| Execution | [inventory-pending-tasks.md](../01-general-prompts/07-execute/04-inventory-pending-tasks.md) | `inventory-pending-tasks` | Read-only scan of pending tasks with 3-agent execution proposal |
+| Execution | [execute-pending-tasks.md](../01-general-prompts/07-execute/01-execute-pending-tasks.md) | `execute-pending-tasks` | Continuous loop & multi-agent execution |
+| Execution | [execute-robust-loop.md](../01-general-prompts/07-execute/02-execute-robust-loop.md) | `execute-robust-loop` | Resilient 3-agent maximum execution loop |
+| Execution | [execute-batched-loop.md](../01-general-prompts/07-execute/03-execute-batched-loop.md) | `execute-batched-loop` | Batch-loop task execution |
 | Coding Standards | [coding-guidelines.md](../01-general-prompts/02-coding-standards/01-coding-guidelines.md) | `coding-guidelines` | Blind-follow hard rules and code best practices |
 | Coding Standards | [theming-guidelines.md](../01-general-prompts/02-coding-standards/02-theming-guidelines.md) | `theming-guidelines` | Design tokens and CSS var requirements |
 | Coding Standards | [update-theming.md](../01-general-prompts/02-coding-standards/03-update-theming.md) | `update-theming` | Instructions for updating theme tokens |

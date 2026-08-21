@@ -1,6 +1,6 @@
 # Read and Write Prompts Enhancement Spec
 
-> Captured user directives for updating the canonical Read Memory and Write Memory prompts.
+> Captured user directives for updating the canonical Read Memory, Write Memory, and Execution/Inventory prompts.
 
 ## Date
 2026-08-22
@@ -28,7 +28,14 @@
 - Finalize with combined unsoftened insults from Read Memory and Insult Code Fix prompts.
 - Maintain dedicated consolidated insults collection under `01-general-prompts/09-insults/01-raw-insults.md`.
 
-### 4. Execution & Workflow Rules
+### 4. Pending Tasks Inventory Directive (Read-Only Scan)
+- Provide a dedicated read-only scan prompt (`01-general-prompts/07-execute/04-inventory-pending-tasks.md`) that lists all pending tasks without executing them.
+- Reference the full `.lovable/` and `spec/` structure clearly.
+- Provide a refined output format (executive summary + prioritized task list).
+- Conclude with a positively framed question asking if the user wishes to trigger a continuous self-loop via 3 parallel agents.
+- Include a checklist of what to do and what NOT to do, along with unsoftened insult sections.
+
+### 5. Execution & Workflow Rules
 - Synchronize `.lovable/memory/index.md`, `.lovable/plans/index.md`, `.lovable/memory/what-to-read.md`, and root `readme.md`.
 - Ensure all prompt copies across categories remain updated and consistent.
 - Perform clean git commit and push.

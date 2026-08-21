@@ -1,11 +1,11 @@
 # What To Read
 
 > Authoritative routing map indicating which file an AI must open for what purpose.
-> Last updated: 2026-08-21T17:58:00Z
+> Last updated: 2026-08-21T18:03:00Z
 
 ## Changelog
 
-- 2026-08-21T17:58:00Z, Added Clean Artifacts & Git History Purge prompt (`05-commit-and-multi-agent-code-fix/09-clean-artifacts-and-git-history.md`) and consolidated insults collection (`09-insults/01-raw-insults.md`). Enforced positive question framing and dual filesystem/git history purge.
+- 2026-08-21T18:03:00Z, Added Pending Tasks Inventory prompt (`07-execute/04-inventory-pending-tasks.md`) for read-only scans and 3-agent execution proposals; documented execution improvement roadmap.
 
 ## Reading Map
 
@@ -19,6 +19,9 @@
 | The archived prompts themselves | `<category>-prompts/` (e.g., `01-general-prompts/`, `02-pwsh-prompts/`) |
 | Canonical prompt registry | `.lovable/prompts.md` |
 | The original prompt library specification | `01-general-prompts/01-prompt-library-setup/01-prompt-library-setup.md` |
+| Pending tasks read-only scan & inventory | `01-general-prompts/07-execute/04-inventory-pending-tasks.md` |
+| Continuous loop & multi-agent execution | `01-general-prompts/07-execute/01-execute-pending-tasks.md` |
+| Resilient 3-agent maximum execution loop | `01-general-prompts/07-execute/02-execute-robust-loop.md` |
 | Coding guidelines / standards | `spec/02` or `01-general-prompts/02-coding-standards/01-coding-guidelines.md` |
 | Error management / handling conventions | `spec/03` |
 | Database conventions & schema rules | `spec/04` |
