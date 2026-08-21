@@ -12,6 +12,7 @@ Version: 1.4.5
 This is a standalone file. Follow every rule below without consulting any other document. If a `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.
 
 ## Agents & Self-Looping
+/goal You MUST self-loop until you finish reading ALL files and finding ALL issues. Write those issues to tasks/pending tasks (and subtasks) before stopping.
 When finding issues or auditing the codebase against these guidelines, the AI must self-loop extensively to read files and identify root causes. Furthermore, you must enqueue tasks to spawn sub-agents to fix these issues in parallel.
 
 ---
@@ -198,3 +199,6 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+- [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
+- [ ] Describe all issues and files that need to be tested against for each file.
+- [ ] Make a detailed plan/task for each file.

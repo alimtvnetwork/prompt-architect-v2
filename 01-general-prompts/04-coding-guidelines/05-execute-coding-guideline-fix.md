@@ -56,3 +56,6 @@ You are to execute the coding‑guideline fixes that were identified by the plan
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+- [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
+- [ ] Describe all issues and files that need to be tested against for each file.
+- [ ] Make a detailed plan/task for each file.
