@@ -29,9 +29,10 @@ You are done reading when you can, without guessing:
 - name the naming, error-handling, and DB conventions,
 - list what is currently in `.lovable/plans/pending/` and every active subtask,
 - point at the exact file that justifies any rule you enforce,
-- explain the whole codebase structure, app features (`spec/21-app/`), coding guidelines (`spec/02-coding-guidelines/`), and error management philosophy (`spec/03-error-manage/`),
+- explain the whole codebase structure, active DB schemas, API route contracts, app features (`spec/21-app/`), coding guidelines (`spec/02-coding-guidelines/`), and error management philosophy (`spec/03-error-manage/`),
 - list out all pending tasks and unresolved issues with accurate step counts,
-- confirm that every nested markdown file in `spec/` has been inspected,
+- confirm that every nested markdown file in `spec/` has been inspected and broken links identified,
+- confirm runtime toolchain and package dependency compatibility,
 - confirm that the root readme is strictly lowercase `readme.md` (and auto-fixed/committed/pushed if it was not).
 
 If you cannot do that, keep reading. Do not start work.
@@ -41,6 +42,9 @@ If you cannot do that, keep reading. Do not start work.
 The `.lovable/` folder, specs, and entire codebase can be massive. To process this information with zero blind spots:
 - **Autonomous Looping Enforcement:** The AI agent MUST autonomously loop through all directories and files across `spec/`, `.lovable/`, and application source trees. Do not stop after one high-level glance; systematically iterate through each directory layer.
 - **Deep Recursive Spec Traversal:** The AI must recursively inspect every subfolder and all nested `.md` files in `spec/` (`00-overview.md`, numbered specs `01-*.md`, `99-consistency-report.md`, `spec-index.md`, subdirectories).
+- **Broken Link & Missing Spec Detection:** Scan internal markdown references across `.lovable/` and `spec/`. If a referenced spec or issue file is missing on disk, automatically log it as an open question in `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md` or ask the user directly, never guessing past missing documentation.
+- **Active Schema & API Contract Mapping:** Ingest and maintain an in-memory map of active DB tables/schemas (`spec/04-database-conventions/`, `spec/23-app-db/`), API endpoints, and global state stores so downstream tasks have zero assumptions on field names or parameter shapes.
+- **Tooling & Runtime Compatibility Check:** Inspect package manifests (`package.json`, `tsconfig.json`, build configs) to catalog runtime targets, linter rules, and banned packages before completing onboarding.
 - **Parallel Subagents for Deep Reading:** You ARE allowed and strongly encouraged to spawn dedicated sub-agents to read items and synthesize memory in parallel.
 - **Specific Titling:** When spawning a sub-agent for reading, you must give it a highly specific title reflecting exactly what it is reading (e.g., `Reading Auth Specs in spec/21-app`, `Scanning Error Management in spec/03-error-manage`, `Surveying App Codebase Tree`, `Ingesting Coding Guidelines in spec/02-coding-guidelines`). Do not use generic names. If an agent switches tasks, its title must change.
 - **Micro-Tasking:** Assign sub-agents small, granular folders/files to read rather than asking one agent to read the entire codebase in a single pass.
@@ -104,8 +108,9 @@ Systematically loop through the `spec/` folder, dynamically matching canonical h
 ### 1.3 Loop Through the Entire Codebase as a Whole
 
 Autonomously survey the codebase structure end-to-end:
-- Root configuration files, package manifests, build scripts.
+- Root configuration files, package manifests, build scripts, tsconfig, linter configs.
 - Application directory (`src/` or app root), entry points, routing tree, components, state management stores, and utility modules.
+- Database schemas, models, and migrations (`db/`, `prisma/`, `drizzle/`, SQLite tables).
 - Asset directories (`assets/`).
 - Verify how data flows from input to state, backend/storage, and UI presentation.
 
@@ -122,6 +127,7 @@ Two indexes decide what you read next. Treat them as required entry points, not 
 - Root readme strictly lowercase `readme.md`?
 - Error-handling philosophy (`spec/03-error-manage/`)?
 - What is in `.lovable/plans/pending/` and `plans/subtasks/` right now (exact list)?
+- Active DB schemas, table columns, and API contracts?
 - App specs and domain architecture (`spec/21-app/`)?
 - Whole codebase layout and component flow?
 - Top forbidden patterns?
@@ -242,6 +248,7 @@ I understand:
 - CODE RED rules: [top 3-5]
 - Naming conventions: [brief]
 - Error handling: [one sentence]
+- Active DB schemas & contracts: [key models / tables]
 - Active plans & pending tasks: [slugs from .lovable/plans/pending/ and subtasks]
 - Strict avoidances: [top 3-5]
 - Blocking ambiguities: [slugs, or "none"]
@@ -265,6 +272,9 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Read every file in `.lovable/spec/commands/`
 - [ ] Read every file in `.lovable/issues/` and `.lovable/cicd-issues/`
 - [ ] Read every file in `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/`
+- [ ] Scanned for broken links or missing docs and surfaced them under open ambiguities
+- [ ] Ingested active schema models, DB column conventions, and API route shapes
+- [ ] Verified runtime dependencies and package compatibility
 - [ ] Recursively traversed and read every subfolder, nested markdown file (*.md), overview, and consistency report within `spec/` (e.g. `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, etc.)
 - [ ] Autonomously surveyed and looped through the entire codebase as a whole (all application code, entry points, routes, components, state stores, utilities, and configuration files)
 - [ ] Read `spec/17-consolidated-guidelines/` (or `spec/12-consolidated-guidelines/`) in numeric order (or noted missing)

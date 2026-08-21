@@ -1,41 +1,33 @@
-# Read and Write Prompts Enhancement Spec
+# Read, Execution, and Pending Prompts Enhancement Spec
 
-> Captured user directives for updating the canonical Read Memory, Write Memory, and Execution/Inventory prompts.
+> Captured user directives for updating the canonical Read Memory, Execution Loop, and Pending Inventory prompts.
 
 ## Date
 2026-08-22
 
 ## User Directives & Specifications
 
-### 1. Read Memory (Enhanced) Directive
-- **Autonomous Self-Looping Enforcement**: The AI agent must systematically and autonomously loop through the entire codebase and all spec folders in `spec/` (e.g. `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, etc.), either directly or via dedicated parallel subagents with explicit titles.
-- **Spec Folder Naming & Dynamic Numbering**: Spec folders strictly follow the hyphenated `spec/<NN>-<slug>/` pattern. Sequence numbers and folder placements can switch or be reorganized across projects; the AI must dynamically discover and inspect all nested subdirectories, markdown files (`*.md`), `00-overview.md`, `99-consistency-report.md`, and `spec-index.md`.
-- Read the entire `.lovable/` folder recursively without omitting any file.
-- Most importantly, read `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and follow all referenced files in full.
-- **Root `readme.md` Lowercase Enforcement & Auto-Fix**: Confirm that the root readme is strictly named lowercase `readme.md`. If an uppercase `README.md` or incorrectly cased file is detected during read or write time, immediately fix it to `readme.md`, delete any uppercase duplicate, commit the change, and push to git without second-guessing or waiting for confirmation.
-- Read all domain specifications (`spec/21-app/`), coding guidelines (`spec/02-coding-guidelines/`), error management (`spec/03-error-manage/`), and database rules (`spec/04-database-conventions/`). If folders contain only `.gitkeep`, fallback to guidelines in `01-general-prompts/` or request the files from the user.
-- **Pending Tasks Reading**: Systematically read and list all pending tasks and subtasks from `.lovable/plans/pending/`, `.lovable/plans/subtasks/`, `.lovable/issues/`, and `.lovable/cicd-issues/`.
+### 1. Read Memory (Enhanced) Improvements
+- **Broken Link & Missing Spec Detection**: Scan internal markdown references across `.lovable/` and `spec/`. If a referenced spec, overview, or issue file is missing on disk, automatically register it as an open question in `.lovable/ambiguous-questions/01-new-ambiguity/XX-<slug>.md` or surface it directly to the user rather than guessing past missing docs.
+- **Active Schema & API Contract Mapping**: Ingest and maintain an in-memory map of active DB tables/schemas (`spec/04-database-conventions/`, `spec/23-app-db/`), API endpoints, and global state stores so downstream planning and coding tasks make zero assumptions on field names or parameter shapes.
+- **Tooling & Runtime Compatibility Check**: Inspect package manifests (`package.json`, build configs, tsconfig) to catalog runtime targets, linter rules, and banned packages before completing onboarding.
+- **Autonomous Self-Looping & Full Codebase Survey**: Systematically loop through the entire codebase as a whole and recursively traverse every subfolder and nested `.md` file in `spec/` (`spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`).
+- **Root `readme.md` Lowercase Auto-Fix**: Automatically verify lowercase root `readme.md`, rename/delete stale uppercase files, commit and push without waiting for confirmation.
 
-### 2. Write Memory Directive
-- Capture recent conversations, instructions, directives, and decisions from the current session as a spec or memory summary inside `.lovable/memory/specs/` or `.lovable/memory/learned/`.
-- Permit consolidation of simple, routine, or ephemeral tasks that do not warrant separate files, avoiding unnecessary repo clutter.
-- **CRITICAL NON-NEGOTIABLE RULE**: Highly detailed and important specs (e.g. `spec/21-app/`, domain architecture, detailed requirements, complex error handling, coding standards) MUST NEVER be consolidated, summarized, resumed, or reduced in size. They must remain 100% complete, granular, and verbatim.
-- Verify and enforce lowercase root `readme.md` during write-memory time as well, auto-fixing and committing/pushing if needed.
+### 2. Execution Loop Improvements (`execute-pending-tasks`, `execute-robust-loop`, `execute-batched-loop`)
+- **File Collision Locking Matrix (`active-locks.json`)**: Parallel sub-agents register their active target files in `.lovable/temp/active-locks.json` to physically prevent two agents from modifying the same files or shared exports concurrently.
+- **Automated Clean Rollback on 3-Strike Failure**: If a sub-agent fails unit tests or build checks 3 consecutive times, automatically rollback dirty working tree (`git checkout -- <modified_files>`), log root cause and stack trace to `.lovable/memory/last-failure.md` and `.lovable/issues/`, and proceed to the next disjoint task.
+- **Embedded Artifact Sanitizer in Commit Fix**: Phase 5 Commit Fix automatically audits staged files and working tree for zip archives, temporary scratch files, or test outputs before committing and purging them if unapproved.
+- **Lovable Branch Preservation Guard**: Strictly avoid force pushes, rebasing, or squashing published Git history (per `AGENTS.md`) so the Lovable editor synchronization remains pristine.
+- **Consolidated Insults Section**: Standardized closing section titled `## MUST FOLLOW NON-NEGOTIABLE` in a single consolidated unsoftened paragraph.
 
-### 3. Artifact Clean & Git History Purge Directive
-- Detect and prevent committing artifact zips, test data, temporary scripts, or unwanted generated code.
-- Itemize candidate files with full path, size, creation step, and origin/purpose.
-- Present questions to the developer using strictly **positive framing** (no negative words, double negatives, or inverted questions).
-- On removal choice, execute **dual removal**: delete from the local filesystem AND purge from Git history to prevent repository bloat.
-- Finalize with unified single-block unsoftened insults under `## MUST FOLLOW NON-NEGOTIABLE`.
+### 3. Pending List / Inventory Improvements (`inventory-pending-tasks`, `pending-tasks`)
+- **Execution Wave Sequencing (Wave 1, Wave 2, Wave 3)**: Group pending tasks into sequenced Execution Waves based on dependencies (*Wave 1: Schemas/DB/wrappers*, *Wave 2: Business services & logic*, *Wave 3: UI & docs*).
+- **Automatic Subtask Decomposition Alert (>7 steps)**: Flag any pending task exceeding 7 steps in the rubric with `[DECOMPOSITION REQUIRED]` to split it into `.lovable/plans/subtasks/XX-<slug>/` before entering the execution queue.
+- **Ambiguity Impact Severity Scoring**: Rank open questions in `01-new-ambiguity/` by blast radius (*High*: blocks multiple core plans; *Medium*: blocks 1 plan; *Low*: non-blocking cosmetic detail).
+- **Strictly Positive Framing**: Concluding question asking whether to trigger continuous 3-agent parallel execution uses strictly positive phrasing.
 
-### 4. Pending Tasks Inventory Directive (Read-Only Scan)
-- Dedicated read-only scan prompt (`01-general-prompts/07-execute/04-inventory-pending-tasks.md`) that lists all pending tasks without executing them.
-- References the full `.lovable/` and `spec/` structure clearly.
-- Concludes with a positively framed question asking if the user wishes to trigger a continuous self-loop via 3 parallel agents.
-- Includes mandatory and banned checklist items along with `## MUST FOLLOW NON-NEGOTIABLE`.
-
-### 5. Execution & Workflow Rules
-- Synchronize `.lovable/memory/index.md`, `.lovable/plans/index.md`, `.lovable/memory/what-to-read.md`, and root `readme.md`.
-- Ensure all prompt copies across categories remain updated and consistent.
-- Perform clean git commit and push.
+### 4. Consolidated Prompts Routing & Registry
+- `01-general-prompts/03-read-write/` is the single home for Read & Write prompts (`01-write-antigravity.md`, `02-read-memory-enhanced.md`, `03-write-memory.md`).
+- `01-general-prompts/07-execute/` contains the execution and inventory prompts (`01-execute-pending-tasks.md`, `02-execute-robust-loop.md`, `03-execute-batched-loop.md`, `04-inventory-pending-tasks.md`).
+- `.lovable/prompts.md`, `.lovable/memory/what-to-read.md`, and root `readme.md` are synchronized and kept in strict alignment.

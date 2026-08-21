@@ -9,9 +9,9 @@
 
 ## Goal
 
-Perform a strictly read-only scan of the entire repository and `.lovable/` directory to compile a comprehensive, deduplicated inventory of every pending task, subtask, unresolved issue, and open requirement.
+Perform a strictly read-only scan of the entire repository, `spec/`, and `.lovable/` directory to compile a comprehensive, deduplicated inventory of every pending task, subtask, unresolved issue, and open requirement structured into Execution Waves.
 
-**CRITICAL CONSTRAINT:** This prompt is strictly for **inventorying and structuring pending work**. It MUST NOT execute code modifications, build changes, or launch the execution loop. Batch execution is handled by dedicated execution prompts.
+**CRITICAL CONSTRAINT:** This prompt is strictly for **inventorying, structuring, and sequencing pending work**. It MUST NOT execute code modifications, build changes, or launch the execution loop. Batch execution is handled by dedicated execution prompts.
 
 ---
 
@@ -58,20 +58,24 @@ readme.md                                       # Root repository guide (strictl
    - Open and read `.lovable/plans/index.md`, `.lovable/plans/pending/`, and all `.lovable/plans/subtasks/` files with `Status:` not `completed`.
    - Open and read all files in `.lovable/issues/`, `.lovable/pending-issues/`, and `.lovable/cicd-issues/`.
    - Open and read all open questions in `.lovable/ambiguous-questions/01-new-ambiguity/`.
-   - Open and read unfulfilled directives in `.lovable/memory/specs/` and `spec/21/`.
+   - Open and read unfulfilled directives in `.lovable/memory/specs/` and `spec/21-app/`.
    - Open and read active suggestions in `.lovable/suggestions.md`.
 2. **Deduplicate Across Sources**:
    - If a feature is referenced across a spec, a plan, and an issue, consolidate it into ONE primary task with cross-references to all origin files.
-3. **Step-Count Rubric (Open Files First)**:
+3. **Step-Count Rubric & Decomposition Alert**:
    - Trivial change (1 file, single edit): 1 step.
    - Small change (1-2 files, 1 verification step): 2-3 steps.
    - Standard task (multi-file, logic + UI/backend, test): 4-7 steps.
    - Cross-cutting task (schema + API + UI + full tests): 8-15 steps.
-   - Deep multi-subtask task: cite total steps and subtask count (`N steps across M subtasks`).
+   - **Automatic Subtask Decomposition Alert:** When a pending task exceeds 7 steps, flag it with `[DECOMPOSITION REQUIRED]` to split it into `.lovable/plans/subtasks/XX-<slug>/` before entering the execution queue.
+4. **Ambiguity Impact Severity Scoring**:
+   - **High Blast Radius**: Blocks multiple core plans or schemas.
+   - **Medium Blast Radius**: Blocks a single isolated feature.
+   - **Low Blast Radius**: Non-blocking cosmetic or detail refinement.
 
 ---
 
-## Step 2: Refined Output Format
+## Step 2: Refined Output Format (Structured by Execution Waves)
 
 Present the inventory to the user in this exact markdown structure:
 
@@ -88,23 +92,42 @@ Present the inventory to the user in this exact markdown structure:
 
 ---
 
-## Prioritized Task List
+## Execution Waves
 
-### 1. [Task Title]
+### Wave 1: Independent Foundations (DB Schemas, Wrappers, Core Models)
+- Can run immediately in parallel across 3 subagents (disjoint files).
+
+#### 1.1 [Task Title]
 - **Source File(s)**: `[path/to/file.md]`
-- **Type**: `Plan` | `Issue` | `CI/CD` | `Ambiguity` | `Spec-Scope`
-- **Status**: `Pending` | `In-Progress` | `Blocked by Ambiguity`
-- **Estimated Steps**: `[N] steps` (or `[N] steps across [M] subtasks`)
-- **Dependencies**: `[Task # or "None"]`
+- **Type**: `Plan` | `Issue` | `CI/CD` | `Spec-Scope`
+- **Status**: `Pending` | `In-Progress`
+- **Estimated Steps**: `[N] steps`
+- **Dependencies**: `None`
 - **Outcome / Intent**: [Clear 1-2 sentence description of what "done" looks like]
 
-### 2. [Task Title]
-...
+### Wave 2: Business Logic, Services & Endpoints
+- Requires Wave 1 foundations to complete before execution.
+
+#### 2.1 [Task Title]
+- **Source File(s)**: `[path/to/file.md]`
+- **Dependencies**: `Wave 1 Task #[X]`
+- **Estimated Steps**: `[N] steps`
+- **Outcome / Intent**: [Description]
+
+### Wave 3: UI Components, Views & Documentation
+- Requires Wave 2 business services.
+
+#### 3.1 [Task Title]
+- **Source File(s)**: `[path/to/file.md]`
+- **Dependencies**: `Wave 2 Task #[Y]`
+- **Estimated Steps**: `[N] steps`
+- **Outcome / Intent**: [Description]
 
 ---
 
-## Blocking Ambiguities (Must Resolve Before Execution)
-- `[slug]`: [Question summary] (Blocks Task #[X], #[Y])
+## Blocking Ambiguities (Ranked by Blast Radius)
+
+- **[HIGH/MED/LOW]** `[slug]`: [Question summary] — *Blocks: Task #[X], Task #[Y]*
 ```
 
 ---
@@ -127,8 +150,10 @@ Would you like to start the continuous self-loop to execute and resolve these pe
 - [ ] Read all `.lovable/` pending folders, subtask files, issue trackers, and spec requirements in full.
 - [ ] Deduplicate tasks appearing across multiple plan, spec, or issue files.
 - [ ] Calculate concrete step counts based on actual file contents using the rubric.
-- [ ] Clearly list all blocking ambiguities and affected task dependencies.
-- [ ] Deliver the clean, structured executive summary and prioritized task list.
+- [ ] Flag tasks exceeding 7 steps for subtask decomposition.
+- [ ] Rank open ambiguities by severity and blast radius.
+- [ ] Sequence pending tasks into logical Execution Waves (Wave 1, Wave 2, Wave 3).
+- [ ] Deliver the clean executive summary and prioritized task list.
 - [ ] Present the 3-agent parallel execution proposal with strictly positive framing.
 
 ### What NOT to Do (Banned / Auto-Reject):
