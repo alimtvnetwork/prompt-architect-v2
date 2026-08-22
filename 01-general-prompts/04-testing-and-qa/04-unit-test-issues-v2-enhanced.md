@@ -29,9 +29,7 @@ If you have any questions or confusion, feel free to ask.
 
 Your task now is to create a detailed execution plan.
 
-
 ## Structured Breakdown and Instructions
-
 
 ### 1. Scope Definition
 
@@ -40,7 +38,6 @@ Your task now is to create a detailed execution plan.
    b. Prioritize packages with <100% coverage
    c. Segment large packages (>1000 LOC) into 200-line tasks
    d. Ensure high-quality, deterministic, and buildable Go tests
-
 
 ### 2. Package Classification Strategy
 
@@ -59,7 +56,6 @@ Your task now is to create a detailed execution plan.
       i. LOC < 300
       ii. Single task
 
-
 ### 3. Segmentation Logic (Large Packages)
 
 1. For each large package:
@@ -76,7 +72,6 @@ Your task now is to create a detailed execution plan.
       → Segment 04: Lines 601-800
       → Segment 05: Lines 801-1000
       → Segment 06: Lines 1001-1200
-
 
 ### 4. Test Design Methodology
 
@@ -98,14 +93,12 @@ Your task now is to create a detailed execution plan.
       iii. Assert:
          - Validate outputs, state, and side effects
 
-
 2. Coverage Targets:
 
    a. Branch coverage
    b. Error path coverage
    c. Boundary conditions
    d. Negative scenarios
-
 
 ### 5. Debugging and Isolation Strategy
 
@@ -118,7 +111,6 @@ Your task now is to create a detailed execution plan.
    a. Deterministic tests
    b. No flaky behavior
 
-
 ### 6. Execution Plan (Hierarchical)
 
 #### 1. Package Identification Phase
@@ -128,7 +120,6 @@ Your task now is to create a detailed execution plan.
    c. Rank by:
       i. Lowest coverage
       ii. Highest LOC
-
 
 #### 2. Large Package Processing (>1000 LOC)
 
@@ -154,7 +145,6 @@ Your task now is to create a detailed execution plan.
          B. Verify naming conventions
          C. Confirm AAA compliance
 
-
 #### 3. Medium Package Processing (300-1000 LOC)
 
    a. Break into:
@@ -165,14 +155,12 @@ Your task now is to create a detailed execution plan.
       ii. Test writing
       iii. Validation
 
-
 #### 4. Small Package Processing (<300 LOC)
 
    a. Single-pass coverage
    b. Focus on:
       i. Missing branches
       ii. Error handling
-
 
 ### 7. Test Naming and Structure Rules
 
@@ -184,7 +172,6 @@ Your task now is to create a detailed execution plan.
 
 3. Example:
    a. TestCreateUserShouldReturnErrorWhenInputInvalid
-
 
 ### 8. Iteration Flow
 
@@ -201,7 +188,6 @@ Your task now is to create a detailed execution plan.
       i. Completed segment
       ii. Remaining segments/packages
 
-
 ### 9. Risk Areas
 
 1. Complex dependencies
@@ -209,13 +195,11 @@ Your task now is to create a detailed execution plan.
 3. Unhandled error paths
 4. Concurrency (if present)
 
-
 ### 10. Ambiguities
 
 1. Exact package list not provided
 2. Coverage tool output format unknown
 3. Existing test depth varies
-
 
 ### 11. Important
 
@@ -225,7 +209,6 @@ Your task now is to create a detailed execution plan.
 4. Ensure no regression
 5. Keep tests deterministic and isolated
 
-
 ### 12. Acceptance Criteria
 
 1. Each segment achieves full coverage
@@ -234,14 +217,12 @@ Your task now is to create a detailed execution plan.
 4. No failing or flaky tests
 5. Code remains buildable
 
-
 ## Remaining Tasks
 
 1. Execute Package Identification Phase
 2. Select first package (<100% coverage)
 3. Begin Segment 01 (first 200 lines)
 4. Continue iterative execution across all packages
-
 
 ## Important Instruction for Continuation
 
@@ -251,7 +232,6 @@ Your task now is to create a detailed execution plan.
    c. Never skip unfinished tasks
 
 If you have any questions or confusion, feel free to ask.
-
 
 ## Actionable Items & Checklist
 

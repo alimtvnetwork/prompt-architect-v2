@@ -267,36 +267,45 @@ Analysis, reporting, memory updates, planning, spec corrections, issue documenta
 ## Global Rules (apply to all parts)
 
 ### Spec before code
+
 Always write or update specs before any implementation. Never implement until the user explicitly says to start a specific phase or task.
 
 ### Ambiguity handling
+
 If the specification is ambiguous, the AI must document the ambiguity in the relevant spec file and in `.lovable/memory/history/01-decisions.md` before implementing a solution. Do not silently resolve ambiguity.
 
 ### Repository scan requirement
+
 Before implementation analysis, scan the entire repository tree at the directory level. Do not read contents inside folders marked excluded. Reading only the spec folder is insufficient.
 
 ### Skipped folders
+
 Folders marked skipped, ignored, deprecated, generated, or archived must not be read or modified. They may be listed structurally but their contents must not be opened. This overrides any other instruction.
 
 ### Code style (GitMap enforced)
+
 - All `if` conditions must be positive (no `!`, no negation).
 - Functions: 8-15 lines.
 - Files: 100-200 lines max.
 - Small, focused packages - one responsibility per package.
 
 ### Version bumping
+
 Any changes to code must bump at least the minor version. The `.release` folder is off-limits - do not read, modify, or reference it.
 
 ### File naming
+
 - Use stable canonical filenames such as `01-plan.md`, `01-suggestions.md`, `01-decisions.md` for singleton tracker files.
 - Use `{seq}-{slug}.md` for repeating records such as issues and failing test write-ups.
 - Keep folder file counts small.
 - Plans and suggestions are tracked in single files and updated in place unless explicitly split by scale.
 
 ### Regression prevention
+
 Every fix - specs, code, or tests - must include an explicit, testable regression prevention rule.
 
 ### Definition of Done
+
 A task is done only when:
 1. Spec updated (if applicable)
 2. Issue documented (if applicable)
@@ -318,7 +327,6 @@ Use:
 4. Blocker Handling for unresolved situations
 
 *Prompt v4.0. Trigger phrase: "unified ai prompt".*
-
 
 ## Actionable Items & Checklist
 

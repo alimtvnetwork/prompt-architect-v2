@@ -69,7 +69,6 @@ readme.md                  root, lowercase
 
 Read and follow spec folders `02`, `03` and `04` before writing any code. Error management must be followed. Code must be DRY.
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

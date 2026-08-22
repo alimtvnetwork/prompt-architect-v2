@@ -6,7 +6,7 @@
 |------|---------|
 | `what-to-read.md` | Routing table indicating which file an AI should open for what purpose. |
 | `prompt-library.md` | Defines how prompts are formatted, archived, and managed in this repository. |
-| `specs/01-read-and-write-prompts-enhancement.md` | User directives for Read Memory and Write Memory prompt enhancements and spec protection rules. |
+| `specs/01-read-and-write-prompts-enhancement.md` | User directives for Read Memory and Write Memory prompt enhancements and spec protection rules. Also defines Markdown Header Spacing Rule and Prompt File Structure Convention (slug/status at bottom). |
 
 ## Memory Rules
 

@@ -126,6 +126,7 @@ mv .lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md .lovable/ambiguous
 Inside the moved file, append:
 
 ```markdown
+
 ## Resolution
 
 - Answered on: YYYY-MM-DD
@@ -195,6 +196,7 @@ If any check fails, fix the file immediately. Do not emit the completion block u
 Reply with this exact markdown block, real numbers only:
 
 ```markdown
+
 # Memory Update Complete
 
 - Plans completed this turn: [N]
@@ -209,6 +211,7 @@ Reply with this exact markdown block, real numbers only:
 - Root readme lowercase verified: [Yes/No]
 
 ## Current State Summary
+
 - Total pending plans: [N]  (from plans/index.md)
 - Total open ambiguities: [N]  (from 01-new-ambiguity/)
 - Total CI/CD issues open: [N]  (from cicd-index.md)
@@ -218,7 +221,6 @@ Next turn will read this state cleanly.
 ```
 
 ---
-
 
 ## Actionable Items & Checklist
 

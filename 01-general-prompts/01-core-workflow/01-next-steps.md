@@ -136,7 +136,6 @@ Before touching code, verify guideline sources and follow them:
 
 ---
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

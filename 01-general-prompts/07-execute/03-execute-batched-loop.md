@@ -116,7 +116,6 @@ Every time you return a response or complete a loop iteration, explicitly output
 
 ---
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

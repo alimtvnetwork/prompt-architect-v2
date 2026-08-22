@@ -56,7 +56,6 @@ Based on the packages which has, like, low coverage, uh, if it has more than tho
 
    Use ORM and database best practices for creating relationships.
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

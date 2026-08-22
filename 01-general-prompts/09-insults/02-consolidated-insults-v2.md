@@ -3,7 +3,6 @@
 - slug: consolidated-insults-v2
 - status: active
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

@@ -50,9 +50,11 @@ Walk each of these recursively. Missing = note it, continue.
 ## Output shape
 
 ```markdown
+
 # Pending Tasks Inventory
 
 ## Summary
+
 - Sources scanned: [list every folder / file scanned, mark missing]
 - Total pending tasks: [N]
 - Blocking ambiguities: [K]  (from .lovable/ambiguous-questions/01-new-ambiguity/)
@@ -67,9 +69,11 @@ Walk each of these recursively. Missing = note it, continue.
 ## Execution Waves
 
 ### Wave 1: Independent Foundations (DB Schemas, Wrappers, Core Models)
+
 - Can run in parallel across 3 subagents (disjoint files).
 
 #### 1.1 <task title>
+
 - Source: <file path(s), one per line if cross-referenced>
 - Type: plan | issue | cicd-issue | ambiguity | suggestion | spec-scope
 - Status: pending | in-progress | blocked-by-ambiguity
@@ -78,18 +82,22 @@ Walk each of these recursively. Missing = note it, continue.
 - One-line intent: <what "done" looks like>
 
 ### Wave 2: Business Logic, Services & Endpoints
+
 - Requires Wave 1 foundations to complete.
 
 #### 2.1 <task title>
+
 - Source: <file path(s)>
 - Depends on: Wave 1 Task #[X]
 - Steps: <N> steps
 - One-line intent: <what "done" looks like>
 
 ### Wave 3: UI Components, Views & Documentation
+
 - Requires Wave 2 business services.
 
 #### 3.1 <task title>
+
 - Source: <file path(s)>
 - Depends on: Wave 2 Task #[Y]
 - Steps: <N> steps
@@ -98,9 +106,11 @@ Walk each of these recursively. Missing = note it, continue.
 ---
 
 ## Blocking Ambiguities (Ranked by Blast Radius)
+
 - [HIGH/MED/LOW] <slug>: <question> (blocks task #<n>, #<n>)
 
 ## Nothing pending
+
 (only if the inventory is truly empty; list the folders scanned to prove it)
 ```
 
@@ -131,7 +141,6 @@ Walk each of these recursively. Missing = note it, continue.
 If any box is unchecked, do not reply. Fix it first.
 
 ---
-
 
 ## Actionable Items & Checklist
 

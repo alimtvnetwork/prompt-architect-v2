@@ -1,6 +1,7 @@
 <!-- AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. -->
 <!-- Source: spec/17-consolidated-guidelines/31-compiled-simple-coding-guidelines.md -->
 <!-- Regenerate with: npm run sync:guidelines -->
+
 # 31. Compiled Simple Coding Guidelines (AI Blind-Follow)
 
 Version: 1.5.0
@@ -196,7 +197,6 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 4. List every remaining task before ending the turn.
 5. Plan multi-file features with a Mermaid component or flow diagram first.
 6. If you cannot find the answer in this file or in an existing `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder, ask. Do not invent.
-
 
 ## Avoid
 

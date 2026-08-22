@@ -10,7 +10,6 @@ Bump the MINOR version (MAJOR.MINOR.PATCH to MAJOR.(MINOR+1).0, PATCH resets to 
 
 Release trigger rule: the user phrase "bump version", "release", or old variants such as "bump version + add changelog + pin that version to root readme" means update `version.json` only unless publishing is explicitly requested. Do not edit `readme.md`, `changelog.md`, `manifest.json`, constants, instruction files, or fallback copies only to propagate a version. Do not run stale-version, version-sync, release-readiness, or asset-manifest checkers.
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.
@@ -19,7 +18,6 @@ Release trigger rule: the user phrase "bump version", "release", or old variants
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
-
 
 ### Execution Checklist
 

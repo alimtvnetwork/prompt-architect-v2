@@ -80,9 +80,11 @@ readme.md                                       # Root repository guide (strictl
 Present the inventory to the user in this exact markdown structure:
 
 ```markdown
+
 # Pending Tasks Inventory
 
 ## Executive Summary
+
 - Total Pending Tasks: [N]
 - Blocking Ambiguities: [K]
 - Pending Plans: [P]
@@ -95,9 +97,11 @@ Present the inventory to the user in this exact markdown structure:
 ## Execution Waves
 
 ### Wave 1: Independent Foundations (DB Schemas, Wrappers, Core Models)
+
 - Can run immediately in parallel across 3 subagents (disjoint files).
 
 #### 1.1 [Task Title]
+
 - Source File(s): `[path/to/file.md]`
 - Type: `Plan` | `Issue` | `CI/CD` | `Spec-Scope`
 - Status: `Pending` | `In-Progress`
@@ -106,18 +110,22 @@ Present the inventory to the user in this exact markdown structure:
 - Outcome / Intent: [Clear 1-2 sentence description of what "done" looks like]
 
 ### Wave 2: Business Logic, Services & Endpoints
+
 - Requires Wave 1 foundations to complete before execution.
 
 #### 2.1 [Task Title]
+
 - Source File(s): `[path/to/file.md]`
 - Dependencies: `Wave 1 Task #[X]`
 - Estimated Steps: `[N] steps`
 - Outcome / Intent: [Description]
 
 ### Wave 3: UI Components, Views & Documentation
+
 - Requires Wave 2 business services.
 
 #### 3.1 [Task Title]
+
 - Source File(s): `[path/to/file.md]`
 - Dependencies: `Wave 2 Task #[Y]`
 - Estimated Steps: `[N] steps`
@@ -147,6 +155,7 @@ Would you like to start the continuous self-loop to execute and resolve these pe
 ## Checklist: What This Prompt MUST Do and MUST NOT Do
 
 ### What to Do (Mandatory):
+
 - [ ] Read all `.lovable/` pending folders, subtask files, issue trackers, and spec requirements in full.
 - [ ] Deduplicate tasks appearing across multiple plan, spec, or issue files.
 - [ ] Calculate concrete step counts based on actual file contents using the rubric.
@@ -157,6 +166,7 @@ Would you like to start the continuous self-loop to execute and resolve these pe
 - [ ] Present the 3-agent parallel execution proposal with strictly positive framing.
 
 ### What NOT to Do (Banned / Auto-Reject):
+
 - [ ] DO NOT execute any code modifications, installs, or migrations during this turn.
 - [ ] DO NOT launch sub-agents or start the execution loop inside this prompt.
 - [ ] DO NOT cherry-pick or omit any pending tasks (missing even one task is a failure).
@@ -164,7 +174,6 @@ Would you like to start the continuous self-loop to execute and resolve these pe
 - [ ] DO NOT use negative question phrasing or double negatives.
 
 ---
-
 
 ## Actionable Items & Checklist
 

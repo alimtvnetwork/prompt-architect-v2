@@ -30,6 +30,7 @@ Chunking policy:
 
 File contents (Markdown):
 ```markdown
+
 # <Title>
 
 Sequence: NNN
@@ -42,9 +43,11 @@ Topic: <one-line summary>
 ## User Prompts (verbatim)
 
 ### 1.
+
 > <verbatim user prompt #1>
 
 ### 2.
+
 > <verbatim user prompt #2>
 
 ...
@@ -52,15 +55,18 @@ Topic: <one-line summary>
 ---
 
 ## Assistant Actions Summary (one bullet per turn, no chain-of-thought)
+
 - <short factual recap>
 - ...
 
 ---
 
 ## Outcomes / Decisions
+
 - <decision or artefact produced>
 
 ## Open Threads (carry-over)
+
 - <anything not yet resolved>
 ```
 
@@ -98,6 +104,7 @@ Save the rewrite to: `prompts/NNN-<slug>.md` at repo root (3-digit prefix, kebab
 Also update: `prompts/index.md` (create if missing). Format:
 
 ```markdown
+
 # Prompts Index
 
 | # | File | Title | Purpose | Status |
@@ -135,7 +142,6 @@ Reply to the user with exactly these sections, in this order:
 ## Acknowledgement Required
 
 Begin your reply with one line: "Understood - staging only, not executing." Then proceed through Phases 1-4.
-
 
 ## Actionable Items & Checklist
 

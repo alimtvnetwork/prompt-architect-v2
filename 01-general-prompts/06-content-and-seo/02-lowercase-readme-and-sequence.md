@@ -49,7 +49,6 @@ Enforce these naming rules across the entire repository:
 title: Lowercase Readme And Sequence Slugs
 slug: lowercase-readme-and-sequence
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

@@ -123,7 +123,6 @@ At the end of every single iteration of your execution loop:
 
 ---
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

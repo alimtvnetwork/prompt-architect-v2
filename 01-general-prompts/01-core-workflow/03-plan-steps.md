@@ -86,6 +86,7 @@ Every attachment is REQUIRED input. Never leave one only in chat.
 ## Plan file shape
 
 ```markdown
+
 # <Task title>
 
 Slug: <slug>
@@ -94,18 +95,22 @@ Status: pending
 Created: <YYYY-MM-DD>
 
 ## Context
+
 <1-3 sentences: what + why, files involved>
 <Links to specs, captured commands, issues, cicd-issues, memory, resolved ambiguity, attachments>
 
 ## Steps
+
 1. <concrete, verifiable, references spec requirement>
 2. ...
 ... exactly {{n}} items ...
 
 ## Verification
+
 <build, logs, preview, tests, screenshots, per step where relevant>
 
 ## Appended from prior pending tasks
+
 <list, or "none">
 ```
 
@@ -156,7 +161,6 @@ If any box is unchecked, do not reply. Fix it first.
 
 ---
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.
@@ -182,21 +186,28 @@ Ambiguity is not a license to guess. It is a file to write.
 New question file shape:
 
 ```markdown
+
 # <one-line question>
+
 Slug: <slug>
 Status: open
 Raised: <YYYY-MM-DD>
 Blocking: <plan slug(s) or "none">
 
 ## Question
+
 ## Options considered
+
 ## Impact if guessed wrong
+
 ```
 
 When answered: `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/`, flip `Status: resolved`, and append:
 
 ```markdown
+
 ## Resolution
+
 Answered: <YYYY-MM-DD>
 Answer: <user answer>
 Applied solution: <what changed / where>

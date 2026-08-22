@@ -1,6 +1,4 @@
 # Plan: Coding Guideline Audit & Enforcement (v4)
-- slug: plan-coding-guideline-audit-v4
-- status: active
 
 ## Prompt
 
@@ -23,6 +21,7 @@ Before planning, you must read the following locations (if they exist) to build 
 - `.lovable/memory/index.md`
 
 ## 2. Planning Loop (50 Steps of Analysis -> 100+ Execution Steps)
+
 This is not a quick glance. You must deeply read the codebase, looping yourself as much as needed (taking at least 50 steps of internal planning and reading) to uncover:
 - Every inverted boolean (`!isSuccess`).
 - Every magic string or number.
@@ -34,12 +33,14 @@ This is not a quick glance. You must deeply read the codebase, looping yourself 
 If there are NO discrepancies, explicitly state: "There are no coding guideline issues or discrepancies." However, assume the codebase is a mess until proven otherwise.
 
 ## 3. Root Cause & Fallout Analysis
+
 For every issue found:
 - What is the root cause? Why was it written this way?
 - How many places does it need to be fixed?
 - Fallout Check: If we change this, what else breaks? Will it break the CI/CD pipeline? Will it break tests? Map the entire blast radius.
 
 ## 4. Enqueueing Tasks for Sub-Agents
+
 Your final output must be a massively detailed plan stored at `.lovable/plans/pending/01-coding-guideline-fixes.md` and granular subtask files written to `.lovable/plans/subtasks/01-coding-guideline-fixes/01-<subslug>.md`.
 The plan must break the work down so granularly (100 to 200 steps) that 3 concurrent sub-agents can be spawned later to safely execute the fixes.
 - Step 1..100+: Exact file, exact line, exact boolean to rename, exact enum to extract.
@@ -57,6 +58,7 @@ This is a standalone file. Follow every rule below without consulting any other 
 #
 
 ### Top-Notch Anti-Hallucination & Non-Negotiable Guidelines
+
 These guidelines are STRICTLY NON-NEGOTIABLE:
 - **Function Size:** Functions MUST be strictly less than 8 lines.
 - **Style Guideline (Returns):** There MUST be a blank line before every `return` statement.
@@ -102,7 +104,6 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 - [ ] List all files that need to be tested against.
 - [ ] Ensure the detailed plan specifies the target output folder as `.lovable/plans/subtasks/01-coding-guideline-fixes/`.
 - [ ] Make a detailed plan/task for each file.
-
 
 ## MUST FOLLOW NON-NEGOTIABLE
 
@@ -260,3 +261,9 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 6. If you cannot find the answer in this file or in an existing `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder, ask. Do not invent.
 
 
+---
+
+## Metadata
+
+- slug: plan-coding-guideline-audit-v4
+- status: active

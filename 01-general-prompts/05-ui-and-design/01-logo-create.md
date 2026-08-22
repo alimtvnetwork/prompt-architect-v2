@@ -235,7 +235,6 @@ All Animations and designs in one shot as much as possible.
 
 If you have any question and confusion, feel free to ask
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

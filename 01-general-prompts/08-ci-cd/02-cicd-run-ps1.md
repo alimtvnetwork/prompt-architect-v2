@@ -18,11 +18,13 @@ This document serves as a strict, universal checklist and specification for sett
 Before making any changes to `.github/workflows` or automation scripts, you must read the following architecture documents. These contain the foundational constraints and mechanisms for deployment, automation, and CI/CD pipelines.
 
 #### PowerShell & Orchestration (`spec/11-powershell-integration`)
+
 - [ ] `spec/11-powershell-integration/00-overview.md`
 - [ ] `spec/11-powershell-integration/02-script-reference.md`
 - [ ] `spec/11-powershell-integration/03-integration-guide.md`
 
 #### CI/CD Pipeline Workflows (`spec/12-cicd-pipeline-workflows`)
+
 - [ ] `spec/12-cicd-pipeline-workflows/00-overview.md`
 - [ ] `spec/12-cicd-pipeline-workflows/01-ci-pipeline.md`
 - [ ] `spec/12-cicd-pipeline-workflows/02-release-pipeline.md`
@@ -30,21 +32,25 @@ Before making any changes to `.github/workflows` or automation scripts, you must
 - [ ] `spec/12-cicd-pipeline-workflows/05-changelog-integration.md`
 
 #### CLI & Build (`spec/13-generic-cli`)
+
 - [ ] `spec/13-generic-cli/00-overview.md`
 - [ ] `spec/13-generic-cli/11-build-deploy.md`
 - [ ] `spec/13-generic-cli/18-batch-execution.md`
 
 #### Update Mechanisms (`spec/14-update`)
+
 - [ ] `spec/14-update/04-build-scripts.md`
 - [ ] `spec/14-update/17-release-pipeline.md`
 - [ ] `spec/14-update/18-install-scripts.md`
 
 #### Release Engineering (`spec/16-generic-release`)
+
 - [ ] `spec/16-generic-release/00-overview.md`
 - [ ] `spec/16-generic-release/02-release-pipeline.md`
 - [ ] `spec/16-generic-release/03-install-scripts.md`
 
 #### Context / Issue Logging
+
 - [ ] `cicd-issues/<issue-name>.md`
   - Any time a CI/CD pipeline fails, an AI must log the failure here (including error traces and environment context) before attempting a fix.
 
@@ -68,6 +74,7 @@ When building or fixing the CI/CD pipelines (e.g., `.github/workflows/ci.yml`), 
 To prevent hardcoded commands and ports, the execution architecture MUST be dynamic. The local run script (e.g., `run.ps1` or `run.sh`) must act as a generic orchestrator, while a JSON configuration file serves as the single source of truth for both local development and CI execution.
 
 #### Expected Configuration Structure (Reference: `run.config.json`)
+
 The JSON file should define all services, ports, and lifecycle commands.
 
 ```json
@@ -119,6 +126,7 @@ When writing or modifying the orchestration scripts, any AI must adhere to the f
 After completing the pipeline and run script creation, you MUST follow this checklist for committing and verifying the changes.
 
 ### 4.1. Pre-flight & Planning
+
 - [ ] Ensure the git repository starts completely clean. If dirty, commit, stash, or fix git issues before writing any new code.
 - [ ] Read the overarching main task plan from `.lovable/plans/pending/XX-<slug>.md` to understand what needs to be executed.
 - [ ] Derive the `<slug>` from the plan filename itself (e.g., plan file `03-auth-refactor.md` → slug is `03-auth-refactor`). Never invent a slug.
@@ -129,6 +137,7 @@ After completing the pipeline and run script creation, you MUST follow this chec
 - [ ] Anti-Hallucination: If referenced files are missing or ambiguous, stop and ask clarifying questions.
 
 ### 4.2. Ruthless Management & Subtask Looping
+
 - [ ] Map out the subtasks from the big plan and spawn sub-agents for all independent tasks simultaneously (MAXIMUM 2 sub-agents concurrently to avoid RAM and caching issues).
 - [ ] Each sub-agent may only run a MAXIMUM of 2-3 async operations at a time.
 - [ ] Enforce lifecycle: sub-agent reads subtask file → marks `🔄 In Progress` → works → marks `✅ Done` with file list and summary → updates parent plan step → signals completion.
@@ -136,10 +145,12 @@ After completing the pipeline and run script creation, you MUST follow this chec
 - [ ] If a sub-agent fails to update its status file or gives garbage, kill it immediately and restart it.
 
 ### 4.3. Root Cause
+
 - [ ] Find the root cause of the problem first, before applying any fix.
 - [ ] Record the root cause strictly into the `.lovable` memory structure per the write protocols.
 
 ### 4.4. File System Writes & Main Agent Commit
+
 - [ ] Sub-agents write to the file system and update their task entries. They do NOT commit.
 - [ ] Wait until all sub-agents have signaled completion and updated their subtask files under `.lovable/plans/subtasks/`.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, test data, artifacts, and compiled binaries (Non-negotiable).
@@ -149,6 +160,7 @@ After completing the pipeline and run script creation, you MUST follow this chec
 - [ ] Push the commit to the remote repository. Pushing is non-negotiable.
 
 ### 4.5. Code Standards (non-negotiable)
+
 - [ ] Follow the code review guidelines from the aspect folder.
 - [ ] Ensure every try-catch block explicitly logs the error according to the error manage folder.
 - [ ] Create a query wrapper for PHP/Python/TS that handles automatic failure logging, so logging is not scattered.
@@ -160,12 +172,12 @@ After completing the pipeline and run script creation, you MUST follow this chec
 - [ ] Reuse constants — never duplicate them. Code must always be DRY; never repeat code. This is high priority.
 
 ### 4.6. End-of-Loop Final Verification (Once only, at the very end)
+
 - [ ] Check the full build. Fix every build failure, commit, and push.
 - [ ] Run all unit tests. Fix every failing test, commit, and push.
 - [ ] Check CI/CD status and ensure pipelines pass.
 - [ ] Audit that coding guidelines from the aspect folder and error manage folder have been followed across all changed files.
 - [ ] Finish the job only when everything is green, pushed, and fully verified.
-
 
 ## Actionable Items & Checklist
 

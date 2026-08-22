@@ -280,7 +280,6 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 
 6. If you cannot find the answer in this file or in an existing `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder, ask. Do not invent.
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

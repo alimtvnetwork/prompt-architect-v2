@@ -118,6 +118,7 @@ if [ "$SKIP_LINTERS" = false ]; then
   run_linter "axios-version"         bash    "$SCRIPT_DIR/check-axios-version.sh"
   run_linter "forbidden-spec-paths"  bash    "$SCRIPT_DIR/check-forbidden-spec-paths.sh"
   run_linter "runner-dispatch"       bash    "$SCRIPT_DIR/check-runner-dispatch-antipatterns.sh"
+  run_linter "markdown-header-spacing" python3 "$SCRIPT_DIR/check-markdown-header-spacing.py"
 fi
 
 # ── Summary ───────────────────────────────────────────────────────

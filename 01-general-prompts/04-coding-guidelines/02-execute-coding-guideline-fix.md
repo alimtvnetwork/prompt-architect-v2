@@ -3,6 +3,7 @@
 You are to execute the coding‑guideline fixes that were identified by the planning prompt.
 
 ### Goals
+
 - Apply concrete fixes for all violations listed in the pending tasks.
 - Enforce non‑negotiable rules:
   - DRY – eliminate duplicated logic.
@@ -25,6 +26,7 @@ You are to execute the coding‑guideline fixes that were identified by the plan
     ```
 
 ### Checklist (execute phase)
+
 1. Read pending tasks from the `.lovable/plans/subtasks/01-coding-guideline-fixes/` folder.
 2. For each task:
    - Locate the affected source file.
@@ -43,10 +45,12 @@ You are to execute the coding‑guideline fixes that were identified by the plan
 5. If no pending tasks remain, output a summary of all fixes applied.
 
 ### Non‑Hallucination Policy
+
 - Do not assume the existence of a file or enum that is not present; if uncertain, raise a question to the user.
 - If a fix would require a large architectural change beyond the scope, create a new pending task instead of applying it directly.
 
 ### Execution Loop
+
 - Process up to 50 tasks per run to avoid long‑running blocks.
 - After each batch, report progress and await user confirmation before proceeding to the next batch.
 
@@ -54,7 +58,6 @@ You are to execute the coding‑guideline fixes that were identified by the plan
 
 /goal Apply coding‑guideline fixes safely and push a minor release.
 /learn Ensure future prompts respect the same checklist and constraints.
-
 
 ## Actionable Items & Checklist
 
@@ -67,7 +70,6 @@ You are to execute the coding‑guideline fixes that were identified by the plan
 - [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
 - [ ] Describe all issues and files that need to be tested against for each file.
 - [ ] Make a detailed plan/task for each file.
-
 
 ---
 slug: execute-coding-guideline-fix

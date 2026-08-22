@@ -126,6 +126,7 @@ mv .lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md .lovable/ambiguous
 Inside the moved file, append:
 
 ```markdown
+
 ## Resolution
 
 - Answered on: YYYY-MM-DD
@@ -237,7 +238,6 @@ Next AI can pick up from: [current state + next logical step]
 - [ ] No em dashes, no softened wording, no execution beyond file writes, lowercase readme fix, and `mv`
 
 ---
-
 
 ## Actionable Items & Checklist
 

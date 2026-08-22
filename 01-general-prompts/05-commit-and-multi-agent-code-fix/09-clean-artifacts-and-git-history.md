@@ -84,7 +84,6 @@ When the developer indicates that a file should be removed:
 
 ---
 
-
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.

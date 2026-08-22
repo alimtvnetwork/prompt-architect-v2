@@ -86,19 +86,23 @@ Ambiguity is not a license to guess. It is a file to write.
 New question file shape:
 
 ```
+
 # <one-line question>
+
 Slug: <slug>
 Status: open
 Raised: <YYYY-MM-DD>
 Blocking: jokes-strategies ({{role}} @ {{company}})
 
 ## Question
+
 ## Options considered
+
 ## Impact if guessed wrong
+
 ```
 
 When answered: `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/`, flip `Status: resolved`, and append a `## Resolution` block (`Answered:`, `Answer:`, `Applied solution:`). Never leave a copy behind. If `{{role}}` or `{{company}}` is unknown, file the question and STOP, do not invent a brand.
-
 
 ## Actionable Items & Checklist
 
