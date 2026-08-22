@@ -1,9 +1,5 @@
----
-slug: execute-coding-guideline-fix
-status: active
----
+# Prompt
 
-## Prompt
 You are to execute the coding‑guideline fixes that were identified by the planning prompt.
 
 ### Goals
@@ -71,3 +67,9 @@ You are to execute the coding‑guideline fixes that were identified by the plan
 - [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
 - [ ] Describe all issues and files that need to be tested against for each file.
 - [ ] Make a detailed plan/task for each file.
+
+
+---
+slug: execute-coding-guideline-fix
+status: active
+---
