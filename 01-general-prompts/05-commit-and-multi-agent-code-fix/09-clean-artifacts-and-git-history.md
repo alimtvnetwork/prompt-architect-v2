@@ -1,7 +1,7 @@
 # Clean Artifacts and Git History Purge
 
 
-## Instruction
+## Instruction (must follow): Clean Artifacts and Git History Purge
 
 > This instruction provides guidelines and directives for clean artifacts and git history purge.
 

@@ -1,7 +1,7 @@
 # Execute Pending Tasks (Self-Loop & Commit)
 
 
-## Instruction
+## Instruction (must follow): Execute Pending Tasks (Self-Loop & Commit)
 
 > This instruction provides guidelines and directives for execute pending tasks (self-loop & commit).
 

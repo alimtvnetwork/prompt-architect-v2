@@ -1,6 +1,6 @@
 # Consolidated Insults V2 (Single Block Enforcement)
 
-## Instruction
+## Instruction (must follow): Consolidated Insults V2 (Single Block Enforcement)
 
 > This instruction provides guidelines and directives for consolidated insults v2 (single block enforcement).
 

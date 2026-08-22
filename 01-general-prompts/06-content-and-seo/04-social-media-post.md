@@ -1,6 +1,6 @@
 # Social Media Post Generation
 
-## Instruction
+## Instruction (must follow): Social Media Post Generation
 
 > This instruction provides guidelines and directives for social media post generation.
 

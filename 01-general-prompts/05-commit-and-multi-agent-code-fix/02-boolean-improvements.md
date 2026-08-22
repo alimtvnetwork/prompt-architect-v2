@@ -1,7 +1,7 @@
 # Boolean Improvements & Multi-Agent Code Fix
 
 
-## Instruction
+## Instruction (must follow): Boolean Improvements & Multi-Agent Code Fix
 
 > This instruction provides guidelines and directives for boolean improvements & multi-agent code fix.
 

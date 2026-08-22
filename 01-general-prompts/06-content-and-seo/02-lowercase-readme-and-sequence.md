@@ -1,6 +1,6 @@
 # Repo File Naming Convention
 
-## Instruction
+## Instruction (must follow): Repo File Naming Convention
 
 > This instruction provides guidelines and directives for repo file naming convention.
 

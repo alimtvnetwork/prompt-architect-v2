@@ -1,7 +1,7 @@
 # Commit Fix
 
 
-## Instruction
+## Instruction (must follow): Commit Fix
 
 > This instruction provides guidelines and directives for commit fix.
 

@@ -1,6 +1,6 @@
 # Any pending tasks (full inventory, maximum enforcement)
 
-## Instruction
+## Instruction (must follow): Any pending tasks (full inventory, maximum enforcement)
 
 > This instruction provides guidelines and directives for any pending tasks (full inventory, maximum enforcement).
 

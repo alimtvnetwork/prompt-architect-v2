@@ -1,6 +1,6 @@
 # Jokes Ideas Generate
 
-## Instruction
+## Instruction (must follow): Jokes Ideas Generate
 
 > This instruction provides guidelines and directives for jokes ideas generate.
 

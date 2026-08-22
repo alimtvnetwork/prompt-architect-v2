@@ -1,7 +1,7 @@
 # Plan: Steps by Groups (Look-Ahead, Standalone Commit)
 
 
-## Instruction
+## Instruction (must follow): Plan: Steps by Groups (Look-Ahead, Standalone Commit)
 
 > This instruction provides guidelines and directives for plan: steps by groups (look-ahead, standalone commit).
 

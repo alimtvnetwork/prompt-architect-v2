@@ -1,7 +1,7 @@
 # CI/CD Pipeline & Run Script Creation
 
 
-## Instruction
+## Instruction (must follow): CI/CD Pipeline & Run Script Creation
 
 > This instruction provides guidelines and directives for ci/cd pipeline & run script creation.
 

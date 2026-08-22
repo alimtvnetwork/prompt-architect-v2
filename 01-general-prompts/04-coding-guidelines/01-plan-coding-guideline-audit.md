@@ -1,6 +1,6 @@
 # Plan: Coding Guideline Audit & Enforcement (v4)
 
-## Instruction
+## Instruction (must follow): Plan: Coding Guideline Audit & Enforcement (v4)
 
 > This instruction provides guidelines and directives for plan: coding guideline audit & enforcement (v4).
 

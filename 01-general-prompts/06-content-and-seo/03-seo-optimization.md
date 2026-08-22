@@ -1,6 +1,6 @@
 # SEO Optimization Instruction
 
-## Instruction
+## Instruction (must follow): SEO Optimization Instruction
 
 > This instruction provides guidelines and directives for seo optimization instruction.
 

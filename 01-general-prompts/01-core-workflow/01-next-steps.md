@@ -1,6 +1,6 @@
 # Next {{n}} steps or tasks (v3.4)
 
-## Instruction
+## Instruction (must follow): Next {{n}} steps or tasks (v3.4)
 
 > This instruction provides guidelines and directives for next {{n}} steps or tasks (v3.4).
 

@@ -1,6 +1,6 @@
 # Theming Guidelines
 
-## Instruction
+## Instruction (must follow): Theming Guidelines
 
 > This instruction provides guidelines and directives for theming guidelines.
 

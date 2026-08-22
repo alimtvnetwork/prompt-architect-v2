@@ -1,6 +1,6 @@
 # Verbatim
 
-## Instruction
+## Instruction (must follow): Verbatim
 
 > This instruction provides guidelines and directives for verbatim.
 

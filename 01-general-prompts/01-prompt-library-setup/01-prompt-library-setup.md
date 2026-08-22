@@ -1,6 +1,6 @@
 # Instruction Library Setup
 
-## Instruction
+## Instruction (must follow): Instruction Library Setup
 
 > This instruction provides guidelines and directives for instruction library setup.
 

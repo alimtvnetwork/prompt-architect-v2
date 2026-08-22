@@ -3,7 +3,7 @@
 
 Run again if said: go, continue, or next
 
-## Instruction
+## Instruction (must follow): Execute Batched Loop (3 Agents, Chunked Commits)
 
 > This instruction provides guidelines and directives for execute batched loop (3 agents, chunked commits).
 

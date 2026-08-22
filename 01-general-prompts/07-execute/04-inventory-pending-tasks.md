@@ -1,7 +1,7 @@
 # Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal)
 
 
-## Instruction
+## Instruction (must follow): Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal)
 
 > This instruction provides guidelines and directives for inventory pending tasks (read-only scan & 3-agent dispatch proposal).
 

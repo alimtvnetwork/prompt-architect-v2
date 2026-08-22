@@ -1,6 +1,6 @@
 # Consolidated Insults Collection
 
-## Instruction
+## Instruction (must follow): Consolidated Insults Collection
 
 > This instruction provides guidelines and directives for consolidated insults collection.
 

@@ -1,6 +1,6 @@
 # SVG Logo Generation
 
-## Instruction
+## Instruction (must follow): SVG Logo Generation
 
 > This instruction provides guidelines and directives for svg logo generation.
 

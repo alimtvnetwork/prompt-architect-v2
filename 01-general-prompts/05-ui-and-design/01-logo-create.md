@@ -1,6 +1,6 @@
 # Logo Creation Instruction
 
-## Instruction
+## Instruction (must follow): Logo Creation Instruction
 
 > This instruction provides guidelines and directives for logo creation instruction.
 

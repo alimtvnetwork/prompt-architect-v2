@@ -1,6 +1,6 @@
 # React UI Fixes & Update Instruction
 
-## Instruction
+## Instruction (must follow): React UI Fixes & Update Instruction
 
 > This instruction provides guidelines and directives for react ui fixes & update instruction.
 

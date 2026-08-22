@@ -1,6 +1,6 @@
 # Version Bump Docs Instruction
 
-## Instruction
+## Instruction (must follow): Version Bump Docs Instruction
 
 > This instruction provides guidelines and directives for version bump docs instruction.
 
