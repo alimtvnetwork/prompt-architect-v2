@@ -200,6 +200,5 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 
 ## Avoid
 
-- **DO NOT** modify anything inside the `.lovable` folder during normal operations unless explicitly instructed to update guidelines.
 - **DO NOT** modify anything inside the `.gitmap` folder.
 - **DO NOT** create Git tags during releases (e.g., `git tag v1.0.0`). The Git Map system will handle tags later. You must only `git commit` and `git push`.
