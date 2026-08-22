@@ -165,7 +165,7 @@ Then link it from the `### Issues` bullet under the changelog entry.
 
 - [ ] No em dashes.
 
-## Prompt maintenance (meta, run once at end)
+## Instruction maintenance (meta, run once at end)
 
 Save this prompt's full body into `.lovable/prompts/XX-release.md` (lowercase):
 

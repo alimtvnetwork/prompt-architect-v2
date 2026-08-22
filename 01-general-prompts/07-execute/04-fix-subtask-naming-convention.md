@@ -1,15 +1,12 @@
 # Execute: Fix Subtask Naming Convention
 
-- slug: fix-subtask-naming
-- status: active
 
-## Prompt
+## Instruction
 
-# Execute: Fix Subtask Naming Convention & References (v1.0)
+> This instruction provides guidelines and directives for execute: fix subtask naming convention.
 
-## Goal
 
-Your objective is to deeply audit the `.lovable/plans/` directory for any subtask files that incorrectly use the `SS-` or `SS-XX-` prefix and fix them. The correct prefix MUST always be strictly `XX-<subslug>.md` (where `XX` is the zero-padded sequence number). 
+/goal Your objective is to deeply audit the `.lovable/plans/` directory for any subtask files that incorrectly use the `SS-` or `SS-XX-` prefix and fix them. The correct prefix MUST always be strictly `XX-<subslug>.md` (where `XX` is the zero-padded sequence number).
 You must also update all markdown files that reference the old filenames, and update the project's memory.
 
 ## 1. Subtask Naming Correction (Non-Negotiable)
@@ -89,3 +86,11 @@ Listen, past turns have been sloppy as fuck: wrong file names, leaving broken re
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+
+
+---
+
+## Metadata
+
+- slug: fix-subtask-naming
+- status: active

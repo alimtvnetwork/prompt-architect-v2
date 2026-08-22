@@ -1,8 +1,9 @@
 # Plan: Maximum Enforcement (v4.2)
 
-## Prompt
+## Instruction
 
-# 5 number of steps plan, maximum enforcement (v4.2)
+> This instruction provides guidelines and directives for plan: maximum enforcement (v4.2).
+
 
 ## RULE 0, step count is law
 

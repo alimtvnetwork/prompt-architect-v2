@@ -1,5 +1,10 @@
 # Proofread instruction, maximum enforcement
 
+## Instruction
+
+> This instruction provides guidelines and directives for proofread instruction, maximum enforcement.
+
+
 ## RULE 0 - REWRITE ONLY, NEVER EXECUTE (MUST)
 
 Trigger keywords: `next`, `rewrite`, `proofread`, `rewrite next`, `revise prompt`. On ANY of these, you REWRITE the input into a clean proofread prompt. You do NOT reason about the task, do NOT plan, do NOT scaffold code, do NOT create migrations, do NOT touch the app. If the input is empty or unclear, STOP and ask exactly one clarifying question. Violating this is auto-reject.

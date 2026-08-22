@@ -1,6 +1,9 @@
-# Prompt Library Setup
+# Instruction Library Setup
 
-## Prompt
+## Instruction
+
+> This instruction provides guidelines and directives for instruction library setup.
+
 
 Create a prompts folder in the root of the repo: `01-prompts`. Inside this you will have the general prompts. So inside this folder will be `01-general`, and afterwards you will have the project names, let's say `02-<project-name>`. Inside this you will always have the file as a sequence: `01`, `02` hyphen the prompt slug. So whatever prompt I give you, you create the slug or title for that and put it into that prompt folder specifically and make a commit.
 
@@ -65,7 +68,7 @@ readme.md                  root, lowercase
   prompt-library.md
 ```
 
-## Before Writing Code (applies to every code prompt)
+## Before Writing Code (applies to every code instruction)
 
 Read and follow spec folders `02`, `03` and `04` before writing any code. Error management must be followed. Code must be DRY.
 

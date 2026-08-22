@@ -1,11 +1,10 @@
 # Plan: Steps by Groups (Look-Ahead, Standalone Commit)
 
-- slug: plan-steps-by-groups
-- status: active
 
-## Prompt
+## Instruction
 
-# Plan: Steps by Groups (v1.0)
+> This instruction provides guidelines and directives for plan: steps by groups (look-ahead, standalone commit).
+
 
 Follow the above instructions.
 
@@ -100,3 +99,11 @@ Each step or group that completes MUST immediately commit and fix the Git. Follo
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+
+
+---
+
+## Metadata
+
+- slug: plan-steps-by-groups
+- status: active

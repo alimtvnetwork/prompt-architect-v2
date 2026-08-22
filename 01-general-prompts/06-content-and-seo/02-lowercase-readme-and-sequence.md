@@ -1,5 +1,10 @@
 # Repo File Naming Convention
 
+## Instruction
+
+> This instruction provides guidelines and directives for repo file naming convention.
+
+
 Enforce these naming rules across the entire repository:
 
 1. All README files must be lowercase: rename every `README.md`, `Readme.md`, `ReadMe.md`, etc. to `readme.md`. Apply recursively at every depth (root, subfolders, packages, specs, prompts, scripts - everywhere). Update every internal link and import reference to match.

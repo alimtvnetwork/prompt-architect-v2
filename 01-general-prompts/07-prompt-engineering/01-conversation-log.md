@@ -1,4 +1,9 @@
-# Conversation Log - Pre-Action Wrapper for Any Follow-up Prompt
+# Conversation Log - Pre-Action Wrapper for Any Follow-up Instruction
+
+## Instruction
+
+> This instruction provides guidelines and directives for conversation log - pre-action wrapper for any follow-up instruction.
+
 
 > Purpose: Before acting on the *next* prompt the user pastes, the AI must (a) persist the full chat so far to disk as a numbered Markdown log, (b) rewrite and improve the user's follow-up prompt in place, (c) confirm that the project's coding guidelines are captured in memory, and (d) surface any ambiguity. The AI does NOT execute the follow-up prompt yet.
 
@@ -40,7 +45,7 @@ Topic: <one-line summary>
 
 ---
 
-## User Prompts (verbatim)
+## User Instructions (verbatim)
 
 ### 1.
 
@@ -88,7 +93,7 @@ Rules:
 
 ---
 
-## Phase 3 - Rewrite the Follow-up Prompt
+## Phase 3 - Rewrite the Follow-up Instruction
 
 Take the user's pasted follow-up prompt and produce an improved, unambiguous, AI-ready version. Rules:
 
@@ -105,7 +110,7 @@ Also update: `prompts/index.md` (create if missing). Format:
 
 ```markdown
 
-# Prompts Index
+# Instructions Index
 
 | # | File | Title | Purpose | Status |
 |---|------|-------|---------|--------|

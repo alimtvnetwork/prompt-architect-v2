@@ -1,5 +1,10 @@
 # Social Media Post Generation
 
+## Instruction
+
+> This instruction provides guidelines and directives for social media post generation.
+
+
 ## Inputs
 
 - Topic / Feature

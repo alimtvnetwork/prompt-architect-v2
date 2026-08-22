@@ -1,5 +1,10 @@
 # Consolidated Insults Collection
 
+## Instruction
+
+> This instruction provides guidelines and directives for consolidated insults collection.
+
+
 > Canonical compilation of raw, unsoftened enforcement and stance texts across all project prompts and specs.
 
 ## 1. Tone and Stance (Read Memory Enforcement)

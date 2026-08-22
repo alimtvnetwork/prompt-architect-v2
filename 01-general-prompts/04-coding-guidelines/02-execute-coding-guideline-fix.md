@@ -1,4 +1,7 @@
-# Prompt
+## Instruction
+
+> This instruction provides guidelines and directives for this task.
+
 
 You are to execute the coding‑guideline fixes that were identified by the planning prompt.
 
@@ -18,9 +21,7 @@ Before executing, you must read the following locations (if they exist) to build
 - `spec/02-coding-guidelines/06-ai-optimization/03-common-ai-mistakes.md` (Common Mistakes)
 - `spec/03-error-manage/00-overview.md` (Error Management)
 
-### Goals
-
-- Apply concrete fixes for all violations listed in the pending tasks.
+/goal - Apply concrete fixes for all violations listed in the pending tasks.
 - Enforce non‑negotiable rules:
   - DRY – eliminate duplicated logic.
   - Use typed enums instead of magic strings or numbers.

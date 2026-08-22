@@ -1,5 +1,10 @@
 # SVG Logo Generation
 
+## Instruction
+
+> This instruction provides guidelines and directives for svg logo generation.
+
+
 When generating an SVG logo from a text description:
 
 ## 1. Clean SVG Code

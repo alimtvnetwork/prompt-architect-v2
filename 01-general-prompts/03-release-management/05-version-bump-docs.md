@@ -1,5 +1,10 @@
 # Version Bump Docs Instruction
 
+## Instruction
+
+> This instruction provides guidelines and directives for version bump docs instruction.
+
+
 When instructed to bump the version in documentation:
 
 ## 1. Search and Replace

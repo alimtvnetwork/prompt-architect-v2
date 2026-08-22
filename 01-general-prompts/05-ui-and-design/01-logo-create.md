@@ -1,5 +1,10 @@
 # Logo Creation Instruction
 
+## Instruction
+
+> This instruction provides guidelines and directives for logo creation instruction.
+
+
 Please instruct Lovable to create a logo for me. The instruction should be saved into the project file system as well, so it knows how to create a logo. I will give the product name, a little bit of product idea based on the voice, and a sample color and things like that. It would generate the project name first at the root level. So there should be a folder named `Projects`, and inside that it will have `01`, `02`, `03`, etc., project name folders. Inside a project name folder, it would have an `icons-svg` folder, where all icons will be created as SVG. Also, there would be an `icons-image` folder, where the image of the icon would be there - two or three samples. If the icon is required to have a dark and white version, it should make both versions. The other part is to create the colors and themes, and at the end, it should also create the favicon for the website. That should be on the root of the repo. And there should be an MD file that actually uses all these things and displays them on Git. This is how, any time an icon is asked to be created, it should be done.
 
 ## Coding Guidelines Reminder

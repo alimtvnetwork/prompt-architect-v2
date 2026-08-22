@@ -1,5 +1,10 @@
 # Theming Guidelines
 
+## Instruction
+
+> This instruction provides guidelines and directives for theming guidelines.
+
+
 When implementing or updating theming (colors, typography, spacing):
 
 ## 1. CSS Variables / Design Tokens
