@@ -29,7 +29,6 @@ Ensure consistency across all documentation files. Do not miss any version refer
 - [ ] Determine new version according to SemVer rules.
 - [ ] Explicitly state previous and new version in the reply.
 - [ ] Update version in standard files (e.g., package.json, version.json, etc.).
-- [ ] **AVOID**: Do NOT touch or modify any files inside the .lovable folder.
 - [ ] **AVOID**: Do NOT touch or modify any files inside the .gitmap folder.
 - [ ] Execute git add .
 - [ ] Execute git commit -m 'chore(release): bump version to <new_version>'
