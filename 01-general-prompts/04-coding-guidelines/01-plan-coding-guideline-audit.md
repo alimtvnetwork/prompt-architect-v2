@@ -1,9 +1,6 @@
-# Plan: Coding Guideline Audit & Enforcement (v4)
-
-## Instruction (must follow): Plan: Coding Guideline Audit & Enforcement (v4)
+# Instruction (must follow): Plan: Coding Guideline Audit & Enforcement (v4)
 
 > This instruction provides guidelines and directives for plan: coding guideline audit & enforcement (v4).
-
 
 /goal You MUST self-loop until you finish reading ALL files and finding ALL issues. Write those issues to tasks/pending tasks (and subtasks) before stopping.
 Before planning, you must read the following locations (if they exist) to build your context:

@@ -1,9 +1,6 @@
-# Conversation Log - Pre-Action Wrapper for Any Follow-up Instruction
-
-## Instruction (must follow): Conversation Log - Pre-Action Wrapper for Any Follow-up Instruction
+# Instruction (must follow): Conversation Log - Pre-Action Wrapper for Any Follow-up Instruction
 
 > This instruction provides guidelines and directives for conversation log - pre-action wrapper for any follow-up instruction.
-
 
 > Purpose: Before acting on the *next* prompt the user pastes, the AI must (a) persist the full chat so far to disk as a numbered Markdown log, (b) rewrite and improve the user's follow-up prompt in place, (c) confirm that the project's coding guidelines are captured in memory, and (d) surface any ambiguity. The AI does NOT execute the follow-up prompt yet.
 

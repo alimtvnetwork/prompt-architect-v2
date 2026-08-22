@@ -1,11 +1,6 @@
-# CI/CD Fix Loop
-
-
-## Instruction (must follow): CI/CD Fix Loop
+# Instruction (must follow): CI/CD Fix Loop
 
 > This instruction provides guidelines and directives for ci/cd fix loop.
-
-
 
 /goal The user will provide an error log from a failed CI/CD pipeline. Your objective is to perform a Root Cause Analysis (RCA), fix the codebase to resolve the issue, record the memory of this failure and its solution in the `.lovable` folder, commit the changes using the commit-fix workflow, and repeat the loop until the CI/CD pipeline is fully green.
 
@@ -53,7 +48,6 @@
 ## Awaiting Input
 
 Wait for the user to paste the CI/CD error log. Once provided, immediately begin at Step 1 of the checklist.
-
 
 ---
 

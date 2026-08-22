@@ -1,9 +1,6 @@
-# Jokes Ideas Generate
-
-## Instruction (must follow): Jokes Ideas Generate
+# Instruction (must follow): Jokes Ideas Generate
 
 > This instruction provides guidelines and directives for jokes ideas generate.
-
 
 ## Variables (fill before running)
 

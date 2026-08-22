@@ -1,11 +1,6 @@
-# Clean Artifacts and Git History Purge
-
-
-## Instruction (must follow): Clean Artifacts and Git History Purge
+# Instruction (must follow): Clean Artifacts and Git History Purge
 
 > This instruction provides guidelines and directives for clean artifacts and git history purge.
-
-
 
 /goal Ensure that NO assets, zip files from artifacts, test data, temporary scratch scripts, or extraneous generated code are accidentally committed to or retained in the Git repository.
 
@@ -100,7 +95,6 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 ## Before Writing Code
 
 Read and follow spec folders `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/` before writing any code. Error management must be followed. Code must be DRY.
-
 
 ---
 

@@ -1,9 +1,6 @@
-# Coding Guidelines (AI Blind-Follow)
-
-## Instruction (must follow): Coding Guidelines (AI Blind-Follow)
+# Instruction (must follow): Coding Guidelines (AI Blind-Follow)
 
 > This instruction provides guidelines and directives for coding guidelines (ai blind-follow).
-
 
 Version: 1.4.5
 

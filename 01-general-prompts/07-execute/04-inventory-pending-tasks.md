@@ -1,11 +1,6 @@
-# Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal)
-
-
-## Instruction (must follow): Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal)
+# Instruction (must follow): Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal)
 
 > This instruction provides guidelines and directives for inventory pending tasks (read-only scan & 3-agent dispatch proposal).
-
-
 
 /goal Perform a strictly read-only scan of the entire repository, `spec/`, and `.lovable/` directory to compile a comprehensive, deduplicated inventory of every pending task, subtask, unresolved issue, and open requirement structured into Execution Waves.
 
@@ -191,7 +186,6 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 ## Before Writing Code
 
 Read and follow spec folders `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/` before writing any code. Error management must be followed. Code must be DRY.
-
 
 ---
 

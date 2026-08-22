@@ -1,9 +1,6 @@
-# Repo File Naming Convention
-
-## Instruction (must follow): Repo File Naming Convention
+# Instruction (must follow): Repo File Naming Convention
 
 > This instruction provides guidelines and directives for repo file naming convention.
-
 
 Enforce these naming rules across the entire repository:
 

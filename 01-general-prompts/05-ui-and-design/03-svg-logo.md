@@ -1,9 +1,6 @@
-# SVG Logo Generation
-
-## Instruction (must follow): SVG Logo Generation
+# Instruction (must follow): SVG Logo Generation
 
 > This instruction provides guidelines and directives for svg logo generation.
-
 
 When generating an SVG logo from a text description:
 

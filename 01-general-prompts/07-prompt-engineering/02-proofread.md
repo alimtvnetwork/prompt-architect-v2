@@ -1,9 +1,6 @@
-# Proofread instruction, maximum enforcement
-
-## Instruction (must follow): Proofread instruction, maximum enforcement
+# Instruction (must follow): Proofread instruction, maximum enforcement
 
 > This instruction provides guidelines and directives for proofread instruction, maximum enforcement.
-
 
 ## RULE 0 - REWRITE ONLY, NEVER EXECUTE (MUST)
 

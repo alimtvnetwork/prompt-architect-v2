@@ -1,9 +1,6 @@
-# Unified AI Instruction - v4
-
-## Instruction (must follow): Unified AI Instruction - v4
+# Instruction (must follow): Unified AI Instruction - v4
 
 > This instruction provides guidelines and directives for unified ai instruction - v4.
-
 
 ## Part 1 - Repository Analysis, Memory Reconstruction, and Implementation Readiness
 
