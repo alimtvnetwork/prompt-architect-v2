@@ -21,3 +21,17 @@ Release trigger rule: the user phrase "patch bump" or "patch release" means upda
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+
+
+### Execution Checklist
+
+- [ ] Discover current version from disk.
+- [ ] Determine new version according to SemVer rules.
+- [ ] Explicitly state previous and new version in the reply.
+- [ ] Update version in standard files (e.g., `package.json`, `version.json`, etc.).
+- [ ] **AVOID**: Do NOT touch or modify any files inside the `.lovable` folder.
+- [ ] **AVOID**: Do NOT touch or modify any files inside the `.gitmap` folder.
+- [ ] Execute `git add .`
+- [ ] Execute `git commit -m "chore(release): bump version to <new_version>"`
+- [ ] Execute `git push`
+- [ ] **AVOID**: Do NOT create a git tag (e.g., `git tag`). Tags are managed externally by Git Map.

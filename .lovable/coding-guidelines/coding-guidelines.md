@@ -196,3 +196,10 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 4. List every remaining task before ending the turn.
 5. Plan multi-file features with a Mermaid component or flow diagram first.
 6. If you cannot find the answer in this file or in an existing `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder, ask. Do not invent.
+
+
+## Avoid
+
+- **DO NOT** modify anything inside the `.lovable` folder during normal operations unless explicitly instructed to update guidelines.
+- **DO NOT** modify anything inside the `.gitmap` folder.
+- **DO NOT** create Git tags during releases (e.g., `git tag v1.0.0`). The Git Map system will handle tags later. You must only `git commit` and `git push`.

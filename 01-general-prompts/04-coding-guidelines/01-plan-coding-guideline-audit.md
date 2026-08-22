@@ -10,10 +10,11 @@
 
 /goal You MUST self-loop until you finish reading ALL files and finding ALL issues. Write those issues to tasks/pending tasks (and subtasks) before stopping.
 Before planning, you must read the following locations (if they exist) to build your context:
-- `.lovable/coding-guidelines.md`
-- `spec/02-coding-guidelines/01-cross-language/04-code-style/` (Style Guidelines, including return statement rules)
+- `.lovable/coding-guidelines/coding-guidelines.md` (or `.lovable/coding-guidelines.md`)
+- `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md` (Style Guidelines)
+- `spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md` (Return statement rules)
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md` (Function Guidelines: functions MUST be < 8 lines)
-- `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/` (Boolean Naming: 'has'/'is' prefixes, inverse naming like isHonest/isDishonest)
+- `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md` (Boolean Naming: 'has'/'is' prefixes, inverse naming like isHonest/isDishonest)
 - `spec/02-coding-guidelines/03-golang/09-wrapped-boolean-results.md` (Golang Wrapped Booleans)
 
 - `spec/02-coding-guidelines/` or `spec/coding-guidelines/`
@@ -63,6 +64,15 @@ These guidelines are STRICTLY NON-NEGOTIABLE:
   - NEVER use negative naming like `isNot`.
   - ALWAYS use inverse naming. For example, if something is dishonest, use `isDishonest` instead of `isNotHonest`. Use `isHonest` and `isDishonest`.
 - **Golang Single Return & Wrapped Booleans:** In Go, strictly recommend passing a single return parameter. If multiple are needed, bundle them into a struct. Functions MUST NOT return raw booleans. Instead, return a single generic wrapped `Result` object (bundling `Data`, `AppError`, and status together) containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
+  *Fallback definition (in case spec file is missing):*
+  ```go
+  type Result[T any] struct {
+      IsSuccess bool
+      IsFailed  bool
+      Data      T
+      AppError  error // Or a custom AppError struct
+  }
+  ```
   Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
   ```go
   paymentStatus := ProcessPayment(100)
