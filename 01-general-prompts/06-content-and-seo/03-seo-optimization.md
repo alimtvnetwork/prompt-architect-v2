@@ -1,7 +1,5 @@
 # Instruction (must follow): SEO Optimization Instruction
 
-> This instruction provides guidelines and directives for seo optimization instruction.
-
 When tasked with SEO optimization for a page or component, enforce the following:
 
 ## 1. Meta Tags

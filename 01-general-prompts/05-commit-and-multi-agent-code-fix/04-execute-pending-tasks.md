@@ -1,7 +1,5 @@
 # Instruction (must follow): Execute Pending Tasks (Autonomous Execution)
 
-> This instruction provides guidelines and directives for execute pending tasks (autonomous execution).
-
 ## 1. Initial State: Audit, Casing Check & Re-Sequence Pending Tasks
 
 Before starting execution, you must ensure the queue of pending tasks is properly ordered, named, and structured into Execution Waves.

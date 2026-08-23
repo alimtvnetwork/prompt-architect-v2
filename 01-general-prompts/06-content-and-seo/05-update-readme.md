@@ -1,7 +1,5 @@
 # Instruction (must follow): Update README Instruction
 
-> This instruction provides guidelines and directives for update readme instruction.
-
 When instructed to update the README:
 
 ## 1. Structure

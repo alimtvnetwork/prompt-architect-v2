@@ -37,7 +37,6 @@ See also: [function-naming.md](../10-function-naming.md)
 
 ---
 
-
 ---
 
 ## Principle 6: Never Mix Positive and Negative Booleans in a Single Condition
@@ -122,7 +121,6 @@ if (isUnauthorized) {
 
 ---
 
-
 ---
 
 ## Principle 7: No Inline Statements in Conditions
@@ -178,7 +176,6 @@ if (isMatchFound) {
 See [Go Boolean Standards P7](../../03-golang/02-boolean-standards.md#28--no-inline-statements-in-if-conditions-rule-p7) for Go-specific details.
 
 ---
-
 
 ---
 

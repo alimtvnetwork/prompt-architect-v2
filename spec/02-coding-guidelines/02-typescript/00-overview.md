@@ -32,7 +32,6 @@ TypeScript-specific coding standards, enum definitions, and type safety enforcem
 
 ---
 
-
 | # | File | Category | Description |
 |---|------|----------|-------------|
 | 01 | [01-connection-status-enum.md](./01-connection-status-enum.md) | Enum | Connection status enum definition |
@@ -57,7 +56,6 @@ TypeScript-specific coding standards, enum definitions, and type safety enforcem
 | File |
 |------|
 | 99-consistency-report.md |
-
 
 ## Cross-References
 

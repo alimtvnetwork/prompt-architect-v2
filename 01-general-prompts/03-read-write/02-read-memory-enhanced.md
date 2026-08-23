@@ -1,14 +1,5 @@
 # Instruction (must follow): Read Memory (Enhanced)
 
-> This instruction provides guidelines and directives for read memory (enhanced).
-
-## Ambiguity Folder Path (Non-Negotiable)
-
-- Open questions: `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md`
-- Answered questions: `.lovable/ambiguous-questions/02-ambiguity-resolved/01-<slug>.md`
-
-Read both folders in full during Phase 1. Surface open-ambiguity counts and slugs in the Completion Confirmation block. Treat resolved-ambiguity files as binding project decisions; do not re-litigate them. If an open ambiguity is relevant to the incoming task, stop and surface it before doing work. Never guess past it.
-
 /goal Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
 
 /learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/specs/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.

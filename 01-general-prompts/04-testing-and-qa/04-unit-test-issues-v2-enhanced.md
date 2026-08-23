@@ -1,7 +1,5 @@
 # Instruction (must follow): Verbatim
 
-> This instruction provides guidelines and directives for verbatim.
-
 Based on the packages that have low coverage, if a package has more than 1000 lines, then for that specific package we should split it into segments of 200 lines per task.
 
 You should create a plan where each 200-line segment is treated as one task. Each task should focus on writing meaningful test coverage, including:

@@ -1,7 +1,5 @@
 # Instruction (must follow): Instruction Library Setup
 
-> This instruction provides guidelines and directives for instruction library setup.
-
 Create a prompts folder in the root of the repo: `01-prompts`. Inside this you will have the general prompts. So inside this folder will be `01-general`, and afterwards you will have the project names, let's say `02-<project-name>`. Inside this you will always have the file as a sequence: `01`, `02` hyphen the prompt slug. So whatever prompt I give you, you create the slug or title for that and put it into that prompt folder specifically and make a commit.
 
 Update your `.lovable` folder with this memory in an MD file. Make sure you also create a "what to read" MD file that would resolve this. Also in the root of the repo, create the root readme file — all readme files should be in lowercase. Remember: hyphen and lowercase, that's the format. In the root of the repo, explain the folder structure and how the files need to be. Empty folders you create with a `.gitkeep` file so that they exist.

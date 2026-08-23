@@ -58,7 +58,6 @@ GlobalErrorModal (Dialog shell)
 |------|
 | 99-consistency-report.md |
 
-
 ## Cross-References
 
 - [Error Modal Spec](../03-error-modal-reference/00-overview.md) — Full modal structure, data model, and UX specification

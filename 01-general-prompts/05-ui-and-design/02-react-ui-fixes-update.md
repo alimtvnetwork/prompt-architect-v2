@@ -1,7 +1,5 @@
 # Instruction (must follow): React UI Fixes & Update Instruction
 
-> This instruction provides guidelines and directives for react ui fixes & update instruction.
-
 When applying UI fixes or updates to a React component, follow these rules strictly:
 
 ## 1. Zero Structural Changes

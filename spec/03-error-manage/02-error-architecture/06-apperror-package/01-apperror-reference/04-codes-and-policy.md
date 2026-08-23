@@ -115,7 +115,6 @@ func NewType(errType apperrtype.ErrorType) *AppError {
 
 ---
 
-
 ---
 
 ## 7. Stack Trace Skip Rules
@@ -140,7 +139,6 @@ The table below shows what each constructor passes to its underlying `CaptureSta
 > **Key insight:** `FailWrap` calls `WrapWithSkip` directly (same as `Wrap` does), so it sits at the **same depth** and passes `skip=0`. `FailNew` calls `NewWithSkip` directly (one frame deeper than `New`), so it passes `skip=1`.
 
 ---
-
 
 ---
 

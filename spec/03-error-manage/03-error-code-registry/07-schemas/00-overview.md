@@ -8,7 +8,6 @@
 
 ---
 
-
 ## Keywords
 
 `error`, `code`, `registry`, `schemas`
@@ -25,7 +24,6 @@
 | Keywords present | ✅ |
 | Scoring table present | ✅ |
 
-
 ## Purpose
 
 Error code registry JSON schemas.
@@ -37,7 +35,6 @@ Error code registry JSON schemas.
 | File |
 |------|
 | 99-consistency-report.md |
-
 
 | 99-consistency-report.md |
 ---

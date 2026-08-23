@@ -27,7 +27,6 @@
 
 ---
 
-
 ---
 
 ## Error Handling — Safe Execution Strategy
@@ -109,7 +108,6 @@ register_shutdown_function(function() {
 > **Implementation:** `ErrorChecker` delegates to `ErrorType::FATAL_TYPES` for the constant list. Use `ErrorChecker::getTypeLabel($error['type'])` to convert any `E_*` integer to a human-readable string (e.g., `'E_ERROR'`) — this replaces all inline type-mapping arrays. See [enums.md](../01-enums.md) for the full `ErrorChecker`, `ErrorType`, and `TYPE_LABELS` implementations.
 
 ---
-
 
 ---
 

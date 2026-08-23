@@ -8,7 +8,6 @@
 
 ---
 
-
 ## Keywords
 
 `error`, `code`, `registry`, `linter-scripts`
@@ -25,7 +24,6 @@
 | Keywords present | ✅ |
 | Scoring table present | ✅ |
 
-
 ## Purpose
 
 Error code registry automation scripts.
@@ -37,7 +35,6 @@ Error code registry automation scripts.
 | File |
 |------|
 | 99-consistency-report.md |
-
 
 | 99-consistency-report.md |
 ---

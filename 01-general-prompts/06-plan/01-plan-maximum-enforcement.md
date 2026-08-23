@@ -1,7 +1,5 @@
 # Instruction (must follow): Plan: Maximum Enforcement (v4.2)
 
-> This instruction provides guidelines and directives for plan: maximum enforcement (v4.2).
-
 ## RULE 0, step count is law
 
 Produce EXACTLY `5` steps. Not `5-1`, not `5+1`. `5` is a positive integer injected at runtime. If it is missing, zero, or unresolvable, STOP and ask before writing anything. Count the steps twice before saving.

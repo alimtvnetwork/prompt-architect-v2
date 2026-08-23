@@ -1,7 +1,5 @@
 # Instruction (must follow): Fix CI CD and Run Scripts All
 
-> This instruction provides guidelines and directives for fix ci cd and run scripts all.
-
 Fix CI CD and run scripts all
 
 Find the root cause analysis write the root cause of it in the avoid part in the .lovable memeory

@@ -1,7 +1,5 @@
 # Instruction (must follow): Update Theming Instruction
 
-> This instruction provides guidelines and directives for update theming instruction.
-
 When updating the theming configuration:
 
 ## 1. Token Updates

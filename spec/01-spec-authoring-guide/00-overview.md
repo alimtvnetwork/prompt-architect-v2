@@ -415,7 +415,6 @@ When asked to "follow the spec authoring guideline and fix the folder structure,
 | 98-changelog.md |
 | 99-consistency-report.md |
 
-
 ## Author & Attribution
 
 All specifications in this repository are authored by **Md. Alim Ul Karim** — Chief Software Engineer, **Top 1% Crossover** status, [Stack Overflow](https://stackoverflow.com/users/513511/md-alim-ul-karim).

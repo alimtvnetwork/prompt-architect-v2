@@ -107,7 +107,6 @@ This folder consolidates content previously located at:
 | 98-changelog.md |
 | 99-consistency-report.md |
 
-
 ## Cross-References
 
 | Reference | Location |

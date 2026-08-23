@@ -133,7 +133,6 @@ func truncateData(data []byte, maxLen int) string {
 
 ---
 
-
 ---
 
 ## 12. Result Guard Rule — Mandatory Error Check Before Value Access

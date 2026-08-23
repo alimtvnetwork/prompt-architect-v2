@@ -8,7 +8,6 @@
 
 ---
 
-
 ## Keywords
 
 `error`, `resolution`, `verification`, `patterns`
@@ -24,7 +23,6 @@
 | Ambiguity assigned | ✅ |
 | Keywords present | ✅ |
 | Scoring table present | ✅ |
-
 
 ## Purpose
 

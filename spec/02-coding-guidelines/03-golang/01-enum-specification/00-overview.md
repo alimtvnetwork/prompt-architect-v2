@@ -9,7 +9,6 @@
 
 ---
 
-
 ## Keywords
 
 `coding`, `enum`, `golang`, `guidelines`, `specification`
@@ -25,7 +24,6 @@
 | Ambiguity assigned | ✅ |
 | Keywords present | ✅ |
 | Scoring table present | ✅ |
-
 
 ## Purpose
 
@@ -147,7 +145,6 @@ internal/enums/
 | File |
 |------|
 | 99-consistency-report.md |
-
 
 ## Cross-References
 

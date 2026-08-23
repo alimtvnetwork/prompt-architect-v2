@@ -1,7 +1,5 @@
 # Instruction (must follow): Coding Guidelines (AI Blind-Follow)
 
-> This instruction provides guidelines and directives for coding guidelines (ai blind-follow).
-
 Version: 1.4.5
 
 This is a standalone file. Follow every rule below without consulting any other document. If a `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.

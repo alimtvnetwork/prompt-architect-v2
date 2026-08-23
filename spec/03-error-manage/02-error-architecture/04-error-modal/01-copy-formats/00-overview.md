@@ -94,7 +94,6 @@ See [01-compact-report.md § Backend error.log.txt Section](./01-compact-report.
 |------|
 | 99-consistency-report.md |
 
-
 ## Cross-References
 
 - [Error Modal Spec](../03-error-modal-reference.md) — Full modal structure and component hierarchy

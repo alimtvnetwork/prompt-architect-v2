@@ -28,7 +28,6 @@ func FetchResults[T any]() apperror.Result[T] { ... }
 
 ---
 
-
 ---
 
 ## Error Handling — `apperror` Package
@@ -186,7 +185,6 @@ return apperror.Wrap(
 | E14xxx | Crypto errors |
 
 ---
-
 
 ---
 

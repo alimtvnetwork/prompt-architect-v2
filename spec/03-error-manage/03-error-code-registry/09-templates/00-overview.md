@@ -8,7 +8,6 @@
 
 ---
 
-
 ## Keywords
 
 `error`, `code`, `registry`, `templates`
@@ -24,7 +23,6 @@
 | Ambiguity assigned | ✅ |
 | Keywords present | ✅ |
 | Scoring table present | ✅ |
-
 
 ## Purpose
 

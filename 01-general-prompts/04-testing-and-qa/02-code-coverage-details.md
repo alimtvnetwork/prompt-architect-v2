@@ -2,8 +2,6 @@ Based on the packages which has, like, low coverage, uh, if it has more than tho
 
 # Instruction (must follow): Actionable Plan
 
-> This instruction provides guidelines and directives for actionable plan.
-
 ## 1. Task Breakdown
 
  Step 1: Identify packages with low coverage, especially those with more than 1000 lines of code.

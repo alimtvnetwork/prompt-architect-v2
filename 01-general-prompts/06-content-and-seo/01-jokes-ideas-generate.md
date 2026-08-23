@@ -1,7 +1,5 @@
 # Instruction (must follow): Jokes Ideas Generate
 
-> This instruction provides guidelines and directives for jokes ideas generate.
-
 ## Variables (fill before running)
 
 - `{{n}}` = number of ideas to generate (e.g. 10) , ask if not provided

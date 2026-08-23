@@ -1,8 +1,5 @@
 ## Instruction
 
-> This instruction provides guidelines and directives for this task.
-
-
 You are to execute the coding‑guideline fixes that were identified by the planning prompt.
 
 ## Context Checklist

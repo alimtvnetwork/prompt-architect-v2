@@ -93,7 +93,6 @@
 |------|
 | 99-consistency-report.md |
 
-
 ## Cross-References
 
 - [Copy Format Samples](../01-copy-formats/00-overview.md) — Complete samples for all copy/export formats

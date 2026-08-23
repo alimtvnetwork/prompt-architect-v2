@@ -70,7 +70,6 @@ This split preserves the existing Go behavior while restoring P1 enforcement for
 
 ---
 
-
 ---
 
 ## Result Wrapper — Full Public API Reference
