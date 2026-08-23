@@ -1,6 +1,6 @@
 # Instruction (must follow): Read Memory (Enhanced)
 
-/goal Before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
+/goal and /learn before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
 
 /learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/specs/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.
 
@@ -283,6 +283,8 @@ Then stop. No next-step suggestions, no exploratory questions.
 
 ## Pre-Reply Checklist (All Must Be True)
 
+/goal Complete the checklist properly until done can do self-looping.
+
 - [ ] Read and /learn `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and followed its order in full
 - [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed, committed, and pushed if uppercase or missing)
 - [ ] Read and /learn the root `readme.md` file (casing rules, architecture, entry points)
@@ -309,6 +311,8 @@ Then stop. No next-step suggestions, no exploratory questions.
 
 ## Actionable Items & Checklist
 
+/goal Complete the checklist properly until done can do self-looping.
+
 - [ ] /learn the coding guidelines in: `.lovable/coding-guidelines/coding-guidelines.md` and create memory.
 - [ ] /learn the condition extraction in: `spec/02-coding-guidelines/01-cross-language/04-code-style/02-conditions-and-extraction.md` and create memory.
 - [ ] /learn the formatting and braces in: `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md` and create memory.
@@ -321,7 +325,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 
 - [ ] Read and /learn the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
-- [ ] Complete all work on the current branch only.
+- [ ] /goal Complete all work on the current branch only.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
