@@ -1,5 +1,11 @@
 # Instruction (must follow): Fix CI CD and Run Scripts All
 
+Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `fix run scripts`
+
+/goal Perform a Root Cause Analysis (RCA) on all failing run scripts and CI/CD workflows, persist the RCA into `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`, implement universal query wrappers with explicit success/failure boolean results and automated error logging, verify clean builds, commit logically, and push to git.
+
+/learn Ingest recent Root Cause Analysis (RCA) records from `.lovable/cicd-issues/`, `.lovable/issues/`, and `spec/03-error-manage/` so previous mistakes and anti-patterns are never repeated.
+
 Fix CI CD and run scripts all
 
 Find the root cause analysis write the root cause of it in the avoid part in the .lovable memeory
@@ -8,12 +14,13 @@ Please have a look into all the code base, try to make the Git commits properly,
 
 ## Action Items — Must Follow (Non-Negotiable)
 
+- [ ] Ingest past RCAs from `.lovable/cicd-issues/` and `.lovable/issues/` before coding.
 - [ ] Fix CI/CD and run all scripts.
-- [ ] Find the root cause of the issue and write it into the "avoid" part of the `.lovable` memory.
+- [ ] Find the root cause of the issue and write it into the 'avoid' part of the `.lovable` memory (`.lovable/strictly-avoid.md` and `.lovable/cicd-issues/01-<slug>.md`).
 - [ ] Make Git commits properly.
 - [ ] Check the CI/CD, run the tests, and build the code; fix any issues found.
 - [ ] Create a query wrapper for PHP/Python/TS that automatically logs failures to reduce code duplication.
-- [ ] Ensure the wrapper explicitly returns success or failure states (e.g., `is success`, `is failure`).
+- [ ] Ensure the wrapper explicitly returns success or failure states (e.g., `isSuccess`, `isFail`).
 - [ ] Identify everywhere this logging wrapper pattern was missed or messed up and fix those places.
 - [ ] Update the memory inside the `.lovable` folder regarding this wrapper pattern so future AI agents do not make the same mistake.
 - [ ] Make a plan for the required fixes and self-loop to execute it.
@@ -27,6 +34,7 @@ Read and follow spec folders `02`, `03` and `04` before writing any code. Error 
 
 ## Actionable Items & Checklist
 
+- [ ] /learn previous RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`.
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.

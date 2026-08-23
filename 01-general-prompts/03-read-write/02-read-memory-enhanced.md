@@ -1,8 +1,8 @@
 # Instruction (must follow): Read Memory (Enhanced)
 
-/goal and /learn before you touch this project, load its identity into your head: who it is, what it forbids, what it has already decided, and what work is in flight.
+/goal Load the project's identity, specifications, conventions, active plans, and recent Root Cause Analysis (RCA) records into your context before starting any task. Never repeat a logged past failure.
 
-/learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/specs/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.
+/learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, RCA logs, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/specs/`, `.lovable/issues/`, `.lovable/cicd-issues/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.
 
 The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
 
@@ -11,6 +11,8 @@ Autonomously self-loop and read:
 - /learn the root `readme.md` to create memory.
 - /learn the entire `.lovable/` folder (especially `what-to-read.md`, `.lovable/coding-guidelines/` and all files they reference) to create memory.
 - /learn every single folder, subfolder, and nested markdown file in the `spec/` directory (specifically `spec/02-coding-guidelines/`, `spec/03-error-manage/`, enum fixes, database conventions) to create memory.
+- /learn all recent Root Cause Analysis (RCA) records, retrospectives, and past failure post-mortems in `.lovable/issues/01-<slug>.md`, `.lovable/cicd-issues/01-<slug>.md`, and `spec/03-error-manage/01-error-resolution/03-retrospectives/` to ensure past mistakes are never repeated.
+- /learn all hard prohibitions in `.lovable/strictly-avoid.md`.
 - Read every pending task across `.lovable/plans/pending/01-<slug>.md`, `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`, `.lovable/issues/`, and `.lovable/cicd-issues/`, listing them out in full.
 
 Note on spec folder naming: Spec folders follow the hyphenated pattern `spec/<NN>-<slug>/` where `<NN>` is a sequence prefix and `<slug>` is the descriptive name. These numbers and folder placements are not rigidly fixed and may switch or be reorganized between projects. This canonical layout represents the general architecture the AI must dynamically discover, inspect, and read in full.
@@ -74,6 +76,37 @@ The `.lovable/` folder, specs, and entire codebase can be massive. To process th
 10. CRITICAL read-only enforcement:
     - Other than fixing the root `readme.md` lowercase naming if needed, you MUST NOT refactor, edit, or write any application source code.
     - This is a strictly read and analysis phase.
+
+---
+
+## Root Cause Analysis (RCA) & Failure Memory Architecture (Non-Negotiable)
+
+To guarantee institutional memory and prevent regressions across all workflows (Plan Mode, CI/CD Fix, Coding Guidelines Audit, and Execution), all Root Cause Analyses (RCAs) follow strict canonical paths, file naming formats, and anti-hallucination guardrails:
+
+1. **General Issue / Bug RCAs**:
+   - Path: `.lovable/issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.)
+   - Index: Registered in `.lovable/issues/index.md` (or `.lovable/plans/index.md`)
+   - Mandatory Structure: Error description, exact file/line location, Root Cause Analysis (one-sentence root cause + deep analysis), fix strategy, and prevention checklist.
+
+2. **CI/CD Failure RCAs**:
+   - Path: `.lovable/cicd-issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.)
+   - Index: Registered in `.lovable/cicd-issues/index.md` (or `.lovable/cicd-index.md`)
+   - Mandatory Structure: Raw pipeline error snippet, Root Cause Analysis, resolution applied, and "What NOT to Repeat" rules.
+
+3. **Retrospectives & Architectural Failure Learnings**:
+   - Path: `.lovable/memory/learned/01-<slug>.md` and `spec/03-error-manage/01-error-resolution/03-retrospectives/01-<slug>.md`
+   - Index: Registered in `.lovable/memory/index.md`
+
+4. **Hard Avoidances / CODE RED Prohibitions**:
+   - Path: `.lovable/strictly-avoid.md`
+   - Hard Rule: Append-only. Never overwrite or truncate existing entries. Any RCA that uncovers a forbidden anti-pattern must append a one-line rule here.
+
+5. **Plan Mode Integration**:
+   - Path: `.lovable/plans/pending/01-<slug>.md` & `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`
+   - Context Requirement: Must cite previous relevant RCAs and failure records so the new plan explicitly avoids repeating past errors.
+
+6. **Anti-Hallucination Guard for RCAs**:
+   - If an RCA file, referenced spec, or issue file is missing on disk, the AI MUST NOT guess or assume its contents. Stop and file an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` or ask the user directly before proceeding.
 
 ---
 
@@ -320,6 +353,8 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] /learn the boolean guidelines in: `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md` and create memory.
 - [ ] /learn the anti-hallucination rules in: `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` and create memory.
 - [ ] /learn the error management architecture in: `spec/03-error-manage/00-overview.md` (and related error manage files) and create memory.
+- [ ] /learn all recent Root Cause Analysis (RCA) files in `.lovable/issues/`, `.lovable/cicd-issues/`, and `spec/03-error-manage/01-error-resolution/03-retrospectives/` to prevent recurring errors.
+- [ ] /learn all hard prohibitions in `.lovable/strictly-avoid.md` and verify zero violations.
 - [ ] /learn the enum standards and fixes in: `spec/17-consolidated-guidelines/04-enum-standards.md` and `spec/02-coding-guidelines/06-ai-optimization/05-enum-naming-quick-reference.md` and create memory.
 - [ ] /learn ALL other single-file specs in `spec/02-coding-guidelines/` and create memory.
 
