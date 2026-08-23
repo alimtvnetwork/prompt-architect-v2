@@ -18,28 +18,33 @@ Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cic
 ## Actionable Items & Checklist
 
 ### 1. Pre-Flight & Past RCA Ingestion
+
 - [ ] /learn past failure patterns in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`.
 - [ ] Read the provided CI/CD error log carefully.
 - [ ] Identify the exact file, line, function, and dependency causing the failure.
 - [ ] Formulate a one-sentence Root Cause Analysis followed by the full causal chain.
 
 ### 2. Memory Update (Mandatory)
+
 - [ ] Create a new issue file at `.lovable/cicd-issues/01-<slug>.md`.
 - [ ] Document: Error Summary, Root Cause Analysis, Solution Applied, and "What NOT to Repeat".
 - [ ] Update `.lovable/cicd-issues/index.md` in the same operation.
 - [ ] If a hard rule was broken, append a one-line prohibition to `.lovable/strictly-avoid.md`.
 
 ### 3. Execution & Code Fix
+
 - [ ] Implement the minimal correct fix in the codebase based strictly on the RCA.
 - [ ] Ensure the fix adheres to `spec/02-coding-guidelines/` and `spec/03-error-manage/`.
 - [ ] Run local builds, linters, or unit tests if available to verify the fix before committing.
 
 ### 4. Verification & Final Checks
+
 - [ ] Run all project tests (e.g., `go test ./...`, `npm test`, or equivalent test suites).
 - [ ] If the project uses Go, run the race detector (`go test -race ./...`).
 - [ ] Verify zero regressions, no swallowed errors, and no negative boolean anti-patterns.
 
 ### 5. Commit, Minor Release & Push
+
 - [ ] Stage changes and commit using the commit-fix workflow (`fix(ci): <issue-slug>`).
 - [ ] Tag a minor release or bump version if required by project release rules.
 - [ ] Push the commit and tags to the remote repository.
