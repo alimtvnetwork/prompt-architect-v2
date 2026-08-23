@@ -1,9 +1,8 @@
-# Instruction (must follow): Plan: Steps by Groups (Look-Ahead, Standalone Commit)
+# Instruction (must follow): Plan: Spec Steps (Look-Ahead, Standard)
 
 Follow the above instructions.
 
 N = [Number of steps the planning AI should self-loop to write the detailed task spec]
-Groups / X Steps = [How many groups/agents it will take to complete the plan, and how many steps per group]
 
 ## RULE 0: Do NOT Execute (Non-Negotiable)
 
@@ -17,35 +16,26 @@ If any images or files are provided, you MUST save them into the `assets/` folde
 
 ## 2. High-Detail Task Breakdown (The "High-Powered Brain")
 
-You must use your high-powered brain to write sub-tasks that explicitly detail:
+You must use your high-powered brain to write tasks that explicitly detail:
 - **Where** the code is.
 - **What** the issue is.
 - **How** to change it.
 
 The tasks must be so detailed and explicit that the next executing AI (who requires less brain) can simply follow the instructions without guessing. 
 
-## 3. Sub-Agent Grouping & Folder Structure
+## 3. Self-Loop to Create Brain and Tasks
 
-You must create tasks for AI agents as a group.
-- Group pending tasks into `.lovable/plans/pending/` and `.lovable/plans/subtasks/` so that when the executing AI agents run, they see the pending tasks clearly defined.
-- Each group must be assigned to a separate standalone sub-agent.
-- Each group must contain full context so the agent can execute and commit its code in a completely STANDALONE way.
-- Give each group/sub-task a highly specific title reflecting its exact task (e.g., `Refactoring Auth` or `Fixing DB Connection`).
-- Sub-agents must only be assigned simple, small micro-tasks rather than larger monolithic ones.
-
-## 4. Self-Loop to Create Brain and Tasks
-
-You must self-loop `N` times to create the brain, tasks, and subtasks for the defined Groups.
-Generate the folder structure, the `.lovable/plans/pending/` files, and the `.lovable/plans/subtasks/` files immediately during your self-loop.
+You must self-loop `N` times to create the brain, tasks, and detailed specs.
+Generate the folder structure and the `.lovable/plans/pending/` files immediately during your self-loop.
 Your self-loop must strictly follow this structure:
 1. Roll-up Index: Update `.lovable/plans/index.md`.
 2. Parent Plan: Create `.lovable/plans/pending/XX-<slug>.md`.
-3. Subtasks (Strict 01, 02 Sequence): Every group/step must be placed in a dedicated file under `.lovable/plans/subtasks/XX-<slug>/`. 
-   - The subtasks MUST follow a strict zero-padded numeric sequence: `01`, `02`, `03`, etc.
+3. Detailed Steps (Strict 01, 02 Sequence): Every step must be detailed inside the parent plan or placed in a dedicated file under `.lovable/plans/subtasks/XX-<slug>/` if it requires more depth.
+   - Any subtasks MUST follow a strict zero-padded numeric sequence: `01`, `02`, `03`, etc.
 
-## 5. High-Stakes Code Standards, Error Management & Guidelines
+## 4. High-Stakes Code Standards, Error Management & Guidelines
 
-You MUST follow the project's strict coding guidelines and ensure your groups enforce them.
+You MUST follow the project's strict coding guidelines and ensure your plans enforce them.
 For every task, you MUST check if the following files or folders exist. **If they exist, they MUST be followed and included in the task's checklist for the executing AI to follow. If they do not exist, they can be skipped.**
 
 ### Dynamic Required Reading / Reference Checklist (Non-Negotiable):
@@ -84,9 +74,9 @@ For every task, you MUST check if the following files or folders exist. **If the
 - `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
 - `spec/02-coding-guidelines/01-cross-language/18-code-mutation-avoidance.md`
 
-## 6. End-of-Loop Commit Fix (Non-Negotiable)
+## 5. End-of-Loop Commit Fix (Non-Negotiable)
 
-Each step or group that completes MUST immediately commit and fix the Git. Follow these exact rules from the commit-fix prompt:
+Each step that completes MUST immediately commit and fix the Git. Follow these exact rules from the commit-fix prompt:
 - Group all completed work for the subtask into a single logical commit.
 - RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.
 - Ensure .gitignore explicitly excludes them.
@@ -95,18 +85,15 @@ Each step or group that completes MUST immediately commit and fix the Git. Follo
 
 ## Action Items — Must Follow (Non-Negotiable)
 
-- [ ] Read the user-provided "N" and "Groups / X Steps" variables.
+- [ ] Read the user-provided "N" variable.
 - [ ] Do not execute anything; write the detailed spec and pending tasks first.
 - [ ] Save all provided images to `assets/`, rename them contextually, and link them in the markdown.
 - [ ] Write tasks using your high-powered brain, detailing explicitly where the code is, what the issue is, and how to change it.
-- [ ] Group tasks logically for independent sub-agents, ensuring each group contains full context for a standalone sub-agent.
-- [ ] Ensure each group can work and commit standalone.
 - [ ] Self-loop `N` times to write detailed specs and task files.
 - [ ] Ensure subtask files are named exactly XX-<subslug>.md where XX is the sequence.
-- [ ] Audit the plan against the Master Consolidated Guide, Code Style, Boolean Conditions, and Variable Naming rules.
-- [ ] Ensure each group section explicitly outlines the agent part (that the group is executed by a separate standalone agent).
-- [ ] Ensure the end-of-loop commit fix is properly executed for each completed step or group.
-- [ ] Update `.lovable/plans/index.md` and populate `.lovable/plans/pending/` and `.lovable/plans/subtasks/`.
+- [ ] Check if the dynamic reading files exist. If so, enforce them in the task checklist.
+- [ ] Ensure the end-of-loop commit fix is properly executed for each completed step.
+- [ ] Update `.lovable/plans/index.md` and populate `.lovable/plans/pending/`.
 
 ## Actionable Items & Checklist
 
@@ -126,5 +113,5 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ## Metadata
 
-- slug: plan-steps-by-groups
+- slug: plan-spec-steps
 - status: active
