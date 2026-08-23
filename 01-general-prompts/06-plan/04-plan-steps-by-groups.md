@@ -51,38 +51,38 @@ For every task, you MUST check if the following files or folders exist. **If the
 ### Dynamic Required Reading / Reference Checklist (Non-Negotiable):
 
 1. **Root Memory Guidelines**
-- `.lovable/coding-guidelines/coding-guidelines.md` (and/or `.lovable/memory/coding-guidelines.md`)
+- /learn `.lovable/coding-guidelines/coding-guidelines.md` (and/or `.lovable/memory/coding-guidelines.md`)
 
 2. **Master Consolidated Guide & Coding Guidelines**
-- `spec/17-consolidated-guidelines/02-coding-guidelines.md`
-- `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/00-overview.md`
+- /learn `spec/17-consolidated-guidelines/02-coding-guidelines.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/00-overview.md`
 
 3. **Error Management (Must Follow for all Coding Tasks)**
-- `spec/03-error-manage/01-error-resolution/00-overview.md`
-- `spec/03-error-manage/02-error-architecture/00-overview.md`
-- `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`
-- *Include most of the files from the error manage directory to ensure robust error handling is implemented per task.*
+- /learn `spec/03-error-manage/01-error-resolution/00-overview.md`
+- /learn `spec/03-error-manage/02-error-architecture/00-overview.md`
+- /learn `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`
+- /learn *Include most of the files from the error manage directory to ensure robust error handling is implemented per task.*
 
 4. **Boolean Conditions, Wrappers & Samples**
-- `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
-- `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
-- `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
-- `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/04-quick-reference.md`
-- `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`
-- `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/04-quick-reference.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
 
 5. **Code Style & File Size Limits (80-100 lines max)**
-- `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
-- `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
-- `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
-- `spec/02-coding-guidelines/01-cross-language/20-nesting-resolution-patterns.md`
-- `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/20-nesting-resolution-patterns.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
 
 6. **Variable Naming & Definitions**
-- `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
-- `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
-- `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
-- `spec/02-coding-guidelines/01-cross-language/18-code-mutation-avoidance.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
+- /learn `spec/02-coding-guidelines/01-cross-language/18-code-mutation-avoidance.md`
 
 ## 6. End-of-Loop Commit Fix (Non-Negotiable)
 
@@ -110,7 +110,7 @@ Each step or group that completes MUST immediately commit and fix the Git. Follo
 
 ## Actionable Items & Checklist
 
-- [ ] Read and /learn the overarching main task plan.
+- [ ] /learn the overarching main task plan.
 - [ ] Read `.lovable/memory/index.md` and `.lovable/plans/index.md` before planning.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.

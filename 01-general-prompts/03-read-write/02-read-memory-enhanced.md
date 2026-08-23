@@ -318,23 +318,23 @@ Then stop. No next-step suggestions, no exploratory questions.
 
 /goal Complete the checklist properly until done can do self-looping.
 
-- [ ] Read and /learn `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and followed its order in full
+- [ ] /learn `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`) first and followed its order in full
 - [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed, committed, and pushed if uppercase or missing)
-- [ ] Read and /learn the root `readme.md` file (casing rules, architecture, entry points)
+- [ ] /learn the root `readme.md` file (casing rules, architecture, entry points)
 - [ ] Walked `.lovable/` recursively, no folder or file skipped silently
-- [ ] Read and /learn `.lovable/memory/index.md` and every file it points at
-- [ ] Read and /learn `.lovable/plans/index.md`, every file in `pending/` (sequenced as `01-`, `02-`), and all active subtasks
+- [ ] /learn `.lovable/memory/index.md` and every file it points at
+- [ ] /learn `.lovable/plans/index.md`, every file in `pending/` (sequenced as `01-`, `02-`), and all active subtasks
 - [ ] Skimmed `.lovable/plans/completed/` for recent history
-- [ ] Read and /learn every file in `.lovable/spec/commands/`
-- [ ] Read and /learn every file in `.lovable/issues/` and `.lovable/cicd-issues/`
-- [ ] Read and /learn every file in `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/`
+- [ ] /learn every file in `.lovable/spec/commands/`
+- [ ] /learn every file in `.lovable/issues/` and `.lovable/cicd-issues/`
+- [ ] /learn every file in `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/`
 - [ ] Scanned for broken links or missing docs and surfaced them under open ambiguities
 - [ ] Ingested active schema models, DB column conventions, and API route shapes
 - [ ] Verified runtime dependencies and package compatibility
 - [ ] Recursively traversed and read every subfolder, nested markdown file (`*.md`), overview, and consistency report within `spec/` (e.g. `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, etc.)
 - [ ] Autonomously surveyed and looped through the entire codebase as a whole (all application code, entry points, routes, components, state stores, utilities, and configuration files)
-- [ ] Read and /learn `spec/17-consolidated-guidelines/` (or `spec/12-consolidated-guidelines/`) in numeric order (or noted missing)
-- [ ] Read and /learn `spec/01-spec-authoring-guide/` in numeric order (or noted missing)
+- [ ] /learn `spec/17-consolidated-guidelines/` (or `spec/12-consolidated-guidelines/`) in numeric order (or noted missing)
+- [ ] /learn `spec/01-spec-authoring-guide/` in numeric order (or noted missing)
 - [ ] Can name CODE RED rules, naming conventions, error-handling philosophy without guessing
 - [ ] Can list every pending plan slug and subtask from memory
 - [ ] Checked whether the repo contains explicit tone, strictly-avoid, or prior-stupidity instructions and applied them without softening
@@ -358,7 +358,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] /learn the enum standards and fixes in: `spec/17-consolidated-guidelines/04-enum-standards.md` and `spec/02-coding-guidelines/06-ai-optimization/05-enum-naming-quick-reference.md` and create memory.
 - [ ] /learn ALL other single-file specs in `spec/02-coding-guidelines/` and create memory.
 
-- [ ] Read and /learn the overarching main task plan.
+- [ ] /learn the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] /goal Complete all work on the current branch only.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
