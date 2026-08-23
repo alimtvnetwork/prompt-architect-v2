@@ -87,7 +87,7 @@ Each step or group that completes MUST immediately commit and fix the Git. Follo
 
 ## Actionable Items & Checklist
 
-- [ ] Read the overarching main task plan.
+- [ ] Read and /learn the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
