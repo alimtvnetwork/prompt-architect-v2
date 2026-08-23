@@ -2,6 +2,8 @@
 
 /goal The user will provide an error log from a failed CI/CD pipeline. Your objective is to perform a Root Cause Analysis (RCA), fix the codebase to resolve the issue, record the memory of this failure and its solution in the `.lovable` folder, commit the changes using the commit-fix workflow, and repeat the loop until the CI/CD pipeline is fully green.
 
+/learn also previous root cause analysis (RCA) so that you can learn past mistakes.
+
 ## Rules & Constraints
 
 1. Analyze First: Do not blindly change code. Read the provided CI/CD error, trace it back to the exact file and line, and perform a proper Root Cause Analysis (RCA).
