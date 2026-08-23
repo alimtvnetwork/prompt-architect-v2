@@ -1,8 +1,31 @@
 # Instruction (must follow): Coding Guidelines (AI Blind-Follow)
 
+/goal Blindly follow, enforce, and execute every coding guideline, error management architecture, function size cap, boolean principle, and type-safety rule across all languages in this repository. Zero hallucination, zero drive-by refactoring, zero tolerance for guideline violations.
+
+/learn Ingest, understand, and internalize all coding standards, cross-language rules, error philosophies, and project specifications from spec/02-coding-guidelines/, spec/03-error-manage/, and .lovable/ memory before reading, modifying, or creating any code.
+
 Version: 1.4.5
 
-This is a standalone file. Follow every rule below without consulting any other document. If a `spec/xx-coding-guidelines/` folder or `spec/xx-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.
+This is a standalone file. Follow every rule below without consulting any other document. If a `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.
+
+Autonomously self-loop and read:
+- /learn the master cross-language coding guidelines in `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/01-naming-and-database.md` through `06-advanced-patterns.md`.
+- /learn the code style, braces, spacing, and multi-line rules in `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md` through `06-comments-and-documentation.md`.
+- /learn the strict function and type size caps (8 lines preferred, 15 lines max) in `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`.
+- /learn the boolean principles, prefixing rules (`is`, `has`, `can`, `should`), and guard extraction in `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md` through `05-exemptions-and-api.md`.
+- /learn the absolute prohibition against negative booleans and inverted logic in `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`.
+- /learn the strict identifier and file naming conventions (banned short identifiers: `arr`, `cb`, `fn`, `el`, `msg`, `ctx`, `obj`, `val`) in `spec/02-coding-guidelines/08-file-folder-naming/01-cross-language.md`.
+- /learn the DRY principles and duplication extraction patterns in `spec/02-coding-guidelines/01-cross-language/08-dry-principles.md`.
+- /learn the error management architecture, response envelope, and logging diagnostics in `spec/03-error-manage/00-overview.md` and `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`.
+- /learn the language-specific standards:
+  - TypeScript: `spec/02-coding-guidelines/02-typescript/00-overview.md` & `spec/02-coding-guidelines/08-file-folder-naming/04-typescript-javascript.md`
+  - Go: `spec/02-coding-guidelines/03-golang/00-overview.md`, `04-golang-standards-reference/01-file-and-function-rules.md`, and `09-wrapped-boolean-results.md`
+  - PHP: `spec/02-coding-guidelines/04-php/05-response-array-standard.md` & `spec/02-coding-guidelines/04-php/07-php-standards-reference/01-naming-and-errors.md`
+  - Rust: `spec/02-coding-guidelines/05-rust/00-overview.md` & `spec/02-coding-guidelines/05-rust/01-naming-conventions.md`
+  - C#: `spec/02-coding-guidelines/07-csharp/00-overview.md` & `spec/02-coding-guidelines/07-csharp/01-naming-and-conventions.md`
+  - Python: `spec/02-coding-guidelines/12-python/00-overview.md` & `spec/02-coding-guidelines/12-python/01-standards.md`
+  - PowerShell: `spec/02-coding-guidelines/09-powershell-integration/00-overview.md`
+- /learn the anti-hallucination rules and common AI mistakes in `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` and `03-common-ai-mistakes.md`.
 
 ---
 
@@ -282,18 +305,31 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 
 ## Actionable Items & Checklist
 
-- [ ] Read and adhere to: `.lovable/coding-guidelines/coding-guidelines.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/04-code-style/02-conditions-and-extraction.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/03-golang/09-wrapped-boolean-results.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`
-- [ ] Read and adhere to: `spec/02-coding-guidelines/06-ai-optimization/03-common-ai-mistakes.md`
-- [ ] Read and adhere to: `spec/03-error-manage/00-overview.md`
+- [ ] /learn the master cross-language coding guidelines in: `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/`
+- [ ] /learn the code style, braces, and nesting in: `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
+- [ ] /learn the condition extraction in: `spec/02-coding-guidelines/01-cross-language/04-code-style/02-conditions-and-extraction.md`
+- [ ] /learn the blank lines and spacing rules in: `spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`
+- [ ] /learn the strict function (< 8-15 lines) and type size limits in: `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
+- [ ] /learn the multi-line parameter and struct formatting in: `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md`
+- [ ] /learn the self-documenting method rules in: `spec/02-coding-guidelines/01-cross-language/04-code-style/06-comments-and-documentation.md`
+- [ ] /learn the boolean naming prefixes (`is`, `has`, `can`, `should`) in: `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
+- [ ] /learn the guard clauses and extraction in: `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
+- [ ] /learn the strict prohibition against negative conditions (`!isSuccess`) in: `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`
+- [ ] /learn the banned short identifiers (`arr`, `cb`, `fn`, `el`, `msg`, `ctx`, `obj`, `val`) in: `spec/02-coding-guidelines/08-file-folder-naming/01-cross-language.md`
+- [ ] /learn the DRY principles and duplication extraction in: `spec/02-coding-guidelines/01-cross-language/08-dry-principles.md`
+- [ ] /learn the database naming conventions (PascalCase tables, camelCase columns) in: `spec/02-coding-guidelines/01-cross-language/07-database-naming.md`
+- [ ] /learn the language-specific guidelines for the active stack:
+  - TypeScript: `spec/02-coding-guidelines/02-typescript/00-overview.md`
+  - Go: `spec/02-coding-guidelines/03-golang/00-overview.md` & `spec/02-coding-guidelines/03-golang/09-wrapped-boolean-results.md`
+  - PHP: `spec/02-coding-guidelines/04-php/05-response-array-standard.md` & `spec/02-coding-guidelines/04-php/07-php-standards-reference/01-naming-and-errors.md`
+  - Rust: `spec/02-coding-guidelines/05-rust/00-overview.md`
+  - C#: `spec/02-coding-guidelines/07-csharp/00-overview.md`
+  - Python: `spec/02-coding-guidelines/12-python/00-overview.md`
+  - PowerShell: `spec/02-coding-guidelines/09-powershell-integration/00-overview.md`
+- [ ] /learn the error management architecture and universal response envelope in: `spec/03-error-manage/00-overview.md` and `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`
+- [ ] /learn the anti-hallucination rules in: `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`
+- [ ] /learn the common AI mistakes inventory in: `spec/02-coding-guidelines/06-ai-optimization/03-common-ai-mistakes.md`
+- [ ] /learn the enum standards and `Type` suffix rules in: `spec/02-coding-guidelines/06-ai-optimization/05-enum-naming-quick-reference.md`
 
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
