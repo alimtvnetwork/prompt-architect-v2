@@ -1,18 +1,20 @@
 # Audit App Spec — blind-AI readiness audit of the app spec (maximum enforcement, v1)
 
-## Variables — set these before running (the only lines you edit)
+## Variables — Auto-Discovered at Runtime
+
+Do NOT ask the user to provide these variables. You must discover them automatically during execution:
 
 ```text
-audit-date     = <yyyy-mm-dd, e.g. 2026-08-24>
-audit-version  = <run number for this date, e.g. 2>
+audit-date     = <Current system date: YYYY-MM-DD>
+audit-time     = <Current system time: HH:MM:SS>
+audit-version  = <Auto-incremented run number. Check spec/25-app-spec-audit/ for previous audits today and increment. Start at 1 if none.>
 audit-file     = spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
 scope          = spec/21-app | spec/23-app-db | spec/24-app-ui-design-system
 min-score      = 90
 ```
 
-`NN` in `audit-file` is the next free two-digit prefix in
-`spec/25-app-spec-audit/`. If `audit-date` or `audit-version` is missing or you
-are guessing it: STOP and ask before writing a single file.
+`NN` in `audit-file` is the next free two-digit prefix in `spec/25-app-spec-audit/`.
+Discover the correct `audit-version` by checking existing files on disk. Do not prompt the user for these values.
 
 **Trigger phrases:** "audit the app spec", "blind ai readiness audit", "score the
 spec", "run audit v<N>".
@@ -259,6 +261,7 @@ section order:
 
 **Version:** 1.0.0
 **Updated:** <audit-date>
+**Generated At:** <audit-date> <audit-time>
 **AI Confidence:** <band>
 **Ambiguity:** <band>
 
@@ -289,7 +292,7 @@ touch.
 
 ## RULE 8 — pre-save checklist (tick every line, in the report)
 
-- [ ] `audit-date`, `audit-version` and `NN` supplied, not guessed; `audit-file` name is lowercase-hyphenated with a two-digit prefix.
+- [ ] `audit-date` and `audit-time` auto-discovered from system, `audit-version` correctly incremented from existing files; `audit-file` name is lowercase-hyphenated with a two-digit prefix.
 - [ ] STEP 1 inventory printed first, every file in `scope` listed with line counts and totals.
 - [ ] All ten phases of RULE 4 present, in order, none skipped.
 - [ ] All twelve dimensions scored, each with evidence and at least one remedy where below `min-score`.
