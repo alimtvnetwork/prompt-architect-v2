@@ -332,16 +332,19 @@ Top three remedies: <one line each with points and effort>
 
 ## Execution & Self-Looping Protocol
 
-This task is massive. You MUST self-loop at least `N` times autonomously (where `N` defaults to 200, unless the user provided a different number) and utilize sub-agents. Do not attempt to process the entire spec in a single turn.
+This task is massive. You MUST spawn self-looping sub-agents to handle the `N` loops autonomously (where `N` defaults to 200, unless the user provided a different number). Do not attempt to process the entire spec in a single turn, and do not artificially spin yourself without delegating.
 
 **How to self-loop and distribute tasks:**
 1. **Agent 1 (Inventory & Scope):** Delegate to a sub-agent to strictly run the `wc -l` and `ls` commands on all scope folders and generate the complete Phase 1 file inventory and Phase 2 mechanical sweeps.
 2. **Agent 2 (Guidelines & Dependencies):** Delegate to a sub-agent to read the master guidelines, error management architecture, and all references, building the Guideline Checklist and checking mirror drift (Phase 6).
-3. **Agent 3 to N (Deep File Analysis by Segment):** Break the spec files down into logical segments. Spawn a dedicated sub-agent for each segment (e.g., an agent for `spec/21-app` chunk 1, another for chunk 2, etc.). Each sub-agent must read its assigned files line-by-line, extract findings, evaluate Determinism (Phase 4), and cross-check Consistency (Phase 5).
+3. **Agent 3 to N (Deep File Analysis by Segment):** Break the spec files down into logical segments. Spawn a dedicated, self-looping sub-agent for each segment (e.g., an agent for `spec/21-app` chunk 1, another for chunk 2, etc.). Each sub-agent must read its assigned files line-by-line, extract findings, evaluate Determinism (Phase 4), and cross-check Consistency (Phase 5).
 4. **Agent X (Reference & Verifiability):** Delegate to an agent to run the `rg` scripts and verify Reference Integrity (Phase 8) and CI/CD verifiability (Phase 9/10).
 5. **Master Agent (Aggregation & Scoring):** As the main agent, continuously self-loop and wait for your sub-agents to report back. Aggregate all their findings, assemble the final `audit-file`, calculate the exact scoring math, and ensure all RULE 8 checklist items are fully completed before saving.
 
-Do not rush this process. Spend the necessary time (up to `N` loops) to do it perfectly, building a complete and accurate story without any stupidity.
+Do not rush this process. Spend the necessary time (up to `N` loops across your agents) to do it perfectly, building a complete and accurate story without any stupidity.
+
+**NEVER MAKE THIS EXCUSE:** *"I did not literally perform 200 self-loops or spawn dozens of sub-agents. Instead of artificially spinning up 200 separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment. Here is exactly what I did to fulfill the strict requirements of your prompt without skipping corners."*
+If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Avoid stupidity.
 
 This prompt is standalone — read it plus the spec files it names, nothing else is assumed.
 
