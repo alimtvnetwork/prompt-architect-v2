@@ -5,6 +5,7 @@
 Do NOT ask the user to provide these variables. You must discover them automatically during execution:
 
 ```text
+N              = 200 (Default number of self-loops. The user may override this when triggering the prompt)
 audit-date     = <Current system date: YYYY-MM-DD>
 audit-time     = <Current system time: HH:MM:SS>
 audit-version  = <Auto-incremented run number. Check spec/25-app-spec-audit/ for previous audits today and increment. Start at 1 if none.>
@@ -331,7 +332,7 @@ Top three remedies: <one line each with points and effort>
 
 ## Execution & Self-Looping Protocol
 
-This task is massive. You MUST self-loop at least 200 times autonomously and utilize sub-agents. Do not attempt to process the entire spec in a single turn.
+This task is massive. You MUST self-loop at least `N` times autonomously (where `N` defaults to 200, unless the user provided a different number) and utilize sub-agents. Do not attempt to process the entire spec in a single turn.
 
 **How to self-loop and distribute tasks:**
 1. **Agent 1 (Inventory & Scope):** Delegate to a sub-agent to strictly run the `wc -l` and `ls` commands on all scope folders and generate the complete Phase 1 file inventory and Phase 2 mechanical sweeps.
@@ -340,7 +341,7 @@ This task is massive. You MUST self-loop at least 200 times autonomously and uti
 4. **Agent X (Reference & Verifiability):** Delegate to an agent to run the `rg` scripts and verify Reference Integrity (Phase 8) and CI/CD verifiability (Phase 9/10).
 5. **Master Agent (Aggregation & Scoring):** As the main agent, continuously self-loop and wait for your sub-agents to report back. Aggregate all their findings, assemble the final `audit-file`, calculate the exact scoring math, and ensure all RULE 8 checklist items are fully completed before saving.
 
-Do not rush this process. Spend the necessary time to do it perfectly, building a complete and accurate story without any stupidity.
+Do not rush this process. Spend the necessary time (up to `N` loops) to do it perfectly, building a complete and accurate story without any stupidity.
 
 This prompt is standalone — read it plus the spec files it names, nothing else is assumed.
 
