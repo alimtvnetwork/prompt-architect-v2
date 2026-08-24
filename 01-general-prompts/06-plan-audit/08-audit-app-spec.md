@@ -9,8 +9,8 @@ audit-date     = <Current system date: YYYY-MM-DD>
 audit-time     = <Current system time: HH:MM:SS>
 audit-version  = <Auto-incremented run number. Check spec/25-app-spec-audit/ for previous audits today and increment. Start at 1 if none.>
 audit-file     = spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
-scope          = spec/21-app | spec/23-app-db | spec/24-app-ui-design-system
-min-score      = 90
+scope          = spec/21-app | spec/23-app-db | spec/24-app-ui-design-system | <any recent folders and files written for recent specs>
+min-score      = 100
 ```
 
 `NN` in `audit-file` is the next free two-digit prefix in `spec/25-app-spec-audit/`.
@@ -58,6 +58,7 @@ may be written until this table exists in `audit-file`.
 
 ```bash
 # 1. the audited scope, with line counts
+# Be sure to include any recent folders and files written for recent specs in these commands!
 wc -l spec/21-app/*.md spec/21-app/*/*.md spec/21-app/*/*/*.md 2>/dev/null | sort -n
 wc -l spec/23-app-db/*.md spec/24-app-ui-design-system/*.md 2>/dev/null | sort -n
 ls spec/21-app/fixtures/
