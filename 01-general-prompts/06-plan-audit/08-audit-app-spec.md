@@ -329,7 +329,19 @@ Top three remedies: <one line each with points and effort>
 
 ---
 
-Execution: Loop at least 200 times autonomously. Spin up multiple sub-agents to thoroughly read and analyze each one of the files to build a complete and accurate story. Do not rush this process; spend the necessary time to do it perfectly without any stupidity.
+## Execution & Self-Looping Protocol
+
+This task is massive. You MUST self-loop at least 200 times autonomously and utilize sub-agents. Do not attempt to process the entire spec in a single turn.
+
+**How to self-loop and distribute tasks:**
+1. **Agent 1 (Inventory & Scope):** Delegate to a sub-agent to strictly run the `wc -l` and `ls` commands on all scope folders and generate the complete Phase 1 file inventory and Phase 2 mechanical sweeps.
+2. **Agent 2 (Guidelines & Dependencies):** Delegate to a sub-agent to read the master guidelines, error management architecture, and all references, building the Guideline Checklist and checking mirror drift (Phase 6).
+3. **Agent 3 to N (Deep File Analysis by Segment):** Break the spec files down into logical segments. Spawn a dedicated sub-agent for each segment (e.g., an agent for `spec/21-app` chunk 1, another for chunk 2, etc.). Each sub-agent must read its assigned files line-by-line, extract findings, evaluate Determinism (Phase 4), and cross-check Consistency (Phase 5).
+4. **Agent X (Reference & Verifiability):** Delegate to an agent to run the `rg` scripts and verify Reference Integrity (Phase 8) and CI/CD verifiability (Phase 9/10).
+5. **Master Agent (Aggregation & Scoring):** As the main agent, continuously self-loop and wait for your sub-agents to report back. Aggregate all their findings, assemble the final `audit-file`, calculate the exact scoring math, and ensure all RULE 8 checklist items are fully completed before saving.
+
+Do not rush this process. Spend the necessary time to do it perfectly, building a complete and accurate story without any stupidity.
+
 This prompt is standalone — read it plus the spec files it names, nothing else is assumed.
 
 ## MUST FOLLOW NON-NEGOTIABLE
