@@ -1,0 +1,329 @@
+# Audit App Spec — blind-AI readiness audit of the app spec (maximum enforcement, v1)
+
+## Variables — set these before running (the only lines you edit)
+
+```text
+audit-date     = <yyyy-mm-dd, e.g. 2026-08-24>
+audit-version  = <run number for this date, e.g. 2>
+audit-file     = spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
+scope          = spec/21-app | spec/23-app-db | spec/24-app-ui-design-system
+min-score      = 90
+```
+
+`NN` in `audit-file` is the next free two-digit prefix in
+`spec/25-app-spec-audit/`. If `audit-date` or `audit-version` is missing or you
+are guessing it: STOP and ask before writing a single file.
+
+**Trigger phrases:** "audit the app spec", "blind ai readiness audit", "score the
+spec", "run audit v<N>".
+
+---
+
+## RULE 0 — what this prompt does, and what it must never do
+
+- It **reads** the spec and **writes one** dated audit file. That is all.
+- It never edits, fixes, renames, splits or reformats a file it audits. Audit,
+  then fix in a separate run. Auditing and fixing in the same pass is a hard
+  failure (`spec/25-app-spec-audit/00-overview.md` §4 AUD-004g).
+- It never writes application code, never runs a migration, never commits.
+- It never edits an earlier dated audit file. A new run is a new file; the
+  superseded run gets a `> **STALE** — superseded by <audit-file>` banner as its
+  only permitted modification.
+- It never rubber-stamps. An audit that finds nothing must list the checks that
+  ran and passed, with their output.
+
+---
+
+## RULE 1 — working stance
+
+Read as the blind-AI persona in `spec/25-app-spec-audit/00-overview.md` §1: never
+asks a question, takes the first matching rule, treats SHOULD as optional, cannot
+infer intent, trusts diagrams over prose, has only the delivered folder, and stops
+at the first heading that looks like an answer. Scoring the spec as a cooperative
+reader would invalidates the audit.
+
+Prior runs of this job failed by: asserting "missing" without a search that would
+have found it, copying findings forward without re-verifying them, writing
+findings with no remedy, and scoring prose quality instead of implementability.
+Do not repeat any of it.
+
+---
+
+## RULE 2 — STEP 1 IS THE FILE INVENTORY (nothing before it)
+
+Before reading content, before forming an opinion, print the inventory. No score
+may be written until this table exists in `audit-file`.
+
+```bash
+# 1. the audited scope, with line counts
+wc -l spec/21-app/*.md spec/21-app/*/*.md spec/21-app/*/*/*.md 2>/dev/null | sort -n
+wc -l spec/23-app-db/*.md spec/24-app-ui-design-system/*.md 2>/dev/null | sort -n
+ls spec/21-app/fixtures/
+
+# 2. the guideline and support folders the spec must bind to
+ls spec/02-coding-guidelines spec/02-coding-guidelines/01-cross-language \
+   spec/02-coding-guidelines/01-cross-language/02-boolean-principles \
+   spec/02-coding-guidelines/01-cross-language/04-code-style \
+   spec/02-coding-guidelines/08-file-folder-naming
+ls spec/03-error-manage spec/03-error-manage/02-error-architecture spec/03-error-manage/03-error-code-registry
+ls spec/04-database-conventions spec/12-cicd-pipeline-workflows spec/12-cicd-pipeline-workflows/03-reusable-ci-guards
+ls spec/17-consolidated-guidelines
+
+# 3. the plan surface that consumes the spec
+ls .lovable/plans/pending .lovable/plans/subtasks/*/ .lovable/ambiguous-questions/01-new-ambiguity
+```
+
+Inventory table shape, written into `audit-file` as section 1:
+
+```text
+| # | Path | Lines | Role (normative / index / fixture / diagram / mirror) | Read? |
+```
+
+Rules:
+
+- Every file in `scope` appears in the table. A file omitted from the table is an
+  audit defect, not a spec defect.
+- Print totals: file count, total lines, count of normative files, count of
+  fixtures, count of files over 300 lines.
+- Then state the read order you will follow, overview files first.
+
+---
+
+## RULE 3 — the scored dimensions (0-100 each, evidence per row)
+
+Each dimension gets a score, the evidence that produced it, and at least one
+remedy row in the improvement set. Point costs come from
+`spec/25-app-spec-audit/01-scoring-rubric.md`.
+
+| #   | Dimension                      | The question it answers                                                                                          |
+| --- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| 1   | Blind-AI readiness             | Can a blind implementer build the system from these files alone, without inventing behaviour?                     |
+| 2   | Code-file coverage             | Does the spec name the exact repo-relative files to create or modify, per unit, in the target language?            |
+| 3   | Coding-guideline checklist     | Does every unit bind to exactly one authoritative guideline file per topic, and do the bindings resolve?           |
+| 4   | Code-mutation discipline       | Is mutation forbidden where it must be, per `01-cross-language/18-code-mutation-avoidance.md`, and are contracts immutable? |
+| 5   | Test specification             | Are unit, integration and end-to-end tests specified per unit, with names and fixtures?                           |
+| 6   | Acceptance criteria            | Does every normative file close with criteria that name a verification method?                                    |
+| 7   | Ambiguity discipline           | Is every undecided thing filed as an open question, and is nothing guessed past in the spec text?                 |
+| 8   | Cross-folder consistency       | Do `21-app`, `23-app-db`, `24-app-ui-design-system` and `fixtures/` agree on names, types and flows?              |
+| 9   | Reference integrity            | How many links and references are missing? Absolute counts, both directions.                                      |
+| 10  | Ci/cd verifiability            | Is there a named pipeline job or guard for every buildable unit and every wire contract?                          |
+| 11  | Shape and size                 | Do files satisfy the mechanical checks in `02-file-size-and-shape-checks.md`?                                     |
+| 12  | Determinism                    | Per file, is every coder decision `Fixed`, or is it `Open` / `Absent`?                                            |
+
+### Dimension 3 — the coding-guideline checklist (mandatory table)
+
+Rebuild it from the filesystem, not from what the spec claims. Every boolean and
+condition-styling sub-file is listed individually:
+
+```text
+| Topic                           | Authority file                                                                 | Bound from spec/21-app? | Duplicates |
+| canonical size tier             | spec/02-coding-guidelines/00-canonical-size-tier.md                            | yes/no                  | none       |
+| boolean naming prefixes         | .../01-cross-language/02-boolean-principles/01-naming-prefixes.md              | yes/no                  | none       |
+| boolean guards + extraction     | .../02-boolean-principles/02-guards-and-extraction.md                          | yes/no                  | none       |
+| boolean params + conditions     | .../02-boolean-principles/03-parameters-and-conditions.md                      | yes/no                  | none       |
+| boolean quick reference         | .../02-boolean-principles/04-quick-reference.md                                | yes/no                  | none       |
+| boolean exemptions + api        | .../02-boolean-principles/05-exemptions-and-api.md                             | yes/no                  | none       |
+| boolean flag methods            | .../01-cross-language/24-boolean-flag-methods.md                               | yes/no                  | none       |
+| no negatives                    | .../01-cross-language/12-no-negatives.md                                       | yes/no                  | none       |
+| braces + nesting                | .../01-cross-language/04-code-style/01-braces-and-nesting.md                   | yes/no                  | none       |
+| conditions + extraction (style) | .../04-code-style/02-conditions-and-extraction.md                              | yes/no                  | none       |
+| blank lines + spacing           | .../04-code-style/03-blank-lines-and-spacing.md                                | yes/no                  | none       |
+| function + type size            | .../04-code-style/04-function-and-type-size.md                                 | yes/no                  | none       |
+| multi-line formatting           | .../04-code-style/05-multi-line-formatting.md                                  | yes/no                  | none       |
+| code-style checklist            | .../04-code-style/07-checklist.md                                              | yes/no                  | none       |
+| nesting resolution              | .../01-cross-language/20-nesting-resolution-patterns.md                        | yes/no                  | none       |
+| cyclomatic complexity           | .../01-cross-language/06-cyclomatic-complexity.md                              | yes/no                  | none       |
+| code mutation avoidance         | .../01-cross-language/18-code-mutation-avoidance.md                            | yes/no                  | none       |
+| strict typing                   | .../01-cross-language/13-strict-typing.md                                      | yes/no                  | none       |
+| null-pointer safety             | .../01-cross-language/19-null-pointer-safety.md                                | yes/no                  | none       |
+| key naming pascalcase           | .../01-cross-language/11-key-naming-pascalcase.md                              | yes/no                  | none       |
+| test naming + structure         | .../01-cross-language/14-test-naming-and-structure.md                          | yes/no                  | none       |
+| file/folder naming              | spec/02-coding-guidelines/08-file-folder-naming/<language>.md                  | yes/no                  | none       |
+| language rules (go/php/ts)      | spec/02-coding-guidelines/03-golang|04-php|02-typescript/...                   | yes/no                  | none       |
+| error architecture              | spec/03-error-manage/02-error-architecture/00-overview.md                      | yes/no                  | none       |
+| error code registry             | spec/03-error-manage/03-error-code-registry/                                   | yes/no                  | none       |
+| database conventions            | spec/04-database-conventions/                                                  | yes/no                  | none       |
+| ci pipeline + guards            | spec/12-cicd-pipeline-workflows/01-ci-pipeline.md, 03-reusable-ci-guards/      | yes/no                  | none       |
+```
+
+Consolidated mirrors under `spec/17-consolidated-guidelines/` (notably
+`02-coding-guidelines.md`, `03-error-management.md`,
+`15-cicd-pipeline-workflows.md`, `31-compiled-simple-coding-guidelines.md`,
+`00-strictly-avoid-quickref.md`) and
+`spec/02-coding-guidelines/consolidated-review-guide-condensed.md` are checked for
+**drift against their authority**. A mirror that contradicts its authority is a
+Consistency finding; the mirror is never treated as the authority. Any topic
+appearing in two authoritative files is a duplicate-authority finding, cost per
+the rubric, with a consolidation remedy naming which file wins.
+
+### Dimension 9 — reference integrity (report counts, not adjectives)
+
+```bash
+python3 linter-scripts/check-spec-folder-refs.py
+python3 linter-scripts/check-file-sizes.py
+
+# every relative link in scope must resolve
+rg -o --no-filename '\]\(([^)]+)\)' spec/21-app spec/23-app-db spec/24-app-ui-design-system \
+  | sed -E 's/^\]\(//; s/\)$//' | sort -u > /tmp/links.txt
+wc -l < /tmp/links.txt
+# index vs filesystem, both directions
+rg -n '\| *[0-9]{2} *\|' spec/21-app/00-overview.md
+```
+
+The audit prints exactly these numbers:
+
+```text
+| Metric                                          | Count |
+| relative links found                            |    NN |
+| links that do not resolve                       |     0 |
+| cited sections that do not exist in their file   |     0 |
+| files present on disk but missing from an index  |     0 |
+| files listed in an index but missing on disk     |     0 |
+| guideline topics with no authority file          |     0 |
+| guideline topics with two authority files        |     0 |
+| files over 300 lines                             |     0 |
+```
+
+Any non-zero row is a finding with a remedy. An index entry missing a file and a
+file missing from the index are two separate findings.
+
+### Dimension 10 — ci/cd verifiability
+
+For every buildable unit, name the pipeline job or guard that proves it, sourced
+from `spec/12-cicd-pipeline-workflows/01-ci-pipeline.md`,
+`03-reusable-ci-guards/`, `13-contract-testing.md`, `14-e2e-testing-pattern.md`,
+and the local mirrors in `linter-scripts/`. A unit with no named check is a
+Testability finding. A spec that mentions "CI will catch it" without naming the
+job is the same finding.
+
+---
+
+## RULE 4 — phase order (skipping a phase invalidates the audit)
+
+Follow `spec/25-app-spec-audit/03-audit-procedure.md` §1, with the inventory as
+phase 1:
+
+1. File inventory (RULE 2) and scope declaration.
+2. Mechanical sweep — commands from `02-file-size-and-shape-checks.md` §6, output
+   pasted verbatim.
+3. Unit inventory — every buildable unit mapped to the file that specifies it,
+   diffed against `.lovable/plans/subtasks/*/` target-file lists.
+4. Determinism read — per file, each coder decision marked
+   `Fixed` / `Defaulted` / `Open` / `Absent`.
+5. Consistency map — concern to authority, rebuilt from files, diffed against each
+   folder's `99-consistency-report.md`.
+6. Guideline checklist (dimension 3) and mirror-drift check.
+7. Test and acceptance-criteria pass (dimensions 5, 6).
+8. Reference integrity and ci/cd verifiability (dimensions 9, 10).
+9. Blind-buildability trace of the primary flow, per `03-audit-procedure.md` §4.
+10. Scoring with the arithmetic shown, then the improvement set.
+
+Phases 2 and 3 may run in parallel; nothing else may.
+
+---
+
+## RULE 5 — evidence rules
+
+- Every finding cites `path:line` or `path §section`.
+- Command output used as evidence is pasted verbatim, never summarised.
+- No finding may assert absence without including the search that would have
+  found it.
+- A finding carried forward from a previous audit is re-verified against the
+  current file and dispositioned as `Closed`, `Partially closed`, `Open`,
+  `Reclassified` or `False positive`. Silently dropping a finding invalidates the
+  run.
+- Every finding carries a remedy naming the file to create or edit and the content
+  it needs. A finding without a remedy is incomplete.
+
+---
+
+## RULE 6 — improvement set format
+
+```text
+| Rank | Finding | Remedy (file + content) | Dimension | Points | Effort |
+```
+
+Effort is `S` (under an hour), `M` (a session), `L` (multi-session). Rank by
+points recovered per unit of effort, highest first. Every dimension scoring below
+`min-score` contributes at least one row.
+
+---
+
+## RULE 7 — output file shape
+
+`audit-file` uses lowercase-hyphenated naming with a two-digit prefix and this
+section order:
+
+```text
+# Audit <audit-date> v<audit-version> — <scope>
+
+**Version:** 1.0.0
+**Updated:** <audit-date>
+**AI Confidence:** <band>
+**Ambiguity:** <band>
+
+## Keywords
+## 1. Scope and file inventory
+## 2. Mechanical sweep output
+## 3. Unit inventory and diff against subtasks
+## 4. Determinism read
+## 5. Consistency map and mirror drift
+## 6. Coding-guideline checklist
+## 7. Tests and acceptance criteria
+## 8. Reference integrity counts
+## 9. Ci/cd verifiability
+## 10. Blind-buildability trace
+## 11. Scores and arithmetic
+## 12. Findings
+## 13. Improvement set
+## 14. Disposition of prior findings
+## 15. Acceptance criteria of this audit
+```
+
+Also update `spec/25-app-spec-audit/00-overview.md` §Index with the new row and
+`98-changelog.md` with a one-line entry, and add the `> **STALE**` banner to the
+superseded run. Those three are the only files outside `audit-file` this run may
+touch.
+
+---
+
+## RULE 8 — pre-save checklist (tick every line, in the report)
+
+- [ ] `audit-date`, `audit-version` and `NN` supplied, not guessed; `audit-file` name is lowercase-hyphenated with a two-digit prefix.
+- [ ] STEP 1 inventory printed first, every file in `scope` listed with line counts and totals.
+- [ ] All ten phases of RULE 4 present, in order, none skipped.
+- [ ] All twelve dimensions scored, each with evidence and at least one remedy where below `min-score`.
+- [ ] Guideline checklist rebuilt from the filesystem, every boolean and code-style sub-file listed individually, duplicates column filled.
+- [ ] Consolidated mirrors checked for drift; no mirror treated as an authority.
+- [ ] Reference-integrity count table present, every row a number, non-zero rows turned into findings.
+- [ ] Ci/cd job or guard named for every buildable unit.
+- [ ] Test specification checked at unit, integration and e2e level.
+- [ ] Every finding has `path:line`, a point cost, and a remedy naming file plus content.
+- [ ] Prior findings each dispositioned; false positives named as such.
+- [ ] Improvement set ranked by points per effort.
+- [ ] Arithmetic shown for the overall score.
+- [ ] Nothing in the audited scope was edited; no code written; no commit; no fix applied.
+- [ ] Stale banner added to the superseded run; index and changelog rows added.
+
+If any box is unchecked, do not save. Fix it first.
+
+---
+
+## RULE 9 — final report format
+
+```text
+Audit file: spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
+Scope: <folders>              Files audited: NN (total NNNN lines)
+Overall score: NN/100 (band <A-F>)
+Dimension scores: readiness/code-files/guidelines/mutation/tests/criteria/ambiguity/consistency/references/cicd/shape/determinism
+Reference integrity: links NN, unresolved 0, index mismatches 0, oversize files 0
+Guideline topics: NN checked, missing 0, duplicated 0, mirror drift 0
+Findings: NN (critical NN, major NN, minor NN)
+Prior findings: closed NN, partially NN, open NN, false positive NN
+Top three remedies: <one line each with points and effort>
+```
+
+---
+
+Execution: one step per run. Self-loop after the checklist passes. Max 2 agents, max 3 threads per agent.
+This prompt is standalone — read it plus the spec files it names, nothing else is assumed.
