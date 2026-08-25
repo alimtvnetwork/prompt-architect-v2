@@ -3,7 +3,7 @@
 ## Variables — check if you are confused only.
 
 ```text
-n            = <default = 150, if not defined> = 50 steps confirmed
+n            = <default = 150, if not defined> = 300 steps confirmed
 domains      = Cli | Plugin | Contract | Ci | Last defined Spec above
 plan-slug    = Context given above or below.
 domains      = get from the spec given or context given, ask questions if any
