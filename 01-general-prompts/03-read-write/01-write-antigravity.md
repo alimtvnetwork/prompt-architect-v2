@@ -62,7 +62,7 @@ Do not repeat any of that stupidity. Writing memory IS the work this turn. Go de
 Walk `.lovable/` recursively. Read all of these if they exist; note missing and create them per the templates in this prompt:
 
 1. `.lovable/memory/index.md` — master memory index
-2. `.lovable/coding-guidelines.md` or `spec/02-coding-guidelines/` — coding rules
+2. `.lovable/coding-guidelines/coding-guidelines.md` or `spec/02-coding-guidelines/` — coding rules
 3. `.lovable/plans/index.md` and every file under `plans/pending/` (`01-<slug>.md`) and `plans/subtasks/`; skim `plans/completed/`
 4. `.lovable/plan.md` if the project uses the single-file variant
 5. `.lovable/suggestions.md` and `.lovable/suggestions/index.md`

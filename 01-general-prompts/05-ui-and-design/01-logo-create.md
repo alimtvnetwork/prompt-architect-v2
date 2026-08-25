@@ -4,7 +4,7 @@ Please instruct Lovable to create a logo for me. The instruction should be saved
 
 ## Coding Guidelines Reminder
 
-Read `.lovable/coding-guidelines.md`, plus boolean, language-specific, enum, and error-management guidelines from `/spec/` before any implementation. Apply all hard rules: functions ≤ 8 lines, files ≤ 100 lines, no nested or negative ifs, strict types (no `any` / `unknown` / `interface{}`), no swallowed errors, no magic strings, definitions in their own files, `is` / `has` boolean prefixes, DRY first.
+Read `.lovable/coding-guidelines/coding-guidelines.md`, plus boolean, language-specific, enum, and error-management guidelines from `/spec/` before any implementation. Apply all hard rules: functions ≤ 8 lines, files ≤ 100 lines, no nested or negative ifs, strict types (no `any` / `unknown` / `interface{}`), no swallowed errors, no magic strings, definitions in their own files, `is` / `has` boolean prefixes, DRY first.
 
 ## Breakdown
 

@@ -127,7 +127,7 @@ You are NOT done until all of these are true:
 
 Before touching code, verify guideline sources and follow them:
 
-1. Check `.lovable/coding-guidelines.md` or `spec/02-coding-guidelines/`. If present, follow it.
+1. Check `.lovable/coding-guidelines/coding-guidelines.md` or `spec/02-coding-guidelines/`. If present, follow it.
 2. Check `spec/03-error-manage/` for error management rules.
 3. Check `spec/04-database-conventions/` for schemas.
 4. If multiple guidelines apply, follow ALL of them.

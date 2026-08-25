@@ -232,7 +232,7 @@ Only open a spec folder when the current task needs it.
 
 Inside each folder: `00-overview.md` -> numbered files -> `99-consistency-report.md`.
 
-Fallbacks when the canonical numbered folder is absent: `.lovable/coding-guidelines.md`, `spec/coding-guidelines/`, `coding-guidelines/`, `spec/XX-error-manage/`, `01-general-prompts/02-coding-standards/01-coding-guidelines.md`. Numbered folder wins on conflict; call the conflict out in the plan's Context.
+Fallbacks when the canonical numbered folder is absent: `.lovable/coding-guidelines/coding-guidelines.md`, `spec/coding-guidelines/`, `coding-guidelines/`, `spec/XX-error-manage/`, `01-general-prompts/02-coding-standards/01-coding-guidelines.md`. Numbered folder wins on conflict; call the conflict out in the plan's Context.
 
 ---
 
