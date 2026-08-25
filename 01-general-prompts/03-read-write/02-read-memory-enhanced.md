@@ -2,7 +2,7 @@
 
 /goal Load the project's identity, specifications, conventions, active plans, and recent Root Cause Analysis (RCA) records into your context before starting any task. Never repeat a logged past failure.
 
-/learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, RCA logs, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/specs/`, `.lovable/issues/`, `.lovable/cicd-issues/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.
+/learn Ingest and internalize all past learnings, user corrections, patterns, coding rules, error philosophies, RCA logs, and project specifications from `.lovable/memory/learned/`, `.lovable/memory/`, `.lovable/issues/`, `.lovable/cicd-issues/`, and `.lovable/strictly-avoid.md` so Antigravity operates with zero hallucination.
 
 The specs, `.lovable/` folder, `what-to-read.md`, root `readme.md`, and the codebase as a whole are the single source of truth. Your training data is not. If the two disagree, the repo wins, every time.
 
@@ -63,7 +63,7 @@ The `.lovable/` folder, specs, and entire codebase can be massive. To process th
 
 8. Memory persistence:
    - You are allowed to write to the `.lovable/` directory to enhance project memory after reading.
-   - Write summaries of what you learned into `.lovable/memory/learned/01-<slug>.md` (or `.lovable/memory/specs/01-<slug>.md`), including file counts, to maintain context.
+   - Write summaries of what you learned into `.lovable/memory/learned/01-<slug>.md` (or `.lovable/memory/01-<slug>.md`), including file counts, to maintain context.
    - Update `.lovable/memory/what-to-read.md` based on your progress to guide future reading workflows.
    - Document any discovered bugs into `.lovable/issues/01-<slug>.md` or `.lovable/suggestions.md`.
    - Capture open ambiguities or update execution plans.
@@ -95,7 +95,7 @@ To guarantee institutional memory and prevent regressions across all workflows (
 
 3. Retrospectives & Architectural Failure Learnings:
    - Path: `.lovable/memory/learned/01-<slug>.md` and `spec/03-error-manage/01-error-resolution/03-retrospectives/01-<slug>.md`
-   - Index: Registered in `.lovable/memory/index.md`
+   - Index: Registered in `.lovable/memory/00-index.md`
 
 4. Hard Avoidances / CODE RED Prohibitions:
    - Path: `.lovable/strictly-avoid.md`
@@ -131,7 +131,7 @@ Walk `.lovable/` recursively. Every file matters. Missing files are noted, not s
 | 3   | `.lovable/strictly-avoid.md`                          | Hard prohibitions (CODE RED)                                                                                                                |
 | 4   | `.lovable/user-preferences`                           | How the human wants you to behave                                                                                                           |
 | 5   | `.lovable/prompt.md` + `.lovable/prompts/`            | Canonical prompts (Read, Plan, etc.). "Read memory" = run this prompt.                                                                      |
-| 6   | `.lovable/memory/index.md`                            | Index of institutional knowledge. Then read every file it references, recursively.                                                          |
+| 6   | `.lovable/memory/00-index.md`                            | Index of institutional knowledge. Then read every file it references, recursively.                                                          |
 | 7   | `.lovable/plans/index.md`                             | Roll-up of all plans (pending + completed + subtasks). Read this before touching individual plan files.                                     |
 | 8   | `.lovable/plans/pending/`                             | Active plans, `01-<slug>.md` — read all and list out each pending item.                                                                   |
 | 9   | `.lovable/plans/completed/`                           | Recent history, skim only                                                                                                                   |
@@ -171,7 +171,7 @@ Autonomously survey the codebase structure end-to-end:
 
 Two indexes decide what you read next. Treat them as required entry points, not as summaries:
 
-- `.lovable/memory/index.md` lists every institutional-knowledge file. If it points at 12 files, you read 12 files.
+- `.lovable/memory/00-index.md` lists every institutional-knowledge file. If it points at 12 files, you read 12 files.
 - `.lovable/plans/index.md` lists every plan (pending, completed, subtasks) with its slug, status, and one-line intent. Use it to pick which plan files to open in full. If it is missing, create it as part of the next code change.
 
 ### 1.5 Self-Check (Internal, Before Phase 2)
@@ -252,7 +252,7 @@ Fallbacks when the canonical numbered folder is absent: `.lovable/coding-guideli
 ```
 New info discovered
 ├─ Institutional knowledge (pattern / convention / decision)?
-│   YES → .lovable/memory/01-<slug>.md  +  update .lovable/memory/index.md
+│   YES → .lovable/memory/01-<slug>.md  +  update .lovable/memory/00-index.md
 ├─ Must never happen again?
 │   YES → .lovable/strictly-avoid.md
 ├─ Idea, not yet approved?
@@ -274,7 +274,7 @@ New info discovered
 Hard rules:
 
 - Folder is `.lovable/memory/`, never `memories/`.
-- Adding a memory file always updates `.lovable/memory/index.md`.
+- Adding a memory file always updates `.lovable/memory/00-index.md`.
 - Adding, moving, or completing a plan always updates `.lovable/plans/index.md`.
 - Ambiguity folders: `01-new-ambiguity/` for open, `02-ambiguity-resolved/` for answered. On answer, MOVE the file (never copy) so it exists in exactly one place. Every resolved file carries a `## Resolution` section.
 - Never guess past an open ambiguity. If one exists and is relevant to the current task, stop and surface it before doing work.
@@ -322,7 +322,7 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed, committed, and pushed if uppercase or missing)
 - [ ] /learn the root `readme.md` file (casing rules, architecture, entry points)
 - [ ] Walked `.lovable/` recursively, no folder or file skipped silently
-- [ ] /learn `.lovable/memory/index.md` and every file it points at
+- [ ] /learn `.lovable/memory/00-index.md` and every file it points at
 - [ ] /learn `.lovable/plans/index.md`, every file in `pending/` (sequenced as `01-`, `02-`), and all active subtasks
 - [ ] Skimmed `.lovable/plans/completed/` for recent history
 - [ ] /learn every file in `.lovable/spec/commands/`

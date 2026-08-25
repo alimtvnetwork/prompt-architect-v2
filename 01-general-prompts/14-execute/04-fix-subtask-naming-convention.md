@@ -14,7 +14,7 @@ Scan the `.lovable/plans/subtasks/` directory recursively.
 
 You must write a memory entry to ensure this rule is persisted and no other AI makes this mistake again.
 - Create a file inside `.lovable/memory/learned/` (or update an existing one) detailing the rule: "Subtasks must NEVER be prefixed with 'SS-'. They must strictly follow the 'XX-<slug>.md' sequence."
-- Update `.lovable/memory/index.md` to reference this newly added/updated memory file.
+- Update `.lovable/memory/00-index.md` to reference this newly added/updated memory file.
 - Add a note explicitly stating how the project is following all guidelines and enforcing this strict naming.
 
 ## 3. High-Stakes Code Standards & Coding Guidelines
@@ -68,7 +68,7 @@ Listen, past turns have been sloppy as fuck: wrong file names, leaving broken re
 - [ ] Rename those files to the correct `XX-<slug>.md` pattern.
 - [ ] Find and correct all file path references to the old names in `.lovable/plans/pending/`, `.lovable/plans/completed/`, `.lovable/plans/index.md`, and memory files.
 - [ ] Add a memory entry under `.lovable/memory/learned/` enforcing this naming convention and confirming how the project is following all guidelines.
-- [ ] Update `.lovable/memory/index.md` with the new memory file.
+- [ ] Update `.lovable/memory/00-index.md` with the new memory file.
 - [ ] Audit your work against the Master Consolidated Guide, Code Style, Boolean Conditions, and Variable Naming rules.
 - [ ] Make a single logical Git commit including all changes and push it to the repository immediately.
 

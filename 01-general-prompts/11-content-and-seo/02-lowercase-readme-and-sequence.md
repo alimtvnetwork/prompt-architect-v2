@@ -26,7 +26,7 @@ Enforce these naming rules across the entire repository:
 
 2. Rename each offending file using `git mv` (preserve history).
 
-3. Update every reference: markdown links, code imports, doc indexes, sidebars, and `.lovable/memory/index.md`.
+3. Update every reference: markdown links, code imports, doc indexes, sidebars, and `.lovable/memory/00-index.md`.
 
 4. Verify with a final scan - fail loudly if any non-conforming file remains.
 

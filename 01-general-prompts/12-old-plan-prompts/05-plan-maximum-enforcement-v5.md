@@ -10,7 +10,7 @@ Produce EXACTLY `[N=?]` steps. Not `[N=?]-1`, not `[N=?]+1`. `[N=?]` is a positi
 
 1. Nothing executes this turn. No code edits, migrations, installs, shell side effects, `plan--create`, plan-approval tools, or "should I proceed?" prompts. Files only.
 2. Spec first, then plan. Order is fixed:
-   a. Verbatim requirements, directives, and specifications go into `.lovable/memory/specs/01-<slug>.md` (or domain specs in `spec/<NN>-<slug>/`).
+   a. Verbatim requirements, directives, and specifications go into `.lovable/memory/01-<slug>.md` (or domain specs in `spec/<NN>-<slug>/`).
    b. Actionable plans go directly into `.lovable/plans/pending/01-<slug>.md` (with two-digit sequence prefixes `01-`, `02-`, etc.). Every step references the concrete files, acceptance criteria, and spec files it implements.
    c. For detailed tasks needing depth, spin out subtasks under `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`.
    d. Execution happens in a LATER turn.

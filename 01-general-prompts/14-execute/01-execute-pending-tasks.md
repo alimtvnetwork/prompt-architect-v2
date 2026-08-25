@@ -22,7 +22,7 @@
 ## Phase 1: Load Pending Tasks & Project State
 
 1. Check git status first. The working tree must be clean and committed before executing anything.
-2. Read `.lovable/memory/index.md` and `.lovable/memory/what-to-read.md`. Verify root readme is strictly lowercase `readme.md`.
+2. Read `.lovable/memory/00-index.md` and `.lovable/memory/what-to-read.md`. Verify root readme is strictly lowercase `readme.md`.
 3. Read `.lovable/plans/index.md`. Then read every file in `.lovable/plans/pending/XX-<slug>.md` and all associated subtasks in `.lovable/plans/subtasks/XX-<slug>/` (Note: for coding guidelines, check `.lovable/plans/subtasks/01-coding-guideline-fixes/` or other synced folder structures).
 4. Group pending tasks into sequenced Execution Waves:
    - Wave 1: Schemas, DB, and query wrappers

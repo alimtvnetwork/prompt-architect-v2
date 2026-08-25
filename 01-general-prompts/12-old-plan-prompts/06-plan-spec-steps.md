@@ -108,7 +108,7 @@ By default, you operate in a strict **Plan & Wait** mode.
 - [ ] **Cognitive Check:** Does every task contain "all the brains" (exact logic, specific paths, deep architectural context) so a lower-level agent can execute it without guessing?
 
 - [ ] /learn the overarching main task plan.
-- [ ] Read `.lovable/memory/index.md` and `.lovable/plans/index.md` before planning.
+- [ ] Read `.lovable/memory/00-index.md` and `.lovable/plans/index.md` before planning.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.

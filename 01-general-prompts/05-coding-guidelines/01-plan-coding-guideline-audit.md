@@ -21,7 +21,7 @@ Autonomously self-loop and read:
 - /learn the error management architecture and logging diagnostics in `spec/03-error-manage/00-overview.md` and `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`.
 - /learn the language-specific standards in `spec/02-coding-guidelines/` (TypeScript, Go, PHP, Rust, C#, Python, PowerShell).
 - /learn the anti-hallucination rules and common AI mistakes in `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` and `03-common-ai-mistakes.md`.
-- Read `.lovable/plans/index.md` and `.lovable/memory/index.md`.
+- Read `.lovable/plans/index.md` and `.lovable/memory/00-index.md`.
 
 ## 2. Planning Loop (Deep N-Step Analysis)
 

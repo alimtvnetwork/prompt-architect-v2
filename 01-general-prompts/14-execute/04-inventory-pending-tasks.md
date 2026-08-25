@@ -49,7 +49,7 @@ readme.md                                       # Root repository guide (strictl
    - Open and read `.lovable/plans/index.md`, `.lovable/plans/pending/`, and all `.lovable/plans/subtasks/` files with `Status:` not `completed`.
    - Open and read all files in `.lovable/issues/`, `.lovable/pending-issues/`, and `.lovable/cicd-issues/`.
    - Open and read all open questions in `.lovable/ambiguous-questions/01-new-ambiguity/`.
-   - Open and read unfulfilled directives in `.lovable/memory/specs/` and `spec/21-app/`.
+   - Open and read unfulfilled directives in `.lovable/memory/` and `spec/21-app/`.
    - Open and read active suggestions in `.lovable/suggestions.md`.
 2. Deduplicate Across Sources:
    - If a feature is referenced across a spec, a plan, and an issue, consolidate it into ONE primary task with cross-references to all origin files.
