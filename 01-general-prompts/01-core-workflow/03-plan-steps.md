@@ -1,5 +1,7 @@
 # Instruction (must follow): {{n}} number of steps plan, maximum enforcement (v4.2)
 
+{{n}} = ?
+
 ## RULE 0, step count is law
 
 Produce EXACTLY `{{n}}` steps. Not `{{n}}-1`, not `{{n}}+1`. `{{n}}` is a positive integer injected at runtime. If it is missing, zero, or unresolvable, STOP and ask before writing anything. Count the steps twice before saving.
