@@ -4,7 +4,7 @@
 
 Do NOT ask the user to provide these variables. You must discover them automatically during execution:
 
-```text
+``text
 N              = 200 (Default number of self-loops. The user may override this when triggering the prompt)
 audit-date     = <Current system date: YYYY-MM-DD>
 audit-time     = <Current system time: HH:MM:SS>
@@ -12,7 +12,7 @@ audit-version  = <Auto-incremented run number. Check `spec/25-app-spec-audit/`. 
 audit-file     = spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
 scope          = spec/*-app* | spec/*-design* | .lovable/plans/pending | <auto-discover any recently modified spec folders>
 min-score      = 100
-```
+``
 
 `NN` in `audit-file` is the next free two-digit prefix in `spec/25-app-spec-audit/`.
 Discover the correct `audit-version` by checking existing files on disk. Do not prompt the user for these values. Non-negotiable checkpoint: If this is the very first audit (no previous versions found), you must remove the audit folder contents before generating the new one.
@@ -43,6 +43,12 @@ You must rigorously audit all proposed files, variables, and unit tests for garb
 - If a spec proposes tests like `TestHandleComp100` or arbitrary generic IDs instead of semantic domain behaviors (e.g., `TestUpdateUser_RejectsInvalidEmail`), you must flag it as a critical failure.
 - If you find generic variable names like `data`, `obj`, `temp`, or `Input100`, record it as a defect and demand a remedy.
 
+## RULE 0L - temporary automation scripts must not be committed
+
+If a spec proposes creating temporary scripts (e.g., CSJ, Python) for fixing or refactoring the codebase:
+- It must explicitly specify that the scripts go into `.lovable/temp-scripts/`.
+- It must explicitly specify that `.lovable/temp-scripts/` is added to .gitignore.
+- If the spec implies committing these temporary files to the repository, you must flag it as a critical failure task.
 ## RULE 1 - working stance
 
 Read as the blind-AI persona in `spec/25-app-spec-audit/00-overview.md` §1: never
@@ -63,7 +69,7 @@ Do not repeat any of it.
 Before reading content, before forming an opinion, print the inventory. No score
 may be written until this table exists in `audit-file`.
 
-```bash
+``bash
 # 1. the audited scope, with line counts
 # Be sure to include any recent folders and files written for recent specs in these commands!
 wc -l spec/21-app/*.md spec/21-app/*/*.md spec/21-app/*/*/*.md 2>/dev/null | sort -n
@@ -81,13 +87,13 @@ ls spec/17-consolidated-guidelines
 
 # 3. the plan surface that consumes the spec
 ls .lovable/plans/pending .lovable/plans/subtasks/*/ .lovable/ambiguous-questions/01-new-ambiguity
-```
+``
 
 Inventory table shape, written into `audit-file` as section 1:
 
-```text
+``text
 | # | Path | Lines | Role (normative / index / fixture / diagram / mirror) | Read? |
-```
+``
 
 Rules:
 
@@ -129,7 +135,7 @@ remedy row in the improvement set. Point costs come from
 Rebuild it from the filesystem, not from what the spec claims. Every boolean and
 condition-styling sub-file is listed individually:
 
-```text
+``text
 | Topic                           | Authority file                                                                 | Bound from spec/21-app? | Duplicates |
 | canonical size tier             | spec/02-coding-guidelines/00-canonical-size-tier.md                            | yes/no                  | none       |
 | boolean naming prefixes         | .../01-cross-language/02-boolean-principles/01-naming-prefixes.md              | yes/no                  | none       |
@@ -158,7 +164,7 @@ condition-styling sub-file is listed individually:
 | error code registry             | spec/03-error-manage/03-error-code-registry/                                   | yes/no                  | none       |
 | database conventions            | spec/04-database-conventions/                                                  | yes/no                  | none       |
 | ci pipeline + guards            | spec/12-cicd-pipeline-workflows/01-ci-pipeline.md, 03-reusable-ci-guards/      | yes/no                  | none       |
-```
+``
 
 Consolidated mirrors under `spec/17-consolidated-guidelines/` (notably
 `02-coding-guidelines.md`, `03-error-management.md`,
@@ -172,7 +178,7 @@ the rubric, with a consolidation remedy naming which file wins.
 
 ### Dimension 9 — reference integrity (report counts, not adjectives)
 
-```bash
+``bash
 python3 linter-scripts/check-spec-folder-refs.py
 python3 linter-scripts/check-file-sizes.py
 
@@ -182,11 +188,11 @@ rg -o --no-filename '\]\(([^)]+)\)' spec/21-app spec/23-app-db spec/24-app-ui-de
 wc -l < /tmp/links.txt
 # index vs filesystem, both directions
 rg -n '\| *[0-9]{2} *\|' spec/21-app/00-overview.md
-```
+``
 
 The audit prints exactly these numbers:
 
-```text
+``text
 | Metric                                          | Count |
 | relative links found                            |    NN |
 | links that do not resolve                       |     0 |
@@ -196,7 +202,7 @@ The audit prints exactly these numbers:
 | guideline topics with no authority file          |     0 |
 | guideline topics with two authority files        |     0 |
 | files over 300 lines                             |     0 |
-```
+``
 
 Any non-zero row is a finding with a remedy. An index entry missing a file and a
 file missing from the index are two separate findings.
@@ -253,9 +259,9 @@ Phases 2 and 3 may run in parallel; nothing else may.
 
 ## RULE 6 — improvement set format
 
-```text
+``text
 | Rank | Finding | Remedy (file + content) | Dimension | Points | Effort |
-```
+``
 
 Effort is `S` (under an hour), `M` (a session), `L` (multi-session). Rank by
 points recovered per unit of effort, highest first. Every dimension scoring below
@@ -270,7 +276,7 @@ Remedy Consolidation: If mechanical sweeps yield more than 20 findings of the ex
 `audit-file` uses lowercase-hyphenated naming with a two-digit prefix and this
 section order:
 
-```text
+``text
 # Audit <audit-date> v<audit-version> — <scope>
 
 Version: 1.0.0
@@ -295,7 +301,7 @@ Ambiguity: <band>
 ## 13. Improvement set
 ## 14. Disposition of prior findings
 ## 15. Acceptance criteria of this audit
-```
+``
 
 Also update `spec/25-app-spec-audit/00-overview.md` §Index with the new row and
 `98-changelog.md` with a one-line entry, and add the `> STALE` banner to the
@@ -328,7 +334,7 @@ If any box is unchecked, do not save. Fix it first.
 
 ## RULE 9 — final report format
 
-```text
+``text
 Audit file: spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
 Scope: <folders>              Files audited: NN (total NNNN lines)
 Overall score: NN/100 (band <A-F>)
@@ -338,7 +344,7 @@ Guideline topics: NN checked, missing 0, duplicated 0, mirror drift 0
 Findings: NN (critical NN, major NN, minor NN)
 Prior findings: closed NN, partially NN, open NN, false positive NN
 Top three remedies: <one line each with points and effort>
-```
+``
 
 At the very bottom of the audit file, you MUST generate a beautifully formatted Markdown Summary Table of all identified issues for a quick glance:
 

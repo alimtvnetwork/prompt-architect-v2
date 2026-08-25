@@ -9,7 +9,8 @@
 1. You must NEVER stop by yourself as long as there are pending tasks.
 2. You must self-loop continuously without breaking between tasks.
 3. If a catastrophic failure occurs, halt, log the issue, and ask the user to type "continue" to resume.
-4. Violation of any rule below is auto-reject on the same tier as RULE 0.
+4. **Temporary Scripts:** Any temporary automation scripts (CSJ, python, etc.) used to perform fixes or mass edits MUST be written to `.lovable/temp-scripts/`. This folder MUST be gitignored. These scripts must NEVER be committed to the repository history.
+5. Violation of any rule below is auto-reject on the same tier as RULE 0.
 
 ## Anti-Hallucination Rules
 
