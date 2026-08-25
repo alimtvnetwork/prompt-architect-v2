@@ -10,7 +10,7 @@ audit-date     = <Current system date: YYYY-MM-DD>
 audit-time     = <Current system time: HH:MM:SS>
 audit-version  = <Auto-incremented run number. Check `spec/25-app-spec-audit/`. If a previous audit exists, increment the version. If NOT, you MUST execute `rm -rf spec/25-app-spec-audit/*` to clear the folder completely, then start at `v1`.>
 audit-file     = spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
-scope          = spec/21-app | spec/23-app-db | spec/24-app-ui-design-system | .lovable/plans/pending|<recent files> | <any recent folders and files written for recent specs>
+scope          = spec/*-app* | spec/*-design* | .lovable/plans/pending | <auto-discover any recently modified spec folders>
 min-score      = 100
 ```
 
@@ -91,9 +91,13 @@ Rules:
   fixtures, count of files over 300 lines.
 - Then state the read order you will follow, overview files first.
 
+Cross-Platform Execution: If bash or rg commands are unavailable in the host environment, you are explicitly authorized to use native equivalents (e.g., PowerShell Get-ChildItem / Measure-Object or a Python glob/os script) to generate the exact required metrics. The output format must still precisely match the required table shapes.
+
 ---
 
 ## RULE 3 — the scored dimensions (0-100 each, evidence per row)
+
+Overall Score Math: The Overall score must be calculated as the strict arithmetic mean of the 12 dimension scores, rounded down to the nearest integer. If any single dimension scores below 50, the Overall Score is capped at 50 (automatic failure).
 
 Each dimension gets a score, the evidence that produced it, and at least one
 remedy row in the improvement set. Point costs come from
@@ -251,6 +255,8 @@ Effort is `S` (under an hour), `M` (a session), `L` (multi-session). Rank by
 points recovered per unit of effort, highest first. Every dimension scoring below
 `min-score` contributes at least one row.
 
+Remedy Consolidation: If mechanical sweeps yield more than 20 findings of the exact same category (e.g., 50 missing reference links), consolidate them into a single high-value Improvement Set row. Point the remedy to a newly generated script or temporary checklist file in scratch/ that lists all fixes, rather than bloating the main audit table.
+
 ---
 
 ## RULE 7 — output file shape
@@ -342,6 +348,8 @@ At the very bottom of the audit file, you MUST generate a beautifully formatted 
 This task is massive. You MUST spawn self-looping sub-agents to handle the `N` loops autonomously (where `N` defaults to 200, unless the user provided a different number). Do not attempt to process the entire spec in a single turn, and do not artificially spin yourself without delegating.
 
 How to self-loop and distribute tasks:
+Platform Failure Fallback: If the system explicitly throws an API error preventing subagent instantiation, you must immediately pivot to a unified Python Orchestrator script. This script must programmatically enforce every check, loop through all files, and generate the exact same rigorous output. If you use this fallback, you must cite the exact system error log that blocked the subagents in your final report.
+
 1. Agent 1 (Inventory & Scope): Delegate to a sub-agent to strictly run the `wc -l` and `ls` commands on all scope folders and generate the complete Phase 1 file inventory and Phase 2 mechanical sweeps.
 2. Agent 2 (Guidelines & Dependencies): Delegate to a sub-agent to read the master guidelines, error management architecture, and all references, building the Guideline Checklist and checking mirror drift (Phase 6).
 3. Agent 3 to N (Deep File Analysis by Segment): Break the spec files down into logical segments. Spawn a dedicated, self-looping sub-agent for each segment (e.g., an agent for `spec/21-app` chunk 1, another for chunk 2, etc.). Each sub-agent must read its assigned files line-by-line, extract findings, evaluate Determinism (Phase 4), and cross-check Consistency (Phase 5).
