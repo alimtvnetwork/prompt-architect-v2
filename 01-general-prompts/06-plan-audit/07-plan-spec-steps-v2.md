@@ -4,15 +4,15 @@
 
 ```text
 n            = <default = 150, if not defined> = 50 steps confirmed
-domains      = Cli | Plugin | Contract | Ci
+domains      = Cli | Plugin | Contract | Ci | Last defined Spec above
+plan-slug    = Context given above or below.
+domains      = get from the spec given or context given, ask questions if any
 min-score    = 100
 regen-score  = 100
 ```
 
 `n` is the step count and it is defined only on the line above. Every rule in
 this prompt refers to it as `n` and never restates a number.
-
-PHASE 1: Handshake. If the user invokes this prompt without explicitly providing `n`, `plan-slug`, and `domains` in their message, your VERY FIRST response must be a bulleted list asking for these exact variables. You must end your turn and wait for the user to provide them. Do NOT touch the filesystem or proceed to planning until you have these variables.
 
 Trigger phrases: "enhanced plan", "plan enhanced", "n step plan with
 subtasks", "write the plan and the subtasks", "regenerate the plan properly".
