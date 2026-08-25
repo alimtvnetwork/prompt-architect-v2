@@ -97,6 +97,9 @@ Each step that completes MUST immediately commit and fix the Git. Follow these e
 
 ## Actionable Items & Checklist
 
+- [ ] **Anti-Boilerplate Check:** Did I copy-paste the exact same "How" steps across multiple tasks? (If yes, you are acting stupid. Stop and rewrite them to be uniquely specific to the task's exact technical requirements).
+- [ ] **Cognitive Check:** Does every task contain "all the brains" (exact logic, specific paths, deep architectural context) so a lower-level agent can execute it without guessing?
+
 - [ ] /learn the overarching main task plan.
 - [ ] Read `.lovable/memory/index.md` and `.lovable/plans/index.md` before planning.
 - [ ] Ensure the git repository starts completely clean.
@@ -120,6 +123,12 @@ How to self-loop and distribute tasks effectively:
 - [ ] Wait and Aggregate:
   - [ ] As the master agent, loop autonomously to wait for your sub-agents.
   - [ ] Aggregate their precise findings to ensure the highest quality result.
+
+### Deep Cognitive Planning Protocol (Anti-Boilerplate)
+When generating task files, the Planner Agent MUST do all the heavy lifting. The task file is the "brain."
+- [ ] Put the "Brains" in the Task: You must define the exact logic, precise file paths, specific code snippets, and deep architectural decisions. The subtask must be so incredibly detailed that a lower-level, brainless agent could execute it blindly.
+- [ ] Eradicate Boilerplate: NEVER copy-paste the exact same "How" steps or execution logic across multiple task files. If two tasks look identical, you are being lazy and stupid.
+- [ ] Mandate Specificity: Tailor every single step to the specific technology or logic of that specific task.
 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
 To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
