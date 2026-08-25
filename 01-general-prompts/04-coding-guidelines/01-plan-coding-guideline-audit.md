@@ -57,12 +57,12 @@ This is a standalone file. Follow every rule below without consulting any other 
 ### Top-Notch Anti-Hallucination & Non-Negotiable Guidelines
 
 These guidelines are STRICTLY NON-NEGOTIABLE:
-- **Function Size:** Functions MUST be strictly less than 8 lines.
-- **Style Guideline (Returns):** There MUST be a blank line before every `return` statement.
-- **Boolean Naming:** Every boolean MUST start with `has` or `is`. 
+- Function Size: Functions MUST be strictly less than 8 lines.
+- Style Guideline (Returns): There MUST be a blank line before every `return` statement.
+- Boolean Naming: Every boolean MUST start with `has` or `is`. 
   - NEVER use negative naming like `isNot`.
   - ALWAYS use inverse naming. For example, if something is dishonest, use `isDishonest` instead of `isNotHonest`. Use `isHonest` and `isDishonest`.
-- **Golang Single Return & Wrapped Booleans:** In Go, strictly recommend passing a single return parameter. If multiple are needed, bundle them into a struct. Functions MUST NOT return raw booleans. Instead, return a single generic wrapped `Result` object (bundling `Data`, `AppError`, and status together) containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
+- Golang Single Return & Wrapped Booleans: In Go, strictly recommend passing a single return parameter. If multiple are needed, bundle them into a struct. Functions MUST NOT return raw booleans. Instead, return a single generic wrapped `Result` object (bundling `Data`, `AppError`, and status together) containing a status flag with TWO mutually exclusive properties (e.g. `IsSuccess` and `IsFailed`). The user NEVER sets both manually; they are set via an initialization/constructor method (like `NewSuccess()` or `NewFailure()`) where setting one automatically infers the other.
   *Fallback definition (in case spec file is missing):*
   ```go
   type Result[T any] struct {
@@ -81,7 +81,7 @@ These guidelines are STRICTLY NON-NEGOTIABLE:
       // handle success
   }
   ```
-- **Anti-Hallucination:** Do not guess the existence of files, enums, or functions. If they are not found in the codebase during your read loops, ask the user.
+- Anti-Hallucination: Do not guess the existence of files, enums, or functions. If they are not found in the codebase during your read loops, ask the user.
 
 ## Must Follow and without negotiation
 

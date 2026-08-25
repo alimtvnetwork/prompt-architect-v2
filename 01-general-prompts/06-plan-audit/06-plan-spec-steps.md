@@ -17,9 +17,9 @@ If any images or files are provided, you MUST save them into the `assets/` folde
 ## 2. High-Detail Task Breakdown (The "High-Powered Brain")
 
 You must use your high-powered brain to write tasks that explicitly detail:
-- **Where** the code is.
-- **What** the issue is.
-- **How** to change it.
+- Where the code is.
+- What the issue is.
+- How to change it.
 
 The tasks must be so detailed and explicit that the next executing AI (who requires less brain) can simply follow the instructions without guessing. 
 
@@ -36,24 +36,24 @@ Your self-loop must strictly follow this structure:
 ## 4. High-Stakes Code Standards, Error Management & Guidelines
 
 You MUST follow the project's strict coding guidelines and ensure your plans enforce them.
-For every task, you MUST check if the following files or folders exist. **If they exist, they MUST be followed and included in the task's checklist for the executing AI to follow. If they do not exist, they can be skipped.**
+For every task, you MUST check if the following files or folders exist. If they exist, they MUST be followed and included in the task's checklist for the executing AI to follow. If they do not exist, they can be skipped.
 
 ### Dynamic Required Reading / Reference Checklist (Non-Negotiable):
 
-1. **Root Memory Guidelines**
+1. Root Memory Guidelines
 - /learn `.lovable/coding-guidelines/coding-guidelines.md` (and/or `.lovable/memory/coding-guidelines.md`)
 
-2. **Master Consolidated Guide & Coding Guidelines**
+2. Master Consolidated Guide & Coding Guidelines
 - /learn `spec/17-consolidated-guidelines/02-coding-guidelines.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/00-overview.md`
 
-3. **Error Management (Must Follow for all Coding Tasks)**
+3. Error Management (Must Follow for all Coding Tasks)
 - /learn `spec/03-error-manage/01-error-resolution/00-overview.md`
 - /learn `spec/03-error-manage/02-error-architecture/00-overview.md`
 - /learn `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`
 - /learn *Include most of the files from the error manage directory to ensure robust error handling is implemented per task.*
 
-4. **Boolean Conditions, Wrappers & Samples**
+4. Boolean Conditions, Wrappers & Samples
 - /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
@@ -61,14 +61,14 @@ For every task, you MUST check if the following files or folders exist. **If the
 - /learn `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
 
-5. **Code Style & File Size Limits (80-100 lines max)**
+5. Code Style & File Size Limits (80-100 lines max)
 - /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/20-nesting-resolution-patterns.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
 
-6. **Variable Naming & Definitions**
+6. Variable Naming & Definitions
 - /learn `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
@@ -109,19 +109,33 @@ Each step that completes MUST immediately commit and fix the Git. Follow these e
 
 This task requires deep, multi-agent processing. You MUST NOT run a fast, linear self-loop that artificially consolidates work or skips steps to save time. 
 
-**How to self-loop and distribute tasks effectively:**
-1. **Spawn Sub-Agents:** For any multi-step group, deep file reading, or complex analysis, you must actively spawn dedicated, self-looping sub-agents to handle the workload.
-2. **Utilize Processing Power:** Take your time and use maximum processing power and credits. Do not take shortcuts. Do not attempt to process a massive spec or write a complex plan in a single, consolidated step.
-3. **Wait and Aggregate:** As the master agent, loop autonomously to wait for your sub-agents to complete their assigned nodes/tasks. Aggregate their precise findings to ensure the highest quality result.
+How to self-loop and distribute tasks effectively:
+- [ ] Spawn Sub-Agents:
+  - [ ] For any multi-step group, deep file reading, or complex analysis, actively spawn dedicated sub-agents.
+  - [ ] Ensure these sub-agents are self-looping to handle the workload.
+- [ ] Utilize Processing Power:
+  - [ ] Take your time and use maximum processing power and credits.
+  - [ ] Do not take shortcuts.
+  - [ ] Do not attempt to process a massive spec or write a complex plan in a single, consolidated step.
+- [ ] Wait and Aggregate:
+  - [ ] As the master agent, loop autonomously to wait for your sub-agents.
+  - [ ] Aggregate their precise findings to ensure the highest quality result.
 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
 To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
-1. **On Start:** The sub-agent creates .lovable/temp-agents/<task-name>.md. Write the objective and STATUS: IN_PROGRESS.
-2. **On Error/Crash:** If an agent breaks or fails, it MUST append the exact error, cause, and STATUS: FAILED to that file before closing.
-3. **On Resume:** The next assigned agent must first read that file to avoid repeating the mistake.
-4. **On Success:** Update the file to STATUS: DONE and immediately update the master plan in .lovable/plans/index.md or .lovable/plans/pending/.
+- [ ] On Start:
+  - [ ] The sub-agent creates .lovable/temp-agents/<task-name>.md.
+  - [ ] Write the objective and STATUS: IN_PROGRESS.
+- [ ] On Error/Crash:
+  - [ ] If an agent breaks or fails, append the exact error and cause to the file.
+  - [ ] Append STATUS: FAILED to that file before closing.
+- [ ] On Resume:
+  - [ ] The next assigned agent must first read that file to avoid repeating the mistake.
+- [ ] On Success:
+  - [ ] Update the file to STATUS: DONE.
+  - [ ] Immediately update the master plan in .lovable/plans/index.md or .lovable/plans/pending/.
 
-**NEVER MAKE THIS EXCUSE:** *"I did not literally perform N self-loops or spawn dozens of sub-agents. Instead of artificially spinning up N separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment."*
+NEVER MAKE THIS EXCUSE: *"I did not literally perform N self-loops or spawn dozens of sub-agents. Instead of artificially spinning up N separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment."*
 If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Utilize the processing power effectively to get the right answer. Avoid stupidity.
 
 ## MUST FOLLOW NON-NEGOTIABLE

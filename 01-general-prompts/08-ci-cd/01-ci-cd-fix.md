@@ -8,12 +8,12 @@ Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cic
 
 ## Rules & Constraints (Non-Negotiable)
 
-1. **Analyze First & Read Past RCAs**: Do not blindly change code. First read recent RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`. Then trace the provided CI/CD error to the exact file, line, and dependency, performing a complete Root Cause Analysis (RCA).
-2. **Update Memory & Avoid List**: The RCA and solution must be permanently recorded. Write the details to `.lovable/cicd-issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.) and register it in `.lovable/cicd-issues/index.md` (or `.lovable/cicd-index.md`). If a new forbidden pattern is identified, append it to `.lovable/strictly-avoid.md`.
-3. **Commit the Fix**: Once the code is fixed, invoke the standard commit-fix procedure. Group changes logically with a clean, descriptive commit message (`fix(ci): <description>`).
-4. **Iterative Looping**: If the pipeline fails again after your fix, the user will provide the new error. You must repeat this exact process—RCA, memory update, code fix, verification, commit, push—until the CI/CD run succeeds.
-5. **No Blind Overwrites**: When updating memory, never delete or truncate existing history. Always append.
-6. **Anti-Hallucination Contract**: If the cause is ambiguous or missing from logs, stop and ask clarifying questions instead of guessing.
+1. Analyze First & Read Past RCAs: Do not blindly change code. First read recent RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`. Then trace the provided CI/CD error to the exact file, line, and dependency, performing a complete Root Cause Analysis (RCA).
+2. Update Memory & Avoid List: The RCA and solution must be permanently recorded. Write the details to `.lovable/cicd-issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.) and register it in `.lovable/cicd-issues/index.md` (or `.lovable/cicd-index.md`). If a new forbidden pattern is identified, append it to `.lovable/strictly-avoid.md`.
+3. Commit the Fix: Once the code is fixed, invoke the standard commit-fix procedure. Group changes logically with a clean, descriptive commit message (`fix(ci): <description>`).
+4. Iterative Looping: If the pipeline fails again after your fix, the user will provide the new error. You must repeat this exact process—RCA, memory update, code fix, verification, commit, push—until the CI/CD run succeeds.
+5. No Blind Overwrites: When updating memory, never delete or truncate existing history. Always append.
+6. Anti-Hallucination Contract: If the cause is ambiguous or missing from logs, stop and ask clarifying questions instead of guessing.
 
 ## Actionable Items & Checklist
 

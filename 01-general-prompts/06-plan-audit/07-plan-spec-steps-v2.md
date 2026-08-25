@@ -11,12 +11,12 @@ min-score    = 100
 regen-score  = 100
 ```
 
-`n` is the step count and it is defined **only** on the line above. Every rule in
+`n` is the step count and it is defined only on the line above. Every rule in
 this prompt refers to it as `n` and never restates a number.
 
 PHASE 1: Handshake. If the user invokes this prompt without explicitly providing `n`, `plan-slug`, and `domains` in their message, your VERY FIRST response must be a bulleted list asking for these exact variables. You must end your turn and wait for the user to provide them. Do NOT touch the filesystem or proceed to planning until you have these variables.
 
-**Trigger phrases:** "enhanced plan", "plan enhanced", "n step plan with
+Trigger phrases: "enhanced plan", "plan enhanced", "n step plan with
 subtasks", "write the plan and the subtasks", "regenerate the plan properly".
 
 ---
@@ -36,18 +36,18 @@ say so and ask whether to split units finer or lower `n`. Never invent
 
 Every file and folder you create or rename obeys all of these, with no exceptions:
 
-- **Lowercase only.** No uppercase character anywhere in the path segment you
+- Lowercase only. No uppercase character anywhere in the path segment you
   author, including the extension. The root readme is `readme.md`, never
   `README.md`.
-- **Hyphens as the only separator.** No spaces, no underscores, no camelCase,
+- Hyphens as the only separator. No spaces, no underscores, no camelCase,
   no dots except the single extension dot.
-- **Zero-padded sequence prefix on every ordered set.** `01-`, `02-`, … `09-`,
+- Zero-padded sequence prefix on every ordered set. `01-`, `02-`, … `09-`,
   `10-`. Two digits for docs, prompts, spec files, audit files, memory files.
   Subtask files keep the existing three-digit form: `001-`, `002-`, … `069-`.
   Never `1-`, never `1.`, never an unnumbered sibling inside a numbered set.
-- **Audit files follow the identical rule.** Files under
+- Audit files follow the identical rule. Files under
   `spec/25-app-spec-audit/` are `01-…md`, `02-…md`, lowercase, hyphenated.
-- **A violating file is renamed, never duplicated.** If a wrongly named file
+- A violating file is renamed, never duplicated. If a wrongly named file
   already exists, `mv` it and update every reference to it in the same run. Do
   not leave both names on disk.
 
@@ -64,17 +64,17 @@ ls .lovable/plans/subtasks/xx-plan-slug | grep -vE '^[0-9]{3}-' || echo "sequenc
 
 ## RULE 0B — audit files are written, not run
 
-Authoring the plan and the subtasks is **not** an audit pass.
+Authoring the plan and the subtasks is not an audit pass.
 
 - Create or reserve the audit file slots with correct RULE 0A names, with a
-  header and an empty/`TBD` body. Do **not** score anything, do **not** fill in
-  findings, do **not** compute a spec score while authoring.
+  header and an empty/`TBD` body. Do not score anything, do not fill in
+  findings, do not compute a spec score while authoring.
 - The audit is a separate later pass, triggered explicitly by the user. Until
   then the slots stay empty.
 - No task body may contain an "audit now", "score the spec", or "run the
   consistency report" step. A task may only _point at_ the audit file where the
   later pass will record its result.
-- RULE 12 self-scoring is about **this batch's own quality gate** and is not the
+- RULE 12 self-scoring is about this batch's own quality gate and is not the
   spec audit. Never write the RULE 12 table into an audit file.
 
 ---
@@ -84,22 +84,22 @@ Authoring the plan and the subtasks is **not** an audit pass.
 This is how the plan is executed later. State it in the plan file and repeat it
 as a footer in every task file.
 
-- **One step per run.** Exactly one step is executed per run. Never batch two
+- One step per run. Exactly one step is executed per run. Never batch two
   steps into a single run, even tiny ones, even "while I'm in the file".
-- **Every step is standalone.** Context does not survive the loop. Everything
+- Every step is standalone. Context does not survive the loop. Everything
   needed to complete the step lives in the step file plus the files it cites. A
   step that assumes knowledge from a previous run is a broken step.
-- **Self-loop after verify.** When the step's `## 6. Verify` commands pass and
+- Self-loop after verify. When the step's `## 6. Verify` commands pass and
   `## 7. Done When` is satisfied: mark the step done in the plan status file,
   then self-loop — re-read the status file, pick the next unstarted step, and
   begin a _fresh_ run for it. Do not carry reasoning across the loop boundary.
-- **Concurrency ceiling, hard limits:**
-  - at most **2** spawned agents at any one time — never 3, never "just one
+- Concurrency ceiling, hard limits:
+  - at most 2 spawned agents at any one time — never 3, never "just one
     more";
-  - each agent runs at most **3** parallel threads — never 4.
+  - each agent runs at most 3 parallel threads — never 4.
   - Exceeding either number is a hard failure. If the work looks like it needs
     more, the step is too big: split it into more steps instead.
-- **Why:** context capacity per run is limited. One step per run spends the
+- Why: context capacity per run is limited. One step per run spends the
   whole budget on that step, which is what produces correct code; batching
   spends it on bookkeeping and produces mush.
 
@@ -115,14 +115,14 @@ This task is standalone — read it plus its cited files, nothing else is assume
 
 ## RULE 0D — coding-guideline single-file checklist (part of spec planning)
 
-Each coding-guideline topic must live in **exactly one** file. Duplicated or
+Each coding-guideline topic must live in exactly one file. Duplicated or
 overlapping guideline files are how two runs end up following two different
 rules.
 
 The spec-planning deliverable MUST include this checklist, filled in with the
 real paths below, not a promise to check later. Every row is mandatory; a row
 left blank fails the step. The boolean / condition-styling family has one file
-per sub-topic and **all of them** are listed — a checklist that collapses them
+per sub-topic and all of them are listed — a checklist that collapses them
 into "the boolean folder" fails.
 
 ```text
@@ -174,7 +174,7 @@ folder wins and the disagreement is filed under RULE 9.
 Rules for the checklist:
 
 - Enumerate guideline files by path — no "the guidelines folder".
-- If a topic appears in two authoritative files, the step **fails**: consolidate
+- If a topic appears in two authoritative files, the step fails: consolidate
   into one file and leave a one-line pointer in the other, then re-run the
   checklist.
 - If a topic has no file, file it as a spec gap under RULE 9 — do not invent the
@@ -345,7 +345,7 @@ Regression check: <runnable command + expected output>
 
 Two mechanical gates, both run with output pasted into the report (RULE 11).
 
-**Missing links and references.** Report absolute counts, not adjectives:
+Missing links and references. Report absolute counts, not adjectives:
 
 ```bash
 # every cited spec/.lovable path in the batch must resolve
@@ -363,7 +363,7 @@ anchor exists inside the cited file. The report prints the four numbers:
 citations total, missing files, missing sections, unreferenced-but-required
 guideline files. A non-zero count blocks the save.
 
-**CI/CD verification.** Every plan states how CI proves it, and every task that
+CI/CD verification. Every plan states how CI proves it, and every task that
 changes code names the pipeline check that guards it:
 
 - Pipeline definition: `spec/12-cicd-pipeline-workflows/01-ci-pipeline.md`.
@@ -523,7 +523,7 @@ Plus: when the spec is silent, cite the ambiguity file
 default. When a task has a database surface, also cite
 `spec/04-database-conventions/` and the owning table section in `spec/23-app-db/`.
 
-These citations must be **task-specific**. A task whose twelve citations match its
+These citations must be task-specific. A task whose twelve citations match its
 neighbour's line for line fails the clone gate in RULE 6. Cite the section that
 decides _this_ task's behaviour, not the folder overview as a reflex.
 
@@ -586,12 +586,12 @@ rg -o --no-filename 'spec/[A-Za-z0-9/._-]+' .lovable/plans/subtasks/xx-plan-slug
 No task file contains a commit, push, tag, or release instruction. The policy for
 this batch, in full:
 
-- One commit per **batch** of completed tasks, never per task. The message names
+- One commit per batch of completed tasks, never per task. The message names
   the plan and the task range, e.g. `feat(cli): tasks 012-018 frontier + parser`.
 - The commit happens after the batch's verification commands pass, not before.
 - Tasks move to `.lovable/plans/completed/` in the same commit that lands their
   code, and `.lovable/plans/index.md` is updated in that same commit.
-- A release (tag, changelog entry, artifact build) fires **only** when every task
+- A release (tag, changelog entry, artifact build) fires only when every task
   of `plan-file` has moved to `.lovable/plans/completed/` with
   `Status: completed`. Releasing mid-plan is forbidden.
 - Never rewrite history, never force-push, never commit build artifacts.
@@ -614,7 +614,7 @@ implementation. It is the most expensive defect class in this project.
 
 ## RULE 10 — dependencies come from data flow
 
-`**Depends On**` is derived from what a task consumes, never from file numbering.
+`Depends On` is derived from what a task consumes, never from file numbering.
 Contract types → producer emit → transport bundle → consumer intake → consumer
 writes → UI → CI. The graph MUST be acyclic; state the check you ran and the
 number of roots. A task that unblocks many others is scheduled early and says so
@@ -644,7 +644,7 @@ in section 2.
 - [ ] RULE 0C footer present verbatim in every task file; plan file states one step per run and self-loop; no task implies batching steps.
 - [ ] RULE 0C ceilings stated: max 2 agents, max 3 threads per agent, nowhere exceeded or contradicted.
 - [ ] RULE 0D coding-guideline single-file checklist filled in with real paths, every boolean/condition-styling sub-file listed individually, every topic single-source, duplicates column reads "none"; consolidated mirrors cited as aids only.
-- [ ] **Execution model confirmed: exactly one step per run, self-loop after Verify, no line anywhere in the plan or a task implies batching two steps.**
+- [ ] Execution model confirmed: exactly one step per run, self-loop after Verify, no line anywhere in the plan or a task implies batching two steps.
 - [ ] Self-loop instruction present in the plan file AND verbatim in every task footer; max 2 agents / max 3 threads per agent restated and nowhere exceeded.
 - [ ] RULE 0E applied: every command, issue, cicd-issue, memory item, strictly-avoid entry and attachment written to its file and linked from Context; nothing left only in chat; every attachment has a caption.
 - [ ] RULE 0F release policy quoted in the plan's Context; no task touches version, changelog, release notes, or the readme version pin.

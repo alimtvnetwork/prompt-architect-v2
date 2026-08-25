@@ -57,7 +57,7 @@ Once ALL sub-agents have signaled completion and updated their subtask files in 
 - Artifact Sanitizer: RED FLAG: NEVER upload or commit test reports, test data, artifact zips, temporary scripts, or compiled binaries to Git. Purge them before making the commit.
 - Lovable Git History Guard: Never rewrite published history (no force push, no rebase, no squash).
 - You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
-- **Commit the changes on the current branch only** (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
+- Commit the changes on the current branch only (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 
 ## 6. End-of-Loop Final Verification
 

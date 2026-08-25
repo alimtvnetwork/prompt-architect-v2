@@ -15,22 +15,22 @@ min-score      = 100
 ```
 
 `NN` in `audit-file` is the next free two-digit prefix in `spec/25-app-spec-audit/`.
-Discover the correct `audit-version` by checking existing files on disk. Do not prompt the user for these values. **Non-negotiable checkpoint:** If this is the very first audit (no previous versions found), you must remove the audit folder contents before generating the new one.
+Discover the correct `audit-version` by checking existing files on disk. Do not prompt the user for these values. Non-negotiable checkpoint: If this is the very first audit (no previous versions found), you must remove the audit folder contents before generating the new one.
 
-**Trigger phrases:** "audit the app spec", "blind ai readiness audit", "score the
+Trigger phrases: "audit the app spec", "blind ai readiness audit", "score the
 spec", "run audit v<N>".
 
 ---
 
 ## RULE 0 — what this prompt does, and what it must never do
 
-- It **reads** the spec and **writes one** dated audit file. That is all.
+- It reads the spec and writes one dated audit file. That is all.
 - It never edits, fixes, renames, splits or reformats a file it audits. Audit,
   then fix in a separate run. Auditing and fixing in the same pass is a hard
   failure (`spec/25-app-spec-audit/00-overview.md` §4 AUD-004g).
 - It never writes application code, never runs a migration, never commits.
 - It never edits an earlier dated audit file. A new run is a new file; the
-  superseded run gets a `> **STALE** — superseded by <audit-file>` banner as its
+  superseded run gets a `> STALE — superseded by <audit-file>` banner as its
   only permitted modification.
 - It never rubber-stamps. An audit that finds nothing must list the checks that
   ran and passed, with their output.
@@ -155,7 +155,7 @@ Consolidated mirrors under `spec/17-consolidated-guidelines/` (notably
 `15-cicd-pipeline-workflows.md`, `31-compiled-simple-coding-guidelines.md`,
 `00-strictly-avoid-quickref.md`) and
 `spec/02-coding-guidelines/consolidated-review-guide-condensed.md` are checked for
-**drift against their authority**. A mirror that contradicts its authority is a
+drift against their authority. A mirror that contradicts its authority is a
 Consistency finding; the mirror is never treated as the authority. Any topic
 appearing in two authoritative files is a duplicate-authority finding, cost per
 the rubric, with a consolidation remedy naming which file wins.
@@ -261,11 +261,11 @@ section order:
 ```text
 # Audit <audit-date> v<audit-version> — <scope>
 
-**Version:** 1.0.0
-**Updated:** <audit-date>
-**Generated At:** <audit-date> <audit-time>
-**AI Confidence:** <band>
-**Ambiguity:** <band>
+Version: 1.0.0
+Updated: <audit-date>
+Generated At: <audit-date> <audit-time>
+AI Confidence: <band>
+Ambiguity: <band>
 
 ## Keywords
 ## 1. Scope and file inventory
@@ -286,7 +286,7 @@ section order:
 ```
 
 Also update `spec/25-app-spec-audit/00-overview.md` §Index with the new row and
-`98-changelog.md` with a one-line entry, and add the `> **STALE**` banner to the
+`98-changelog.md` with a one-line entry, and add the `> STALE` banner to the
 superseded run. Those three are the only files outside `audit-file` this run may
 touch.
 
@@ -341,16 +341,16 @@ At the very bottom of the audit file, you MUST generate a beautifully formatted 
 
 This task is massive. You MUST spawn self-looping sub-agents to handle the `N` loops autonomously (where `N` defaults to 200, unless the user provided a different number). Do not attempt to process the entire spec in a single turn, and do not artificially spin yourself without delegating.
 
-**How to self-loop and distribute tasks:**
-1. **Agent 1 (Inventory & Scope):** Delegate to a sub-agent to strictly run the `wc -l` and `ls` commands on all scope folders and generate the complete Phase 1 file inventory and Phase 2 mechanical sweeps.
-2. **Agent 2 (Guidelines & Dependencies):** Delegate to a sub-agent to read the master guidelines, error management architecture, and all references, building the Guideline Checklist and checking mirror drift (Phase 6).
-3. **Agent 3 to N (Deep File Analysis by Segment):** Break the spec files down into logical segments. Spawn a dedicated, self-looping sub-agent for each segment (e.g., an agent for `spec/21-app` chunk 1, another for chunk 2, etc.). Each sub-agent must read its assigned files line-by-line, extract findings, evaluate Determinism (Phase 4), and cross-check Consistency (Phase 5).
-4. **Agent X (Reference & Verifiability):** Delegate to an agent to run the `rg` scripts and verify Reference Integrity (Phase 8) and CI/CD verifiability (Phase 9/10).
-5. **Master Agent (Aggregation & Scoring):** As the main agent, continuously self-loop and wait for your sub-agents to report back. Aggregate all their findings, assemble the final `audit-file`, calculate the exact scoring math, and ensure all RULE 8 checklist items are fully completed before saving.
+How to self-loop and distribute tasks:
+1. Agent 1 (Inventory & Scope): Delegate to a sub-agent to strictly run the `wc -l` and `ls` commands on all scope folders and generate the complete Phase 1 file inventory and Phase 2 mechanical sweeps.
+2. Agent 2 (Guidelines & Dependencies): Delegate to a sub-agent to read the master guidelines, error management architecture, and all references, building the Guideline Checklist and checking mirror drift (Phase 6).
+3. Agent 3 to N (Deep File Analysis by Segment): Break the spec files down into logical segments. Spawn a dedicated, self-looping sub-agent for each segment (e.g., an agent for `spec/21-app` chunk 1, another for chunk 2, etc.). Each sub-agent must read its assigned files line-by-line, extract findings, evaluate Determinism (Phase 4), and cross-check Consistency (Phase 5).
+4. Agent X (Reference & Verifiability): Delegate to an agent to run the `rg` scripts and verify Reference Integrity (Phase 8) and CI/CD verifiability (Phase 9/10).
+5. Master Agent (Aggregation & Scoring): As the main agent, continuously self-loop and wait for your sub-agents to report back. Aggregate all their findings, assemble the final `audit-file`, calculate the exact scoring math, and ensure all RULE 8 checklist items are fully completed before saving.
 
 Do not rush this process. Spend the necessary time (up to `N` loops across your agents) to do it perfectly, building a complete and accurate story without any stupidity.
 
-**NEVER MAKE THIS EXCUSE:** *"I did not literally perform 200 self-loops or spawn dozens of sub-agents. Instead of artificially spinning up 200 separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment. Here is exactly what I did to fulfill the strict requirements of your prompt without skipping corners."*
+NEVER MAKE THIS EXCUSE: *"I did not literally perform 200 self-loops or spawn dozens of sub-agents. Instead of artificially spinning up 200 separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment. Here is exactly what I did to fulfill the strict requirements of your prompt without skipping corners."*
 If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Avoid stupidity.
 
 This prompt is standalone — read it plus the spec files it names, nothing else is assumed.

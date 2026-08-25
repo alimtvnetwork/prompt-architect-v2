@@ -51,12 +51,12 @@ You MUST follow the project's strict coding guidelines. These files are located 
 
 When you are done fixing the filenames, updating the references, and writing the memory, you MUST commit and fix the Git.
 - Group all completed work into a single logical commit.
-- **Commit the changes on the current branch only** (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
+- Commit the changes on the current branch only (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 - RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.
 - Ensure `.gitignore` explicitly excludes them.
 - If issues arise during the commit process, fix those git issues and try again.
 - You MUST push the commit to the repository immediately. Pushing after commits is non-negotiable.
-- **Commit the changes on the current branch only** (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
+- Commit the changes on the current branch only (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 
 ## 5. Must Follow, without negotiation
 

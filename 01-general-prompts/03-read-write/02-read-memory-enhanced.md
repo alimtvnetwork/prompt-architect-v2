@@ -83,29 +83,29 @@ The `.lovable/` folder, specs, and entire codebase can be massive. To process th
 
 To guarantee institutional memory and prevent regressions across all workflows (Plan Mode, CI/CD Fix, Coding Guidelines Audit, and Execution), all Root Cause Analyses (RCAs) follow strict canonical paths, file naming formats, and anti-hallucination guardrails:
 
-1. **General Issue / Bug RCAs**:
+1. General Issue / Bug RCAs:
    - Path: `.lovable/issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.)
    - Index: Registered in `.lovable/issues/index.md` (or `.lovable/plans/index.md`)
    - Mandatory Structure: Error description, exact file/line location, Root Cause Analysis (one-sentence root cause + deep analysis), fix strategy, and prevention checklist.
 
-2. **CI/CD Failure RCAs**:
+2. CI/CD Failure RCAs:
    - Path: `.lovable/cicd-issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.)
    - Index: Registered in `.lovable/cicd-issues/index.md` (or `.lovable/cicd-index.md`)
    - Mandatory Structure: Raw pipeline error snippet, Root Cause Analysis, resolution applied, and "What NOT to Repeat" rules.
 
-3. **Retrospectives & Architectural Failure Learnings**:
+3. Retrospectives & Architectural Failure Learnings:
    - Path: `.lovable/memory/learned/01-<slug>.md` and `spec/03-error-manage/01-error-resolution/03-retrospectives/01-<slug>.md`
    - Index: Registered in `.lovable/memory/index.md`
 
-4. **Hard Avoidances / CODE RED Prohibitions**:
+4. Hard Avoidances / CODE RED Prohibitions:
    - Path: `.lovable/strictly-avoid.md`
    - Hard Rule: Append-only. Never overwrite or truncate existing entries. Any RCA that uncovers a forbidden anti-pattern must append a one-line rule here.
 
-5. **Plan Mode Integration**:
+5. Plan Mode Integration:
    - Path: `.lovable/plans/pending/01-<slug>.md` & `.lovable/plans/subtasks/01-<slug>/01-<subslug>.md`
    - Context Requirement: Must cite previous relevant RCAs and failure records so the new plan explicitly avoids repeating past errors.
 
-6. **Anti-Hallucination Guard for RCAs**:
+6. Anti-Hallucination Guard for RCAs:
    - If an RCA file, referenced spec, or issue file is missing on disk, the AI MUST NOT guess or assume its contents. Stop and file an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` or ask the user directly before proceeding.
 
 ---
