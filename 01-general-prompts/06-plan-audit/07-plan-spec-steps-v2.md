@@ -3,9 +3,7 @@
 ## Variables — set these before running (the only lines you edit)
 
 ```text
-n            = <type the exact number of steps here, e.g. 150>
-plan-slug    = <subtask folder name, e.g. xx-plan-slug>
-plan-file    = <plan path under .lovable/plans/pending/, e.g. 01-xx-plan-slug.md>
+n            = <default = 150, if not defined> = 50 steps confirmed
 domains      = Cli | Plugin | Contract | Ci
 min-score    = 100
 regen-score  = 100
