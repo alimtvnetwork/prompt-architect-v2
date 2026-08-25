@@ -17,6 +17,7 @@
 - If a spec file, folder, or task is missing or ambiguous, do NOT guess or invent a rule.
 - Ask a clarifying question or log an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` before proceeding.
 - Never invent step counts. Read the actual files and count from them.
+- **Ambiguity Blocked Queue:** If you file an ambiguity to `.lovable/ambiguous-questions/`, you MUST immediately update the plan file to mark that specific subtask as `[Blocked]`. The execution loop must safely skip `[Blocked]` tasks and continue executing other disjoint tasks. Do not retry blocked tasks.
 
 ---
 
@@ -38,6 +39,7 @@
    - Assign subtasks to up to 3 parallel sub-agents to accelerate execution.
    - Maintain active file paths in `.lovable/temp/active-locks.json`. Parallel sub-agents must never touch the same files simultaneously.
    - Assign each sub-agent a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service`). Do not use generic names. If an agent switches tasks, its title must change.
+   - **Context Diet:** When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-slug/01-task.md` and execute it"). The subagent MUST read the necessary files itself. Passing massive payloads instantly causes hallucination and memory blowout.
    - Ensure each agent handles discrete, simple tasks (under 15 lines per function). Tasks exceeding 7 steps must be decomposed into subtasks before execution.
 
 2. Continuous self-looping:
