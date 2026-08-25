@@ -8,14 +8,14 @@ Do NOT ask the user to provide these variables. You must discover them automatic
 N              = 200 (Default number of self-loops. The user may override this when triggering the prompt)
 audit-date     = <Current system date: YYYY-MM-DD>
 audit-time     = <Current system time: HH:MM:SS>
-audit-version  = <Auto-incremented run number. Check spec/25-app-spec-audit/ for previous audits today and increment. Start at 1 if none.>
+audit-version  = <Auto-incremented run number. Check `spec/25-app-spec-audit/`. If a previous audit exists, increment the version. If NOT, you MUST execute `rm -rf spec/25-app-spec-audit/*` to clear the folder completely, then start at `v1`.>
 audit-file     = spec/25-app-spec-audit/NN-audit-<audit-date>-v<audit-version>.md
 scope          = spec/21-app | spec/23-app-db | spec/24-app-ui-design-system | <any recent folders and files written for recent specs>
 min-score      = 100
 ```
 
 `NN` in `audit-file` is the next free two-digit prefix in `spec/25-app-spec-audit/`.
-Discover the correct `audit-version` by checking existing files on disk. Do not prompt the user for these values.
+Discover the correct `audit-version` by checking existing files on disk. Do not prompt the user for these values. **Non-negotiable checkpoint:** If this is the very first audit (no previous versions found), you must remove the audit folder contents before generating the new one.
 
 **Trigger phrases:** "audit the app spec", "blind ai readiness audit", "score the
 spec", "run audit v<N>".
@@ -327,6 +327,13 @@ Findings: NN (critical NN, major NN, minor NN)
 Prior findings: closed NN, partially NN, open NN, false positive NN
 Top three remedies: <one line each with points and effort>
 ```
+
+At the very bottom of the audit file, you MUST generate a beautifully formatted Markdown Summary Table of all identified issues for a quick glance:
+
+| Folder / Subfolder / File | Identified Issue (Meaningful details) | Proposed Fix |
+| :--- | :--- | :--- |
+| `spec/21-app/00-overview.md` | Lacks determinism in feature X (score impact -5) | Rewrite line 42 to strictly define X |
+| ... | ... | ... |
 
 ---
 

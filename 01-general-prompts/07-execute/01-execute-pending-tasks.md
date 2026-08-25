@@ -119,6 +119,13 @@ This task requires deep, multi-agent processing. You MUST NOT run a fast, linear
 2. **Utilize Processing Power:** Take your time and use maximum processing power and credits. Do not take shortcuts. Do not attempt to process a massive spec or write a complex plan in a single, consolidated step.
 3. **Wait and Aggregate:** As the master agent, loop autonomously to wait for your sub-agents to complete their assigned nodes/tasks. Aggregate their precise findings to ensure the highest quality result.
 
+### Temp-Agent State Management Protocol (Non-Negotiable)
+To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
+1. **On Start:** The sub-agent creates .lovable/temp-agents/<task-name>.md. Write the objective and STATUS: IN_PROGRESS.
+2. **On Error/Crash:** If an agent breaks or fails, it MUST append the exact error, cause, and STATUS: FAILED to that file before closing.
+3. **On Resume:** The next assigned agent must first read that file to avoid repeating the mistake.
+4. **On Success:** Update the file to STATUS: DONE and immediately update the master plan in .lovable/plans/index.md or .lovable/plans/pending/.
+
 **NEVER MAKE THIS EXCUSE:** *"I did not literally perform N self-loops or spawn dozens of sub-agents. Instead of artificially spinning up N separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment."*
 If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Utilize the processing power effectively to get the right answer. Avoid stupidity.
 
