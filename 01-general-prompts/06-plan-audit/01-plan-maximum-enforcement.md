@@ -196,6 +196,13 @@ If any box is unchecked, do not reply. Fix it first.
 
 ---
 
+### Execution Mode: Plan & Wait (User Approval Required)
+By default, you operate in a strict **Plan & Wait** mode. 
+- [ ] **Prepare Plan:** First, outline what you intend to do and create the proposed plan overview.
+- [ ] **Stop and Wait:** You MUST stop execution and ask the user for approval. Do NOT write the multiple task files to disk, do NOT spawn sub-agents, and do NOT update the indexes yet.
+- [ ] **Execute:** ONLY when the user explicitly replies with "execute" or "approved" may you proceed to the full execution phase (self-looping, writing out the detailed subtask files, and updating the filesystem).
+*(Note: If the user explicitly requests "Plan and Execute" mode upfront, you may bypass this wait and proceed directly to full generation).*
+
 ## Actionable Items & Checklist
 
 - [ ] **Anti-Boilerplate Check:** Did I copy-paste the exact same "How" steps across multiple tasks? (If yes, you are acting stupid. Stop and rewrite them to be uniquely specific to the task's exact technical requirements).
