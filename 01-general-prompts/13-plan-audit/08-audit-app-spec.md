@@ -37,7 +37,13 @@ spec", "run audit v<N>".
 
 ---
 
-## RULE 1 — working stance
+## RULE 0K - strict anti-garbage naming audit
+
+You must rigorously audit all proposed files, variables, and unit tests for garbage naming conventions.
+- If a spec proposes tests like `TestHandleComp100` or arbitrary generic IDs instead of semantic domain behaviors (e.g., `TestUpdateUser_RejectsInvalidEmail`), you must flag it as a critical failure.
+- If you find generic variable names like `data`, `obj`, `temp`, or `Input100`, record it as a defect and demand a remedy.
+
+## RULE 1 - working stance
 
 Read as the blind-AI persona in `spec/25-app-spec-audit/00-overview.md` §1: never
 asks a question, takes the first matching rule, treats SHOULD as optional, cannot
