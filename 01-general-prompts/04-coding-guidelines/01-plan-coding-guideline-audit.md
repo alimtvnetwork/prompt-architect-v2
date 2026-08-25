@@ -1,5 +1,11 @@
 # Instruction (must follow): Plan: Coding Guideline Audit & Enforcement (v4)
 
+## Variables — Auto-Discovered at Runtime
+
+```text
+N = 150 (Default number of steps the planning AI should take to generate the audit plan. The user may override this when triggering the prompt)
+```
+
 /goal Deeply audit the entire codebase for coding guideline violations, boolean anti-patterns, missing enums, cyclomatic complexity, and error-handling flaws. Structure all findings into actionable, fine-grained tasks in .lovable/plans/pending/ and subtasks before stopping.
 
 /learn Ingest, analyze, and internalize all coding guidelines, boolean principles, function size limits, and error handling architectures across the codebase and specs.
@@ -17,9 +23,11 @@ Autonomously self-loop and read:
 - /learn the anti-hallucination rules and common AI mistakes in `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` and `03-common-ai-mistakes.md`.
 - Read `.lovable/plans/index.md` and `.lovable/memory/index.md`.
 
-## 2. Planning Loop (50 Steps of Analysis -> 100+ Execution Steps)
+## 2. Planning Loop (Deep N-Step Analysis)
 
-This is not a quick glance. You must deeply read the codebase, looping yourself as much as needed (taking at least 50 steps of internal planning and reading) to uncover:
+This is not a quick glance. You must deeply read the codebase, looping yourself as much as needed (taking exactly `N` steps of internal planning and reading). Each one of these steps MUST be followed properly using your highest processing capacity, proper memory retention of prior files, and careful multi-agent cognitive logic.
+
+You must dedicate this immense processing power to uncover:
 - Every inverted boolean (`!isSuccess`).
 - Every magic string or number.
 - Every swallowed error or generic `catch {}`.
@@ -39,8 +47,8 @@ For every issue found:
 ## 4. Enqueueing Tasks for Sub-Agents
 
 Your final output must be a massively detailed plan stored at `.lovable/plans/pending/01-coding-guideline-fixes.md` and granular subtask files written to `.lovable/plans/subtasks/01-coding-guideline-fixes/01-<subslug>.md`.
-The plan must break the work down so granularly (100 to 200 steps) that 3 concurrent sub-agents can be spawned later to safely execute the fixes.
-- Step 1..100+: Exact file, exact line, exact boolean to rename, exact enum to extract.
+The plan must break the work down so granularly (exactly `N` steps) that 3 concurrent sub-agents can be spawned later to safely execute the fixes.
+- Step 1..N: Exact file, exact line, exact boolean to rename, exact enum to extract. Keep the writing concise but hyper-specific. Do not write too much fluff.
 - Do NOT fix the code in this turn. Your job is ONLY to plan, audit, and enqueue.
 - Anti-Hallucination: If referenced guidelines or files are missing, ask clarifying questions rather than guessing.
 
