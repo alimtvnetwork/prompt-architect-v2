@@ -1,6 +1,6 @@
 # Plan Enhanced — n-step plan and the subtasks it becomes (maximum enforcement, v4)
 
-## Variables — set these before running (the only lines you edit)
+## Variables — check if you are confused only.
 
 ```text
 n            = <default = 150, if not defined> = 50 steps confirmed
