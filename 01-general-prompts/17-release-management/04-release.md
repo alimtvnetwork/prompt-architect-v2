@@ -26,6 +26,9 @@ When in doubt: MINOR.
 
 ## Hard rules (MUST)
 
+- **Version Inheritance Protocol:** The root `version.json` file is the strict Single Source of Truth. It may contain components (e.g. `frontend`, `backend`) whose version is set to `"inherit"`. If a component's version is `"inherit"`, DO NOT bump it independently; it automatically scales with the global version. Always bump the global root `"version"` property unless the user explicitly asks to bump an unlinked sub-component.
+
+
 - All version pin sites move in lock-step. Partial bumps are rejected.
 
 - The previous version string MUST NOT appear anywhere in the repo after this turn EXCEPT in historic files: `changelog.md`, `release_notes.md`, anything under `.lovable/release/`, and any dated archive folder.

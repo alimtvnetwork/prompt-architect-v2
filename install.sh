@@ -61,9 +61,9 @@ if os.path.exists(version_file):
         with open(version_file, 'r') as f:
             data = json.load(f)
     except Exception:
-        data = {'name': 'unknown-project', 'version': '0.0.0'}
+        data = {'name': 'unknown-project', 'version': '0.0.0', 'frontend': {'version': 'inherit'}, 'backend': {'version': 'inherit'}}
 else:
-    data = {'name': 'unknown-project', 'version': '0.0.0'}
+    data = {'name': 'unknown-project', 'version': '0.0.0', 'frontend': {'version': 'inherit'}, 'backend': {'version': 'inherit'}}
 
 data['promptArchitectByRiseupAsia'] = prompt_data
 

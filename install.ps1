@@ -61,6 +61,8 @@ try {
         $newJson = @{
             name = "unknown-project"
             version = "0.0.0"
+            frontend = @{ version = "inherit" }
+            backend = @{ version = "inherit" }
             promptArchitectByRiseupAsia = $promptData
         }
         $newJson | ConvertTo-Json -Depth 10 | Set-Content $VersionJsonPath

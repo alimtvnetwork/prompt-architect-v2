@@ -47,3 +47,6 @@
 9. **Code Standards**: Read `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/` before writing any code. Error management must be followed (never swallow errors, always log operation name and key inputs). Code must be DRY.
 10. **Naming & Casing**: Two-digit sequence, hyphen, lowercase slug. Exactly one lowercase root `readme.md`, never create `README.md`. Empty folders keep a `.gitkeep`.
 
+
+11. **Version SSOT**: The root ersion.json file is the strict Single Source of Truth for the entire repo's version. The architecture (including the inherit mechanism for components like frontend/backend) must be adhered to as documented in .lovable/memory/version-json-architecture.md.
+

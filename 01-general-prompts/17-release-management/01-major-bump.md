@@ -21,6 +21,9 @@ Release trigger rule: the user phrase "major bump" or "major release" means upda
 
 ### Execution Checklist
 
+- [ ] Version Inheritance: If `version.json` contains components (e.g. `frontend`) set to `"inherit"`, DO NOT modify them. They automatically scale with the global version. Always bump the global root `"version"` property unless explicitly asked to bump a sub-component.
+
+
 - [ ] Discover current version from disk.
 - [ ] Determine new version according to SemVer rules.
 - [ ] Explicitly state previous and new version in the reply.

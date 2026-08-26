@@ -1,6 +1,12 @@
 {
   "name": "target-project-name",
   "version": "1.0.0",
+  "frontend": {
+    "version": "inherit"
+  },
+  "backend": {
+    "version": "1.2.3"
+  },
   "promptArchitectByRiseupAsia": {
     "version": "v1.2.0",
     "installed_at": "2026-08-26T12:00:00Z",
@@ -14,8 +20,7 @@
       "source_directory": "01-general-prompts",
       "target_directory": ".lovable/prompts",
       "files_imported": [
-        ".lovable/prompts/14-execute/01-execute-pending-tasks.md",
-        ".lovable/prompts/14-execute/02-execute-parent-task-with-n-steps.md"
+        ".lovable/prompts/14-execute/01-execute-pending-tasks.md"
       ]
     }
   }
