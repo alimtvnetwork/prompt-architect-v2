@@ -641,7 +641,7 @@ in section 2.
 - [ ] RULE 0B respected: audit slots exist with correct names and empty bodies; no audit was scored during authoring; no task contains an audit step.
 - [ ] RULE 0C footer present verbatim in every task file; plan file states one step per run and self-loop; no task implies batching steps.
 - [ ] RULE 0C ceilings stated: max 2 agents, max 3 threads per agent, nowhere exceeded or contradicted.
-- [ ] **Consolidated Coding Guidelines (Mandatory):** I have explicitly cited the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md` in the plan and marked it as mandatory reading for all execution agents.
+- [ ] Consolidated Coding Guidelines (Mandatory): I have explicitly cited the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md` in the plan and marked it as mandatory reading for all execution agents.
 - [ ] RULE 0D coding-guideline single-file checklist filled in with real paths, every boolean/condition-styling sub-file listed individually, every topic single-source, duplicates column reads "none".
 - [ ] Execution model confirmed: exactly one step per run, self-loop after Verify, no line anywhere in the plan or a task implies batching two steps.
 - [ ] Self-loop instruction present in the plan file AND verbatim in every task footer; max 2 agents / max 3 threads per agent restated and nowhere exceeded.

@@ -11,7 +11,7 @@ This is a standalone file. Follow every rule below without consulting any other 
 ## 1. Strict Anti-Garbage Naming (Zero Tolerance)
 - NEVER generate arbitrary, generic, or sequential names like `comp_100.go`, `comp_100_test.go`, `Input100`, `data`, `temp`, `obj`, or `val`.
 - Variables, functions, structs, classes, and file names MUST explicitly describe the domain concept they represent (e.g., `UpdateUserProfileInput` not `Input100`).
-- **Unit Tests:** Unit test file names and test function names must explicitly define exactly what behavior is being tested. `TestHandleComp100` is garbage. `TestUpdateUserProfile_RejectsInvalidEmail` is required.
+- Unit Tests: Unit test file names and test function names must explicitly define exactly what behavior is being tested. `TestHandleComp100` is garbage. `TestUpdateUserProfile_RejectsInvalidEmail` is required.
 - If you generate sequential "ID-based" garbage names, the audit will fail you automatically. 
 
 ## 2. Boolean Naming & Logic
@@ -27,7 +27,7 @@ This is a standalone file. Follow every rule below without consulting any other 
 - No boolean positional parameters (e.g., `save(true)`). Use configuration objects (`save(SaveOptions{force: true})`).
 
 ## 4. Error Management & App Errors
-- **AppError vs Generic Error:** Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific AppError.
+- AppError vs Generic Error: Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific AppError.
 - Based on the language, create a strongly typed generic wrapper for application errors. For C# and similar OOP languages, this MUST be a custom Exception type (e.g., `AppException`, `DomainException`).
 - Propagate and wrap EVERY error with context. Never swallow errors with generic `catch {}`.
 - No magic literals as arguments; extract them into named constants or Enums.

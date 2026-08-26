@@ -9,7 +9,7 @@
 1. You must NEVER stop by yourself as long as there are pending tasks.
 2. You must self-loop continuously without breaking between tasks.
 3. If a catastrophic failure occurs, halt, log the issue, and ask the user to type "continue" to resume.
-4. **Temporary Scripts:** Any temporary automation scripts (CSJ, python, etc.) used to perform fixes or mass edits MUST be written to `.lovable/temp-scripts/`. This folder MUST be gitignored. These scripts must NEVER be committed to the repository history.
+4. Temporary Scripts: Any temporary automation scripts (CSJ, python, etc.) used to perform fixes or mass edits MUST be written to `.lovable/temp-scripts/`. This folder MUST be gitignored. These scripts must NEVER be committed to the repository history.
 5. Violation of any rule below is auto-reject on the same tier as RULE 0.
 
 ## Anti-Hallucination Rules
@@ -17,7 +17,7 @@
 - If a spec file, folder, or task is missing or ambiguous, do NOT guess or invent a rule.
 - Ask a clarifying question or log an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` before proceeding.
 - Never invent step counts. Read the actual files and count from them.
-- **Ambiguity Blocked Queue:** If you file an ambiguity to `.lovable/ambiguous-questions/`, you MUST immediately update the plan file to mark that specific subtask as `[Blocked]`. The execution loop must safely skip `[Blocked]` tasks and continue executing other disjoint tasks. Do not retry blocked tasks.
+- Ambiguity Blocked Queue: If you file an ambiguity to `.lovable/ambiguous-questions/`, you MUST immediately update the plan file to mark that specific subtask as `[Blocked]`. The execution loop must safely skip `[Blocked]` tasks and continue executing other disjoint tasks. Do not retry blocked tasks.
 
 ---
 
@@ -39,7 +39,7 @@
    - Assign subtasks to up to 2 parallel sub-agents (and ONLY if there are too many tasks to handle sequentially) to accelerate execution.
    - Maintain active file paths in `.lovable/temp/active-locks.json`. Parallel sub-agents must never touch the same files simultaneously.
    - Assign each sub-agent a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service`). Do not use generic names. If an agent switches tasks, its title must change.
-   - **Context Diet:** When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-slug/01-task.md` and execute it"). The subagent MUST read the necessary files itself. Passing massive payloads instantly causes hallucination and memory blowout.
+   - Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-slug/01-task.md` and execute it"). The subagent MUST read the necessary files itself. Passing massive payloads instantly causes hallucination and memory blowout.
    - Ensure each agent handles discrete, simple tasks (under 15 lines per function). Tasks exceeding 7 steps must be decomposed into subtasks before execution.
 
 2. Continuous self-looping:
@@ -98,14 +98,14 @@ At the end of every single iteration of your execution loop:
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Staged files sanitized of artifact zips and temporary scratch files.
-- [ ] **Consolidated Coding Guidelines:** I have fully read and strictly enforced the master coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`. (This is mandatory for all plans and execution).
-- [ ] **Error Manage Checklist:** I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
-- [ ] **Boolean Examples & Fixations:** All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
-- [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used anywhere.
-- [ ] **Semantic Tests:** All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
-- [ ] **Function Size:** No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
-- [ ] **Error Handling (AppError):** Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
-- [ ] **Formatting & Acronyms:** Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
+- [ ] Consolidated Coding Guidelines: I have fully read and strictly enforced the master coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`. (This is mandatory for all plans and execution).
+- [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
+- [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
+- [ ] Anti-Garbage Naming: No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used anywhere.
+- [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
+- [ ] Function Size: No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] Error Handling (AppError): Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
+- [ ] Formatting & Acronyms: Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
 - [ ] Fast-forward commits created and pushed without rewriting published git history.
 - [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
 
