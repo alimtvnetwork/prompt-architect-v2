@@ -23,6 +23,21 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 2. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
 3. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
 
+
+## Execution Reporting (Mandatory Output Format)
+
+1. Start of Run (Initial Output): Before writing any code, explicitly list out all pending tasks in your output window.
+2. End of Run Summary: When all tasks are completed (or if the run concludes), you MUST output a comprehensive final summary containing:
+   - Completed Tasks: Explicit list of what was successfully completed.
+   - Pending Tasks Left: Explicit list of any tasks still remaining.
+   - Quality Assessment: A brief summary of how well the execution went.
+   - Compliance Checklist: A markdown checklist explicitly verifying that you followed the rules:
+     - [x] Coding Guidelines enforced (spec/02-coding-guidelines/ and consolidated file checked).
+     - [x] Boolean conventions used (is/has prefixes, no negatives).
+     - [x] No garbage variable names used.
+     - [x] No magic strings or numbers.
+     - [x] Error management protocols followed (AppError/AppException).
+
 ## 3. Pre-Commit Verification Checklist (Must Follow)
 
 Before marking the parent task as complete and pushing to the repository, you MUST manually verify every item on this checklist. If a subagent violated one of these rules, you must reject their work and make them fix it.

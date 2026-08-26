@@ -94,6 +94,21 @@ Every time you return a response or complete a loop iteration, explicitly output
 
 ---
 
+
+## Execution Reporting (Mandatory Output Format)
+
+1. Start of Run (Initial Output): Before writing any code, explicitly list out all pending tasks in your output window.
+2. End of Run Summary: When all tasks are completed (or if the run concludes), you MUST output a comprehensive final summary containing:
+   - Completed Tasks: Explicit list of what was successfully completed.
+   - Pending Tasks Left: Explicit list of any tasks still remaining.
+   - Quality Assessment: A brief summary of how well the execution went.
+   - Compliance Checklist: A markdown checklist explicitly verifying that you followed the rules:
+     - [x] Coding Guidelines enforced (spec/02-coding-guidelines/ and consolidated file checked).
+     - [x] Boolean conventions used (is/has prefixes, no negatives).
+     - [x] No garbage variable names used.
+     - [x] No magic strings or numbers.
+     - [x] Error management protocols followed (AppError/AppException).
+
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
 - [ ] `.gitignore` verified to exclude `.lovable/temp/` and garbage collection executed.
