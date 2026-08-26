@@ -12,19 +12,26 @@ One readme only, always lowercase `readme.md`. Never create `README.md`.
 
 ```text
 01-general-prompts/             library of all general reusable prompts
-  01-core-workflow/             general lifecycle prompts (initial unified prompt, plan/next steps)
-  02-coding-standards/          prompts for coding guidelines and theming
+  00-folder-structure/          prompts regarding folder layout
+  01-prompt-library-setup/      prompts for setting up prompt indexing and architecture
+  02-core-workflow/             general lifecycle prompts (initial unified prompt, plan/next steps)
   03-read-write/                canonical Read Memory & Write Memory prompts
-  03-release-management/        prompts for version bumps and releases
-  04-testing-and-qa/            prompts for unit tests, code coverage, issues
-  05-commit-and-multi-agent-code-fix/ prompts for code fix, wrappers, artifact purge
-  05-ui-and-design/             prompts for UI components, SVG, logo creation
-  06-content-and-seo/           prompts for README, SEO, social media, jokes
-  06-plan/                      prompts for detailed execution planning
-  07-execute/                   prompts for pending task inventory & execution loops
-  07-prompt-engineering/        prompts for proofreading and prompt creation
-  08-ci-cd/                     prompts for CI/CD workflow & script fixes
-  09-insults/                   consolidated unsoftened stance and enforcement texts
+  04-coding-standards/          actual master coding guidelines and theming rules
+  05-coding-guidelines/         prompts for auditing/executing against guidelines
+  06-testing-and-qa/            prompts for unit tests, code coverage, issues
+  07-bug-fix/                   prompts for fixing specific issues
+  08-dry-code/                  prompts enforcing DRY code
+  09-commit-and-multi-agent-code-fix/ prompts for commit fixes and git history cleanups
+  10-ui-and-design/             prompts for UI components, SVG, logo creation
+  11-content-and-seo/           prompts for README, SEO, social media, jokes
+  12-old-plan-prompts/          archive of legacy planning prompts
+  13-plan-audit/                prompts for auditing specs and generating strict plans
+  14-execute/                   prompts for pending task execution & self-looping agents
+  15-prompt-engineering/        prompts for proofreading and prompt creation
+  16-ci-cd/                     prompts for CI/CD workflow & script fixes
+  17-release-management/        prompts for version bumps and releases
+  18-insults/                   consolidated unsoftened stance and enforcement texts
+  19-old-execute-prompts/       archive of legacy execution prompts
 02-pwsh-prompts/                PowerShell specific prompts
 <project-name>-prompts/         prompts that name a project
   01-<prompt-slug>.md
@@ -37,6 +44,8 @@ spec/                           specifications (hyphenated: spec/<NN>-<slug>/)
   21-app/                       app domain specifications & routes
 .lovable/                       configuration, memory, and indexes
   memory/                       what-to-read.md, prompt-library.md
+  temp-scripts/                 scratch space for automation scripts (gitignored)
+  temp-agents/                  scratch space for active sub-agent states (gitignored)
   prompts.md                    canonical index of all saved prompts
 readme.md                       this file
 src/                            application code
