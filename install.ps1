@@ -5,11 +5,11 @@ param (
 
 Write-Host "Installing Prompt Architect v$Version into $TargetDir..."
 
+# Try to find the root of the repo (assume it's the current directory where the script is invoked)
+$RepoRoot = (Get-Item .).FullName
+$VersionJsonPath = Join-Path $RepoRoot "version.json"
+
 if (Test-Path $TargetDir) {
-    if (Test-Path "$TargetDir\prompt-version.json") {
-        $oldVersion = (Get-Content "$TargetDir\prompt-version.json" | ConvertFrom-Json).version
-        Write-Host "Removing old version: $oldVersion"
-    }
     Remove-Item -Path "$TargetDir\*" -Recurse -Force -ErrorAction SilentlyContinue
 } else {
     New-Item -ItemType Directory -Path $TargetDir -Force | Out-Null
@@ -24,11 +24,47 @@ try {
     Write-Host "Copying prompts..."
     Copy-Item -Path "$tempDir\01-general-prompts\*" -Destination $TargetDir -Recurse -Force
     
-    $versionInfo = @{
+    # Generate list of imported files
+    $importedFiles = Get-ChildItem -Path $TargetDir -Recurse -File | Select-Object -ExpandProperty FullName
+    $relativeFiles = $importedFiles | ForEach-Object { $_.Replace($RepoRoot + "\", "").Replace("\", "/") }
+    
+    $promptData = @{
         version = $Version
         installed_at = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+        author = @{
+            name = "Md. Alim Ul Karim"
+            title = "Chief Software Engineer"
+            url = "https://github.com/alimtvnetwork/prompt-architect-v2"
+        }
+        mapping = @{
+            source_repository = "alimtvnetwork/prompt-architect-v2"
+            source_directory = "01-general-prompts"
+            target_directory = $TargetDir.Replace("\", "/")
+            files_imported = $relativeFiles
+        }
     }
-    $versionInfo | ConvertTo-Json | Set-Content "$TargetDir\prompt-version.json"
+
+    if (Test-Path $VersionJsonPath) {
+        Write-Host "Updating $VersionJsonPath with Prompt Architect metadata..."
+        $jsonContent = Get-Content $VersionJsonPath -Raw | ConvertFrom-Json
+        
+        # Cross-PS version compatible update
+        if ($null -eq $jsonContent.prompt_architect) {
+            $jsonContent | Add-Member -MemberType NoteProperty -Name "prompt_architect" -Value $promptData
+        } else {
+            $jsonContent.prompt_architect = $promptData
+        }
+        
+        $jsonContent | ConvertTo-Json -Depth 10 | Set-Content $VersionJsonPath
+    } else {
+        Write-Host "Creating new $VersionJsonPath with Prompt Architect metadata..."
+        $newJson = @{
+            name = "unknown-project"
+            version = "0.0.0"
+            prompt_architect = $promptData
+        }
+        $newJson | ConvertTo-Json -Depth 10 | Set-Content $VersionJsonPath
+    }
     
     Write-Host "Successfully installed Prompt Architect $Version!"
 } finally {
