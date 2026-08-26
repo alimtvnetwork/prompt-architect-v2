@@ -29,13 +29,13 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 
 Before marking the parent task as complete and pushing to the repository, you MUST manually verify every item on this checklist. If a subagent violated one of these rules, you must reject their work and make them fix it.
 
-- [ ] **Coding Guidelines & Error Manage Check:** I have fully read and enforced every file in `spec/02-coding-guidelines/` and `spec/03-error-manage/`.
-- [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used anywhere in the codebase.
+- [ ] **Consolidated Coding Guidelines:** I have fully read and strictly enforced the master coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`. (This is mandatory for all plans and execution).
+- [ ] **Error Manage Checklist:** I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
+- [ ] **Boolean Examples & Fixations:** All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
+- [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used anywhere.
 - [ ] **Semantic Tests:** All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
-- [ ] **Boolean Conventions:** All boolean variables begin with `is`, `has`, `can`, or `should` and are NEVER negative (`isNotReady`). Success checks are never inverted (`!response.isSuccess` is banned; use `response.isFail`).
-- [ ] **Function Size Constraints:** No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
-- [ ] **Error Handling:** Errors use domain-specific `AppError` or custom `AppException`, not generic base `Error`. EVERY error is propagated and wrapped with context.
-- [ ] **Formatting:** Spacing rules are strictly followed (no double blank lines, no padded braces).
-- [ ] **Acronyms:** Casing is strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
+- [ ] **Function Size:** No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] **Error Handling (AppError):** Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
+- [ ] **Formatting & Acronyms:** Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
 - [ ] **Artifacts:** Any user-provided images are correctly saved in `.lovable/assets/<category>/`.
 - [ ] **Git Hygiene:** The Git working tree is completely clean, `.lovable/temp-scripts/` is untracked, and all tests pass locally.

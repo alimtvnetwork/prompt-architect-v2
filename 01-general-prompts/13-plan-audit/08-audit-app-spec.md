@@ -317,6 +317,7 @@ touch.
 - [ ] All ten phases of RULE 4 present, in order, none skipped.
 - [ ] All twelve dimensions scored, each with evidence and at least one remedy where below `min-score`.
 - [ ] Guideline checklist rebuilt from the filesystem, every boolean and code-style sub-file listed individually, duplicates column filled.
+- [ ] **Consolidated Coding Guidelines:** The master file at `.lovable/coding-guidelines/coding-guidelines.md` has been successfully audited and explicitly added to the output checklist.
 - [ ] Consolidated mirrors checked for drift; no mirror treated as an authority.
 - [ ] Reference-integrity count table present, every row a number, non-zero rows turned into findings.
 - [ ] Ci/cd job or guard named for every buildable unit.

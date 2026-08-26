@@ -98,13 +98,14 @@ At the end of every single iteration of your execution loop:
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Staged files sanitized of artifact zips and temporary scratch files.
-- [ ] **Coding Guidelines & Error Manage Check:** I have fully read and enforced every file in `spec/02-coding-guidelines/` and `spec/03-error-manage/`.
-- [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used.
-- [ ] **Semantic Tests:** All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
-- [ ] **Boolean Conventions:** Booleans begin with `is`, `has`, `can`, or `should` and are NEVER negative. Success checks are never inverted (`response.isFail`).
-- [ ] **Function Size:** No function exceeds 15 lines. Long arguments are split across lines.
-- [ ] **Error Handling:** Errors use domain-specific `AppError` or custom `AppException`, not generic base `Error`.
-- [ ] **Formatting & Acronyms:** Spacing rules are strictly followed. Acronyms are strictly PascalCase.
+- [ ] **Consolidated Coding Guidelines:** I have fully read and strictly enforced the master coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`. (This is mandatory for all plans and execution).
+- [ ] **Error Manage Checklist:** I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
+- [ ] **Boolean Examples & Fixations:** All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
+- [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used anywhere.
+- [ ] **Semantic Tests:** All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
+- [ ] **Function Size:** No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] **Error Handling (AppError):** Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
+- [ ] **Formatting & Acronyms:** Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
 - [ ] Fast-forward commits created and pushed without rewriting published git history.
 - [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
 
