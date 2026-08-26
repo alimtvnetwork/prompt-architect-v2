@@ -8,11 +8,20 @@ Bump the MINOR version (MAJOR.MINOR.PATCH to MAJOR.(MINOR+1).0, PATCH resets to 
 
 2. If publishing is requested, create the matching `vX.Y.0` Git tag after the `version.json` change is present on the target branch. The tag triggers the release workflow.
 
-Release trigger rule: the user phrase "bump version", "release", or old variants such as "bump version + add changelog + pin that version to root readme" means update `version.json` only unless publishing is explicitly requested. Do not edit `readme.md`, `changelog.md`, `manifest.json`, constants, instruction files, or fallback copies only to propagate a version. Do not run stale-version, version-sync, release-readiness, or asset-manifest checkers.
+## Mandatory Pinning & Changelog (Fatal if missed)
+
+1. **Changelog:** You MUST read the `"changelog"` configuration from `version.json` (e.g. `file_path` and `format`) and append the proper changelog correctly according to that format.
+2. **Root README:** You MUST pin the latest release version into the root `readme.md` file. It is FATAL if you do not update the version pins in the root README file!
+
+You must update `version.json`, `changelog.md`, and `readme.md` at a minimum during any bump.
 
 ## Actionable Items & Checklist
 
 - [ ] Read the overarching main task plan.
+- [ ] Update version in `version.json`.
+- [ ] Read `version.json` for Changelog formatting rules.
+- [ ] Add the changelog properly to the targeted changelog file.
+- [ ] Pin the latest version into the root `readme.md` file (FATAL IF MISSED).
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.

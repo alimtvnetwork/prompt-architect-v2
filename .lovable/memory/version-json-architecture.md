@@ -24,6 +24,10 @@ The `version.json` file is designed to support both a global version and distinc
 }
 ```
 
+
+### Changelog Management
+- **Changelog Configuration:** ersion.json acts as the source of truth for how the changelog should be updated. It must include a "changelog" object dictating the ile_path and ormat to be used by AI agents.
+
 ### The "Inherit" Protocol
 - **Global Version:** The `"version"` property at the root of the JSON file dictates the global master version for the repository.
 - **Component Inheritance:** Components (like `"frontend"` or `"backend"`) can have their `"version"` set to the string `"inherit"`. 
@@ -39,3 +43,4 @@ Whenever you are asked to cut a release, bump versions, or execute release manag
 1. Always start with the root `version.json`.
 2. Do not touch component versions if they are set to `"inherit"`—they automatically scale when the global version is bumped.
 3. If an explicit sub-component bump is requested, verify if it is unlinked from the global version before proceeding.
+

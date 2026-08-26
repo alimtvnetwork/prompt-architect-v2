@@ -63,6 +63,7 @@ try {
             version = "0.0.0"
             frontend = @{ version = "inherit" }
             backend = @{ version = "inherit" }
+            changelog = @{ file_path = "changelog.md"; format = "## [v{version}] {date} {headline}" }
             promptArchitectByRiseupAsia = $promptData
         }
         $newJson | ConvertTo-Json -Depth 10 | Set-Content $VersionJsonPath

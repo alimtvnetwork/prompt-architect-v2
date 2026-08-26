@@ -231,6 +231,7 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 
 
 ## 11. Version JSON Configuration & Path Mapping
+
 - **Configurable Installation Path:** While `version.json` and prompt architectural mapping files are installed in `.lovable/memory/` and `.lovable/prompts/` by default, this path MUST be treated as dynamically configurable. 
 - Any AI agent or script (including the `cg` reporting guideline commands) that reads or installs `version.json` information must allow the path to be overridden via a root JSON configuration (e.g., if the user wants memory files stored outside `.lovable`).
 
