@@ -26,7 +26,9 @@ This is a standalone file. Follow every rule below without consulting any other 
 - No unused parameters. Remove them.
 - No boolean positional parameters (e.g., `save(true)`). Use configuration objects (`save(SaveOptions{force: true})`).
 
-## 4. Error Management
+## 4. Error Management & App Errors
+- **AppError vs Generic Error:** Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific AppError.
+- Based on the language, create a strongly typed generic wrapper for application errors. For C# and similar OOP languages, this MUST be a custom Exception type (e.g., `AppException`, `DomainException`).
 - Propagate and wrap EVERY error with context. Never swallow errors with generic `catch {}`.
 - No magic literals as arguments; extract them into named constants or Enums.
 
@@ -51,3 +53,14 @@ This is a standalone file. Follow every rule below without consulting any other 
 - Read the code, find the root cause in one sentence, apply the minimum correct fix, and verify it in the logs.
 - List EVERY remaining task. Bump the version, update changelog.
 - Do the job properly. Going deep IS the job. Violating this is auto-reject on the same tier as RULE 0.
+
+
+## 9. Pre-Commit Checklist (Must Follow)
+Before completing any task, you must explicitly check and verify:
+- [ ] No generic garbage names (`comp_100`, `temp`, `data`) were used.
+- [ ] All unit test names are semantic (e.g., `TestBehavior_Condition`).
+- [ ] Booleans use `is/has/can/should` prefixes and are never negative.
+- [ ] Functions do not exceed 15 lines.
+- [ ] Errors use `AppError` or custom `AppException` rather than generic `Error`.
+- [ ] Spacing rules (R13-R19) are strictly followed (no double blank lines, padded braces, etc).
+- [ ] Acronyms are PascalCase (`SwapIpWindows` not `SwapIPWindows`).
