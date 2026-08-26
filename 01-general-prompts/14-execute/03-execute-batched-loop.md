@@ -108,6 +108,10 @@ Every time you return a response or complete a loop iteration, explicitly output
      - [x] No garbage variable names used.
      - [x] No magic strings or numbers.
      - [x] Error management protocols followed (AppError/AppException).
+3. End of Tunnel Release & Version Bump: When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release.
+   - You must bump the MINOR version.
+   - You must focus on the `version.json` file as the source of truth for the release.
+   - If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
