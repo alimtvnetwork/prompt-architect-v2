@@ -1,14 +1,12 @@
 # Instruction (must follow): Execute Parent Task (N-Step Continuous Loop & Multi-Agent)
 
+```text
+N = 50 
+```
+
 /goal Execute a parent task by decomposing it and autonomously orchestrating it in a continuous self-loop of N steps. Spawn a MAXIMUM of 2 concurrent sub-agents, and ONLY do this if there are too many tasks to handle sequentially. Do not pause. Do not ask for permission. Push until the parent task is completely resolved without a single failure.
 
 /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/` before taking action.
-
-## Variables - Auto-Discovered at Runtime
-
-```text
-N = 50 (Default step limit for the self-loop. The user may override this by explicitly specifying "N=100" in their prompt).
-```
 
 ## 1. Ruthless Orchestration & Insult Protocol
 
