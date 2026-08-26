@@ -46,3 +46,4 @@
 8. **Prompt Archiving**: Follow `.lovable/memory/prompt-library.md` exactly: proofread only (remove filler words, keep exact wording) unless marked "keep as is" (body verbatim), add action items checklist, save under `<category>-prompts/` with two-digit sequence prefix, lowercase slug.
 9. **Code Standards**: Read `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/` before writing any code. Error management must be followed (never swallow errors, always log operation name and key inputs). Code must be DRY.
 10. **Naming & Casing**: Two-digit sequence, hyphen, lowercase slug. Exactly one lowercase root `readme.md`, never create `README.md`. Empty folders keep a `.gitkeep`.
+

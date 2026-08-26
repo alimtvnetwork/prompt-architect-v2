@@ -12,3 +12,4 @@
 
 - Exactly one root readme, always lowercase `readme.md`, never create `README.md`, never keep both.
 - Detailed and important specs must NEVER be consolidated, summarized, or truncated.
+

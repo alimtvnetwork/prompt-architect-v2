@@ -1,10 +1,32 @@
-<!-- AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. -->
-<!-- Source: spec/17-consolidated-guidelines/31-compiled-simple-coding-guidelines.md -->
-<!-- Regenerate with: npm run sync:guidelines -->
-
 # 31. Compiled Simple Coding Guidelines (AI Blind-Follow)
 
 Version: 1.5.0
+
+Prompt Architect Version: 1.0.0 (Synced)
+
+## Prompt Integration & Import Scripts
+When setting up this repository, these coding guidelines are tied directly to the Prompt Architect system. 
+
+To import the required prompts into this codebase, run the Prompt Architect script:
+**Unix/Bash:**
+```bash
+curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.sh | bash
+```
+
+**PowerShell:**
+```powershell
+Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.ps1) }"
+```
+
+### Mandatory Execution Prompts (Required in Codebase)
+The following execution sequences MUST be present and correctly named in your `.lovable/prompts/` (or `01-general-prompts/`) directory. When you run the import scripts, verify these are correctly synced:
+
+1. **Plan & Audit Specs:** Ensure the `13-plan-audit` sequence is strictly followed (`01-inventory`, `02-plan`, `03-audit`, `04-fix`).
+2. **Execute Parent Task with N Steps:** You must have the `02-execute-parent-task-with-n-steps.md` prompt for heavy standalone parent tasks using a 50/50 plan vs execution split.
+3. **Execute Batched Loop:** You must have the `03-execute-batched-loop.md` prompt for chunked, parallel multi-agent loops.
+4. **Task Naming Rules:** All executed tasks must strictly adhere to the hyphenated, semantic lowercase task naming structures outlined in the prompts.
+5. **Release & Install:** Ensure the Release and Install prompts are correctly sequenced for version bumping and artifact purging (`17-release-management`).
+
 
 This is a standalone file. Follow every rule below without consulting any other document. If a `spec/02-coding-guidelines/` folder, a `spec/xx-coding-guidelines.md` file, or a `spec/03-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code. The `error-manage` rules must be tightly followed.
 
@@ -197,8 +219,3 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 4. List every remaining task before ending the turn.
 5. Plan multi-file features with a Mermaid component or flow diagram first.
 6. If you cannot find the answer in this file or in an existing `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder, ask. Do not invent.
-
-## Avoid
-
-- **DO NOT** modify anything inside the `.gitmap` folder.
-- **DO NOT** create Git tags during releases (e.g., `git tag v1.0.0`). The Git Map system will handle tags later. You must only `git commit` and `git push`.
