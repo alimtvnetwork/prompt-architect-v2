@@ -113,6 +113,8 @@ Every time you return a response or complete a loop iteration, explicitly output
    - You must bump the MINOR version.
    - You must focus on the `version.json` file as the source of truth for the release.
    - If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
+- You MUST strictly exclude all test files (e.g., `*test*`, `*.spec.*`) from version scanning and modification, as they contain mock data.
+- You must create and maintain `.lovable/memory/release-architecture-map.md` documenting exactly how releases work in the repository. Ensure it is enqueued in `what-to-read.md` and linked in the root `readme.md`.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
