@@ -3,7 +3,7 @@
 Cross-Language Coding Guidelines Validator
 ==========================================
 
-Version: 1.5.0  (2026-04-19) — Added P2/P3/P5/P7 boolean-principle checks.
+Version: 1.6.0  (2026-04-19) — Added P2/P3/P5/P7 boolean-principle checks.
 
 Validates Go, PHP, TypeScript, and Rust source files against the coding
 guidelines defined in spec/02-coding-guidelines/03-coding-guidelines-spec/.

@@ -90,7 +90,7 @@ Each Worker independently asks Main "what version should I be running?" and self
 - **Headers:** `X-Correlation-Id` (mandatory), `X-Worker-Identity` (mirror of `WorkerNodeIdentity`).
 - **Response 200 (no update needed):**
   ```json
-  { "DesiredVersion": "1.5.0", "CurrentVersion": "1.5.0", "InstructionRequired": false }
+  { "DesiredVersion": "1.6.0", "CurrentVersion": "1.6.0", "InstructionRequired": false }
   ```
 - **Response 200 (update needed):** Full JID per `spec/14-update/28-worker-push-instruction.md` §3, with `PayloadUrl` pointing at Main's release store.
 - **Response 304 Not Modified:** when `If-None-Match: <ETag>` matches; saves bandwidth.
@@ -153,9 +153,9 @@ Allow a Worker to keep updating itself even when Main is unreachable. Source of 
 ```jsonc
 {
   "ManifestVersion": "1.0.0",
-  "LatestVersion": "1.5.0",
+  "LatestVersion": "1.6.0",
   "MinimumWorkerVersion": "1.4.0",
-  "PayloadUrl": "https://releases.example.com/worker/1.5.0/worker-1.5.0.zip",
+  "PayloadUrl": "https://releases.example.com/worker/1.6.0/worker-1.6.0.zip",
   "PayloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "PayloadSizeBytes": 18234567,
   "PayloadSignatureBase64": "MEUCIQDx...==",
