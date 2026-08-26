@@ -41,3 +41,11 @@ Read and follow spec folders `02`, `03` and `04` before writing any code. Error 
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+
+
+## End of Tunnel Release & Version Bump (Mandatory)
+When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.
+- You must bump the MINOR version.
+- You must focus on the `version.json` file as the source of truth for the release.
+- If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
+
