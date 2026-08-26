@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:md": "markdownlint \"**/*.md\" --ignore node_modules",
-    "lint:md:fix": "markdownlint \"**/*.md\" --ignore node_modules --fix"
+    "lint:md": "markdownlint \"**/*.md\" --dot --ignore node_modules",
+    "lint:md:fix": "markdownlint \"**/*.md\" --dot --ignore node_modules --fix"
   },
   "repository": {
     "type": "git",
