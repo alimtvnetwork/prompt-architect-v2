@@ -65,7 +65,7 @@ if os.path.exists(version_file):
 else:
     data = {'name': 'unknown-project', 'version': '0.0.0'}
 
-data['prompt_architect'] = prompt_data
+data['promptArchitectByRiseupAsia'] = prompt_data
 
 with open(version_file, 'w') as f:
     json.dump(data, f, indent=2)

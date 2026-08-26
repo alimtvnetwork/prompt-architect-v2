@@ -128,7 +128,7 @@ Example CLI wrapper implementation (Node.js/Bash/PowerShell):
 2. The command should detect the host OS.
 3. If Windows, spawn: `Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1) }"`
 4. If macOS/Linux, spawn: `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh | bash`
-5. The install script will automatically populate your repository's `version.json` with the rich `prompt_architect` metadata block containing the imported file mappings and author attributions.
+5. The install script will automatically populate your repository's `version.json` with the rich `promptArchitectByRiseupAsia` metadata block containing the imported file mappings and author attributions.
 
 ## Prompt Library Reference
 

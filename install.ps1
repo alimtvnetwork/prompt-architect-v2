@@ -49,10 +49,10 @@ try {
         $jsonContent = Get-Content $VersionJsonPath -Raw | ConvertFrom-Json
         
         # Cross-PS version compatible update
-        if ($null -eq $jsonContent.prompt_architect) {
-            $jsonContent | Add-Member -MemberType NoteProperty -Name "prompt_architect" -Value $promptData
+        if ($null -eq $jsonContent.promptArchitectByRiseupAsia) {
+            $jsonContent | Add-Member -MemberType NoteProperty -Name "promptArchitectByRiseupAsia" -Value $promptData
         } else {
-            $jsonContent.prompt_architect = $promptData
+            $jsonContent.promptArchitectByRiseupAsia = $promptData
         }
         
         $jsonContent | ConvertTo-Json -Depth 10 | Set-Content $VersionJsonPath
@@ -61,7 +61,7 @@ try {
         $newJson = @{
             name = "unknown-project"
             version = "0.0.0"
-            prompt_architect = $promptData
+            promptArchitectByRiseupAsia = $promptData
         }
         $newJson | ConvertTo-Json -Depth 10 | Set-Content $VersionJsonPath
     }
