@@ -62,6 +62,17 @@ Wait for the user to trigger with any alias (`fix with RCA`, `fix`, `fix, fix`, 
 - status: active
 
 
+
+## Core Rules & Non-Negotiable Checklist for AI (Must Verify Before Completing Task)
+
+Before finalizing any code modification, you MUST manually verify the following:
+- [ ] **Function Signatures (R4, R5, R9):** If a function has `> 3 parameters` or the signature is `> 100 chars`, you MUST split it so there is exactly **one parameter per line**.
+- [ ] **Error Handling (R7):** No silent failures or swallowed errors. Use explicit boolean states (e.g., `isFail`). Never invert success booleans (e.g., avoid `!isSuccess`).
+- [ ] **Magic Strings/Numbers (R8):** Extract all magic strings/numbers into named constants.
+- [ ] **Enums:** TypeScript string unions are banned. All Enums must end with the `Type` suffix.
+- [ ] **Naming & Casing (R1, R2):** PascalCase everywhere. Acronyms (Id, Json, Url) are Pascal case, never all-caps (e.g., `UserId`, not `UserID`).
+- [ ] **Blank Lines (R13-R20):** One blank line before every `return`/`throw`. One blank line after closing `}`. Never two blank lines in a row.
+
 ## End of Tunnel Release & Version Bump (Mandatory)
 
 When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.

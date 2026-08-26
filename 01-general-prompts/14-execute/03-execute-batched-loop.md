@@ -109,6 +109,10 @@ Every time you return a response or complete a loop iteration, explicitly output
      - [x] No magic strings or numbers.
      - [x] Markdown format verified (newlines around every header).
      - [x] Error management protocols followed (AppError/AppException).
+     - [x] Signatures > 3 parameters or > 100 chars split to one parameter per line.
+     - [x] Boolean conventions followed (e.g., `isFail` instead of `!isSuccess`).
+     - [x] Acronyms are PascalCased (e.g., `UserId`, not `UserID`).
+     - [x] Magic strings/numbers extracted to constants.
 3. End of Tunnel Release & Version Bump: When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release.
    - You must bump the MINOR version.
    - You must focus on the `version.json` file as the source of truth for the release.
