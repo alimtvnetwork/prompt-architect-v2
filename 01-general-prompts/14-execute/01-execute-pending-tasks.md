@@ -1,6 +1,6 @@
 # Instruction (must follow): Execute Pending Tasks (Continuous Loop & Multi-Agent)
 
-/goal Execute every pending task across `.lovable/plans/pending/` using up to 3 sub-agents in a continuous self-loop. Do not stop until the queue is empty, every plan is committed to git, and all indexes are updated. This run ends only when there is nothing left to execute. You MUST self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
+/goal Execute every pending task across `.lovable/plans/pending/` using up to 2 sub-agents in a continuous self-loop. Do not stop until the queue is empty, every plan is committed to git, and all indexes are updated. This run ends only when there is nothing left to execute. You MUST self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
 
 /learn Capture every pattern, convention, fix, and correction discovered during execution into `.lovable/memory/learned/01-<slug>.md` and `.lovable/strictly-avoid.md`. Never repeat a mistake that was logged.
 
@@ -35,8 +35,8 @@
 
 ## Phase 2: Allocate & Execute (Continuous Loop & Parallel Agents)
 
-1. Spawn sub-agents (maximum 3 concurrent):
-   - Assign subtasks to up to 3 parallel sub-agents to accelerate execution.
+1. Spawn sub-agents (MAXIMUM 2 concurrent):
+   - Assign subtasks to up to 2 parallel sub-agents (and ONLY if there are too many tasks to handle sequentially) to accelerate execution.
    - Maintain active file paths in `.lovable/temp/active-locks.json`. Parallel sub-agents must never touch the same files simultaneously.
    - Assign each sub-agent a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service`). Do not use generic names. If an agent switches tasks, its title must change.
    - **Context Diet:** When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-slug/01-task.md` and execute it"). The subagent MUST read the necessary files itself. Passing massive payloads instantly causes hallucination and memory blowout.

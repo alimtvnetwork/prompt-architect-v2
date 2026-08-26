@@ -1,6 +1,6 @@
 # Instruction (must follow): Execute Parent Task (N-Step Continuous Loop & Multi-Agent)
 
-/goal Execute a parent task by decomposing it and autonomously orchestrating up to 3 sub-agents in a continuous self-loop of N steps. Do not pause. Do not ask for permission. Push the agents until the parent task is completely resolved.
+/goal Execute a parent task by decomposing it and autonomously orchestrating it in a continuous self-loop of N steps. Spawn a MAXIMUM of 2 concurrent sub-agents, and ONLY do this if there are too many tasks to handle sequentially. Do not pause. Do not ask for permission. Push until the parent task is completely resolved without a single failure.
 
 /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/` before taking action.
 
@@ -19,7 +19,7 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 
 ## 2. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
-1. **Continuous Execution:** Run autonomously for up to `N` steps. Do not stop unless a catastrophic failure occurs.
+1. **Continuous & Zero-Failure Execution:** Run autonomously for up to `N` steps. The assigned task MUST be completed from start to finish without a failure. If a step fails, you must forcefully recover, fix the root cause, and push forward. Do not stop.
 2. **Image/Asset Handling:** If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
 3. **Temporary Scripts:** Any temporary automation scripts (CSJ, python) used to execute mass edits must be placed in `.lovable/temp-scripts/` and explicitly gitignored. NEVER commit them.
 4. **Error Management (AppError Rule):** Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific `AppError`. For OOP languages (like C#), this MUST be a custom Exception type (e.g., `AppException`, `DomainException`).
