@@ -98,7 +98,13 @@ At the end of every single iteration of your execution loop:
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Staged files sanitized of artifact zips and temporary scratch files.
-- [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
+- [ ] **Coding Guidelines & Error Manage Check:** I have fully read and enforced every file in `spec/02-coding-guidelines/` and `spec/03-error-manage/`.
+- [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used.
+- [ ] **Semantic Tests:** All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
+- [ ] **Boolean Conventions:** Booleans begin with `is`, `has`, `can`, or `should` and are NEVER negative. Success checks are never inverted (`response.isFail`).
+- [ ] **Function Size:** No function exceeds 15 lines. Long arguments are split across lines.
+- [ ] **Error Handling:** Errors use domain-specific `AppError` or custom `AppException`, not generic base `Error`.
+- [ ] **Formatting & Acronyms:** Spacing rules are strictly followed. Acronyms are strictly PascalCase.
 - [ ] Fast-forward commits created and pushed without rewriting published git history.
 - [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
 

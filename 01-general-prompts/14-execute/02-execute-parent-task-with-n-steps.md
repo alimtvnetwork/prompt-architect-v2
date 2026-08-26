@@ -29,6 +29,7 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 
 Before marking the parent task as complete and pushing to the repository, you MUST manually verify every item on this checklist. If a subagent violated one of these rules, you must reject their work and make them fix it.
 
+- [ ] **Coding Guidelines & Error Manage Check:** I have fully read and enforced every file in `spec/02-coding-guidelines/` and `spec/03-error-manage/`.
 - [ ] **Anti-Garbage Naming:** No generic garbage names (`comp_100.go`, `temp`, `data`, `obj`, `Input100`) were used anywhere in the codebase.
 - [ ] **Semantic Tests:** All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
 - [ ] **Boolean Conventions:** All boolean variables begin with `is`, `has`, `can`, or `should` and are NEVER negative (`isNotReady`). Success checks are never inverted (`!response.isSuccess` is banned; use `response.isFail`).
