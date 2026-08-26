@@ -36,6 +36,7 @@ Before marking the parent task as complete and pushing to the repository, you MU
 - [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
 - [ ] Function Size: No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
 - [ ] Error Handling (AppError): Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
+- [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
 - [ ] Formatting & Acronyms: Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
 - [ ] Artifacts: Any user-provided images are correctly saved in `.lovable/assets/<category>/`.
 - [ ] Git Hygiene: The Git working tree is completely clean, `.lovable/temp-scripts/` is untracked, and all tests pass locally.

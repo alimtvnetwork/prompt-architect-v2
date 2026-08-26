@@ -8,7 +8,7 @@
 
 1. Maximum 3 sub-agents may run concurrently at any time. Never exceed this limit.
 2. No end-to-end tests that make live API calls. Only run local, isolated unit tests.
-3. **Temporary Scripts:** Any temporary automation scripts (CSJ, python, etc.) used to perform fixes or mass edits MUST be written to `.lovable/temp-scripts/`. This folder MUST be gitignored. These scripts must NEVER be committed to the repository history.
+3. Temporary Scripts: Any temporary automation scripts (CSJ, python, etc.) used to perform fixes or mass edits MUST be written to `.lovable/temp-scripts/`. This folder MUST be gitignored. These scripts must NEVER be committed to the repository history.
 4. Violation of any rule below is auto-reject on the same tier as RULE 0.
 
 ## Anti-Hallucination Rules
