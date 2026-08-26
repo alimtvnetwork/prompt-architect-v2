@@ -713,6 +713,7 @@ This pattern is used by:
 See: `06-validation-data-seeding.md` for complete implementation guide.
 
 ### Examples of Data That Must Be Seeded:
+
 - Transition words for SEO validation
 - Stop words for RAG indexing
 - Allowed file types for search

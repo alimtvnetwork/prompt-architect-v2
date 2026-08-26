@@ -32,18 +32,21 @@
 ## PHP Quick Reference
 
 ### Log Locations
+
 ```
 wp-content/uploads/{plugin-slug}/logs/debug.log
 wp-content/uploads/{plugin-slug}/logs/error.log
 ```
 
 ### Enable/Disable Logging
+
 ```php
 define('PLUGIN_DEBUG_LOGGING', true);   // Trace every step
 define('PLUGIN_ERROR_LOGGING', true);   // Errors + stack traces
 ```
 
 ### Common Commands
+
 ```php
 // Log debug message
 Logger::debug('Message', ['context' => $value]);
@@ -56,12 +59,14 @@ extension_loaded('pdo_sqlite'); // Returns true/false
 ```
 
 ### Debugging Steps
+
 1. Clear logs → Delete `debug.log` and `error.log`
 2. Trigger action → Try to activate plugin
 3. Check debug.log → Find last successful step
 4. Check error.log → Find exception with file/line
 
 ### Common Issues
+
 | Issue | Check |
 |-------|-------|
 | Plugin won't activate | PDO SQLite extension, directory permissions |
@@ -73,11 +78,13 @@ extension_loaded('pdo_sqlite'); // Returns true/false
 ## Go Quick Reference
 
 ### Logging Levels
+
 ```
 Trace → Debug → Info → Warn → Error → Fatal
 ```
 
 ### Common Commands
+
 ```bash
 # Check if server running
 ps aux | grep "cli-name"
@@ -97,6 +104,7 @@ journalctl -u cli-name -f | grep '"level":"error"'
 ```
 
 ### Structured Logging (zerolog)
+
 ```go
 // Simple message
 log.Info().Msg("Server started")
@@ -116,6 +124,7 @@ logger := log.With().Str("request_id", id).Logger()
 ```
 
 ### Response Helpers
+
 ```go
 // Error response
 respondError(w, http.StatusBadRequest, 7001, "Invalid input", err)
@@ -129,6 +138,7 @@ respondSuccess(w, StatusResponse{Status: "ok"})
 ```
 
 ### Common Issues
+
 | Issue | Solution |
 |-------|----------|
 | Connection refused | Check `server.Addr = ":8080"` (not `localhost:8080`) |
@@ -138,6 +148,7 @@ respondSuccess(w, StatusResponse{Status: "ok"})
 | Database locked | `db.SetMaxOpenConns(1)` + WAL mode |
 
 ### Profiling (pprof)
+
 ```bash
 go tool pprof http://localhost:6060/debug/pprof/profile?seconds=30
 go tool pprof http://localhost:6060/debug/pprof/heap
@@ -149,6 +160,7 @@ go tool pprof http://localhost:6060/debug/pprof/goroutine
 ## TypeScript/React Quick Reference
 
 ### Console Logging
+
 ```typescript
 // Structured logger
 logger.debug('Message', data);        // Dev only
@@ -159,6 +171,7 @@ logger.api('GET', '/api/v1/health', 200, 45); // API calls
 ```
 
 ### API Response Validation
+
 ```typescript
 // Standard envelope
 interface ApiResponse<T> {
@@ -177,6 +190,7 @@ return body.data;
 ```
 
 ### Health Check Pattern
+
 ```typescript
 const response = await fetch(`${baseUrl}/api/v1/health`, {
   signal: AbortSignal.timeout(5000),
@@ -185,6 +199,7 @@ const connected = response.ok; // PRIMARY indicator
 ```
 
 ### React Query Debugging
+
 ```typescript
 // Add DevTools
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -196,6 +211,7 @@ console.log({ status, fetchStatus, isLoading, isFetching });
 ```
 
 ### WebSocket Debugging
+
 ```typescript
 ws.onclose = (event) => console.log({ 
   code: event.code, 
@@ -205,6 +221,7 @@ ws.onclose = (event) => console.log({
 ```
 
 ### Browser DevTools Filters
+
 ```
 # Network tab
 /api/v1/                        # Filter API calls
@@ -217,6 +234,7 @@ url:/api/                       # API-related only
 ```
 
 ### Common Issues
+
 | Issue | Solution |
 |-------|----------|
 | Backend disconnected | Check API URL, CORS, response format |

@@ -1,6 +1,7 @@
 # Multi-Site Deployment
 
 ## Overview
+
 Upload plugins to multiple WordPress sites from a single command using Base64-encoded credentials stored in `powershell.json`.
 
 ## Configuration

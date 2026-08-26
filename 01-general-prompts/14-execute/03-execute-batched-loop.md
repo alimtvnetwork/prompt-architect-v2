@@ -107,6 +107,7 @@ Every time you return a response or complete a loop iteration, explicitly output
      - [x] Boolean conventions used (is/has prefixes, no negatives).
      - [x] No garbage variable names used.
      - [x] No magic strings or numbers.
+     - [x] Markdown format verified (newlines around every header).
      - [x] Error management protocols followed (AppError/AppException).
 3. End of Tunnel Release & Version Bump: When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release.
    - You must bump the MINOR version.
@@ -154,6 +155,7 @@ How to self-loop and distribute tasks effectively:
   - [ ] Aggregate their precise findings to ensure the highest quality result.
 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
+
 To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
 - [ ] On Start:
   - [ ] The sub-agent creates .lovable/temp-agents/<task-name>.md.

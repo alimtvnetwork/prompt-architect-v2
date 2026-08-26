@@ -203,6 +203,7 @@ If any box is unchecked, do not reply. Fix it first.
 ---
 
 ### Execution Mode: Plan & Wait (User Approval Required)
+
 By default, you operate in a strict Plan & Wait mode. 
 - [ ] Prepare Plan: First, outline what you intend to do and create the proposed plan overview.
 - [ ] Stop and Wait: You MUST stop execution and ask the user for approval. Do NOT write the multiple task files to disk, do NOT spawn sub-agents, and do NOT update the indexes yet.
@@ -238,12 +239,14 @@ How to self-loop and distribute tasks effectively:
   - [ ] Aggregate their precise findings to ensure the highest quality result.
 
 ### Deep Cognitive Planning Protocol (Anti-Boilerplate)
+
 When generating task files, the Planner Agent MUST do all the heavy lifting. The task file is the "brain."
 - [ ] Put the "Brains" in the Task: You must define the exact logic, precise file paths, specific code snippets, and deep architectural decisions. The subtask must be so incredibly detailed that a lower-level, brainless agent could execute it blindly.
 - [ ] Eradicate Boilerplate: NEVER copy-paste the exact same "How" steps or execution logic across multiple task files. If two tasks look identical, you are being lazy and stupid.
 - [ ] Mandate Specificity: Tailor every single step to the specific technology or logic of that specific task.
 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
+
 To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
 - [ ] On Start:
   - [ ] The sub-agent creates .lovable/temp-agents/<task-name>.md.

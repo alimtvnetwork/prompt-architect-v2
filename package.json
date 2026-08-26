@@ -1,0 +1,26 @@
+{
+  "name": "prompt-architect",
+  "version": "1.0.0",
+  "description": "One readme only, always lowercase `readme.md`. Never create `README.md`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:md": "markdownlint \"**/*.md\" --ignore node_modules",
+    "lint:md:fix": "markdownlint \"**/*.md\" --ignore node_modules --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alimtvnetwork/prompt-architect-v2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alimtvnetwork/prompt-architect-v2/issues"
+  },
+  "homepage": "https://github.com/alimtvnetwork/prompt-architect-v2#readme",
+  "devDependencies": {
+    "markdownlint-cli": "^0.49.1"
+  }
+}

@@ -20,12 +20,14 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 You MUST strictly split your `N` steps into a 50/50 effort allocation model:
 
 ### First 50% of Effort: Deep Planning & Specification Writing
+
 The very first thing you must do is spend half of your allocated effort on writing a highly detailed specification and execution plan.
 - What to write: You must write out the parent task in a very detailed manner with actionable items, code review guides, and embedded checklists (including all coding guidelines).
 - Where to save it: You MUST put this plan properly into the `.lovable/plans/pending/` directory (e.g., `.lovable/plans/pending/XX-<slug>.md`). If subtasks are required, generate them in `.lovable/plans/subtasks/XX-<slug>/`.
 - Do not hallucinate folders. The plan MUST be saved into `.lovable/plans/pending/` before any execution begins.
 
 ### Second 50% of Effort: Execution & Completion
+
 Once the detailed spec and plan are written to `.lovable/plans/pending/`, you will allocate the remaining 50% of your steps purely on execution and completion of that plan.
 - Read the plan you just generated and execute it flawlessly.
 - Push through until the task is completely resolved without a single failure.
@@ -49,6 +51,7 @@ Once the detailed spec and plan are written to `.lovable/plans/pending/`, you wi
      - [x] Boolean conventions used (is/has prefixes, no negatives).
      - [x] No garbage variable names used.
      - [x] No magic strings or numbers.
+     - [x] Markdown format verified (newlines around every header).
      - [x] Error management protocols followed (AppError/AppException).
 3. End of Tunnel Release & Version Bump: When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release.
    - You must bump the MINOR version.
@@ -72,6 +75,7 @@ Before marking the parent task as complete and pushing to the repository, you MU
 - [ ] Git Hygiene: The Git working tree is completely clean, `.lovable/temp-scripts/` is untracked, and all tests pass locally.
 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
+
 To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` directory for tracking sub-agent tasks.
 - On Start: The sub-agent creates `.lovable/temp-agents/<task-name>.md` and writes the objective and `STATUS: IN_PROGRESS`.
 - On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.

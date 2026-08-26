@@ -104,6 +104,7 @@ Routes needed (reference REST conventions from `14-rest-api-conventions.md`).
 ## Placement Decision Guide
 
 ### Place content in `21-app/` when:
+
 - It defines a specific app feature or workflow
 - It documents app architecture decisions not reusable across projects
 - It specifies UI/UX flows tied to a particular application
@@ -151,6 +152,7 @@ spec/21-app/
 ```
 
 ### Rules
+
 - Lowercase kebab-case only
 - Numeric prefix mandatory for sequencing
 - Feature name should be 2–4 words, descriptive

@@ -63,6 +63,7 @@ Wait for the user to trigger with any alias (`fix with RCA`, `fix`, `fix, fix`, 
 
 
 ## End of Tunnel Release & Version Bump (Mandatory)
+
 When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.
 - You must bump the MINOR version.
 - You must focus on the `version.json` file as the source of truth for the release.

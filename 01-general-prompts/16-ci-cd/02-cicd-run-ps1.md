@@ -190,6 +190,7 @@ After completing the pipeline and run script creation, you MUST follow this chec
 
 
 ## End of Tunnel Release & Version Bump (Mandatory)
+
 When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.
 - You must bump the MINOR version.
 - You must focus on the `version.json` file as the source of truth for the release.

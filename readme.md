@@ -121,6 +121,7 @@ chmod +x install.sh
 
 
 ### Git Map / CT CLI Integration
+
 If you are using the `git map` ecosystem or a `ct` CLI wrapper, you can embed this installation seamlessly into your toolchain as `ct install-prompts`.
 
 Example CLI wrapper implementation (Node.js/Bash/PowerShell):

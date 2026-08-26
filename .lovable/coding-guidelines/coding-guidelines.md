@@ -219,3 +219,9 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 4. List every remaining task before ending the turn.
 5. Plan multi-file features with a Mermaid component or flow diagram first.
 6. If you cannot find the answer in this file or in an existing `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder, ask. Do not invent.
+
+
+## 10. Markdown Formatting (Reporting Guidelines)
+- **Header Spacing:** Every header (`#`, `##`, `###`, etc.) MUST have a completely blank new line directly before and after it. This ensures clean Markdown rendering and passes the `MD022` markdown linter rule.
+- Do not compress headings against text blocks.
+
