@@ -1,0 +1,17 @@
+{
+  "version": "1.8.0",
+  "branch": "release/v1.8.0",
+  "sourceBranch": "main",
+  "commit": "454b999a0c5d11d2913c6fe1b402b7cc44ccd552",
+  "tag": "v1.8.0",
+  "assets": [],
+  "changelog": [
+    "Stripped all `**` bold formatting from all recently injected execution and CI/CD checklists to comply with repository Markdown standards.",
+    "Injected explicit Root README Pinning instructions (labeled FATAL) directly into the End of Tunnel Release blocks of all `14-execute`, `16-ci-cd`, and `09-commit-and-multi-agent-code-fix` prompts.",
+    "Added explicit README pinning checklists to all release prompts so agents cannot skip the step."
+  ],
+  "isDraft": false,
+  "isPreRelease": false,
+  "createdAt": "2026-08-26T18:29:07Z",
+  "isLatest": false
+}
