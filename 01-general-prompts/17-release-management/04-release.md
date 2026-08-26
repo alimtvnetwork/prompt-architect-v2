@@ -2,7 +2,7 @@
 
 Trigger phrases: `release`, `bump version`, `bump version + add changelog + pin to root readme`, `abump version ...` (typo variants count).
 
-If I say bump, or release use this prompt and save this prompt if not saved properly into the `.lovable\prompts\xx-release.md` or `.lovable\prompts\18-release.md` 
+If I say bump, or release use this prompt and save this prompt if not saved properly into the `.lovable\prompts\xx-release.md` or `.lovable\prompts\18-release.md` (update the prompt if there is a unsync)
 
 ---
 
