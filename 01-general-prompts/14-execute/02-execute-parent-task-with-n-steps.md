@@ -60,6 +60,7 @@ Once the detailed spec and plan are written to `.lovable/plans/pending/`, you wi
 3. End of Tunnel Release & Version Bump: When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release.
    - You must bump the MINOR version.
    - You must focus on the `version.json` file as the source of truth for the release.
+     - Root README Pinning (FATAL): You MUST pin the latest release version into the root `readme.md` file! Do not skip this! Also, update the changelog according to `version.json` format.
    - If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
 - You MUST strictly exclude all test files (e.g., `*test*`, `*.spec.*`) from version scanning and modification, as they contain mock data.
 - You must create and maintain `.lovable/memory/release-architecture-map.md` documenting exactly how releases work in the repository. Ensure it is enqueued in `what-to-read.md` and linked in the root `readme.md`.

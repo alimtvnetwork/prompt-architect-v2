@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.8.0] 2026-08-27 Strict Readme Pinning & Markdown Unbolding
+
+### Install Prompt Architect v1.8.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.8.0/install.sh | bash -s -- ".lovable/prompts" "v1.8.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.8.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.8.0"`
+
+### Added / Changed / Fixed / Removed
+
+- Stripped all `**` bold formatting from all recently injected execution and CI/CD checklists to comply with repository Markdown standards.
+- Injected explicit Root README Pinning instructions (labeled FATAL) directly into the End of Tunnel Release blocks of all `14-execute`, `16-ci-cd`, and `09-commit-and-multi-agent-code-fix` prompts.
+- Added explicit README pinning checklists to all release prompts so agents cannot skip the step.
+
+
 ## [v1.7.0] 2026-08-26 Consolidated Master Release Prompt Updates
 
 ### Install Prompt Architect v1.7.0
@@ -28,5 +42,6 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 

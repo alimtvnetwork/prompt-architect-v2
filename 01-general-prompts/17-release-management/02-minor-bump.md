@@ -10,8 +10,8 @@ Bump the MINOR version (MAJOR.MINOR.PATCH to MAJOR.(MINOR+1).0, PATCH resets to 
 
 ## Mandatory Pinning & Changelog (Fatal if missed)
 
-1. **Changelog:** You MUST read the `"changelog"` configuration from `version.json` (e.g. `file_path` and `format`) and append the proper changelog correctly according to that format.
-2. **Root README:** You MUST pin the latest release version into the root `readme.md` file. It is FATAL if you do not update the version pins in the root README file!
+1. Changelog: You MUST read the `"changelog"` configuration from `version.json` (e.g. `file_path` and `format`) and append the proper changelog correctly according to that format.
+2. Root README: You MUST pin the latest release version into the root `readme.md` file. It is FATAL if you do not update the version pins in the root README file!
 
 You must update `version.json`, `changelog.md`, and `readme.md` at a minimum during any bump.
 
@@ -30,8 +30,8 @@ You must update `version.json`, `changelog.md`, and `readme.md` at a minimum dur
 
 ### Execution Checklist
 
-- **Test File Ban:** You MUST NOT read, scan, or modify test files (e.g., `*_test.*`, `*.spec.*`, `test/*`) when discovering or updating versions. Test files contain mock data, and updating mock data corrupts the tests.
-- **Release Architecture Memory:** You must dynamically build a map of how the release works in this codebase (where the version lives, how it propagates) and write it to `.lovable/memory/release-architecture-map.md`. You must then enqueue this file inside `.lovable/memory/what-to-read.md` and link it in the root `readme.md`.
+- Test File Ban: You MUST NOT read, scan, or modify test files (e.g., `*_test.*`, `*.spec.*`, `test/*`) when discovering or updating versions. Test files contain mock data, and updating mock data corrupts the tests.
+- Release Architecture Memory: You must dynamically build a map of how the release works in this codebase (where the version lives, how it propagates) and write it to `.lovable/memory/release-architecture-map.md`. You must then enqueue this file inside `.lovable/memory/what-to-read.md` and link it in the root `readme.md`.
 
 
 - [ ] Version Inheritance: If `version.json` contains components (e.g. `frontend`) set to `"inherit"`, DO NOT modify them. They automatically scale with the global version. Always bump the global root `"version"` property unless explicitly asked to bump a sub-component.
