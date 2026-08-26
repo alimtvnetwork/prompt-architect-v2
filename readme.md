@@ -101,22 +101,22 @@ You can instantly import the Prompt Architect directly into your own codebase us
 **Using PowerShell (Windows):**
 ```powershell
 # Import the latest version
-Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.ps1) }"
+Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1) }"
 
 # Import a specific version into a specific folder
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.ps1 -OutFile import.ps1
-.\import.ps1 -TargetDir ".lovable/prompts" -Version "v1.2.0"
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1 -OutFile install.ps1
+.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.2.0"
 ```
 
 **Using Bash (macOS/Linux):**
 ```bash
 # Import the latest version
-curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.sh | bash
+curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh | bash
 
 # Import a specific version into a specific folder
-curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.sh
-chmod +x import-prompts.sh
-./import-prompts.sh ".lovable/prompts" "v1.2.0"
+curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh
+chmod +x install.sh
+./install.sh ".lovable/prompts" "v1.2.0"
 ```
 
 ## Prompt Library Reference
@@ -180,3 +180,4 @@ Below is a complete list of all prompts available in the `01-general-prompts` di
 | **18-insults**<br>`02-consolidated-insults-v2.md` | 02 Consolidated Insults V2 | [View](https://github.com/alimtvnetwork/prompt-architect-v2/blob/main/01-general-prompts/18-insults/02-consolidated-insults-v2.md) | [Raw Text](https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/01-general-prompts/18-insults/02-consolidated-insults-v2.md) |
 | **19-old-execute-prompts**<br>`02-execute-robust-loop.md` | 02 Execute Robust Loop | [View](https://github.com/alimtvnetwork/prompt-architect-v2/blob/main/01-general-prompts/19-old-execute-prompts/02-execute-robust-loop.md) | [Raw Text](https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/01-general-prompts/19-old-execute-prompts/02-execute-robust-loop.md) |
 | **19-old-execute-prompts**<br>`04-fix-subtask-naming-convention.md` | 04 Fix Subtask Naming Convention | [View](https://github.com/alimtvnetwork/prompt-architect-v2/blob/main/01-general-prompts/19-old-execute-prompts/04-fix-subtask-naming-convention.md) | [Raw Text](https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/01-general-prompts/19-old-execute-prompts/04-fix-subtask-naming-convention.md) |
+

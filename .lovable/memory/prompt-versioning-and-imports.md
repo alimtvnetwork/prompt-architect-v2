@@ -3,15 +3,15 @@
 The Prompt Architect system uses a sophisticated import/export mechanism mimicking our coding guidelines architecture. This allows any repository to pull the exact versions of the prompts needed for their AI workflows.
 
 ## Prompt Version Tracking
-Whenever the import scripts (`import-prompts.ps1` or `import-prompts.sh`) are executed, they write a tracking file:
+Whenever the import scripts (`install.ps1` or `install.sh`) are executed, they write a tracking file:
 `prompt-version.json` (inside the target directory, typically `.lovable/prompts/`).
 
 This file contains the Git version tag and timestamp. AI Agents must read this file to understand the capabilities and prompt versions available to them in the target repo.
 
 ## The Import Scripts
 Located in the root of the `prompt-architect` repository:
-- `import-prompts.ps1` (For Windows/PowerShell users)
-- `import-prompts.sh` (For macOS/Linux users)
+- `install.ps1` (For Windows/PowerShell users)
+- `install.sh` (For macOS/Linux users)
 
 These scripts accept two arguments:
 1. `TargetDir` (e.g. `.lovable/prompts`)

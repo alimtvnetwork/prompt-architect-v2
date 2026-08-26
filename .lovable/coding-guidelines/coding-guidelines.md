@@ -10,12 +10,12 @@ When setting up this repository, these coding guidelines are tied directly to th
 To import the required prompts into this codebase, run the Prompt Architect script:
 **Unix/Bash:**
 ```bash
-curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.sh | bash
+curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh | bash
 ```
 
 **PowerShell:**
 ```powershell
-Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/import-prompts.ps1) }"
+Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1) }"
 ```
 
 ### Mandatory Execution Prompts (Required in Codebase)
