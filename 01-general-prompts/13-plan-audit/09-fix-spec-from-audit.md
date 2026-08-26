@@ -8,7 +8,7 @@ You must ingest the audit, map the findings to the broken files, and execute the
 
 - [ ] Read the latest audit file located in `spec/25-app-spec-audit/`. 
 - [ ] Parse the Markdown Summary Table at the bottom of the audit to understand every folder, issue, and proposed fix.
-- [ ] Anti-Garbage Naming: Ensure all variable names and unit test names proposed in the fixes use strict, semantic domain concepts. NEVER write generic garbage names like `comp_100.go` or `TestHandleComp100`.
+- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
 - [ ] Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.

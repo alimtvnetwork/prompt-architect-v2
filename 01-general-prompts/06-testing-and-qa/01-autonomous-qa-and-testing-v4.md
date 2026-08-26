@@ -23,6 +23,12 @@ N = 200 (Default loop limit. User can override.)
 4. Subagents must verify tests locally before marking the task `[Done]`.
 5. Loop continuously until every subtask in the master plan is marked `[Done]`.
 
+
+## Pre-Completion Checklist (Must Follow Non-Negotiable)
+- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
+- [ ] All tests follow the AAA pattern.
+- [ ] All tests run and pass locally.
+
 ## Anti-Garbage Naming & Quality (Zero Tolerance)
 - NEVER generate arbitrary, generic, or sequential names like `TestComp100`. Test functions must explicitly define exactly what behavior is being tested (e.g., `TestUpdateUserProfile_RejectsInvalidEmail`).
 - Do not hallucinate mock interfaces or use arbitrary IDs. Use semantic domain concepts.
@@ -34,3 +40,9 @@ N = 200 (Default loop limit. User can override.)
 
 ## Temp Script Sandboxing (Global Law)
 If you need to generate any temporary code, scripts, or scratch files to aid in your execution or test generation, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+### Temp-Agent State Management Protocol (Non-Negotiable)
+To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` directory for tracking sub-agent tasks.
+- On Start: The sub-agent creates `.lovable/temp-agents/<task-name>.md` and writes the objective and `STATUS: IN_PROGRESS`.
+- On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.
+- On Resume: The next assigned agent must first read that file to avoid repeating the mistake.
+- On Success: Update the file to `STATUS: DONE` and immediately update the master plan.

@@ -326,6 +326,7 @@ touch.
 - [ ] All twelve dimensions scored, each with evidence and at least one remedy where below `min-score`.
 - [ ] Guideline checklist rebuilt from the filesystem, every boolean and code-style sub-file listed individually, duplicates column filled.
 - [ ] Consolidated Coding Guidelines: The master file at `.lovable/coding-guidelines/coding-guidelines.md` has been successfully audited and explicitly added to the output checklist.
+- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
 - [ ] Consolidated mirrors checked for drift; no mirror treated as an authority.
 - [ ] Reference-integrity count table present, every row a number, non-zero rows turned into findings.
 - [ ] Ci/cd job or guard named for every buildable unit.
@@ -383,6 +384,14 @@ NEVER MAKE THIS EXCUSE: *"I did not literally perform 200 self-loops or spawn do
 If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Avoid stupidity.
 
 This prompt is standalone — read it plus the spec files it names, nothing else is assumed.
+
+
+### Temp-Agent State Management Protocol (Non-Negotiable)
+To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` directory for tracking sub-agent tasks.
+- On Start: The sub-agent creates `.lovable/temp-agents/<task-name>.md` and writes the objective and `STATUS: IN_PROGRESS`.
+- On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.
+- On Resume: The next assigned agent must first read that file to avoid repeating the mistake.
+- On Success: Update the file to `STATUS: DONE` and immediately update the master plan.
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

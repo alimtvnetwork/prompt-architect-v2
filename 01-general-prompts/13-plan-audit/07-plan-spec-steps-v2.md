@@ -649,6 +649,7 @@ in section 2.
 - [ ] RULE 0C ceilings stated: max 2 agents, max 3 threads per agent, nowhere exceeded or contradicted.
 - [ ] Consolidated Coding Guidelines (Mandatory): I have explicitly cited the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md` in the plan and marked it as mandatory reading for all execution agents.
 - [ ] RULE 0E coding-guideline single-file checklist filled in with real paths, every boolean/condition-styling sub-file listed individually, every topic single-source, duplicates column reads "none".
+- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
 - [ ] Execution model confirmed: exactly one step per run, self-loop after Verify, no line anywhere in the plan or a task implies batching two steps.
 - [ ] Self-loop instruction present in the plan file AND verbatim in every task footer; max 2 agents / max 3 threads per agent restated and nowhere exceeded.
 - [ ] RULE 0E applied: every command, issue, cicd-issue, memory item, strictly-avoid entry and attachment written to its file and linked from Context; nothing left only in chat; every attachment has a caption.
@@ -703,3 +704,10 @@ Tasks blocked on ambiguity: n (Q..)   Rca records written: n
 Self-score: Uniqueness/Specificity/Anchoring/Reference/Verifiability/Ci/Sequencing -> Overall
 Spec gaps filed: <list or none>
 ``
+
+### Temp-Agent State Management Protocol (Non-Negotiable)
+To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` directory for tracking sub-agent tasks.
+- On Start: The sub-agent creates `.lovable/temp-agents/<task-name>.md` and writes the objective and `STATUS: IN_PROGRESS`.
+- On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.
+- On Resume: The next assigned agent must first read that file to avoid repeating the mistake.
+- On Success: Update the file to `STATUS: DONE` and immediately update the master plan.
