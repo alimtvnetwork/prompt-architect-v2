@@ -49,6 +49,14 @@ If a spec proposes creating temporary scripts (e.g., CSJ, Python) for fixing or 
 - It must explicitly specify that the scripts go into `.lovable/temp-scripts/`.
 - It must explicitly specify that `.lovable/temp-scripts/` is added to .gitignore.
 - If the spec implies committing these temporary files to the repository, you must flag it as a critical failure task.
+---
+
+## RULE 0 — Temp Script Sandboxing (Global Law)
+
+If you need to generate any temporary code, scripts, or scratch files to aid in your execution or auditing, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+
+---
+
 ## RULE 1 - working stance
 
 Read as the blind-AI persona in `spec/25-app-spec-audit/00-overview.md` §1: never

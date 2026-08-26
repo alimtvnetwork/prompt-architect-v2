@@ -31,3 +31,6 @@ N = 200 (Default loop limit. User can override.)
 - If an ambiguity prevents a test from being written, log it to `.lovable/ambiguous-questions/`.
 - Immediately update the plan file to mark that specific subtask as `[Blocked]`.
 - The execution loop must safely skip `[Blocked]` tasks and continue executing other disjoint tasks. Do not retry blocked tasks.
+
+## Temp Script Sandboxing (Global Law)
+If you need to generate any temporary code, scripts, or scratch files to aid in your execution or test generation, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.

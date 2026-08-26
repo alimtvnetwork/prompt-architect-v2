@@ -17,6 +17,8 @@
 - If a spec file, folder, or task is missing or ambiguous, do NOT guess or invent a rule.
 - Ask a clarifying question or log an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` before proceeding.
 - Never invent step counts. Read the actual files and count from them.
+- Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+- Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
 - Ambiguity Blocked Queue: If you file an ambiguity to `.lovable/ambiguous-questions/`, you MUST immediately update the plan file to mark that specific subtask as `[Blocked]`. The execution loop must safely skip `[Blocked]` tasks and continue executing other disjoint tasks. Do not retry blocked tasks.
 
 ---
@@ -52,19 +54,6 @@
    - If it fails 3 consecutive times, automatically rollback the dirty working tree (`git checkout -- <modified_files>`).
    - Log the root cause to `.lovable/memory/last-failure.md` and `.lovable/issues/`.
    - Proceed to the next disjoint task after rollback.
-
----
-
-## Phase 3: Code Quality & Commit Fix (Non-Negotiable)
-
-While executing tasks, you and your agents must adhere to these strict coding guidelines without exception:
-
-- Read and follow guidelines in `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `spec/04-database-conventions/`.
-- All caught errors must be explicitly logged. Use or create a query wrapper that automatically logs failures with operation name and key inputs.
-- No magic strings or numbers. Do not introduce any unless explicitly for the logger.
-- Never use string union types (e.g., `"pass" | "fail"`). Use TypeScript Enums with the suffix `Type` (e.g., `StatusType`).
-- Always use explicit boolean state checks (e.g., `response.isFail`). Never invert success booleans (e.g., `!response.isSuccess`).
-- Code must be DRY. Reuse constants and wrappers.
 
 ---
 
@@ -111,15 +100,6 @@ At the end of every single iteration of your execution loop:
 - [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
 
 ---
-
-## Actionable Items & Checklist
-
-- [ ] Read the overarching main task plan.
-- [ ] Ensure the git repository starts completely clean.
-- [ ] Complete all work on the current branch only.
-- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
-- [ ] Group all completed work into a single logical commit.
-- [ ] Push the commit to the remote repository.
 
 ## Execution & Self-Looping Protocol
 

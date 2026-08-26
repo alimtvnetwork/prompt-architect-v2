@@ -21,9 +21,7 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 
 1. Continuous & Zero-Failure Execution: Run autonomously for up to `N` steps. The assigned task MUST be completed from start to finish without a failure. If a step fails, you must forcefully recover, fix the root cause, and push forward. Do not stop.
 2. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
-3. Temporary Scripts: Any temporary automation scripts (CSJ, python) used to execute mass edits must be placed in `.lovable/temp-scripts/` and explicitly gitignored. NEVER commit them.
-4. Error Management (AppError Rule): Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific `AppError`. For OOP languages (like C#), this MUST be a custom Exception type (e.g., `AppException`, `DomainException`).
-5. Coding Guidelines Integration: You must treat `spec/02-coding-guidelines/` and `spec/03-error-manage/` as binding law.
+3. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
 
 ## 3. Pre-Commit Verification Checklist (Must Follow)
 
