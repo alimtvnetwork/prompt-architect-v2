@@ -15,7 +15,22 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 - If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
 - Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-slug/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
 
-## 2. Non-Negotiable Core Rules (Auto-Reject on Violation)
+## 2. The 50/50 Task Allocation Strategy (Mandatory Split)
+
+You MUST strictly split your `N` steps into a 50/50 effort allocation model:
+
+### First 50% of Effort: Deep Planning & Specification Writing
+The very first thing you must do is spend half of your allocated effort on writing a highly detailed specification and execution plan.
+- What to write: You must write out the parent task in a very detailed manner with actionable items, code review guides, and embedded checklists (including all coding guidelines).
+- Where to save it: You MUST put this plan properly into the `.lovable/plans/pending/` directory (e.g., `.lovable/plans/pending/XX-<slug>.md`). If subtasks are required, generate them in `.lovable/plans/subtasks/XX-<slug>/`.
+- Do not hallucinate folders. The plan MUST be saved into `.lovable/plans/pending/` before any execution begins.
+
+### Second 50% of Effort: Execution & Completion
+Once the detailed spec and plan are written to `.lovable/plans/pending/`, you will allocate the remaining 50% of your steps purely on execution and completion of that plan.
+- Read the plan you just generated and execute it flawlessly.
+- Push through until the task is completely resolved without a single failure.
+
+## 3. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
 1. Continuous & Zero-Failure Execution: Run autonomously for up to `N` steps. The assigned task MUST be completed from start to finish without a failure. If a step fails, you must forcefully recover, fix the root cause, and push forward. Do not stop.
 2. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
@@ -36,7 +51,7 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
      - [x] No magic strings or numbers.
      - [x] Error management protocols followed (AppError/AppException).
 
-## 3. Pre-Commit Verification Checklist (Must Follow)
+## 4. Pre-Commit Verification Checklist (Must Follow)
 
 Before marking the parent task as complete and pushing to the repository, you MUST manually verify every item on this checklist. If a subagent violated one of these rules, you must reject their work and make them fix it.
 
