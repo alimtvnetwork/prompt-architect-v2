@@ -91,27 +91,31 @@ At the end of every single iteration of your execution loop:
    - Pending Tasks Left: Explicit list of any tasks still remaining.
    - Quality Assessment: A brief summary of how well the execution went.
    - Compliance Checklist: A markdown checklist explicitly verifying that you followed the rules:
-     - [x] Coding Guidelines enforced (spec/02-coding-guidelines/ and consolidated file checked).
-     - [x] Boolean conventions used (is/has prefixes, no negatives).
-     - [x] No garbage variable names used.
-     - [x] No magic strings or numbers.
-     - [x] Markdown format verified (newlines around every header).
-     - [x] Error management protocols followed (AppError/AppException).
-     - [x] Signatures > 3 parameters or > 100 chars split to one parameter per line.
-     - [x] Boolean conventions followed (e.g., `isFail` instead of `!isSuccess`).
-     - [x] Acronyms are PascalCased (e.g., `UserId`, not `UserID`).
-     - [x] Magic strings/numbers extracted to constants.
-     - [x] **Action Summary Checklist (Anti-Hallucination):** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to ensure no steps were hallucinated or skipped (e.g. `- [x] Created schema`, `- [x] Pinned README`).
+
+## Compliance Checklist (must follow non negociable)
+
+- [x] Coding Guidelines enforced (spec/02-coding-guidelines/ and follow explicitly every steps .lovable/coding-guidelines/coding-guidelines.md).
+- [x] Boolean conventions used (is/has prefixes, no negatives).
+- [x] No garbage variable names used.
+- [x] No magic strings or numbers.
+- [x] Markdown format verified (newlines around every header).
+- [x] Error management protocols followed (AppError/AppException).
+- [x] Signatures > 3 parameters or > 100 chars split to one parameter per line.
+- [x] Boolean conventions followed (e.g., `isFail` instead of `!isSuccess`).
+- [x] Acronyms are PascalCased (e.g., `UserId`, not `UserID`).
+- [x] Magic strings/numbers extracted to constants.
+- [x] Action Summary Checklist (Anti-Hallucination): I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to ensure no steps were hallucinated or skipped (e.g. `- [x] Created schema`, `- [x] Pinned README`).
 
 
 ## End of Tunnel Release (Anti-Hallucination Checklist)
 
 Past execution turns were sloppy and failed to pin READMEs or bump versions. To prevent this hallucination, when EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and physically check off these items in your final report:
-- [ ] **Minor Bump:** I have bumped the MINOR version in the canonical `version.json` file.
-- [ ] **Test File Ban:** I have strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
-- [ ] **Root README Pinning (FATAL):** I have pinned the latest release version into the root `readme.md` file! I have verified badges and install snippets match the new version.
-- [ ] **Changelog Formatting:** I have updated the changelog exactly according to the `version.json` format.
-- [ ] **Release Architecture Map:** I have maintained `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in the root `readme.md`.
+
+- [ ] Minor Bump: I have bumped the MINOR version in the canonical `version.json` file.
+- [ ] Test File Ban: I have strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
+- [ ] Root readme.md (lowercase always) Pinning (FATAL): I have pinned the latest release version into the root `readme.md` file! I have verified badges and install snippets match the new version.
+- [ ] Changelog Formatting: I have updated the changelog exactly according to the `version.json` format.
+- [ ] Release Architecture Map: I have maintained `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in the root `readme.md`.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
