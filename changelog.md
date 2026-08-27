@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.13.1] 2026-08-27 File Encoding / Null Byte Fixes
+
+### Install Prompt Architect v1.13.1
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.1/install.sh | bash -s -- ".lovable/prompts" "v1.13.1"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.1/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.13.1"`
+
+### Added / Changed / Fixed / Removed
+
+- **Fixed:** Stripped accidental null bytes (`\x00`) from `03-commit-fix-v2.md` and several other Markdown files. A bad regex evaluation during a previous injection caused folder references like `01-` to be written as an octal null byte escape sequence (`\01-`). This resolves the issue where GitHub Desktop incorrectly identified these Markdown files as binary.
+
+
 ## [v1.13.0] 2026-08-27 Python Auto-Bumper & Install Snippet Propagation
 
 ### Install Prompt Architect v1.13.0
@@ -116,6 +128,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

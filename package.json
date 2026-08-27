@@ -1,6 +1,6 @@
 {
   "name": "prompt-architect",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "description": "One readme only, always lowercase `readme.md`. Never create `README.md`.",
   "main": "index.js",
   "scripts": {
