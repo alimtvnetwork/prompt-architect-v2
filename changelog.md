@@ -1,5 +1,20 @@
 # Changelog
 
+## [v1.15.0] 2026-08-27 Coding Guidelines Consolidation & Antigravity Optimization
+
+### Install Prompt Architect v1.15.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.0/install.sh | bash -s -- ".lovable/prompts" "v1.15.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.15.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Changed:** Massively overhauled and consolidated `01-coding-guidelines.md`. Removed all repeated sections, verbose auto-generated boilerplate blocks, and excessive multi-language code snippets.
+- **Added:** Optimized the file strictly for the Antigravity multi-agent architecture. The `/goal` and `/learn` commands are now heavily focused at the very top of the file to guarantee agents internalize the rules before executing.
+- **Changed:** Reduced the coding examples to exactly two highly effective snippets (one Bad, one Good) that succinctly demonstrate Parameter Structs, PascalCase Acronyms, Positive Booleans, and Whitespace spacing rules across languages.
+- **Added:** Added a rigid "Antigravity Verification Checklist" to the bottom of the prompt to ensure agents mechanically verify their compliance with the rules before ending their turn.
+
+
 ## [v1.14.0] 2026-08-27 Execute Prompts Checklist Consolidation & Spec Phase
 
 ### Install Prompt Architect v1.14.0
@@ -145,4 +160,5 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 

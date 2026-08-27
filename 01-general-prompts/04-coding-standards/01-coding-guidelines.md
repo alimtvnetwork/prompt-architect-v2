@@ -1,60 +1,102 @@
-# Important Instruction : Coding Guidelines v1.14
+# Instruction: Antigravity Coding Guidelines & Standards
 
-- [ ] /goal Blindly follow, enforce, and execute every coding guideline, error management architecture, function size cap, boolean principle, and type-safety rule across all languages in this repository. Zero hallucination, zero drive-by refactoring, zero tolerance for guideline violations.
-- [ ] /learn Ingest, understand, and internalize all coding standards, cross-language rules, error philosophies, and project specifications from spec/02-coding-guidelines/, spec/03-error-manage/, and .lovable/ memory before reading, modifying, or creating any code.
+/goal You are the Chief Code Reviewer and Architect. Blindly follow, enforce, and execute every coding guideline, error management architecture, function size cap, boolean principle, and type-safety rule across all languages in this repository. Zero hallucination, zero drive-by refactoring, zero tolerance for guideline violations.
 
-This is a standalone file. Follow every rule below without consulting any other document. If a `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.
+/learn Ingest, understand, and internalize all coding standards from `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/memory/` before reading, modifying, or creating any code.
 
-## 1. Strict Anti-Garbage Naming (Zero Tolerance)
+This file is the single source of truth for coding standards. It applies to Go, TypeScript/JavaScript, Python, Rust, Java, C#, and PHP. You must enforce these rules mechanically and perfectly.
 
-- NEVER generate arbitrary, generic, or sequential names like `comp_100.go`, `comp_100_test.go`, `Input100`, `data`, `temp`, `obj`, or `val`.
-- Variables, functions, structs, classes, and file names MUST explicitly describe the domain concept they represent (e.g., `UpdateUserProfileInput` not `Input100`).
-- Unit Tests: Unit test file names and test function names must explicitly define exactly what behavior is being tested. `TestHandleComp100` is garbage. `TestUpdateUserProfile_RejectsInvalidEmail` is required.
-- If you generate sequential "ID-based" garbage names, the audit will fail you automatically. 
+---
 
-## 2. Boolean Naming & Logic
+## 1. Naming & Syntax (Strict Rules)
 
-- All boolean variables/properties MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`).
-- Never use negative booleans (e.g., `isNotReady`, `disableCache`).
-- Never invert success checks (e.g., `!response.isSuccess`). Use a direct failure check (`response.isFail`).
+- **Anti-Garbage Naming:** NEVER generate arbitrary, generic, or sequential names like `comp_100.go`, `data`, `temp`, `obj`, or `TestHandleComp100`. All variables, functions, structs, and tests MUST semantically describe their behavior (e.g., `UpdateUserProfileInput`).
+- **Acronyms (PascalCase):** Acronyms must be PascalCase, NEVER all-caps. Write `UserId`, `SwapIpWindows`, `ParseJsonUrl`. Do NOT write `UserID`, `SwapIPWindows`, or `parseJSONURL`.
+- **JSON / Serialization Keys:** Serialized keys use PascalCase (e.g., `{"Id": "123", "IsActive": true}`). Do not use snake_case or camelCase for JSON keys unless integrating with a legacy external API.
 
-## 3. Function & Type Constraints
+## 2. Boolean Naming & Logic (Zero Tolerance)
 
-- Functions should ideally be <= 8 lines, and MUST never exceed 15 lines. Extract logic into named sub-functions.
-- Group parameters into a struct/options object if there are >3 parameters or multiple adjacent parameters of the same type.
-- Split long call arguments across multiple lines. No line should exceed 100 characters.
-- No unused parameters. Remove them.
-- No boolean positional parameters (e.g., `save(true)`). Use configuration objects (`save(SaveOptions{force: true})`).
+- **Mandatory Prefixes:** Every boolean variable, parameter, JSON key, or function MUST begin with `is`, `has`, `can`, `should`, `was`, `will`, `did`, or `must` (e.g., `isReady`, `hasData`).
+- **Positive Framing Only:** Never use negative booleans (e.g., `isNotReady`, `disableCache` are banned). If the natural name is negative, invert it to positive.
+- **Never Invert Success:** Never use `!response.isSuccess`. Instead, use a direct failure check like `response.isFail`.
+- **No Boolean Positional Arguments:** Never do `save(true)`. Use explicit configuration objects/enums: `save(SaveOptions{ IsForce: true })`.
 
-## 4. Error Management & App Errors
+## 3. Function & Structure Constraints
 
-- AppError vs Generic Error: Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific AppError.
-- Based on the language, create a strongly typed generic wrapper for application errors. For C# and similar OOP languages, this MUST be a custom Exception type (e.g., `AppException`, `DomainException`).
-- Propagate and wrap EVERY error with context. Never swallow errors with generic `catch {}`.
-- No magic literals as arguments; extract them into named constants or Enums.
+- **Length Caps:** Functions should ideally be <= 8 lines, and MUST never exceed 15 lines. Extract logic into well-named sub-functions.
+- **Argument Splitting:** If a function has > 3 parameters or the signature exceeds 100 characters, you MUST split them so there is one parameter per line.
+- **Parameter Grouping:** If a function has > 4 parameters, or 2+ adjacent parameters of the same type, group them into a parameters Struct/Object (e.g., `SwapIpParams`).
+- **Unused Parameters:** Remove them. Do not leave dead code.
 
-## 5. Line-Gap and Whitespace Style
+## 4. Error Management (AppError)
 
-- R13: Blank line BEFORE `return` or `throw` (unless the function is 1 line).
-- R14: Blank line AFTER a closing brace (e.g., after an `if` block).
-- R15: Never use double blank lines.
-- R16: No padded braces (e.g., `function() { \n\n }`).
-- R17: Blank line between top-level declarations.
-- R18: Group imports logically.
-- R19: No trailing whitespace, always end with a single trailing newline.
+- **No Generic Errors:** Never throw or return generic base errors (e.g., `Error`, `Exception`). You MUST use a domain-specific `AppError` or custom `AppException`.
+- **Never Swallow Errors:** Every `catch` block must log the operation name and key inputs, and then rethrow or return the typed error. Silent `catch {}` is a build-fail.
+- **Context Wrapping:** Propagate and wrap EVERY error with context (e.g., `apperror.Wrap(err, "fetching user", userId)`). The original stack trace must survive.
 
-## 6. Acronyms & Serialization
+## 5. Spacing, Whitespace, & Markdown (MD022/MD032)
 
-- R1: Acronym casing is PascalCase, NEVER all-caps (e.g., `SwapIpWindows`, not `SwapIPWindows`).
-- R2: JSON / serialization keys must be PascalCase.
+- **MD022 / MD032:** Markdown headers and lists MUST be surrounded by completely blank lines.
+- **Return / Throw Spacing:** You MUST place one blank line BEFORE every `return` or `throw` (unless it is the only statement in the block).
+- **Brace Spacing:** You MUST place one blank line AFTER a closing `}` brace (unless the next line is `}`, `else`, `catch`, or `case`).
+- **No Double Blanks:** Never use two blank lines in a row. Never pad the inside of braces (e.g., `function() { 
 
-## 7. Method Documentation
+ }`).
 
-- Simple methods do NOT require documentation. Do not restate the signature.
-- ONLY write docs if the method performs complex transformations or requires external citation.
+- **Top-Level Separation:** Always leave exactly one blank line between top-level declarations.
+- **Trailing Newline:** Every file must end with a single trailing newline.
 
-## 8. Workflow & Execution
+## 6. Code Examples (Cross-Language Reference)
 
-- Read the code, find the root cause in one sentence, apply the minimum correct fix, and verify it in the logs.
-- List EVERY remaining task. Bump the version, update changelog.
-- Do the job properly. Going deep IS the job. Violating this is auto-reject on the same tier as RULE 0.
+Below is a consolidated example demonstrating Parameter Structs, Acronym Casing, Boolean Naming, and Whitespace rules.
+
+### Bad Example (Violates Rules)
+
+```go
+// VIOLATES: All-caps acronyms (IP, URL), more than 3 params not split or grouped,
+// adjacent strings, negative booleans, no whitespace before return.
+func swapIPWindows(ctx context.Context, interfaceName string, oldIP string, newIP string, isNotDryRun bool) error {
+	if !isNotDryRun {
+		// VIOLATES: Magic strings, swallowed errors
+		return fmt.Errorf("failed")
+	}
+	return nil
+}
+```
+
+### Good Example (Follows Rules)
+
+```typescript
+// FOLLOWS: PascalCase acronyms (Ip), param struct for >3/adjacent types.
+interface SwapIpParams {
+  InterfaceName: string;
+  OldIp: string;
+  NewIp: string;
+  IsDryRun: boolean; // Positive boolean prefix
+}
+
+export async function swapIpWindows(ctx: Context, params: SwapIpParams): Promise<void> {
+  if (params.IsDryRun) {
+    throw new AppError("Dry run enabled", { op: "swapIpWindows" });
+  }
+  
+  const result = await executeSwap(params);
+  
+  // FOLLOWS: Blank line before return
+  return result;
+}
+```
+
+---
+
+## 7. Antigravity Verification Checklist
+
+Before ending your execution turn or committing any code, you MUST mechanically verify this checklist. If you violate any rule, your work will be auto-rejected.
+
+- [ ] **No Garbage Names:** I have strictly used domain-specific names (no `temp`, `data`, `comp_100`).
+- [ ] **Acronyms & Booleans:** All acronyms are PascalCase (`Id`, `Url`, `Ip`). All booleans start with `is`, `has`, `can`, or `should`. NO negative booleans exist.
+- [ ] **Function Size & Spacing:** No function exceeds 15 lines. Blank lines exist before every `return`/`throw` and after every closing `}` block. No double blank lines.
+- [ ] **Signatures & Grouping:** Any signature > 3 parameters is split to one per line. Adjacent same-type parameters are grouped into a Struct/Object.
+- [ ] **Error Handling:** I used domain-specific `AppError` types. I did not swallow any errors. All errors are wrapped with context.
+- [ ] **Markdown Formatted:** All markdown lists and headers are surrounded by blank lines (MD022/MD032).
+- [ ] **Artifacts & Generation:** I did not commit generated binaries, cache files, or temp scripts to Git. I updated `.gitignore` if necessary.

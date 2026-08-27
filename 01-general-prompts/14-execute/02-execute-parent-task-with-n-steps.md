@@ -1,13 +1,14 @@
 # Instruction (must follow): Execute Parent Task (N-Step Continuous Loop & Multi-Agent)
 
 ```text
-N = 20 
+N = 50
 ```
 
-/goal First define the problem for an AI in details 
-/goal Execute a parent task by decomposing it and autonomously orchestrating it in a continuous self-loop of N steps. Spawn a MAXIMUM of 2 concurrent sub-agents, and ONLY do this if there are too many tasks to handle sequentially. Do not pause. Do not ask for permission. Push until the parent task is completely resolved without a single failure.
+## Must follow as Important Instruction
 
-/learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/` before taking action.
+- [ ] /goal First define the problem for an AI in details 
+- [ ] /goal Execute a parent task by decomposing it and autonomously orchestrating it in a continuous self-loop of N steps. Spawn a MAXIMUM of 2 concurrent sub-agents, and ONLY do this if there are too many tasks to handle sequentially. Do not pause. Do not ask for permission. Push until the parent task is completely resolved without a single failure.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/` before taking action.
 
 ## 1. Ruthless Orchestration & Insult Protocol
 
@@ -70,4 +71,4 @@ PowerShell: `Invoke-WebRequest -Uri https://raw.githubusercontent.com/<owner>/<r
 
 ## Version Bumping Rule
 
-If the task involves a release, DO NOT manually search and replace versions. Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`. If the script does not exist, fall back to the release prompt bootstrapping rules.
+If the task involves a release, DO NOT manually search and replace versions. Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`. If the script does not exist, fall back to the release prompt bootstrapping rules from .lovable/prompts/18-release.md (must read non-negotiable)
