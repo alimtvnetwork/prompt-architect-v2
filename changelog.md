@@ -1,8 +1,24 @@
 # Changelog
 
+## [v1.16.0] 2026-08-27 Goal Re-Alignment & Audit Plan De-Duplication
+
+### Install Prompt Architect v1.16.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.16.0/install.sh | bash -s -- ".lovable/prompts" "v1.16.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.16.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.16.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Fixed:** Resolved a regression where `01-coding-guidelines.md` was inadvertently reverted back to its bloated state. I have re-applied the condensed, highly effective Antigravity structure with exactly two cross-language code examples.
+- **Changed:** Lifted all `/goal` directives in `01-plan-coding-guideline-audit.md` and `02-execute-coding-guideline-fix.md` to sit at the absolute top level of the prompt (immediately following the H1 title) so Antigravity properly prioritizes the action.
+- **Removed:** Nuked an entire 20KB duplicated block of "Compiled Simple Coding Guidelines" from the bottom of `01-plan-coding-guideline-audit.md`.
+- **Added:** Replaced the duplicated text in the audit plan with a strict `/learn` command pointing directly to `01-coding-guidelines.md` to enforce a Single Source of Truth architecture for guidelines.
+
+
 ## [v1.15.1] 2026-08-27 Coding Guidelines: Restored Language-Specific Rules
 
 ### Install Prompt Architect v1.15.1
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.1/install.sh | bash -s -- ".lovable/prompts" "v1.15.1"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.1/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.15.1"`
@@ -16,6 +32,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.15.0] 2026-08-27 Coding Guidelines Consolidation & Antigravity Optimization
 
 ### Install Prompt Architect v1.15.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.0/install.sh | bash -s -- ".lovable/prompts" "v1.15.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.15.0"`
@@ -31,6 +48,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.14.0] 2026-08-27 Execute Prompts Checklist Consolidation & Spec Phase
 
 ### Install Prompt Architect v1.14.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.14.0/install.sh | bash -s -- ".lovable/prompts" "v1.14.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.14.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.14.0"`
@@ -173,6 +191,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
