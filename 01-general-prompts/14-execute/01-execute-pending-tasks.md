@@ -101,13 +101,16 @@ At the end of every single iteration of your execution loop:
      - [x] Boolean conventions followed (e.g., `isFail` instead of `!isSuccess`).
      - [x] Acronyms are PascalCased (e.g., `UserId`, not `UserID`).
      - [x] Magic strings/numbers extracted to constants.
-3. End of Tunnel Release & Version Bump: When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release.
-   - You must bump the MINOR version.
-   - You must focus on the `version.json` file as the source of truth for the release.
-     - Root README Pinning (FATAL): You MUST pin the latest release version into the root `readme.md` file! Do not skip this! Also, update the changelog according to `version.json` format.
-   - If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
-- You MUST strictly exclude all test files (e.g., `*test*`, `*.spec.*`) from version scanning and modification, as they contain mock data.
-- You must create and maintain `.lovable/memory/release-architecture-map.md` documenting exactly how releases work in the repository. Ensure it is enqueued in `what-to-read.md` and linked in the root `readme.md`.
+     - [x] **Action Summary Checklist:** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn (e.g. `- [x] Created schema`, `- [x] Applied isFail convention`).
+
+## End of Tunnel Release (Strict Checklist)
+
+When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and physically check off these items in your final report:
+- [ ] **Minor Bump:** I have bumped the MINOR version in the canonical `version.json` file.
+- [ ] **Test File Ban:** I have strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
+- [ ] **Root README Pinning (FATAL):** I have pinned the latest release version into the root `readme.md` file! I have verified badges and install snippets match the new version.
+- [ ] **Changelog Formatting:** I have updated the changelog exactly according to the `version.json` format.
+- [ ] **Release Architecture Map:** I have maintained `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in the root `readme.md`.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 

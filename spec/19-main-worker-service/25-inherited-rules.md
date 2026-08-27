@@ -110,7 +110,7 @@ The RBAC adapter lives in the App tier per `mem://architecture/split-database`. 
 - Config seed file: `config.seed.json`. Categories block holds tunables (e.g. `Categories.MainWorker.Settings.WorkerJwtTtlSeconds`); Tables block holds reference rows.
 - **SemVer-merged via GORM at boot.** A category's `Version` controls migration order: bumping = forward migration on next boot.
 - **Defaults are authoritative** in the seed; runtime DB rows override only via explicit admin write. A literal AI MUST NOT hard-code defaults that already live in the seed.
-- Spec/19's seed payload is in [`15-tunable-constants.md`](./15-tunable-constants.md) §4 (current `MainWorker` category SemVer: **1.8.0**).
+- Spec/19's seed payload is in [`15-tunable-constants.md`](./15-tunable-constants.md) §4 (current `MainWorker` category SemVer: **1.9.0**).
 
 ### 5.2 Bump rules
 

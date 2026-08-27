@@ -1,8 +1,25 @@
 # Changelog
 
+## [v1.9.0] 2026-08-27 Execution Architecture Improvements
+
+### Install Prompt Architect v1.9.0
+
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.9.0/install.sh | bash -s -- ".lovable/prompts" "v1.9.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.9.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.9.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** `04-execute-ai-instruction-writer.md` prompt for generating generic, anti-hallucination spec instructions.
+- **Changed:** Injected aggressive Anti-Hallucination ("Insult") stance into all execution prompts to strictly enforce code quality and zero-sloppiness.
+- **Changed:** Refactored the End of Tunnel Release block in all execution prompts into a strict Markdown checklist (`- [ ]`), explicitly forcing verification of Root README pinning.
+- **Changed:** Expanded the `Execution Reporting` format to enforce an Action Summary Checklist summarizing all completed tasks.
+
+
 ## [v1.8.0] 2026-08-27 Strict Readme Pinning & Markdown Unbolding
 
 ### Install Prompt Architect v1.8.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.8.0/install.sh | bash -s -- ".lovable/prompts" "v1.8.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.8.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.8.0"`
@@ -42,6 +59,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
