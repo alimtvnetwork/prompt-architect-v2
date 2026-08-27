@@ -12,10 +12,12 @@ This file contains the Git version tag and timestamp. AI Agents must read this f
 ## The Import Scripts
 
 Located in the root of the `prompt-architect` repository:
+
 - `install.ps1` (For Windows/PowerShell users)
 - `install.sh` (For macOS/Linux users)
 
 These scripts accept two arguments:
+
 1. `TargetDir` (e.g. `.lovable/prompts`)
 2. `Version` (e.g. `main` or a pinned tag like `v1.2.0`)
 

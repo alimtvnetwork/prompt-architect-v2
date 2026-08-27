@@ -144,6 +144,7 @@ Runs `govulncheck` to detect known vulnerabilities in dependencies.
 ### Stdlib vs. Third-Party Vulnerability Handling
 
 The scanner differentiates between:
+
 - **Third-party vulnerabilities** (packages you import) → **fail the build**
 - **Standard library vulnerabilities** (unfixable until Go upgrades) → **warn only**
 
@@ -212,6 +213,7 @@ exit "$exit_code"
 ```
 
 Key details:
+
 - `set +e` prevents the step from exiting on the first test failure — capture the exit code instead
 - `tee` writes output to both stdout and a file for later artifact upload
 - `PIPESTATUS[0]` captures the exit code of `go test`, not `tee`
@@ -242,6 +244,7 @@ Aggregates results from all test matrix jobs into a single report.
 ### Failure Report Script
 
 The script (`.github/scripts/test-summary.sh`) parses each suite's `test-output.txt` to extract:
+
 - Failing test names
 - Specific failure reasons (assertion errors, expected/got mismatches, panics, undefined references)
 
@@ -329,6 +332,7 @@ CGO_ENABLED=0 GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags 
 ```
 
 Key details:
+
 - `CGO_ENABLED=0` produces static binaries with no C dependencies
 - `-s -w` strips debug symbols for smaller binaries
 - `-X` embeds the version string at compile time

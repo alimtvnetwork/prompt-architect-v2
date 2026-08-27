@@ -6,6 +6,7 @@ You must also update all markdown files that reference the old filenames, and up
 ## 1. Subtask Naming Correction (Non-Negotiable)
 
 Scan the `.lovable/plans/subtasks/` directory recursively.
+
 - If you find any file starting with `SS-` or `SS-XX-` (e.g., `SS-01-fix-auth.md` or `SS-fix-auth.md`), rename it to the correct format: `XX-<subslug>.md` (e.g., `01-fix-auth.md`).
 - After renaming, you MUST recursively search `.lovable/plans/pending/`, `.lovable/plans/completed/`, `.lovable/plans/index.md`, and `.lovable/memory/` for any text references to the old filenames.
 - Replace those old references with the new correct filenames.
@@ -13,6 +14,7 @@ Scan the `.lovable/plans/subtasks/` directory recursively.
 ## 2. Memory Update
 
 You must write a memory entry to ensure this rule is persisted and no other AI makes this mistake again.
+
 - Create a file inside `.lovable/memory/learned/` (or update an existing one) detailing the rule: "Subtasks must NEVER be prefixed with 'SS-'. They must strictly follow the 'XX-<slug>.md' sequence."
 - Update `.lovable/memory/00-index.md` to reference this newly added/updated memory file.
 - Add a note explicitly stating how the project is following all guidelines and enforcing this strict naming.
@@ -24,9 +26,11 @@ You MUST follow the project's strict coding guidelines. These files are located 
 ### Required Reading / Reference Checklist:
 
 1. The Master Consolidated Guide
+
 - `spec/17-consolidated-guidelines/02-coding-guidelines.md`
 
 2. Code Style & File Size Limits (80-100 lines max)
+
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
@@ -34,6 +38,7 @@ You MUST follow the project's strict coding guidelines. These files are located 
 - `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
 
 3. Boolean Conditions & Samples
+
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
@@ -42,6 +47,7 @@ You MUST follow the project's strict coding guidelines. These files are located 
 - `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
 
 4. Variable Naming & Definitions
+
 - `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
 - `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
 - `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
@@ -50,6 +56,7 @@ You MUST follow the project's strict coding guidelines. These files are located 
 ## 4. End-of-Loop Commit Fix (Non-Negotiable)
 
 When you are done fixing the filenames, updating the references, and writing the memory, you MUST commit and fix the Git.
+
 - Group all completed work into a single logical commit.
 - Commit the changes on the current branch only (`git commit ...`) and push with `git push origin <current-branch>`. No branch switching or creation.
 - RED FLAG: Verify absolutely NO test results, artifacts, or compiled binaries are staged before making the commit.

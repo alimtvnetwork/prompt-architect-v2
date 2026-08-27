@@ -1,6 +1,6 @@
 # 31. Compiled Simple Coding Guidelines (AI Blind-Follow)
 
-Version: 1.10.0
+Version: 1.12.0
 
 Prompt Architect Version: 1.0.0 (Synced)
 
@@ -225,7 +225,8 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 
 ## 10. Markdown Formatting (Reporting Guidelines)
 
-- **Header Spacing:** Every header (`#`, `##`, `###`, etc.) MUST have a completely blank new line directly before and after it. This ensures clean Markdown rendering and passes the `MD022` markdown linter rule.
+- **Header Spacing (MD022):** Every header (`#`, `##`, `###`, etc.) MUST have a completely blank new line directly before and after it.
+- **List Spacing (MD032):** Every list item block MUST be surrounded by blank lines. There must be a gap between a paragraph or a heading and the start of a list. This ensures clean Markdown rendering and passes the `MD032` markdown linter rule.
 - Do not compress headings against text blocks.
 
 

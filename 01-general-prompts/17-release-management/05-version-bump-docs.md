@@ -29,7 +29,6 @@ Ensure consistency across all documentation files. Do not miss any version refer
 
 - [ ] I have successfully pinned the new version in the root `readme.md` (FATAL IF MISSED).
 - [ ] I have successfully updated the changelog.
-
 - [ ] Discover current version from disk.
 - [ ] Determine new version according to SemVer rules.
 - [ ] Explicitly state previous and new version in the reply.

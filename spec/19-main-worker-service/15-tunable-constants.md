@@ -182,7 +182,7 @@ Promoted from §4.2 to a first-class catalogue entry so T3 (seed parity) covers 
 
 ## 4. `config.seed.json` Categories binding (paste-ready)
 
-Add (or merge with) the following category at SemVer `2.0.0` of `config.seed.json` (bumped from `1.10.0` to materialize the 27 backup-tier tunables (`MainWorker.Backup.*`) defined in §2.11–2.15, closing the audit-09 §2.1 deferral; the major bump reflects the new `Backup` sub-namespace and the addition of the `Enabled` feature flag, not a breaking change to existing v1.5.0 keys — all v1.5.0 defaults are preserved verbatim):
+Add (or merge with) the following category at SemVer `2.0.0` of `config.seed.json` (bumped from `1.12.0` to materialize the 27 backup-tier tunables (`MainWorker.Backup.*`) defined in §2.11–2.15, closing the audit-09 §2.1 deferral; the major bump reflects the new `Backup` sub-namespace and the addition of the `Enabled` feature flag, not a breaking change to existing v1.5.0 keys — all v1.5.0 defaults are preserved verbatim):
 
 ```jsonc
 "MainWorker": {
@@ -401,6 +401,7 @@ Failure = build break.
 **Decision:** Keep explicit `[2, 8, 30]` array (`MainWorker.Retry.BackoffSeconds`). **Reject** `base^n` exponential.
 
 **Why:**
+
 - **Dumb-AI friendly** — every value is visible; no implementer needs to compute `2^n` mentally and re-derive a ceiling clamp.
 - **Bounded worst case** — explicit ceiling at element `[N-1]`; exponential needs an extra `Min(base^n, Cap)` rule which is a second tunable AND a second source of disagreement (audit F-A-15 root cause was exactly this kind of derived value).
 - **Operationally tweakable** — ops can paste `[5, 30, 120]` into Seedable-Config without re-reading any formula doc. Exponential requires editing `Base` AND `Cap` AND mentally reconciling.
@@ -415,6 +416,7 @@ Failure = build break.
 **Decision:** Adopt **sliding** TTL by default (matches Laravel Sanctum / Express-Session / ASP.NET Core), bounded by an **absolute** maximum-lifetime ceiling.
 
 **Why:**
+
 - **Sliding** matches every default-stack target (Laravel/.NET/Express) — zero surprise for implementers.
 - **Pure sliding is unbounded** — a user keeping a tab open for 90 days never re-authenticates. Compliance frameworks (SOC 2, ISO 27001 §9.4.2) require periodic re-authentication.
 - **Sliding + absolute cap** is the industry compromise (used by Auth0, Okta, AWS Cognito) — refresh on activity, but force re-login at the absolute boundary regardless of activity.
@@ -426,6 +428,7 @@ Failure = build break.
 - `MainWorker.Auth.SessionSlidingExtendOnReadOnly` (NEW, **true**) — if `false`, only state-changing requests (POST/PUT/PATCH/DELETE) extend the window — mitigates background-poll abuse.
 
 **Implementation contract (consumed by `05-auth-and-2fa.md` §6):**
+
 1. On each authenticated request: if `(now - SessionStartedAt) >= MainSessionAbsoluteMaxSeconds` → `401 + X-Auth-Action: Reauthenticate`.
 2. Else if request qualifies (write request, OR sliding-extend-on-read flag true): `SessionLastSeenAt = now`; cookie `Max-Age` reset to sliding TTL.
 3. Else: leave `SessionLastSeenAt` and cookie `Max-Age` untouched.
@@ -445,4 +448,4 @@ Failure = build break.
 
 ---
 
-*Tunable constants v1.10.0 — 2026-05-06 (Phase 11: §2.15 added — SnapshotRetentionDays=30 resolving OQ-A4, Snapshot.BuildHourUtc, Snapshot.QuiesceTimeoutSeconds, Snapshot.MaxBuildSeconds, Restore.PrimaryAckTimeoutSeconds)*
+*Tunable constants v1.12.0 — 2026-05-06 (Phase 11: §2.15 added — SnapshotRetentionDays=30 resolving OQ-A4, Snapshot.BuildHourUtc, Snapshot.QuiesceTimeoutSeconds, Snapshot.MaxBuildSeconds, Restore.PrimaryAckTimeoutSeconds)*

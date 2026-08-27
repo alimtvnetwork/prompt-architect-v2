@@ -44,6 +44,7 @@ ELSE
 ```
 
 Implementer obligations:
+
 1. The check MUST live in middleware, not the handler.
 2. The check MUST read `Settings.Env` from Seedable-Config (key `MainWorker.Environment`); never from a request-scoped value.
 3. The check MUST be covered by a regression test that asserts 403 when `Env=Production`.
@@ -90,7 +91,7 @@ Each Worker independently asks Main "what version should I be running?" and self
 - **Headers:** `X-Correlation-Id` (mandatory), `X-Worker-Identity` (mirror of `WorkerNodeIdentity`).
 - **Response 200 (no update needed):**
   ```json
-  { "DesiredVersion": "1.10.0", "CurrentVersion": "1.10.0", "InstructionRequired": false }
+  { "DesiredVersion": "1.12.0", "CurrentVersion": "1.12.0", "InstructionRequired": false }
   ```
 - **Response 200 (update needed):** Full JID per `spec/14-update/28-worker-push-instruction.md` §3, with `PayloadUrl` pointing at Main's release store.
 - **Response 304 Not Modified:** when `If-None-Match: <ETag>` matches; saves bandwidth.
@@ -153,9 +154,9 @@ Allow a Worker to keep updating itself even when Main is unreachable. Source of 
 ```jsonc
 {
   "ManifestVersion": "1.0.0",
-  "LatestVersion": "1.10.0",
+  "LatestVersion": "1.12.0",
   "MinimumWorkerVersion": "1.4.0",
-  "PayloadUrl": "https://releases.example.com/worker/1.10.0/worker-1.10.0.zip",
+  "PayloadUrl": "https://releases.example.com/worker/1.12.0/worker-1.12.0.zip",
   "PayloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "PayloadSizeBytes": 18234567,
   "PayloadSignatureBase64": "MEUCIQDx...==",
@@ -197,6 +198,7 @@ All three channels produce a JID with a unique `InstructionId` (ULID). Worker de
 ### 5.3 No double-apply guard
 
 Worker MUST persist a `LastAppliedInstructionId` in the Settings tier. On startup, Worker:
+
 1. Reads `LastAppliedInstructionId`.
 2. If a channel offers an InstructionId equal to this, skip with `INSTRUCTION_ALREADY_APPLIED` (200 OK).
 

@@ -50,6 +50,7 @@ If you need to generate any temporary code, scripts, or scratch files to aid in 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
 
 To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` directory for tracking sub-agent tasks.
+
 - On Start: The sub-agent creates `.lovable/temp-agents/<task-name>.md` and writes the objective and `STATUS: IN_PROGRESS`.
 - On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.
 - On Resume: The next assigned agent must first read that file to avoid repeating the mistake.

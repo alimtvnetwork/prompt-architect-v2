@@ -105,7 +105,7 @@ Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/ali
 
 # Import a specific version into a specific folder
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1 -OutFile install.ps1
-.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.10.0"
+.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.12.0"
 ```
 
 **Using Bash (macOS/Linux):**
@@ -116,7 +116,7 @@ curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/mai
 # Import a specific version into a specific folder
 curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh
 chmod +x install.sh
-./install.sh ".lovable/prompts" "v1.10.0"
+./install.sh ".lovable/prompts" "v1.12.0"
 ```
 
 
@@ -125,6 +125,7 @@ chmod +x install.sh
 If you are using the `git map` ecosystem or a `ct` CLI wrapper, you can embed this installation seamlessly into your toolchain as `ct install-prompts`.
 
 Example CLI wrapper implementation (Node.js/Bash/PowerShell):
+
 1. Create a `ct install-prompts` command.
 2. The command should detect the host OS.
 3. If Windows, spawn: `Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1) }"`

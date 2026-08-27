@@ -33,10 +33,12 @@ You MUST follow the project's strict coding guidelines located in `spec/02-codin
 
 1. The Master Consolidated Guide
 *(The single source of truth containing summaries of all rules)*
+
 - `spec/17-consolidated-guidelines/02-coding-guidelines.md`
 
 2. Code Style & File Size Limits (80-100 lines max)
 *(Enforces strict size limitations: e.g., React components < 100 lines, functions < 15 lines, and basic formatting)*
+
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
 - `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
@@ -45,6 +47,7 @@ You MUST follow the project's strict coding guidelines located in `spec/02-codin
 
 3. Boolean Conditions & Positive Framing
 *(Dictates strict is/has prefixes, absolute ban on negative words like `not`/`no`, and extraction of complex logic)*
+
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
 - `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
@@ -54,6 +57,7 @@ You MUST follow the project's strict coding guidelines located in `spec/02-codin
 
 4. Variable Naming & Definitions
 *(Covers clean variable declaration, immutability, singular vs plural, and casing)*
+
 - `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
 - `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
 - `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
@@ -91,7 +95,6 @@ Once ALL pending tasks have been completed and marked `✅ Done`:
 ## Actionable Items & Checklist (All Must Be True)
 
 - [ ] Self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
-
 - [ ] Audited `.lovable/plans/pending/` and re-sequenced task filenames to `01-`, `02-`, etc., if incorrectly named.
 - [ ] Grouped tasks into Execution Waves and checked `.lovable/temp/active-locks.json` for file collisions.
 - [ ] Executed autonomously via continuous self-looping without stopping to ask user questions.
