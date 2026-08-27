@@ -1,7 +1,5 @@
 # Instruction (must follow): Execute Parent Task (N-Step Continuous Loop & Multi-Agent)
 
-
-
 ```text
 N = 20 
 ```
