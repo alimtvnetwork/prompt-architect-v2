@@ -56,17 +56,31 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
 1. Read the current version from the canonical version source. Print previous and new version. Confirm PATCH digit is `0`.
 
-2. Discover pin sites, then update every one to the new version in lock-step. Use a single canonical search:
-
+2. **Version Bumping (The Python Auto-Bumper Bootstrap)**:
+   You MUST NOT manually hunt and replace versions using `rg` in every release. Instead, rely on a dedicated python script: `.lovable/release/bump_versions.py`.
+   
+   **First-Time Bootstrap (If `.lovable/release/bump_versions.py` or `.lovable/memory/release-architecture.md` do NOT exist, or are outdated):**
+   - **Investigate:** Run a one-time global `rg` scan (`rg -n "<PREV_VERSION>" -g '!node_modules'`) across the repository to discover every file where the version is pinned (e.g., manifests, configs, constants).
+   - **Document:** Write `.lovable/memory/release-architecture.md` detailing all discovered pin sites, the version source of truth, and how releases are structured.
+   - **Generate Script:** Write the `.lovable/release/bump_versions.py` script. The script MUST:
+     - Accept an argument for the bump tier (`--type major`, `--type minor`, `--type patch`).
+     - Read the old version, bump it, and update the canonical version file.
+     - Explicitly open and replace the old version string with the new version string across all the discovered pin sites.
+     - GUARANTEE it pins the newest version into the root `readme.md` (lowercase).
+     - Include a `PROMPT_VERSION = "vX.Y.Z"` variable at the top so it knows when it needs to be regenerated.
+   - **Enqueue:** Add both files to `.lovable/what-to-read.md` and link them in the root `readme.md`.
+   
+   **Sample `bump_versions.py` structure:**
+   ```python
+   import argparse, re, json, sys
+   PROMPT_VERSION = "vX.Y.Z" # Tie this to the version of the release prompt that generated it
+   PIN_SITES = ["readme.md", "manifest.json", "package.json"]
+   
+   # ... [Implementation: parse args, bump SemVer, loop through PIN_SITES and replace old_version with new_version] ...
    ```
-   rg -n "\b<PREV_MAJOR>\.<PREV_MINOR>\.<PREV_PATCH>\b" -g '!node_modules' -g '!*.lock' -g '!.git' -g '!*test*' -g '!*.spec.*'
-   rg -n "\b(VERSION|APP_VERSION|EXTENSION_VERSION|SCHEMA_VERSION|CACHE_SCHEMA_VERSION|BUILD_VERSION)\b"
-   ```
 
-   Typical pin sites (non-exhaustive):
-
-   - Canonical version file (set `releaseDate` to UTC today if the field exists).
-   - Manifests: `manifest.json`, extension / plugin manifests.
+   **Normal Execution (If the script DOES exist and is up-to-date):**
+   - Execute it: `python .lovable/release/bump_versions.py --type minor` (or major/patch).
    - Source constants named like `VERSION`, `APP_VERSION`, `EXTENSION_VERSION`, `SCHEMA_VERSION`, `CACHE_SCHEMA_VERSION`, `BUILD_VERSION`.
    - `instruction.ts` / `instruction.md` / metadata files with a `Version:` field.
    - Sub-packages under `scripts/`, `standalone-scripts/`, `packages/`, `apps/` carrying their own version constant.

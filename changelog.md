@@ -1,5 +1,20 @@
 # Changelog
 
+## [v1.13.0] 2026-08-27 Python Auto-Bumper & Install Snippet Propagation
+
+### Install Prompt Architect v1.13.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.0/install.sh | bash -s -- ".lovable/prompts" "v1.13.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.13.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Replaced the rigid `rg` global search in the release prompts with a new **Python Auto-Bumper Bootstrap** phase. On the first release, the AI will scan the repository and auto-generate `.lovable/release/bump_versions.py` and a `.lovable/memory/release-architecture.md` brain file to explicitly map and handle all future version replacements without breaking context limits.
+- **Added:** Supplied a rich, functional Python skeleton for the Auto-Bumper script within the release prompts to ensure AIs generate robust bumping logic.
+- **Changed:** Propagated the non-negotiable **Install Snippet (Dynamic URL Discovery)** section to ALL remaining release scripts (`01`, `02`, `03`) and ALL execution/CI/CD/bug scripts (`09` and `14` series).
+- **Added:** Injected a strict rule into all Execution and CI/CD scripts commanding the AI to execute `bump_versions.py --type <tier>` for releases instead of manually trying to search and replace versions.
+
+
 ## [v1.12.0] 2026-08-27 Collapse Markdown Checklist Gaps
 
 ### Install Prompt Architect v1.12.0
@@ -101,6 +116,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

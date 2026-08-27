@@ -42,3 +42,16 @@ You must update `version.json`, `changelog.md`, and `readme.md` at a minimum dur
 - [ ] Execute `git commit -m "chore(release): bump version to <new_version>"`
 - [ ] Execute `git push`
 - [ ] AVOID: Do NOT create a git tag (e.g., `git tag`). Tags are managed externally by Git Map.
+
+
+## Install Section (Non-Negotiable)
+
+When generating release notes, changelogs, or README updates, you MUST include the install snippet:
+
+### Install <Project Name> vX.Y.Z
+
+To pin your repository to this exact version, run the following one-liner:
+Unix/Bash: `curl -sL https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.sh | bash -s -- ".lovable/prompts" "vX.Y.Z"`
+PowerShell: `Invoke-WebRequest -Uri https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "vX.Y.Z"`
+
+*(Note: You MUST dynamically discover the `<owner>/<repo>` by running `git config --get remote.origin.url`.)*

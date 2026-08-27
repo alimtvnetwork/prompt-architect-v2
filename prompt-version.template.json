@@ -1,6 +1,6 @@
 {
   "name": "target-project-name",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "frontend": {
     "version": "inherit"
   },
@@ -12,7 +12,7 @@
     "format": "## [v{version}] {date} {headline}"
   },
   "promptArchitectByRiseupAsia": {
-    "version": "v1.12.0",
+    "version": "v1.13.0",
     "installed_at": "2026-08-26T12:00:00Z",
     "author": {
       "name": "Md. Alim Ul Karim",

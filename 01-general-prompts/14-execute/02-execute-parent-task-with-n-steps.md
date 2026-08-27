@@ -99,3 +99,20 @@ To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` d
 - On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.
 - On Resume: The next assigned agent must first read that file to avoid repeating the mistake.
 - On Success: Update the file to `STATUS: DONE` and immediately update the master plan.
+
+
+## Install Section (Non-Negotiable for Releases)
+
+When generating release notes, changelogs, or README updates during a release task, you MUST include the install snippet:
+
+### Install <Project Name> vX.Y.Z
+
+To pin your repository to this exact version, run the following one-liner:
+Unix/Bash: `curl -sL https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.sh | bash -s -- ".lovable/prompts" "vX.Y.Z"`
+PowerShell: `Invoke-WebRequest -Uri https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "vX.Y.Z"`
+
+*(Note: You MUST dynamically discover the `<owner>/<repo>` by running `git config --get remote.origin.url`.)*
+
+## Version Bumping Rule
+
+If the task involves a release, DO NOT manually search and replace versions. Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`. If the script does not exist, fall back to the release prompt bootstrapping rules.
