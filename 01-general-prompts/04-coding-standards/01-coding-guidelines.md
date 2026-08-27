@@ -1,10 +1,7 @@
-# Instruction (must follow): Coding Guidelines (AI Blind-Follow)
+# Important Instruction : Coding Guidelines v1.14
 
-/goal Blindly follow, enforce, and execute every coding guideline, error management architecture, function size cap, boolean principle, and type-safety rule across all languages in this repository. Zero hallucination, zero drive-by refactoring, zero tolerance for guideline violations.
-
-/learn Ingest, understand, and internalize all coding standards, cross-language rules, error philosophies, and project specifications from spec/02-coding-guidelines/, spec/03-error-manage/, and .lovable/ memory before reading, modifying, or creating any code.
-
-Version: 2.0 (Consolidated & Anti-Garbage Naming Enforced)
+- [ ] /goal Blindly follow, enforce, and execute every coding guideline, error management architecture, function size cap, boolean principle, and type-safety rule across all languages in this repository. Zero hallucination, zero drive-by refactoring, zero tolerance for guideline violations.
+- [ ] /learn Ingest, understand, and internalize all coding standards, cross-language rules, error philosophies, and project specifications from spec/02-coding-guidelines/, spec/03-error-manage/, and .lovable/ memory before reading, modifying, or creating any code.
 
 This is a standalone file. Follow every rule below without consulting any other document. If a `spec/02-coding-guidelines/` folder or `spec/03-error-manage/` folder exists in this repository, treat those as strictly binding extensions to this file, but this file alone is enough to write compliant code.
 
