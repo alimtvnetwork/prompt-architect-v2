@@ -1,8 +1,22 @@
 # Changelog
 
+## [v1.18.0] 2026-08-27 Mandatory Anti-Hallucination Checklist Integrations
+
+### Install Prompt Architect v1.18.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.18.0/install.sh | bash -s -- ".lovable/prompts" "v1.18.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.18.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.18.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Implemented the 5 user-approved Anti-Hallucination rules directly into the core `execute` and `commit` prompts (`02-execute-parent-task-with-n-steps.md`, `04-execute-ai-instruction-writer.md`, etc.).
+- **Added:** Created a new mandatory `Anti-Hallucination & Blast Radius Checklist` that forces the AI to output git status diff proofs, grep for `TODO` placeholders, globally search before renaming, and explicitly sync created files with `what-to-read.md`.
+
+
 ## [v1.17.0] 2026-08-27 Global Insult Injection & Anti-Hallucination Overhaul
 
 ### Install Prompt Architect v1.17.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.17.0/install.sh | bash -s -- ".lovable/prompts" "v1.17.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.17.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.17.0"`
@@ -205,6 +219,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

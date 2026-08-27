@@ -124,3 +124,14 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 ## Version Bumping Rule
 
 If the task involves a release or version bump, DO NOT manually search and replace versions across files. Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`. If the script does not exist, trigger the first-time release bootstrapping phase to generate it.
+
+## 4. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
+
+Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
+
+- [ ] **Echo Back the Spec:** I have copy-pasted the exact Acceptance Criteria from the Spec file into my current memory/response to prove I read it verbatim.
+- [ ] **Pre-Commit Diff Proof:** I have executed `git status` or `git diff --stat` and verified that the files I claim to have modified are actually listed as modified in the terminal output before committing.
+- [ ] **No Placeholder Search:** I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
+- [ ] **Index Sync Deadman Switch:** I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
+- [ ] **Blast Radius Acknowledgment:** Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
+

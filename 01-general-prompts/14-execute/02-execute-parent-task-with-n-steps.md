@@ -51,7 +51,17 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 - [ ] **Temp Scripts:** All temporary code was written to `.lovable/temp-scripts/` and NOT committed to Git.
 - [ ] **Action Summary:** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
-## 4. End of Tunnel Release Checklist (Anti-Hallucination)
+## 4. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
+
+Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
+
+- [ ] **Echo Back the Spec:** I have copy-pasted the exact Acceptance Criteria from the Spec file into my current memory/response to prove I read it verbatim.
+- [ ] **Pre-Commit Diff Proof:** I have executed `git status` or `git diff --stat` and verified that the files I claim to have modified are actually listed as modified in the terminal output before committing.
+- [ ] **No Placeholder Search:** I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
+- [ ] **Index Sync Deadman Switch:** I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
+- [ ] **Blast Radius Acknowledgment:** Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
+
+## 5. End of Tunnel Release Checklist (Anti-Hallucination)
 
 When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and check off these items in your final report:
 
