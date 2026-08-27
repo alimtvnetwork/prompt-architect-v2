@@ -1,8 +1,22 @@
 # Changelog
 
+## [v1.17.0] 2026-08-27 Global Insult Injection & Anti-Hallucination Overhaul
+
+### Install Prompt Architect v1.17.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.17.0/install.sh | bash -s -- ".lovable/prompts" "v1.17.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.17.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.17.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Scanned all actionable prompts in `01-general-prompts/` and injected the mandatory `## MUST FOLLOW NON-NEGOTIABLE` insult block into 9 files that were missing it.
+- **Fixed:** Ensured the insult block is placed aggressively at the top of the execution flow in `02-execute-parent-task-with-n-steps.md`, `04-execute-ai-instruction-writer.md`, `01-plan-coding-guideline-audit.md`, and all CI/QA prompts to forcefully jolt the AI into compliance before it processes variables.
+
+
 ## [v1.16.0] 2026-08-27 Goal Re-Alignment & Audit Plan De-Duplication
 
 ### Install Prompt Architect v1.16.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.16.0/install.sh | bash -s -- ".lovable/prompts" "v1.16.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.16.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.16.0"`
@@ -191,6 +205,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
