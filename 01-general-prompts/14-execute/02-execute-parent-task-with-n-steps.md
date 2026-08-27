@@ -16,24 +16,14 @@ You are the master orchestrator. If your sub-agents fail, hallucinate, write gar
 - If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
 - Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-slug/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
 
-## 2. The 50/50 Task Allocation Strategy (Mandatory Split)
+## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST
 
-You MUST strictly split your `N` steps into a 50/50 effort allocation model:
+Before doing anything else, you MUST write a highly detailed execution spec.
 
-### First 50% of Effort: Deep Planning & Specification Writing
+- **What to write:** Break down the parent task into a detailed architectural plan, code review guides, and embedded coding guidelines.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-<slug>.md`. Do not hallucinate folders.
+- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-<slug>/`. Every subtask file must contain actionable, microscopic instructions.
 
-The very first thing you must do is spend half of your allocated effort on writing a highly detailed specification and execution plan.
-
-- What to write: You must write out the parent task in a very detailed manner with actionable items, code review guides, and embedded checklists (including all coding guidelines).
-- Where to save it: You MUST put this plan properly into the `.lovable/plans/pending/` directory (e.g., `.lovable/plans/pending/XX-<slug>.md`). If subtasks are required, generate them in `.lovable/plans/subtasks/XX-<slug>/`.
-- Do not hallucinate folders. The plan MUST be saved into `.lovable/plans/pending/` before any execution begins.
-
-### Second 50% of Effort: Execution & Completion
-
-Once the detailed spec and plan are written to `.lovable/plans/pending/`, you will allocate the remaining 50% of your steps purely on execution and completion of that plan.
-
-- Read the plan you just generated and execute it flawlessly.
-- Push through until the task is completely resolved without a single failure.
 
 ## 3. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
@@ -42,64 +32,28 @@ Once the detailed spec and plan are written to `.lovable/plans/pending/`, you wi
 3. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
 
 
-## Execution Reporting (Mandatory Output Format)
+## 3. Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
 
-1. Start of Run (Initial Output): Before writing any code, explicitly list out all pending tasks in your output window.
-2. End of Run Summary: When all tasks are completed (or if the run concludes), you MUST output a comprehensive final summary containing:
-   - Completed Tasks: Explicit list of what was successfully completed.
-   - Pending Tasks Left: Explicit list of any tasks still remaining.
-   - Quality Assessment: A brief summary of how well the execution went.
-   - Compliance Checklist: A markdown checklist explicitly verifying that you followed the rules:
+You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
-## Compliance Checklist (must follow non negociable)
+- [ ] **Master Guidelines:** I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] **Error Management:** I have read and enforced `spec/03-error-manage/`. I used `AppError`/`AppException` and did not swallow errors.
+- [ ] **Boolean Conventions:** All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).
+- [ ] **Semantic Naming:** Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
+- [ ] **Formatting:** Signatures > 3 parameters or > 100 chars are split to one parameter per line. Newlines around every Markdown header (MD022) and lists are surrounded by blank lines (MD032).
+- [ ] **Acronyms & Magic Strings:** Acronyms are PascalCase (`UserId` not `UserID`). Magic strings/numbers are extracted to constants.
+- [ ] **Temp Scripts:** All temporary code was written to `.lovable/temp-scripts/` and NOT committed to Git.
+- [ ] **Action Summary:** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
-- [x] Coding Guidelines enforced (spec/02-coding-guidelines/ and follow explicitly every steps .lovable/coding-guidelines/coding-guidelines.md).
-- [x] Boolean conventions used (is/has prefixes, no negatives).
-- [x] No garbage variable names used.
-- [x] No magic strings or numbers.
-- [x] Markdown format verified (newlines around every header).
-- [x] Error management protocols followed (AppError/AppException).
-- [x] Signatures > 3 parameters or > 100 chars split to one parameter per line.
-- [x] Boolean conventions followed (e.g., `isFail` instead of `!isSuccess`).
-- [x] Acronyms are PascalCased (e.g., `UserId`, not `UserID`).
-- [x] Magic strings/numbers extracted to constants.
-- [x] Action Summary Checklist (Anti-Hallucination): I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to ensure no steps were hallucinated or skipped (e.g. `- [x] Created schema`, `- [x] Pinned README`).
+## 4. End of Tunnel Release Checklist (Anti-Hallucination)
 
-## End of Tunnel Release (Anti-Hallucination Checklist)
+When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and check off these items in your final report:
 
-Past execution turns were sloppy and failed to pin READMEs or bump versions. To prevent this hallucination, when EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and physically check off these items in your final report:
-
-- [ ] Minor Bump: I have bumped the MINOR version in the canonical `version.json` file.
-- [ ] Test File Ban: I have strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
-- [ ] Root readme.md (lowercase always) Pinning (FATAL): I have pinned the latest release version into the root `readme.md` file! I have verified badges and install snippets match the new version.
-- [ ] Changelog Formatting: I have updated the changelog exactly according to the `version.json` format.
-- [ ] Release Architecture Map: I have maintained `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in the root `readme.md`.
-
-## 4. Pre-Commit Verification Checklist (Must Follow)
-
-Before marking the parent task as complete and pushing to the repository, you MUST manually verify every item on this checklist. If a subagent violated one of these rules, you must reject their work and make them fix it.
-
-- [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
-- [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
-- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
-- [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
-- [ ] Function Size: No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
-- [ ] Error Handling (AppError): Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
-- [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
-- [ ] Formatting & Acronyms: Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
-- [ ] Artifacts: Any user-provided images are correctly saved in `.lovable/assets/<category>/`.
-- [ ] Git Hygiene: The Git working tree is completely clean, `.lovable/temp-scripts/` is untracked, and all tests pass locally.
-
-### Temp-Agent State Management Protocol (Non-Negotiable)
-
-To ensure agents do not lose context, you MUST use the `.lovable/temp-agents/` directory for tracking sub-agent tasks.
-
-- On Start: The sub-agent creates `.lovable/temp-agents/<task-name>.md` and writes the objective and `STATUS: IN_PROGRESS`.
-- On Error/Crash: If an agent breaks or fails, append the exact error and cause to the file, then append `STATUS: FAILED` before closing.
-- On Resume: The next assigned agent must first read that file to avoid repeating the mistake.
-- On Success: Update the file to `STATUS: DONE` and immediately update the master plan.
-
+- [ ] **Minor Bump:** I bumped the MINOR version in the canonical version file.
+- [ ] **Test File Ban:** I strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
+- [ ] **Root Readme Pinning:** I pinned the latest release version into the root `readme.md` (lowercase) file!
+- [ ] **Release Architecture Map:** I updated `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in `readme.md`.
+- [ ] **Dynamic Install Snippet:** I included the `### Install <Project Name>` snippet dynamically parsing the Git config, as required by the Install Section.
 
 ## Install Section (Non-Negotiable for Releases)
 

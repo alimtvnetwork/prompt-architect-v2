@@ -1,8 +1,24 @@
 # Changelog
 
+## [v1.14.0] 2026-08-27 Execute Prompts Checklist Consolidation & Spec Phase
+
+### Install Prompt Architect v1.14.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.14.0/install.sh | bash -s -- ".lovable/prompts" "v1.14.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.14.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.14.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Changed:** Restructured the `02-execute-parent-task-with-n-steps.md` and `04-execute-ai-instruction-writer.md` prompts to explicitly force a "Phase 1: Write Spec" step. Agents MUST write a detailed spec to `.lovable/plans/pending/XX-<slug>.md` before writing code.
+- **Changed:** Differentiated the goals of the two execution prompts. `02` focuses on writing subtasks (`.lovable/plans/subtasks/`) for multi-agent execution, while `04` focuses on writing a generic AI instruction spec and outputting it to the chat window for cross-library sharing.
+- **Fixed:** Consolidated the messy, scattered checklists in the execution prompts into exactly two unified blocks: **Non-Negotiable Coding Guidelines Checklist** (which now heavily focuses on MD022, MD032, Boolean logic, and error envelopes) and the **End of Tunnel Release Checklist**.
+- **Removed:** Stripped out the "status task" (Temp-Agent State Management Protocol) checklists to reduce noise and prevent AI hallucination.
+
+
 ## [v1.13.1] 2026-08-27 File Encoding / Null Byte Fixes
 
 ### Install Prompt Architect v1.13.1
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.1/install.sh | bash -s -- ".lovable/prompts" "v1.13.1"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.1/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.13.1"`
@@ -15,6 +31,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.13.0] 2026-08-27 Python Auto-Bumper & Install Snippet Propagation
 
 ### Install Prompt Architect v1.13.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.0/install.sh | bash -s -- ".lovable/prompts" "v1.13.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.13.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.13.0"`
@@ -128,3 +145,4 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
