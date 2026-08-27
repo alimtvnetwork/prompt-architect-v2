@@ -109,7 +109,6 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 - [ ] /learn `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`
 - [ ] /learn `spec/02-coding-guidelines/06-ai-optimization/03-common-ai-mistakes.md`
 - [ ] /learn `spec/03-error-manage/00-overview.md`
-
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.
@@ -117,7 +116,6 @@ Listen, past next-tasks turns have been sloppy as fuck: wrong step count, missin
 - [ ] Group all completed work into a single logical commit.
 - [ ] Anti-Hallucination Check: Before finalizing the plan or writing code, you MUST use read/search tools to verify that every file, function, enum, and variable mentioned actually exists in the codebase. Do not guess.
 - [ ] Push the commit to the remote repository.
-
 - [ ] Self-loop continuously until all the code issues are listed out in tasks and pending tasks.
 - [ ] Describe all issues found for each file.
 - [ ] List all files that need to be tested against.

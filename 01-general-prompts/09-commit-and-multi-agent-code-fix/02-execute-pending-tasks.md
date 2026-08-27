@@ -56,7 +56,6 @@ Once ALL pending tasks have been completed and marked `✅ Done`:
 ## Actionable Items & Checklist (All Must Be True)
 
 - [ ] Self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
-
 - [ ] Audited `.lovable/plans/pending/` and re-sequenced task filenames to `01-`, `02-`, etc., if incorrectly named.
 - [ ] Grouped tasks into Execution Waves and checked `.lovable/temp/active-locks.json` for file collisions.
 - [ ] Executed autonomously via continuous self-looping without stopping to ask user questions.

@@ -107,7 +107,6 @@ By default, you operate in a strict Plan & Wait mode.
 
 - [ ] Anti-Boilerplate Check: Did I copy-paste the exact same "How" steps across multiple tasks? (If yes, you are acting stupid. Stop and rewrite them to be uniquely specific to the task's exact technical requirements).
 - [ ] Cognitive Check: Does every task contain "all the brains" (exact logic, specific paths, deep architectural context) so a lower-level agent can execute it without guessing?
-
 - [ ] /learn the overarching main task plan.
 - [ ] Read `.lovable/memory/00-index.md` and `.lovable/plans/index.md` before planning.
 - [ ] Ensure the git repository starts completely clean.

@@ -1,6 +1,6 @@
 # 31. Compiled Simple Coding Guidelines (AI Blind-Follow)
 
-Version: 1.11.0
+Version: 1.12.0
 
 Prompt Architect Version: 1.0.0 (Synced)
 

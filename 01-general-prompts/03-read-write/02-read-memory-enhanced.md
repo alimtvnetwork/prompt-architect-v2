@@ -357,7 +357,6 @@ Then stop. No next-step suggestions, no exploratory questions.
 - [ ] /learn all hard prohibitions in `.lovable/strictly-avoid.md` and verify zero violations.
 - [ ] /learn the enum standards and fixes in: `spec/17-consolidated-guidelines/04-enum-standards.md` and `spec/02-coding-guidelines/06-ai-optimization/05-enum-naming-quick-reference.md` and create memory.
 - [ ] /learn ALL other single-file specs in `spec/02-coding-guidelines/` and create memory.
-
 - [ ] /learn the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] /goal Complete all work on the current branch only.

@@ -1,8 +1,21 @@
 # Changelog
 
+## [v1.12.0] 2026-08-27 Collapse Markdown Checklist Gaps
+
+### Install Prompt Architect v1.12.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.12.0/install.sh | bash -s -- ".lovable/prompts" "v1.12.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.12.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.12.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Fixed:** Executed a repository-wide regex sweep to collapse all "loose" markdown checklists. Every `- [ ]` checklist item that was previously separated by an ugly empty blank line has been tightly condensed to improve visual readability across all `01-general-prompts`, `.lovable/prompts`, and `spec` files.
+
+
 ## [v1.11.0] 2026-08-27 Dynamic Git Install Script Detection
 
 ### Install Prompt Architect v1.11.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.11.0/install.sh | bash -s -- ".lovable/prompts" "v1.11.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.11.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.11.0"`
@@ -87,6 +100,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

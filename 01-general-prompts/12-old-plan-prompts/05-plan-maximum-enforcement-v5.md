@@ -163,7 +163,6 @@ For every task, you MUST check if the following files or folders exist. If they 
 
 7. Database Conventions
 - /learn `spec/04-database-conventions/` (for schemas and queries)
-
 - If NONE exist for a coding task, ask before planning.
 
 ## Banned actions (auto-reject)
@@ -214,7 +213,6 @@ By default, you operate in a strict Plan & Wait mode.
 
 - [ ] Anti-Boilerplate Check: Did I copy-paste the exact same "How" steps across multiple tasks? (If yes, you are acting stupid. Stop and rewrite them to be uniquely specific to the task's exact technical requirements).
 - [ ] Cognitive Check: Does every task contain "all the brains" (exact logic, specific paths, deep architectural context) so a lower-level agent can execute it without guessing?
-
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.

@@ -378,7 +378,6 @@ Before committing changes to `.github/workflows/*.yml`, `release.sh`, `install.s
 - [ ] Missing required secrets fail loudly (no silent skip)? — Issue #11
 - [ ] Asset naming centralized; checksum generated in artifact `working-directory`? — Issue #12
 - [ ] Any `winres.json`-referenced PNG is ≤ 256×256? — Issue #4
-
 - [ ] This ledger updated if a new failure mode was discovered.
 
 ---

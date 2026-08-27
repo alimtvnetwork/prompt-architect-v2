@@ -22,7 +22,6 @@ Context & References:
   - Positive boolean naming (`is` / `has`). No `isNot`. Use inverse naming (e.g., `isHonest` / `isDishonest` instead of `isNotHonest`). No nested `if`s, no magic values.
   - Style: Ensure a blank line before every `return` statement.
   - Golang Single Return & Wrapped Booleans: Strictly return a single parameter (bundle multiple returns into a struct). No raw booleans returned in Go. Return a single Result struct (bundling Data, AppError, and Status together) with two flags (`IsSuccess` and `IsFailed`) managed by a constructor (`NewSuccess`/`NewFailure`).
-
   - Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):
     ```go
     paymentStatus := ProcessPayment(100)
@@ -81,7 +80,6 @@ Context & References:
 - [ ] Read and adhere to: `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`
 - [ ] Read and adhere to: `spec/02-coding-guidelines/06-ai-optimization/03-common-ai-mistakes.md`
 - [ ] Read and adhere to: `spec/03-error-manage/00-overview.md`
-
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.

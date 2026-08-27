@@ -93,9 +93,7 @@ If any mirror is missing or stale, run `node scripts/sync-guidelines.mjs` before
 Also binding if present, treat as strict extensions:
 
 - `spec/xx-coding-guidelines/` (any language-specific subfolder inside).
-
 - `spec/xx-error-manage/`.
-
 - Boolean, Enum, and logging guideline files referenced from the source of truth.
 
 ### Hard rules (zero tolerance)
@@ -269,17 +267,11 @@ Same rules for TypeScript, PHP, Rust, C#, PowerShell, Python. Only comment synta
 ### Language one-liners
 
 - Go: result type, not `(T, error)`. Wrap errors with an operation label. Enums are `type X byte` plus `iota`, never string constants.
-
 - TypeScript: `Promise.all` for independent async, never sequential `await`. No `any`. `readonly` on interface fields by default.
-
 - Rust: `Result<T, E>` with a `thiserror`-style enum. `let`, not `let mut`, unless mutation is the point.
-
 - PHP: enum comparison via method call (`->isEqual()`), never `===`.
-
 - PowerShell: `Verb-Noun` PascalCase function names, `lowercase-kebab-case` filenames.
-
 - C#: PascalCase methods and properties, `_camelCase` private fields, `I`-prefix interfaces.
-
 - Python: `snake_case` functions and variables, `PascalCase` classes, type hints on every public function, `dataclass` or `pydantic` for structured records.
 
 ### Workflow
@@ -309,7 +301,6 @@ Write or update `.lovable/coding-guidelines/coding-guidelines.md` and `.cursorru
 ## Acceptance criteria
 
 - [ ] Measurable check 1
-
 - [ ] Measurable check 2
 
 ## Ambiguities
@@ -327,61 +318,35 @@ If you have any question or confusion, feel free to ask. If you are creating mul
 ## Banned actions (auto-reject)
 
 - Executing, planning, or scaffolding anything the input describes.
-
 - Calling `plan--create` or any plan-mode / approval tool.
-
 - Dropping the `TO AI` footer.
-
 - Dropping the coding guidelines block on a coding-adjacent prompt.
-
 - Inventing sections the user did not include (SEO, marketing, analytics, etc.).
-
 - Softening the aggressive wording of this instruction file.
-
 - Closing the outer code block early with a matching fence length inside.
-
 - Writing per-invocation prompt archives. Only the canonical `.lovable/prompts/xx-proof-read.md` is written, once, and only when this proofread instruction itself changes.
-
 - Using em dashes anywhere.
-
 - Guessing on ambiguity instead of listing it.
 
 ## Checklist before replying (every box)
 
 - [ ] Read `.lovable/what-to-read.md` and root `README.md`; noted if missing.
-
 - [ ] Kept ONE outer fenced code block; inner fences use a different length.
-
 - [ ] Title line matches `# {Title} Instruction`.
-
 - [ ] Verbatim preserved after cleaning filler; zero meaning lost.
-
 - [ ] Numbering hierarchy is `1.` / `a.` / `i.` only.
-
 - [ ] PascalCase applied to every table, column, JSON key, enum name.
-
 - [ ] Type / Status / Category / Kind promoted to joined tables where relevant.
-
 - [ ] Common replacer applied (`CW configuration`, `git map`).
-
 - [ ] Coding guidelines block included whenever the input touches code, DB, or UI logic.
-
 - [ ] Database section uses markdown tables with PK/FK/joins, not SQL.
-
 - [ ] UI section defines fields, theme, every step, no gaps.
-
 - [ ] Steps are sequenced when the input mentions steps.
-
 - [ ] Acceptance criteria present and measurable.
-
 - [ ] Ambiguities listed, not guessed.
-
 - [ ] `TO AI` footer present, with the "if you have any question" paragraph verbatim.
-
 - [ ] No em dashes anywhere. No SEO items. No fabricated sections.
-
 - [ ] Canonical mirror updated only if THIS proofread instruction changed. No per-invocation archive of the user's input.
-
 - [ ] Nothing executed. No `plan--create`.
 
 If any box is unchecked, do not reply. Fix it first.

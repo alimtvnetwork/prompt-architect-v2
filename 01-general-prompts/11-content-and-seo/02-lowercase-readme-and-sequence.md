@@ -7,17 +7,13 @@ Enforce these naming rules across the entire repository:
 2. Sequence-prefixed markdown files must use `xx-lower-case.md` slug form: any markdown file that begins with a numeric sequence prefix must follow the pattern `NN-kebab-lower-case.md` where:
 
    - `NN` is a two-digit zero-padded number (`01`, `02`, ..., `99`)
-
    - The remainder is all lowercase, words separated by single hyphens (`-`)
-
    - No spaces, no underscores, no PascalCase or camelCase, no uppercase letters
-
    - The `.md` extension is lowercase
 
    Examples:
 
    - ✅ `01-overview.md`, `02-coding-guidelines.md`, `13-cicd-pipeline.md`
-
    - ❌ `1-Overview.md`, `01_Coding_Guidelines.md`, `13-CICD-Pipeline.MD`
 
 ## Execution Steps
@@ -35,9 +31,7 @@ Enforce these naming rules across the entire repository:
 ## Important
 
 - Do not skip nested folders.
-
 - Do not leave both `README.md` and `readme.md` (case-only renames on case-insensitive filesystems require a two-step `git mv`).
-
 - Bump the minor version of the codebase after this change, per repo convention.
 
 ---

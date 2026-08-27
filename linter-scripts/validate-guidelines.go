@@ -1,6 +1,6 @@
 // Package main — Cross-Language Coding Guidelines Validator (Go Edition)
 //
-// Version: 1.11.0  (2026-04-19) — Added P2/P3/P5/P7 boolean-principle checks.
+// Version: 1.12.0  (2026-04-19) — Added P2/P3/P5/P7 boolean-principle checks.
 //
 // A Go port of validate-guidelines.py that validates Go, PHP, TypeScript,
 // and Rust source files against the coding guidelines defined in
