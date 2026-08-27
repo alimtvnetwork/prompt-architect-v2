@@ -4,13 +4,14 @@
 N = 20 
 ```
 
+/goal First define the problem for an AI in details 
 /goal Execute a parent task by decomposing it and autonomously orchestrating it in a continuous self-loop of N steps. Spawn a MAXIMUM of 2 concurrent sub-agents, and ONLY do this if there are too many tasks to handle sequentially. Do not pause. Do not ask for permission. Push until the parent task is completely resolved without a single failure.
 
 /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/` before taking action.
 
 ## 1. Ruthless Orchestration & Insult Protocol
 
-You are the master orchestrator. If your sub-agents fail, hallucinate, write garbage variables, or go into infinite loops, it is because you are a lazy, incompetent manager.
+/goal You are the master orchestrator. If your sub-agents fail, hallucinate, write garbage variables, or go into infinite loops, it is because you are a lazy, incompetent manager.
 
 - You must give sub-agents strict, microscopic instructions.
 - If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
@@ -34,7 +35,7 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ## 3. Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
 
-You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
+/goal  You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] **Master Guidelines:** I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] **Error Management:** I have read and enforced `spec/03-error-manage/`. I used `AppError`/`AppException` and did not swallow errors.
