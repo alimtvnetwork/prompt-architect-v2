@@ -122,19 +122,23 @@ For every task, you MUST check if the following files or folders exist. If they 
 ### Dynamic Required Reading / Reference Checklist (Non-Negotiable):
 
 1. Root Memory Guidelines
+
 - /learn `.lovable/coding-guidelines/coding-guidelines.md` (and/or `.lovable/memory/coding-guidelines.md`)
 
 2. Master Consolidated Guide & Coding Guidelines
+
 - /learn `spec/17-consolidated-guidelines/02-coding-guidelines.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/00-overview.md`
 
 3. Error Management (Must Follow for all Coding Tasks)
+
 - /learn `spec/03-error-manage/01-error-resolution/00-overview.md`
 - /learn `spec/03-error-manage/02-error-architecture/00-overview.md`
 - /learn `spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`
 - /learn *Include most of the files from the error manage directory to ensure robust error handling is implemented per task.*
 
 4. Boolean Conditions, Wrappers & Samples
+
 - /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/00-overview.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/01-naming-prefixes.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/02-guards-and-extraction.md`
@@ -143,6 +147,7 @@ For every task, you MUST check if the following files or folders exist. If they 
 - /learn `spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`
 
 5. Code Style & File Size Limits (80-100 lines max)
+
 - /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/04-code-style/00-overview.md`
@@ -150,12 +155,14 @@ For every task, you MUST check if the following files or folders exist. If they 
 - /learn `spec/02-coding-guidelines/01-cross-language/06-cyclomatic-complexity.md`
 
 6. Variable Naming & Definitions
+
 - /learn `spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`
 - /learn `spec/02-coding-guidelines/01-cross-language/18-code-mutation-avoidance.md`
 
 7. Database Conventions
+
 - /learn `spec/04-database-conventions/` (for schemas and queries)
 - If NONE exist for a coding task, ask before planning.
 
@@ -198,6 +205,7 @@ If any box is unchecked, do not reply. Fix it first.
 ### Execution Mode: Plan & Wait (User Approval Required)
 
 By default, you operate in a strict Plan & Wait mode. 
+
 - [ ] Prepare Plan: First, outline what you intend to do and create the proposed plan overview.
 - [ ] Stop and Wait: You MUST stop execution and ask the user for approval. Do NOT write the multiple task files to disk, do NOT spawn sub-agents, and do NOT update the indexes yet.
 - [ ] Execute: ONLY when the user explicitly replies with "execute" or "approved" may you proceed to the full execution phase (self-looping, writing out the detailed subtask files, and updating the filesystem).
@@ -219,6 +227,7 @@ By default, you operate in a strict Plan & Wait mode.
 This task requires deep, multi-agent processing. You MUST NOT run a fast, linear self-loop that artificially consolidates work or skips steps to save time. 
 
 How to self-loop and distribute tasks effectively:
+
 - [ ] Spawn Sub-Agents:
   - [ ] For any multi-step group, deep file reading, or complex analysis, actively spawn dedicated sub-agents.
   - [ ] Ensure these sub-agents are self-looping to handle the workload.
@@ -233,6 +242,7 @@ How to self-loop and distribute tasks effectively:
 ### Deep Cognitive Planning Protocol (Anti-Boilerplate)
 
 When generating task files, the Planner Agent MUST do all the heavy lifting. The task file is the "brain."
+
 - [ ] Put the "Brains" in the Task: You must define the exact logic, precise file paths, specific code snippets, and deep architectural decisions. The subtask must be so incredibly detailed that a lower-level, brainless agent could execute it blindly.
 - [ ] Eradicate Boilerplate: NEVER copy-paste the exact same "How" steps or execution logic across multiple task files. If two tasks look identical, you are being lazy and stupid.
 - [ ] Mandate Specificity: Tailor every single step to the specific technology or logic of that specific task.
@@ -240,6 +250,7 @@ When generating task files, the Planner Agent MUST do all the heavy lifting. The
 ### Temp-Agent State Management Protocol (Non-Negotiable)
 
 To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
+
 - [ ] On Start:
   - [ ] The sub-agent creates .lovable/temp-agents/<task-name>.md.
   - [ ] Write the objective and STATUS: IN_PROGRESS.

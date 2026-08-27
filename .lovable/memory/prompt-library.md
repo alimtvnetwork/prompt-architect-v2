@@ -70,6 +70,7 @@ but macOS/Windows filesystems and editor tabs do not, so both spellings appeared
 exist at once and the stale entry kept resurfacing.
 
 Standing rule (non-negotiable):
+
 - Exactly ONE readme at the repo root, named lowercase `readme.md`.
 - Never create `README.md`, never keep both, never reintroduce an uppercase readme
   anywhere in the repo (including `src/routes/readme.md`).
@@ -80,6 +81,7 @@ Standing rule (non-negotiable):
 ## 8. "Keep as is" prompts
 
 When the user says to keep a prompt as is (no proofread, do not change anything):
+
 - Store the prompt body VERBATIM under `## Prompt` — no filler-word removal, no rewording,
   no reordering, nothing added or removed.
 - Only the "Actionable Items & Checklist and non-negotiable must follow" section may be

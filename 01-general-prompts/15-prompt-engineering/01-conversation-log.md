@@ -21,10 +21,12 @@
 Target folder: `conversation/` at repo root (create if missing).
 
 File naming: `NNN-hyphen-title-slug.md` where:
+
 - `NNN` = next available 3-digit sequence (scan existing files; do not collide).
 - `hyphen-title-slug` = short kebab-case summary of the dominant topic of that chunk (≤ 6 words).
 
 Chunking policy:
+
 - One file per logical user-driven topic shift, OR per session if the session stayed on one topic.
 - If the entire prior history is one topic, write one file (e.g. `001-bootstrap-session.md`).
 
@@ -71,6 +73,7 @@ Topic: <one-line summary>
 ```
 
 Rules:
+
 - User prompts are verbatim (preserve typos, casing, punctuation). Wrap each in a blockquote.
 - Assistant side is a terse factual summary only - never paste internal reasoning, never invent quotes.
 - Use UTC ISO-8601 for stored timestamps; render local time only in UI.

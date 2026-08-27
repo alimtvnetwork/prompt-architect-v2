@@ -3,6 +3,7 @@
 ## [v1.12.0] 2026-08-27 Collapse Markdown Checklist Gaps
 
 ### Install Prompt Architect v1.12.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.12.0/install.sh | bash -s -- ".lovable/prompts" "v1.12.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.12.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.12.0"`

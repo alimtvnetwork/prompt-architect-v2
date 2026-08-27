@@ -64,6 +64,7 @@ type StackFrame struct {
 ```
 
 **Methods:**
+
 - `String() string` — formats as `"function\n      file:line"`
 
 ### 1.2 StackTrace Type
@@ -76,6 +77,7 @@ type StackTrace struct {
 ```
 
 **Fields:**
+
 - `Frames` — ordered list of captured stack frames
 - `PreviousTrace` — when two stack traces are merged (e.g., re-wrapping an error), the original trace is stored here as a formatted string
 
@@ -91,6 +93,7 @@ func CaptureStackN(skip int, maxFrames int) StackTrace
 ```
 
 **Rules:**
+
 - Default max frames: **18** (sufficient for most call chains)
 - `skip` parameter: number of frames to skip from the top
   - `New()` and `Wrap()` use `skip=2` (skip `runtime.Callers` + constructor)

@@ -63,6 +63,7 @@ VERSION="${GITHUB_REF#refs/heads/release/}"
 ```
 
 The resolved version is used for:
+
 - Build-time `-ldflags` embedding
 - Archive file naming
 - Install script placeholder substitution

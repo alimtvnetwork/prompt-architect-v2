@@ -5,6 +5,7 @@
 /learn Ingest and internalize all coding standards, boolean extraction patterns, and error management rules before applying fixes.
 
 Context & References:
+
 - /learn master cross-language coding guidelines: `spec/02-coding-guidelines/01-cross-language/15-master-coding-guidelines/`
 - /learn braces, nesting, and conditions: `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md` & `02-conditions-and-extraction.md`
 - /learn function size caps (< 8 lines): `spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`
@@ -13,6 +14,7 @@ Context & References:
 - /learn language-specific rules in `spec/02-coding-guidelines/` (Go wrapped booleans: `spec/02-coding-guidelines/03-golang/09-wrapped-boolean-results.md`)
 
 /goal - Apply concrete fixes for all violations listed in the pending tasks.
+
 - Enforce non‑negotiable rules:
   - DRY – eliminate duplicated logic.
   - Use typed enums instead of magic strings or numbers.

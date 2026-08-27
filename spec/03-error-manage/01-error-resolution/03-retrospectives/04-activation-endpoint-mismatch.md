@@ -20,6 +20,7 @@
  ```
  
  But the WordPress PHP plugin (`riseup-asia-uploader.php`) only registers these endpoints:
+
  - `/status` - Status check
  - `/upload` - Plugin upload (with optional `activate: true`)
  - `/plugins` - List plugins

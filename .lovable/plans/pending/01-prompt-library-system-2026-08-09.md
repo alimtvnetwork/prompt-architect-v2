@@ -18,6 +18,7 @@ readme.md                     (root, lowercase)
 ```
 
 Rules encoded in the structure:
+
 - Every folder and file is prefixed with a two-digit sequence: `01-`, `02-`, ...
 - All names lowercase, hyphen separated. All readme files lowercase (`readme.md`).
 - Empty folders are kept with a `.gitkeep` file.
@@ -27,6 +28,7 @@ Rules encoded in the structure:
 ## Prompt file format
 
 Each saved prompt file contains, in order:
+
 1. The prompt itself — filler words removed only, exact wording otherwise preserved (proofread only, no rewriting).
 2. `## Action Items — Must Follow (Non-Negotiable)` — checklist of every rule discussed in that prompt.
 3. `## Folder Structure` — only if a structure was discussed.

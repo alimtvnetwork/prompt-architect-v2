@@ -157,6 +157,7 @@ Past execution turns were sloppy and failed to pin READMEs or bump versions. To 
 This task requires deep, multi-agent processing. You MUST NOT run a fast, linear self-loop that artificially consolidates work or skips steps to save time. 
 
 How to self-loop and distribute tasks effectively:
+
 - [ ] Spawn Sub-Agents:
   - [ ] For any multi-step group, deep file reading, or complex analysis, actively spawn dedicated sub-agents.
   - [ ] Ensure these sub-agents are self-looping to handle the workload.
@@ -171,6 +172,7 @@ How to self-loop and distribute tasks effectively:
 ### Temp-Agent State Management Protocol (Non-Negotiable)
 
 To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ directory for tracking sub-agent tasks.
+
 - [ ] On Start:
   - [ ] The sub-agent creates .lovable/temp-agents/<task-name>.md.
   - [ ] Write the objective and STATUS: IN_PROGRESS.
