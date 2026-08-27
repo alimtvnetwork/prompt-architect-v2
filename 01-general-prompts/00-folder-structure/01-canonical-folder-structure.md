@@ -108,3 +108,4 @@ otes/, or any folder name not listed above.
 - No per-turn mirror files under .lovable/prompts/.
 - No renaming a file when moving it between lifecycle folders.
 - No guessing when the folder is unclear. File an ambiguity.
+ 
