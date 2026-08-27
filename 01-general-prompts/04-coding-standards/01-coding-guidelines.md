@@ -89,7 +89,39 @@ export async function swapIpWindows(ctx: Context, params: SwapIpParams): Promise
 
 ---
 
-## 7. Antigravity Verification Checklist
+## 7. Language-Specific Rules (Antigravity /learn Pointers)
+
+To operate correctly across the stack, Antigravity MUST internalize the following language-specific nuances.
+
+### TypeScript & React
+
+- `/learn spec/02-coding-guidelines/02-typescript/`
+- **React Hooks:** `useEffect` dependency guards must be extracted into positively named boolean variables above the hook (e.g., `const isReady = a && b; useEffect(...)`). Never mutate state or arrays directly; use `.map()`, `.concat()`, or `structuredClone()`.
+- **TypeScript Strictness:** No `any`. No anonymous inline object types (e.g., `(props: { id: string })`). Define named `interface` or `type` blocks. Use `Promise.all()` for parallel async operations, never sequential `await` unless strictly required.
+
+### Go (Golang)
+
+- `/learn spec/02-coding-guidelines/03-golang/`
+- **Error Wrapping:** Never return a bare `(T, error)` without context. Always wrap with `apperror.Wrap(err, "operation_name", context)`.
+- **Enums:** Define enums as typed integers (`type Status byte`) using `iota` blocks, not raw string constants.
+
+### Python
+
+- `/learn spec/02-coding-guidelines/06-python/` (if it exists)
+- **Type Hints:** Strict typing is required on every public function signature.
+- **Data Structures:** Use `@dataclass` or `pydantic` for structured records.
+
+### C# / Java (OOP)
+
+- `/learn spec/02-coding-guidelines/05-csharp/` (if it exists)
+- **Interfaces & Casing:** Interfaces must be prefixed with `I`. Public methods and properties are strictly `PascalCase`. Use custom `AppException` objects for domain errors.
+
+### PHP
+
+- `/learn spec/02-coding-guidelines/04-php/`
+- **Strict Enums:** Enum comparisons must use strict method calls (e.g., `$enum->isEqual($other)`), never raw string comparisons like `=== 'ACTIVE'`.
+
+## 8. Antigravity Verification Checklist
 
 Before ending your execution turn or committing any code, you MUST mechanically verify this checklist. If you violate any rule, your work will be auto-rejected.
 

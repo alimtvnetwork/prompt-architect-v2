@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.15.1] 2026-08-27 Coding Guidelines: Restored Language-Specific Rules
+
+### Install Prompt Architect v1.15.1
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.1/install.sh | bash -s -- ".lovable/prompts" "v1.15.1"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.15.1/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.15.1"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Injected the missing `## Language-Specific Rules` section back into `01-coding-guidelines.md`.
+- **Added:** Formatted the language-specific rules to heavily utilize the `/learn` command, instructing the Antigravity agent on exactly which sub-folders to ingest for React/TypeScript, Go, Python, C#, and PHP standards.
+
+
 ## [v1.15.0] 2026-08-27 Coding Guidelines Consolidation & Antigravity Optimization
 
 ### Install Prompt Architect v1.15.0
@@ -160,5 +173,6 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
