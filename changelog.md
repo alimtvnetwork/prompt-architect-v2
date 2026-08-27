@@ -1,8 +1,22 @@
 # Changelog
 
+## [v1.20.0] 2026-08-27 Ripgrep Global Search Ban & Performance Optimization
+
+### Install Prompt Architect v1.20.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.20.0/install.sh | bash -s -- ".lovable/prompts" "v1.20.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.20.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.20.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Injected a `CRITICAL PERFORMANCE RULE` into all Release and Execution prompts that strictly forbids the AI from running slow global ripgrep (`rg`) or `find` searches across the repository.
+- **Fixed:** Removed the hardcoded `rg -n " <PREV_VERSION> " -g '!node_modules'` command from the Auto-Bumper Bootstrap phase. Agents are now forced to use the high-performance Python script (`bump_versions.py`) targeting explicitly known files, vastly improving release pipeline speed.
+
+
 ## [v1.19.0] 2026-08-27 Aggressive Insult Block Expansion
 
 ### Install Prompt Architect v1.19.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.19.0/install.sh | bash -s -- ".lovable/prompts" "v1.19.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.19.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.19.0"`
@@ -233,6 +247,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

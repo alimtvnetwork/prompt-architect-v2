@@ -61,10 +61,17 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 1. Read the current version from the canonical version source. Print previous and new version. Confirm PATCH digit is `0`.
 
 2. **Version Bumping (The Python Auto-Bumper Bootstrap)**:
+
+### CRITICAL PERFORMANCE RULE: NO GLOBAL RIPGREP SEARCHES
+
+You MUST NEVER use `rg`, `grep`, or `find` to globally search the entire repository for version strings (e.g. `rg "1.2.3" --hidden --glob !.git`). This is extremely slow and degrades performance.
+Instead, use a highly targeted Python script (`bump_versions.py`) that strictly limits its search to known version files (`version.json`, `package.json`, `readme.md`, `changelog.md`, and specific `.md` prompt files). Do not scan `.lovable/memory` or `.venv`.
+
    You MUST NOT manually hunt and replace versions using `rg` in every release. Instead, rely on a dedicated python script: `.lovable/release/bump_versions.py`.
    
    **First-Time Bootstrap (If `.lovable/release/bump_versions.py` or `.lovable/memory/release-architecture.md` do NOT exist, or are outdated):**
-   - **Investigate:** Run a one-time global `rg` scan (`rg -n "<PREV_VERSION>" -g '!node_modules'`) across the repository to discover every file where the version is pinned (e.g., manifests, configs, constants).
+
+   - **Investigate:** Use a targeted python script or manual inspection to scan (using specific file targeting, NEVER global searches) across the repository to discover every file where the version is pinned (e.g., manifests, configs, constants).
    - **Document:** Write `.lovable/memory/release-architecture.md` detailing all discovered pin sites, the version source of truth, and how releases are structured.
    - **Generate Script:** Write the `.lovable/release/bump_versions.py` script. The script MUST:
      - Accept an argument for the bump tier (`--type major`, `--type minor`, `--type patch`).
@@ -84,6 +91,7 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
    ```
 
    **Normal Execution (If the script DOES exist and is up-to-date):**
+
    - Execute it: `python .lovable/release/bump_versions.py --type minor` (or major/patch).
    - Source constants named like `VERSION`, `APP_VERSION`, `EXTENSION_VERSION`, `SCHEMA_VERSION`, `CACHE_SCHEMA_VERSION`, `BUILD_VERSION`.
    - `instruction.ts` / `instruction.md` / metadata files with a `Version:` field.
@@ -92,7 +100,7 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
    A pin site missed here breaks installs.
 
-3. Pin the new version in `readme.md` (lowercase filename, MUST). Rewrite every occurrence of the previous version (`vX.Y.Z` and bare `X.Y.Z`) in badges, install snippets, "current version" lines, release-branch examples, zip filenames, inline references. After this step, `rg "<previous-version>" readme.md` MUST return nothing.
+3. Pin the new version in `readme.md` (lowercase filename, MUST). Rewrite every occurrence of the previous version (`vX.Y.Z` and bare `X.Y.Z`) in badges, install snippets, "current version" lines, release-branch examples, zip filenames, inline references. After this step, `grep "<previous-version>" readme.md` MUST return nothing.
 
 4. Add a changelog entry at the top of `changelog.md`, directly under `# Changelog`. Replace `X.Y.Z` with the actual new version and `YYYY-MM-DD` with `date -u +%Y-%m-%d` output:
 
@@ -146,15 +154,15 @@ Then link it from the `### Issues` bullet under the changelog entry.
 - [ ] New version is a MINOR bump (or explicit MAJOR / PATCH per rules); PATCH digit is `0`.
 - [ ] Previous and new version both stated in the reply.
 - [ ] Pre-flight passed (idempotency, changelog placeholder, UTC date from `date -u`).
-- [ ] Every pin site from step 2 `rg` output matches the new version.
+- [ ] Every pin site matches the new version.
 - [ ] Canonical version file's `releaseDate` (if the field exists) is today's UTC date.
 - [ ] Changelog entry added at the top of `changelog.md` with real bullets only.
 - [ ] All markdown filenames in the repo are lowercase.
-- [ ] `rg "<previous-version>"` returns matches ONLY in the historic allow-list (`changelog.md`, `release_notes.md`, `.lovable/release/`, dated archives).
+- [ ] A highly restricted search returns matches ONLY in the historic allow-list (`changelog.md`, `release_notes.md`, `.lovable/release/`, dated archives).
 - [ ] `### Issues` block present in the changelog if any step failed or was flagged, with links to `.lovable/release/issues/` files.
 - [ ] Stale-version helper (if it exists) ran successfully; otherwise manual rewrite done.
 - [ ] Bundled / aggregated artifacts regenerated if their sources changed.
-- [ ] Version-sync check (if it exists) exited 0; otherwise manual `rg` confirms allow-list only.
+- [ ] Version-sync check (if it exists) exited 0; otherwise a targeted search confirms allow-list only.
 - [ ] Pre-flight Git sync completed (`git status`, commit pending changes, `git pull`).
 - [ ] Commit + tag created (if git-tracked) with `release: vX.Y.Z <headline>` and `vX.Y.Z`, AND successfully pushed to Git.
 - [ ] Report includes previous version, new version, tier, and exact file list.
@@ -170,7 +178,7 @@ Save this prompt's full body into `.lovable/prompts/XX-release.md` (lowercase):
 
 ## Must Follow and without negotiation
 
-Listen, past release turns were sloppy. You must clean and sync the Git working tree first (commit pending changes, pull). Then read the canonical version file, bump MINOR, reset PATCH to zero, pin the new version in `readme.md`, propagate everywhere via the helper (or by hand from the `rg` output), rename every uppercase markdown file to lowercase, write the changelog under the new version, log every failure or flagged issue under `.lovable/release/issues/` with a matching `### Issues` bullet, and finally create the release commit, tag it, and PUSH to Git. Skipping any step = broken installs. Going deep IS the job.
+Listen, past release turns were sloppy. You must clean and sync the Git working tree first (commit pending changes, pull). Then read the canonical version file, bump MINOR, reset PATCH to zero, pin the new version in `readme.md`, propagate everywhere via the helper (or by hand from the known pin sites), rename every uppercase markdown file to lowercase, write the changelog under the new version, log every failure or flagged issue under `.lovable/release/issues/` with a matching `### Issues` bullet, and finally create the release commit, tag it, and PUSH to Git. Skipping any step = broken installs. Going deep IS the job.
 
 ## Ambiguity handling (open questions and answers)
 
