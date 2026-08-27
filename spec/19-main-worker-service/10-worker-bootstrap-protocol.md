@@ -72,7 +72,7 @@ Worker boot                              Main
 {
   "WorkerNodeDisplayName": "worker-kl-01",
   "WorkerEndpointPublic":  "https://w1.example.com",
-  "WorkerVersionPin":      "1.9.0",
+  "WorkerVersionPin":      "1.10.0",
   "BootInstanceUlid":      "01J...ULID",   // new every process boot; idempotency
   "Description":           null
 }
@@ -118,7 +118,7 @@ Trust store: only ONE active key at a time in v1.0. (OQ-10-1 reserved for multi-
 
 | Compile-time `WorkerVersionPin` | Main `AcceptedVersionRange` | Outcome |
 |---|---|---|
-| `1.9.0` | `>=1.4.0 <2.0.0` | ✅ Register |
+| `1.10.0` | `>=1.4.0 <2.0.0` | ✅ Register |
 | `1.3.9` | `>=1.4.0 <2.0.0` | ❌ `WORKER_VERSION_TOO_OLD` |
 | `2.0.0` | `>=1.4.0 <2.0.0` | ❌ `VERSION_MISMATCH` (major bump requires Main upgrade first) |
 
@@ -158,7 +158,7 @@ Body:
 {
   "WorkerNodeId":               3,
   "BootInstanceUlid":           "01J...",
-  "CurrentVersion":             "1.9.0",
+  "CurrentVersion":             "1.10.0",
   "ActiveTenantCount":          12,
   "LastUpdateInstructionId":    null,
   "LastUpdateOutcomeCode":      null,

@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.10.0] 2026-08-27 Checklist-Driven Anti-Hallucination
+
+### Install Prompt Architect v1.10.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.10.0/install.sh | bash -s -- ".lovable/prompts" "v1.10.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.10.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.10.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Fixed:** Corrected a critical placement error in execution prompts where `N=20` and `/goal` instructions were being pushed down by top-level anti-hallucination blocks. These variables are now firmly back at the absolute top of the file.
+- **Changed:** Refactored the anti-hallucination stance to be exclusively checklist-driven. The aggressive warnings are now embedded directly within the End of Tunnel Release and Action Summary Checklists, targeting specific points of failure (e.g. "To prevent this hallucination... physically check off these items").
+
+
 ## [v1.9.0] 2026-08-27 Execution Architecture Improvements
 
 ### Install Prompt Architect v1.9.0
@@ -59,6 +72,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

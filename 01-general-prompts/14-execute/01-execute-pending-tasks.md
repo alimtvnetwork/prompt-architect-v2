@@ -101,11 +101,12 @@ At the end of every single iteration of your execution loop:
      - [x] Boolean conventions followed (e.g., `isFail` instead of `!isSuccess`).
      - [x] Acronyms are PascalCased (e.g., `UserId`, not `UserID`).
      - [x] Magic strings/numbers extracted to constants.
-     - [x] **Action Summary Checklist:** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn (e.g. `- [x] Created schema`, `- [x] Applied isFail convention`).
+     - [x] **Action Summary Checklist (Anti-Hallucination):** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to ensure no steps were hallucinated or skipped (e.g. `- [x] Created schema`, `- [x] Pinned README`).
 
-## End of Tunnel Release (Strict Checklist)
 
-When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and physically check off these items in your final report:
+## End of Tunnel Release (Anti-Hallucination Checklist)
+
+Past execution turns were sloppy and failed to pin READMEs or bump versions. To prevent this hallucination, when EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and physically check off these items in your final report:
 - [ ] **Minor Bump:** I have bumped the MINOR version in the canonical `version.json` file.
 - [ ] **Test File Ban:** I have strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
 - [ ] **Root README Pinning (FATAL):** I have pinned the latest release version into the root `readme.md` file! I have verified badges and install snippets match the new version.
