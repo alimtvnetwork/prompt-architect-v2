@@ -140,7 +140,7 @@ CREATE TABLE AuthMechanism (
 
   "WorkerNodeStatus": {
     "AddedIn": "1.3.0",
-    "Version": "1.18.0",
+    "Version": "1.19.0",
     "PrimaryKey": ["WorkerNodeStatusCode"],
     "MergeStrategy": "UpsertByLogicalKey",
     "Description": "Worker lifecycle states observed by Main. Codes Active/Draining/Offline/Quarantined/Retired apply to primaries (IsBackup=0); BackupAttached/BackupLagging apply to backups (IsBackup=1) per 18-backup-nodes.md §4.3.",

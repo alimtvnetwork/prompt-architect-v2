@@ -1,8 +1,22 @@
 # Changelog
 
+## [v1.19.0] 2026-08-27 Aggressive Insult Block Expansion
+
+### Install Prompt Architect v1.19.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.19.0/install.sh | bash -s -- ".lovable/prompts" "v1.19.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.19.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.19.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Aggressively expanded the `MUST FOLLOW NON-NEGOTIABLE` insult block to **20 additional prompts**, covering every single actionable file in the repository.
+- **Added:** The insult block is now forcefully embedded in Spec Writing, UI/Design generation, Content/SEO workflows, Prompt Engineering proofreading, and Release Management/Version Bumping scripts.
+
+
 ## [v1.18.0] 2026-08-27 Mandatory Anti-Hallucination Checklist Integrations
 
 ### Install Prompt Architect v1.18.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.18.0/install.sh | bash -s -- ".lovable/prompts" "v1.18.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.18.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.18.0"`
@@ -219,6 +233,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
