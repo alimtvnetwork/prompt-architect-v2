@@ -1,8 +1,23 @@
 # Changelog
 
+## [v1.11.0] 2026-08-27 Dynamic Git Install Script Detection
+
+### Install Prompt Architect v1.11.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.11.0/install.sh | bash -s -- ".lovable/prompts" "v1.11.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.11.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.11.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Fixed:** Removed the hardcoded "Prompt Architect" repository URL from all generic release prompts (`01-general-prompts/17-release-management/*`).
+- **Added:** Added explicit instructions to the release prompts requiring AI agents to dynamically construct the raw `install.sh`/`install.ps1` URL by running `git config --get remote.origin.url` and parsing the `<owner>/<repo>`.
+- **Added:** Formalized the dynamic Git config extraction rule inside the `16-generic-release/03-install-scripts.md` and `14-update/18-install-scripts.md` coding guidelines.
+
+
 ## [v1.10.0] 2026-08-27 Checklist-Driven Anti-Hallucination
 
 ### Install Prompt Architect v1.10.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.10.0/install.sh | bash -s -- ".lovable/prompts" "v1.10.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.10.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.10.0"`
@@ -72,6 +87,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

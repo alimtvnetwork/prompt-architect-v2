@@ -104,10 +104,13 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
    ```markdown
    ## [vX.Y.Z] YYYY-MM-DD <short headline>
 
-   ### Install Prompt Architect vX.Y.Z
+   ### Install <Project Name> vX.Y.Z
    To pin your repository to this exact version, run the following one-liner:
-   Unix/Bash: `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/vX.Y.Z/install.sh | bash -s -- ".lovable/prompts" "vX.Y.Z"`
-   PowerShell: `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/vX.Y.Z/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "vX.Y.Z"`
+   Unix/Bash: `curl -sL https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.sh | bash -s -- ".lovable/prompts" "vX.Y.Z"`
+   PowerShell: `Invoke-WebRequest -Uri https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "vX.Y.Z"`
+
+   *(Note: You MUST dynamically discover the `<owner>/<repo>` by running `git config --get remote.origin.url`. Do not hardcode Prompt Architect URLs unless you are actually in the Prompt Architect repository.)*
+
 
    ### Added / Changed / Fixed / Removed
 
@@ -118,7 +121,7 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
    - [xx-<new-version>-<slug>](.lovable/release/issues/xx-<new-version>-<slug>.md) short description
    ```
 
-   Use only the subheadings that apply. `### Issues` is REQUIRED whenever any step surfaced a problem, even if worked around. You MUST include the `### Install Prompt Architect` block exactly as shown above, ensuring `vX.Y.Z` is fully replaced with the new version tag.
+   Use only the subheadings that apply. `### Issues` is REQUIRED whenever any step surfaced a problem, even if worked around. You MUST include the `### Install <Project Name>` block, dynamically filling in the GitHub owner and repo parsed from the git config, ensuring `vX.Y.Z` is fully replaced with the new version tag.
 
 5. Rewrite remaining pin sites via the project's stale-version helper if one exists (discover: `scripts/update-stale-version-refs.*`, `scripts/bump-version.*`, `tools/update-versions.*`). Run it with previous and new version. If no helper exists, use the `rg` output from step 2 and rewrite each match by hand.
 

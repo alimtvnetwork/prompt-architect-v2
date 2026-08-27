@@ -361,3 +361,17 @@ specific version, not "latest".
   - [Facebook](https://www.facebook.com/riseupasia.talent/)
   - [LinkedIn](https://www.linkedin.com/company/105304484/)
   - [YouTube](https://www.youtube.com/@riseup-asia)
+
+
+## Install Script Snippet Generation (Dynamic URL Discovery)
+
+When generating the changelog or README snippets that instruct users how to run the `install.ps1` or `install.sh` scripts, the release pipeline or AI agent **MUST NOT** hardcode a repository URL unless explicitly configured to do so.
+
+Instead, the install snippet URL MUST be discovered dynamically from the repository's Git configuration:
+
+1. **Extract Remote URL:** Run `git config --get remote.origin.url` to determine the upstream repository.
+2. **Parse Owner/Repo:** Extract the `<owner>/<repo>` path from the URL (e.g., parsing `git@github.com:alimtvnetwork/prompt-architect-v2.git` into `alimtvnetwork/prompt-architect-v2`).
+3. **Construct Raw URL:** Construct the raw GitHubusercontent URL for the specific release version using the format:
+   `https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.sh`
+
+This ensures that cloned or forked repositories correctly generate install snippets that point to their own codebase rather than the original author's repository.
