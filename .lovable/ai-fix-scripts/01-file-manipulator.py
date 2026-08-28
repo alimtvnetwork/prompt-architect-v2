@@ -10,8 +10,8 @@ from pathlib import Path
 def get_safe_path(path_str):
     """Safely handle Windows MAX_PATH limitations by using \\?\ prefix for absolute paths."""
     abs_path = os.path.abspath(path_str)
-    if os.name == 'nt' and not abs_path.startswith(r'\\?\'):
-        return r'\\?\' + abs_path
+    if os.name == 'nt' and not abs_path.startswith('\\\\?\\'):
+        return '\\\\?\\' + abs_path
     return abs_path
 
 def safe_rename(old_path_str, new_path_str):
