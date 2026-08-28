@@ -8,7 +8,7 @@ N = 30
 
 N = is the number of steps that the agents will perform
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given and then breaking down into parts as intruction as subtasks for N/2 steps.
+- [ ] /goal First N/2 steps will be given for spec writing for AI as given and then breaking down into parts as instruction as subtasks for N/2 steps.
 - [ ] /goal second N/2 steps will be given execute the created tasks with following coding guidelines and error manage properly.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/`, `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
