@@ -1,8 +1,26 @@
 # Changelog
 
+## [v1.21.0] 2026-08-28 Folder Structure Docs & 4-Step Release Fallback
+
+### Install Prompt Architect v1.21.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.21.0/install.sh | bash -s -- ".lovable/prompts" "v1.21.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.21.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.21.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Created `.lovable/lovable-folder-structure.md` and `spec/spec-folder-structure.md` to serve as the absolute source of truth for the `XX-<slug>` directory structure and sequential prefixing system.
+- **Added:** Introduced a strict 4-Step Fallback Chain for version bumping into all execution and release prompts:
+  1. Rely on `.lovable/release/bump_versions.py`
+  2. Fallback to `.lovable/release/release-method.md` to learn pin sites and generate the Python script.
+  3. Fallback to a high-performance, OS-agnostic Python `os.walk` search (banning `rg`) to generate the method doc and script.
+  4. Fallback to stopping and asking the user if utterly stuck.
+
+
 ## [v1.20.0] 2026-08-27 Ripgrep Global Search Ban & Performance Optimization
 
 ### Install Prompt Architect v1.20.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.20.0/install.sh | bash -s -- ".lovable/prompts" "v1.20.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.20.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.20.0"`
@@ -247,6 +265,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

@@ -126,6 +126,15 @@ When EVERYTHING is completely finished and fixed (at the very end of the tunnel)
 
 
 
-## Version Bumping Rule
+## Version Bumping Rule & Fallback Chain
 
-If the task involves a release or version bump, DO NOT manually search and replace versions across files. Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`. If the script does not exist, trigger the first-time release bootstrapping phase to generate it.
+If the task involves a release or version bump, you MUST NOT manually search and replace versions globally using slow tools like `rg`, `grep`, or `find`. You MUST follow this strict 4-step fallback chain:
+
+1. **Primary Method (Python Script):** Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`.
+2. **Fallback 1 (Read Method Docs):** If the script does not exist, check for `.lovable/release/release-method.md`. This file documents exactly *which* files contain versions. Read it, use the knowledge to generate `bump_versions.py`, and run it.
+3. **Fallback 2 (Efficient OS-Agnostic Search):** If `release-method.md` is also missing, you MUST perform a highly efficient, OS-agnostic search (e.g., writing a quick Python `os.walk` script that strictly ignores `.git`, `node_modules`, `.venv`, and `.lovable/memory`) to discover where versions are pinned. 
+   - Once found, you MUST create `.lovable/release/release-method.md` to document the pin sites.
+   - Then, you MUST create `.lovable/release/bump_versions.py` using those sites.
+   - Finally, run the script.
+4. **Fallback 3 (Ask User):** If the efficient search fails, or you are completely stuck and cannot confidently determine the versioning scheme, you MUST stop and ask the user to upload or specify the version files explicitly.
+
