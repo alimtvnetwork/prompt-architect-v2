@@ -68,7 +68,7 @@ table, CSV export). Use it when wiring a dashboard, writing a
 
 The five values are **the only ones the renderer will ever emit**;
 adding a new status is a major-version contract change announced in
-`CHANGELOG.md`. Field-order, casing, and dash hyphenation are part
+`changelog.md`. Field-order, casing, and dash hyphenation are part
 of the contract — `Matched`, `ignored_deleted`, etc. will never be
 emitted.
 
@@ -487,7 +487,7 @@ recorded. Treat `score: 0` as "git observed and rated 0% similar"
   shown above, but that may change.
 - **Unknown statuses** are never emitted today — the closed vocabulary
   is enforced at the renderer. New statuses, if added, will land in a
-  major version bump and be announced in `CHANGELOG.md`.
+  major version bump and be announced in `changelog.md`.
 - **`--dedupe-changed-files`** runs before serialisation; the JSON
   array contains at most one record per `path` when that flag is set,
   with first-seen-wins semantics applied to the `similarity` record

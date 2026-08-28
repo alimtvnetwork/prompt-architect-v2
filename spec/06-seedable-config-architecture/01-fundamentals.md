@@ -35,7 +35,7 @@
 │                                  ▼                                        │
 │                          ┌───────────────┐                               │
 │                          │ Update        │                               │
-│                          │ CHANGELOG.md  │                               │
+│                          │ changelog.md  │                               │
 │                          └───────────────┘                               │
 │                                                                          │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -177,7 +177,7 @@ JSON Schema for validation:
 }
 ```
 
-### CHANGELOG.md Format
+### changelog.md Format
 
 ```markdown
 # Changelog
@@ -406,7 +406,7 @@ func (s *ConfigService) mergeSeed(seed SeedConfig, previousVersion string) error
     return nil
 }
 
-// updateChangelog appends version entry to CHANGELOG.md
+// updateChangelog appends version entry to changelog.md
 func (s *ConfigService) updateChangelog(seed SeedConfig) error {
     if seed.Changelog == "" {
         return nil

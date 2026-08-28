@@ -13,7 +13,7 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ## 2. Changelog
 
-- If asked, add a new section in `CHANGELOG.md` for the new version.
+- If asked, add a new section in `changelog.md` for the new version.
 - Format: `## [Version] - YYYY-MM-DD`.
 
 ## Must Follow

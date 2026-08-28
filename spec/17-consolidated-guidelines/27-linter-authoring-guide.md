@@ -189,7 +189,7 @@ Two acceptable formats:
 
 README.md
 LICENSE
-CHANGELOG.md
+changelog.md
 ```
 
 **Format B — sectioned** (when entries belong to disjoint categories):
