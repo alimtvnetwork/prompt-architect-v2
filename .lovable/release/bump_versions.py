@@ -2,6 +2,7 @@ import os
 import re
 import json
 import argparse
+import subprocess
 
 # Files that need to be bumped
 FILES_TO_BUMP = [
@@ -65,10 +66,49 @@ def update_files(old_version, new_version):
                 f.write(new_content)
             print(f"Bumped version in {file_path}")
 
+def handle_git_release(new_version):
+    v_string = f"v{new_version}"
+    branch_name = f"release/{v_string}"
+    
+    print(f"\n--- Creating Full Release: {v_string} ---")
+    
+    try:
+        print(f"Creating release branch: {branch_name}")
+        subprocess.run(["git", "checkout", "-b", branch_name], check=True)
+        
+        print("Committing version bump...")
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-m", f"chore(release): bump version to {new_version}"], check=True)
+        
+        print(f"Tagging release: {v_string}")
+        subprocess.run(["git", "tag", v_string], check=True)
+        
+        print("Pushing branch and tags...")
+        subprocess.run(["git", "push", "-u", "origin", branch_name], check=True)
+        subprocess.run(["git", "push", "origin", v_string], check=True)
+        
+        # Detect CLI for platform release
+        try:
+            subprocess.run(["gh", "--version"], capture_output=True, check=True)
+            print("GitHub CLI detected. Creating GitHub Release...")
+            subprocess.run(["gh", "release", "create", v_string, "--generate-notes"], check=True)
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            try:
+                subprocess.run(["glab", "--version"], capture_output=True, check=True)
+                print("GitLab CLI detected. Creating GitLab Release...")
+                subprocess.run(["glab", "release", "create", v_string], check=True)
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                print("No gh or glab CLI detected. Skipping platform release creation.")
+                
+    except subprocess.CalledProcessError as e:
+        print(f"Error during git operations: {e}")
+        print("Release automation failed.")
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Bump project versions safely.")
+    parser = argparse.ArgumentParser(description="Bump project versions and optionally create a Git release.")
     parser.add_argument("--type", choices=["major", "minor", "patch"], help="Type of bump")
     parser.add_argument("--set", type=str, help="Explicitly set a specific version")
+    parser.add_argument("--create-release", action="store_true", help="Create a git branch, tag, and push a full release via gh/glab CLI")
     args = parser.parse_args()
 
     current_version = get_current_version()
@@ -83,11 +123,10 @@ if __name__ == "__main__":
 
     print(f"Bumping from {current_version} to {new_version}...")
     
-    # 1. Update version.json
     set_current_version(new_version)
-    print("Bumped version.json")
-    
-    # 2. Update all other files
     update_files(current_version, new_version)
     
-    print(f"Successfully bumped to {new_version}!")
+    if args.create_release:
+        handle_git_release(new_version)
+    else:
+        print(f"Successfully bumped to {new_version} (Standard Mode - No git operations performed).")

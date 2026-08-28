@@ -32,4 +32,21 @@ eadme.md
 
 ## Automation Script
 
-The python script .lovable/release/bump_versions.py automates this process. It reads ersion.json, calculates the next semantic version, and safely applies regex replacements only to the files listed above.
+The python script .lovable/release/bump_versions.py automates this process. It has two operating modes:
+
+### Standard Mode
+
+python .lovable/release/bump_versions.py --type <major|minor|patch>
+Calculates the new version and safely applies regex replacements only to the files listed above. It does not run any git commands.
+
+### Full Release Mode
+
+python .lovable/release/bump_versions.py --type <major|minor|patch> --create-release
+Performs the version replacement, then automates the entire git release process:
+
+1. Creates and checks out a new branch (
+elease/vX.Y.Z).
+2. Commits the changes.
+3. Creates a git tag (X.Y.Z).
+4. Pushes the branch and tag to origin.
+5. Detects if gh (GitHub) or glab (GitLab) CLI is installed and automatically publishes the official platform release.
