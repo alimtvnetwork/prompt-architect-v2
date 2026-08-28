@@ -70,8 +70,7 @@ def handle_git_release(new_version):
     v_string = f"v{new_version}"
     branch_name = f"release/{v_string}"
     
-    print(f"
---- Creating Full Release: {v_string} ---")
+    print(f"\n--- Creating Full Release: {v_string} ---")
     
     try:
         # 1. Capture current branch to return to it later
