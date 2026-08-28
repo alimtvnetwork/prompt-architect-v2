@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.22.0] 2026-08-28 Write Memory Prompt Restructuring
+
+### Install Prompt Architect v1.22.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.22.0/install.sh | bash -s -- ".lovable/prompts" "v1.22.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.22.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.22.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Changed:** Manually replaced the `01-general-prompts/03-read-write/03-write-memory.md` payload with the user's provided block to precisely align the "Actionable Items & Checklist" and "MUST FOLLOW NON-NEGOTIABLE" insult sections at the bottom of the execution file.
+
+
 ## [v1.21.0] 2026-08-28 Folder Structure Docs & 4-Step Release Fallback
 
 ### Install Prompt Architect v1.21.0
@@ -265,6 +277,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
