@@ -191,6 +191,3 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 - slug: execute-pending-tasks
 - status: active
-
-
-
