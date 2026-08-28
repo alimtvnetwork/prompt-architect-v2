@@ -28,6 +28,17 @@ try {
     $AiFixScriptsTarget = Join-Path (Split-Path $TargetDir -Parent) "ai-fix-scripts"
     if (-not (Test-Path $AiFixScriptsTarget)) { New-Item -ItemType Directory -Force -Path $AiFixScriptsTarget | Out-Null }
     Copy-Item -Path "$TempDir\.lovable\ai-fix-scripts\*" -Destination $AiFixScriptsTarget -Recurse -Force -ErrorAction SilentlyContinue
+
+    Write-Host "Copying release automation scripts..." -ForegroundColor Cyan
+    $ReleaseTarget = Join-Path (Split-Path $TargetDir -Parent) "release"
+    if (-not (Test-Path $ReleaseTarget)) { New-Item -ItemType Directory -Force -Path $ReleaseTarget | Out-Null }
+    Copy-Item -Path "$TempDir\.lovable\release\bump_versions.py" -Destination $ReleaseTarget -Force -ErrorAction SilentlyContinue
+    Copy-Item -Path "$TempDir\.lovable\release\release-method.md" -Destination $ReleaseTarget -Force -ErrorAction SilentlyContinue
+
+    Write-Host "Copying ai-fix-scripts..." -ForegroundColor Cyan
+    $AiFixScriptsTarget = Join-Path (Split-Path $TargetDir -Parent) "ai-fix-scripts"
+    if (-not (Test-Path $AiFixScriptsTarget)) { New-Item -ItemType Directory -Force -Path $AiFixScriptsTarget | Out-Null }
+    Copy-Item -Path "$TempDir\.lovable\ai-fix-scripts\*" -Destination $AiFixScriptsTarget -Recurse -Force -ErrorAction SilentlyContinue
     
     # Generate list of imported files
     $importedFiles = Get-ChildItem -Path $TargetDir -Recurse -File | Select-Object -ExpandProperty FullName

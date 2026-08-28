@@ -25,6 +25,14 @@ if [ $? -eq 0 ]; then
     echo "Copying ai-fix-scripts..."
     cp -r "$TEMP_DIR"/.lovable/ai-fix-scripts "$TARGET_DIR"/../ai-fix-scripts 2>/dev/null || true
     
+    echo "Copying release automation scripts..."
+    mkdir -p "$TARGET_DIR"/../release
+    cp "$TEMP_DIR"/.lovable/release/bump_versions.py "$TARGET_DIR"/../release/bump_versions.py 2>/dev/null || true
+    cp "$TEMP_DIR"/.lovable/release/release-method.md "$TARGET_DIR"/../release/release-method.md 2>/dev/null || true
+    
+    echo "Copying ai-fix-scripts..."
+    cp -r "$TEMP_DIR"/.lovable/ai-fix-scripts "$TARGET_DIR"/../ai-fix-scripts 2>/dev/null || true
+    
     NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     
     python3 -c "

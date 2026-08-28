@@ -70,10 +70,16 @@ def handle_git_release(new_version):
     v_string = f"v{new_version}"
     branch_name = f"release/{v_string}"
     
-    print(f"\n--- Creating Full Release: {v_string} ---")
+    print(f"
+--- Creating Full Release: {v_string} ---")
     
     try:
-        print(f"Creating release branch: {branch_name}")
+        # 1. Capture current branch to return to it later
+        current_branch = subprocess.run(["git", "branch", "--show-current"], capture_output=True, text=True, check=True).stdout.strip()
+        if not current_branch:
+            current_branch = "main" # Fallback if detached head
+            
+        print(f"Current branch is {current_branch}. Creating release branch: {branch_name}")
         subprocess.run(["git", "checkout", "-b", branch_name], check=True)
         
         print("Committing version bump...")
@@ -99,6 +105,13 @@ def handle_git_release(new_version):
                 subprocess.run(["glab", "release", "create", v_string], check=True)
             except (subprocess.CalledProcessError, FileNotFoundError):
                 print("No gh or glab CLI detected. Skipping platform release creation.")
+                
+        # 2. Return to original branch, merge, and push
+        print(f"Returning to {current_branch} and merging {branch_name}...")
+        subprocess.run(["git", "checkout", current_branch], check=True)
+        subprocess.run(["git", "merge", branch_name], check=True)
+        subprocess.run(["git", "push", "origin", current_branch], check=True)
+        print("Release loop successfully completed and synced with main branch!")
                 
     except subprocess.CalledProcessError as e:
         print(f"Error during git operations: {e}")
