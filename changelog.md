@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.26.0] 2026-08-28 Permanent Release Automation Scripts
+
+### Install Prompt Architect v1.26.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.26.0/install.sh | bash -s -- ".lovable/prompts" "v1.26.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.26.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.26.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Officially cemented `.lovable/release/release-method.md` as the blueprint mapping out every single file requiring version bumps. This acts as the architectural map for AI sub-agents starting a new project.
+- **Added:** Officially committed the automated Python bumper script to `.lovable/release/bump_versions.py`. This script reads `version.json` and updates the entire repository via targeted regex logic, natively solving the ripgrep global scan lag for good.
+
+
 ## [v1.25.0] 2026-08-28 AI Fix Scripts & Memory Consolidation
 
 ### Install Prompt Architect v1.25.0
@@ -322,6 +335,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
