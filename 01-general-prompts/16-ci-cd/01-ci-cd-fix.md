@@ -15,6 +15,15 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
 
+
+## CI/CD Local Execution & Runner Translation (`02-cicd-local-runner.py`)
+
+To rapidly diagnose and verify CI/CD issues without waiting for remote pipelines, you MUST utilize a dedicated local test runner. 
+
+1. **The Script (`.lovable/ai-fix-scripts/02-cicd-local-runner.py`)**: You must check if this exact file exists. Its purpose is to execute all CI/CD checks locally, running jobs in parallel to simulate CI speed.
+2. **Rebuild / Generation Logic**: If the file is missing, or if the user explicitly tells you to "force rebuild" it, your *first* action must be to deeply analyze the project's CI/CD runner configuration files (e.g., GitHub Actions YAML, GitLab CI, etc.). Extract how the project runs tests, builds, and linters, and autonomously write `02-cicd-local-runner.py` to automate these exact steps.
+3. **The Docker Translation Rule (CRITICAL)**: CI/CD pipelines typically execute inside Docker containers (e.g., `docker run ...` or containerized steps). Your generated Python script MUST strip out the Docker layers and translate the commands so they execute directly and natively on the local machine (as the local environment already has the necessary dependencies). Never attempt to invoke Docker in the local runner.
+
 ## Rules & Constraints (Non-Negotiable)
 
 1. Analyze First & Read Past RCAs: Do not blindly change code. First read recent RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`. Then trace the provided CI/CD error to the exact file, line, and dependency, performing a complete Root Cause Analysis (RCA).
@@ -25,6 +34,13 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 6. Anti-Hallucination Contract: If the cause is ambiguous or missing from logs, stop and ask clarifying questions instead of guessing.
 
 ## Actionable Items & Checklist
+
+
+### CI/CD Local Runner Execution (Mandatory)
+
+- [ ] Check if `.lovable/ai-fix-scripts/02-cicd-local-runner.py` exists.
+- [ ] If missing or if forced by the user, parse the CI/CD configurations and generate the script, strictly stripping Docker wrappers to ensure native local execution.
+- [ ] `/goal` **Local Verification Loop:** You MUST run this local script repeatedly, reading its output, and fixing any errors you find. You must loop this execution as a core `/goal` until the script passes with absolutely zero errors.
 
 ### 1. Pre-Flight & Past RCA Ingestion
 
@@ -78,6 +94,7 @@ Before finalizing any code modification, you MUST manually verify the following:
 
 When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.
 
+- [ ] **Local CI Pass Required:** You MUST absolutely ensure that `02-cicd-local-runner.py` runs with zero errors locally BEFORE you are permitted to trigger this release.
 - [ ] You must bump the MINOR version.
 - [ ] You must focus on the `version.json` file as the source of truth for the release.
 - [ ] Root README Pinning (FATAL): You MUST pin the latest release version into the root `readme.md` file! Do not skip this! Also, update the changelog according to `version.json` format.

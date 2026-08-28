@@ -71,6 +71,7 @@ Before finalizing any code modification, you MUST manually verify the following:
 
 When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.
 
+- [ ] **Local CI Pass Required:** You MUST absolutely ensure that `02-cicd-local-runner.py` runs with zero errors locally BEFORE you are permitted to trigger this release.
 - [ ] You must bump the MINOR version.
 - [ ] You must focus on the `version.json` file as the source of truth for the release.
 - [ ] Root README Pinning (FATAL): You MUST pin the latest release version into the root `readme.md` file! Do not skip this! Also, update the changelog according to `version.json` format.
