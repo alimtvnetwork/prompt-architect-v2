@@ -36,7 +36,7 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 ## 3. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
 1. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
-2. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+2. AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 

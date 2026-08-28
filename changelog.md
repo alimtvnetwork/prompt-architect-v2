@@ -1,8 +1,23 @@
 # Changelog
 
+## [v1.25.0] 2026-08-28 AI Fix Scripts & Memory Consolidation
+
+### Install Prompt Architect v1.25.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.25.0/install.sh | bash -s -- ".lovable/prompts" "v1.25.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.25.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.25.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Added:** Created `01-general-prompts/19-memory-consolidate/01-consolidate-completed-plans.md`. This prompt safely consolidates garbage/repetitive tasks from `.lovable/plans/completed/` while explicitly banning the removal of architectural rules, and generates a detailed changelog of the cleanup.
+- **Changed:** Deprecated the ephemeral `temp-scripts` folder across the entire architecture. Replaced it with `.lovable/ai-fix-scripts/`.
+- **Changed:** Updated execute, commit, and memory prompts to explicitly enforce checking `.lovable/ai-fix-scripts/index.md` before coding to reuse existing tools, and mandated committing newly generated helper tools.
+
+
 ## [v1.24.0] 2026-08-28 Encoding Verification & Line Ending Normalization
 
 ### Install Prompt Architect v1.24.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.24.0/install.sh | bash -s -- ".lovable/prompts" "v1.24.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.24.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.24.0"`
@@ -16,6 +31,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.23.0] 2026-08-28 Execution Prompts Consolidation & Rule Sets
 
 ### Install Prompt Architect v1.23.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.23.0/install.sh | bash -s -- ".lovable/prompts" "v1.23.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.23.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.23.0"`
@@ -30,6 +46,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.22.0] 2026-08-28 Write Memory Prompt Restructuring
 
 ### Install Prompt Architect v1.22.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.22.0/install.sh | bash -s -- ".lovable/prompts" "v1.22.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.22.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.22.0"`
@@ -42,6 +59,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.21.0] 2026-08-28 Folder Structure Docs & 4-Step Release Fallback
 
 ### Install Prompt Architect v1.21.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.21.0/install.sh | bash -s -- ".lovable/prompts" "v1.21.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.21.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.21.0"`
@@ -304,6 +322,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

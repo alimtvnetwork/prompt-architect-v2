@@ -182,7 +182,7 @@ Promoted from §4.2 to a first-class catalogue entry so T3 (seed parity) covers 
 
 ## 4. `config.seed.json` Categories binding (paste-ready)
 
-Add (or merge with) the following category at SemVer `2.0.0` of `config.seed.json` (bumped from `1.24.0` to materialize the 27 backup-tier tunables (`MainWorker.Backup.*`) defined in §2.11–2.15, closing the audit-09 §2.1 deferral; the major bump reflects the new `Backup` sub-namespace and the addition of the `Enabled` feature flag, not a breaking change to existing v1.5.0 keys — all v1.5.0 defaults are preserved verbatim):
+Add (or merge with) the following category at SemVer `2.0.0` of `config.seed.json` (bumped from `1.25.0` to materialize the 27 backup-tier tunables (`MainWorker.Backup.*`) defined in §2.11–2.15, closing the audit-09 §2.1 deferral; the major bump reflects the new `Backup` sub-namespace and the addition of the `Enabled` feature flag, not a breaking change to existing v1.5.0 keys — all v1.5.0 defaults are preserved verbatim):
 
 ```jsonc
 "MainWorker": {
@@ -448,4 +448,4 @@ Failure = build break.
 
 ---
 
-*Tunable constants v1.24.0 — 2026-05-06 (Phase 11: §2.15 added — SnapshotRetentionDays=30 resolving OQ-A4, Snapshot.BuildHourUtc, Snapshot.QuiesceTimeoutSeconds, Snapshot.MaxBuildSeconds, Restore.PrimaryAckTimeoutSeconds)*
+*Tunable constants v1.25.0 — 2026-05-06 (Phase 11: §2.15 added — SnapshotRetentionDays=30 resolving OQ-A4, Snapshot.BuildHourUtc, Snapshot.QuiesceTimeoutSeconds, Snapshot.MaxBuildSeconds, Restore.PrimaryAckTimeoutSeconds)*

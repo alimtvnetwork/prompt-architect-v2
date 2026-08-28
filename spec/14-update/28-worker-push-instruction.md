@@ -50,13 +50,13 @@ The JID is the **contract** between Main (issuer) and Worker (executor). It MUST
   "TargetCurrentVersion": "1.4.2",                // worker MUST match or refuse
   "TargetMinimumVersion": "1.4.0",                // refuse if worker < this
   "PayloadKind": "ZipBundle",                     // see §4
-  "PayloadUrl": "https://main.example.com/Releases/worker/1.24.0/worker-1.24.0.zip",
+  "PayloadUrl": "https://main.example.com/Releases/worker/1.25.0/worker-1.25.0.zip",
   "PayloadSizeBytes": 18234567,
   "PayloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "PayloadSignatureAlg": "RS256",
   "PayloadSignatureBase64": "MEUCIQDx...==",      // signature over PayloadSha256
   "SigningKeyId": "main-release-2026-q2",         // matches a key in worker's trust store
-  "TargetVersion": "1.24.0",                       // version the worker WILL run after swap
+  "TargetVersion": "1.25.0",                       // version the worker WILL run after swap
   "DeployStrategy": "RenameFirst",                // see §5
   "ExecutionWindow": {
     "EarliestStartUtc": "2026-05-04T16:00:00Z",

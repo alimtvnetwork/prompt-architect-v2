@@ -48,7 +48,7 @@ Before doing anything else, you MUST write a highly detailed, generic AI Instruc
 ## 3. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
 1. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
-2. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+2. AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 
 ## 4. Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
 
@@ -60,7 +60,7 @@ You MUST verify every item on this checklist before committing any code. If a su
 - [ ] **Semantic Naming:** Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
 - [ ] **Formatting:** Signatures > 3 parameters or > 100 chars are split to one parameter per line. Newlines around every Markdown header (MD022) and lists are surrounded by blank lines (MD032).
 - [ ] **Acronyms & Magic Strings:** Acronyms are PascalCase (`UserId` not `UserID`). Magic strings/numbers are extracted to constants.
-- [ ] **Temp Scripts:** All temporary code was written to `.lovable/temp-scripts/` and NOT committed to Git.
+- [ ] **AI Fix Scripts:** All helper scripts were written to `.lovable/ai-fix-scripts/`, documented in its `index.md`, and committed to Git for reuse.
 - [ ] **Action Summary:** I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ## 5. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
