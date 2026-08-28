@@ -48,15 +48,15 @@ You must rigorously audit all proposed files, variables, and unit tests for garb
 
 If a spec proposes creating temporary scripts (e.g., CSJ, Python) for fixing or refactoring the codebase:
 
-- It must explicitly specify that the scripts go into `.lovable/temp-scripts/`.
-- It must explicitly specify that `.lovable/temp-scripts/` is added to .gitignore.
+- It must explicitly specify that helper scripts go into `.lovable/ai-fix-scripts/` and MUST be committed.
+- It must explicitly specify that `.lovable/ai-fix-scripts/index.md` is updated and linked in `what-to-read.md`.
 - If the spec implies committing these temporary files to the repository, you must flag it as a critical failure task.
 
 ---
 
 ## RULE 0 — Temp Script Sandboxing (Global Law)
 
-If you need to generate any temporary code, scripts, or scratch files to aid in your execution or auditing, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 
 ---
 

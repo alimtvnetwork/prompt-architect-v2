@@ -49,7 +49,7 @@ N = 200 (Default loop limit. User can override.)
 
 ## Temp Script Sandboxing (Global Law)
 
-If you need to generate any temporary code, scripts, or scratch files to aid in your execution or test generation, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 
 ### Temp-Agent State Management Protocol (Non-Negotiable)
 

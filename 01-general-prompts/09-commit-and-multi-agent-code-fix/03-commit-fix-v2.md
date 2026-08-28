@@ -79,7 +79,7 @@ You MUST follow the project's strict coding guidelines. These files are located 
 
 ### 5. Consolidated Coding Standards & Temp Scripts (Non-Negotiable)
 
-- [ ] Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+- [ ] Temp Script Sandboxing: AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 - [ ] Consolidated Coding Guidelines: I have fully read and strictly enforced the master coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. (Never swallow errors, always wrap with context, use domain-specific AppError/AppException).
 - [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).

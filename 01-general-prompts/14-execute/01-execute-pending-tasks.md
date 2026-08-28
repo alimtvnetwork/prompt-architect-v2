@@ -11,12 +11,12 @@
 1. You must NEVER stop by yourself as long as there are pending tasks.
 2. You must self-loop continuously without breaking between tasks.
 3. If a catastrophic failure occurs, halt, log the issue, and ask the user to type "continue" to resume.
-4. Temporary Scripts: Any temporary automation scripts (CSJ, python, etc.) used to perform fixes or mass edits MUST be written to `.lovable/temp-scripts/`. This folder MUST be gitignored. These scripts must NEVER be committed to the repository history.
+4. AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 5. Violation of any rule below is auto-reject on the same tier as RULE 0.
 
 ## Anti-Hallucination Rules
 
-- Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
+- Temp Script Sandboxing: AI Fix Scripts (Reusable Tools): Before creating a helper script, you MUST check `.lovable/ai-fix-scripts/index.md` to reuse existing tools. If you generate a new script, you MUST write it to `.lovable/ai-fix-scripts/`, update `index.md` with its explanation, ensure `index.md` is linked in `what-to-read.md`, and commit the script.
 - If a spec file, folder, or task is missing or ambiguous, do NOT guess or invent a rule.
 - Ask a clarifying question or log an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` before proceeding.
 - Never invent step counts. Read the actual files and count from them.
