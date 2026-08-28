@@ -82,6 +82,3 @@ Before you commit code or end your turn, you MUST mechanically check off these i
 - [ ] **No Placeholder Search:** I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
 - [ ] **Index Sync Deadman Switch:** I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
 - [ ] **Blast Radius Acknowledgment:** Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
-
-
-
