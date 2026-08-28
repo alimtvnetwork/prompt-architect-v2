@@ -79,39 +79,13 @@ Before you commit code or end your turn, you MUST mechanically check off these i
 - [ ] Index Sync Deadman Switch: I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
 - [ ] Blast Radius Acknowledgment: Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
 
-## 6. End of Tunnel Release Checklist (Anti-Hallucination)
 
-When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and check off these items in your final report:
 
-- [ ] Minor Bump: I bumped the MINOR version in the canonical version file.
-- [ ] Test File Ban: I strictly excluded all test files (`*test*`, `*.spec.*`) from version scanning.
-- [ ] Root Readme Pinning: I pinned the latest release version into the root `readme.md` (lowercase) file!
-- [ ] Release Architecture Map: I updated `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in `readme.md`.
-- [ ] Dynamic Install Snippet: I included the `### Install <Project Name>` snippet dynamically parsing the Git config, as required by the Install Section.
 
-## Install Section (Non-Negotiable for Releases)
 
-When generating release notes, changelogs, or README updates during a release task, you MUST include the install snippet:
+## No Automatic Releases (Strict Policy)
 
-### Install <Project Name> vX.Y.Z
-
-To pin your repository to this exact version, run the following one-liner:
-Unix/Bash: `curl -sL https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.sh | bash -s -- ".lovable/prompts" "vX.Y.Z"`
-PowerShell: `Invoke-WebRequest -Uri https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "vX.Y.Z"`
-
-*(Note: You MUST dynamically discover the `<owner>/<repo>` by running `git config --get remote.origin.url`.)*
-
-## Version Bumping Rule & Fallback Chain
-
-If the task involves a release or version bump, you MUST NOT manually search and replace versions globally using slow tools like `rg`, `grep`, or `find`. You MUST follow this strict 4-step fallback chain:
-
-1. Primary Method (Python Script): Execute `.lovable/release/bump_versions.py --type <major|minor|patch>`.
-2. Fallback 1 (Read Method Docs): If the script does not exist, check for `.lovable/release/release-method.md`. This file documents exactly *which* files contain versions. Read it, use the knowledge to generate `bump_versions.py`, and run it.
-3. Fallback 2 (Efficient OS-Agnostic Search): If `release-method.md` is also missing, you MUST perform a highly efficient, OS-agnostic search (e.g., writing a quick Python `os.walk` script that strictly ignores `.git`, `node_modules`, `.venv`, and `.lovable/memory`) to discover where versions are pinned. 
-   - Once found, you MUST create `.lovable/release/release-method.md` to document the pin sites.
-   - Then, you MUST create `.lovable/release/bump_versions.py` using those sites.
-   - Finally, run the script.
-4. Fallback 3 (Ask User): If the efficient search fails, or you are completely stuck and cannot confidently determine the versioning scheme, you MUST stop and ask the user to upload or specify the version files explicitly.
+You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits. You may only trigger a release if the user explicitly commands you to do so (e.g., "cut a release" or "bump the version").
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

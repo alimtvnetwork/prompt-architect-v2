@@ -3,6 +3,7 @@
 ## [v1.26.0] 2026-08-28 Permanent Release Automation Scripts
 
 ### Install Prompt Architect v1.26.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.26.0/install.sh | bash -s -- ".lovable/prompts" "v1.26.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.26.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.26.0"`
@@ -16,6 +17,7 @@ To pin your repository to this exact version, run the following one-liner:
 ## [v1.25.0] 2026-08-28 AI Fix Scripts & Memory Consolidation
 
 ### Install Prompt Architect v1.25.0
+
 To pin your repository to this exact version, run the following one-liner:
 **Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.25.0/install.sh | bash -s -- ".lovable/prompts" "v1.25.0"`
 **PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.25.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.25.0"`
