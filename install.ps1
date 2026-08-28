@@ -22,7 +22,12 @@ try {
     git clone -q --depth 1 --branch $Version https://github.com/alimtvnetwork/prompt-architect-v2.git $tempDir
     
     Write-Host "Copying prompts..."
-    Copy-Item -Path "$tempDir\01-general-prompts\*" -Destination $TargetDir -Recurse -Force
+    Copy-Item -Path "$TempDir\01-general-prompts\*" -Destination $TargetDir -Recurse -Force
+
+    Write-Host "Copying ai-fix-scripts..." -ForegroundColor Cyan
+    $AiFixScriptsTarget = Join-Path (Split-Path $TargetDir -Parent) "ai-fix-scripts"
+    if (-not (Test-Path $AiFixScriptsTarget)) { New-Item -ItemType Directory -Force -Path $AiFixScriptsTarget | Out-Null }
+    Copy-Item -Path "$TempDir\.lovable\ai-fix-scripts\*" -Destination $AiFixScriptsTarget -Recurse -Force -ErrorAction SilentlyContinue
     
     # Generate list of imported files
     $importedFiles = Get-ChildItem -Path $TargetDir -Recurse -File | Select-Object -ExpandProperty FullName

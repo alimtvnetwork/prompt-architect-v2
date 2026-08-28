@@ -22,6 +22,9 @@ if [ $? -eq 0 ]; then
     echo "Copying prompts..."
     cp -r "$TEMP_DIR"/01-general-prompts/* "$TARGET_DIR"/
     
+    echo "Copying ai-fix-scripts..."
+    cp -r "$TEMP_DIR"/.lovable/ai-fix-scripts "$TARGET_DIR"/../ai-fix-scripts 2>/dev/null || true
+    
     NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     
     python3 -c "

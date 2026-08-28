@@ -7,6 +7,10 @@ from pathlib import Path
 
 # --- Core Utilities ---
 
+def log(msg, verbose=False, is_verbose_msg=False):
+    if not is_verbose_msg or (is_verbose_msg and verbose):
+        print(msg)
+
 def get_safe_path(path_str):
     """Safely handle Windows MAX_PATH limitations by using \\?\ prefix for absolute paths."""
     abs_path = os.path.abspath(path_str)
@@ -14,18 +18,25 @@ def get_safe_path(path_str):
         return '\\\\?\\' + abs_path
     return abs_path
 
-def safe_rename(old_path_str, new_path_str):
+def safe_rename(old_path_str, new_path_str, dry_run=False, verbose=False):
     """Attempt `git mv` first to preserve history, fallback to `os.rename`."""
-    # git mv requires relative paths or paths within the repo, so we try without \\?\ first
+    if dry_run:
+        log(f"[DRY-RUN] Would rename: {os.path.basename(old_path_str)} -> {os.path.basename(new_path_str)}")
+        return
+
     try:
-        result = subprocess.run(['git', 'mv', old_path_str, new_path_str], check=True, capture_output=True, text=True)
+        subprocess.run(['git', 'mv', old_path_str, new_path_str], check=True, capture_output=True, text=True)
+        log(f"[GIT MV] {os.path.basename(old_path_str)} -> {os.path.basename(new_path_str)}", verbose, True)
     except (subprocess.CalledProcessError, FileNotFoundError):
-        # Fallback to standard os rename with safe paths
-        os.rename(get_safe_path(old_path_str), get_safe_path(new_path_str))
+        try:
+            os.rename(get_safe_path(old_path_str), get_safe_path(new_path_str))
+            log(f"[OS RENAME] {os.path.basename(old_path_str)} -> {os.path.basename(new_path_str)}", verbose, True)
+        except Exception as e:
+            print(f"[ERROR] Failed to rename {old_path_str}: {e}")
 
 def should_ignore(name, path_str, except_patterns):
     """Check if a file or directory should be ignored."""
-    if name in ['node_modules', '.git']:
+    if name in ['node_modules', '.git', '__pycache__', '.venv']:
         return True
     
     path_obj = Path(path_str)
@@ -42,10 +53,12 @@ def should_ignore(name, path_str, except_patterns):
 def command_lowercase(args):
     target = args.target_directory
     except_patterns = args.except_list.split(',') if args.except_list else []
+    dry_run = args.dry_run
+    verbose = args.verbose
     
-    print(f"Lowercasing files in {target}...")
+    log(f"Lowercasing files in {target}...", verbose)
+    if dry_run: log("[DRY-RUN MODE ENABLED]")
     
-    # We collect renames first to avoid modifying the directory tree while walking it
     renames = []
     
     for root, dirs, files in os.walk(target):
@@ -68,8 +81,9 @@ def command_lowercase(args):
                 renames.append((old_path, new_path))
                 
     for old_p, new_p in renames:
-        print(f"Renaming: {os.path.basename(old_p)} -> {os.path.basename(new_p)}")
-        safe_rename(old_p, new_p)
+        safe_rename(old_p, new_p, dry_run, verbose)
+        
+    log(f"Processed {len(renames)} files for lowercasing.")
 
 # --- Feature 2: Fix File Sequencing ---
 
@@ -83,8 +97,10 @@ def parse_sequence(filename):
 
 def command_fix_seq(args):
     target = args.target_directory
+    dry_run = args.dry_run
+    verbose = args.verbose
     
-    print(f"Fixing sequences in {target}...")
+    log(f"Fixing sequences in {target}...", verbose)
     if not os.path.isdir(target):
         print(f"Error: {target} is not a valid directory.")
         sys.exit(1)
@@ -107,28 +123,23 @@ def command_fix_seq(args):
     if args.order_by_time:
         files.sort(key=lambda x: os.path.getmtime(os.path.join(target, x)))
     elif args.order_by_az:
-        # Sort by alphabetical, ignoring existing numeric prefixes
         files.sort(key=lambda x: parse_sequence(x)[1].lower())
     else:
-        # Default alphabetical
         files.sort()
         
-    # Sequence reassignment
     used_seqs = set(pinned.values())
     
-    # If keep_old_order, try to reserve their existing sequences if not pinned
     if args.keep_old_order:
         for f in files:
             seq, _ = parse_sequence(f)
             if seq is not None and seq not in used_seqs:
-                # We need a quick way to map this, but for simplicity we'll just track used
-                pass # Complex tie-breaking omitted for brevity; appending iteratively
+                pass 
     
     current_seq = 1
+    rename_count = 0
     for file in files:
         old_path = os.path.join(target, file)
         
-        # Determine sequence
         assigned_seq = None
         for k, v in pinned.items():
             if k in file:
@@ -143,7 +154,6 @@ def command_fix_seq(args):
             used_seqs.add(assigned_seq)
             
         _, remainder = parse_sequence(file)
-        # Ensure it starts with a hyphen if remainder doesn't have one
         if remainder and not remainder.startswith('-') and not remainder.startswith('_') and not remainder.startswith('.'):
             remainder = '-' + remainder
             
@@ -151,22 +161,28 @@ def command_fix_seq(args):
         
         if file != new_name:
             new_path = os.path.join(target, new_name)
-            print(f"Sequencing: {file} -> {new_name}")
-            safe_rename(old_path, new_path)
+            safe_rename(old_path, new_path, dry_run, verbose)
+            rename_count += 1
+            
+    log(f"Re-sequenced {rename_count} files.")
 
 # --- Feature 3: Fix Encoding ---
 
 def command_fix_encoding(args):
     target = args.target_directory
-    print(f"Fixing encoding in {target}...")
+    dry_run = args.dry_run
+    verbose = args.verbose
+    
+    log(f"Fixing encoding in {target}...")
+    if dry_run: log("[DRY-RUN MODE ENABLED]")
     
     fixed_count = 0
     for root, dirs, files in os.walk(target):
-        if 'node_modules' in root or '.git' in root:
+        if 'node_modules' in root or '.git' in root or '__pycache__' in root:
             continue
             
         for file in files:
-            if file.endswith('.md') or file.endswith('.txt') or file.endswith('.py') or file.endswith('.json'):
+            if file.endswith(('.md', '.txt', '.py', '.json', '.go', '.yaml', '.yml', '.sh', '.ps1')):
                 path = os.path.join(root, file)
                 try:
                     with open(get_safe_path(path), 'rb') as f:
@@ -174,35 +190,40 @@ def command_fix_encoding(args):
                         
                     changed = False
                     
-                    # Convert UTF-16
                     if raw.startswith(b'\xff\xfe') or raw.startswith(b'\xfe\xff'):
                         raw = raw.decode('utf-16').encode('utf-8')
                         changed = True
                     
-                    # Strip BOM
                     if raw.startswith(b'\xef\xbb\xbf'):
                         raw = raw[3:]
                         changed = True
                         
-                    # Normalize CRLF
                     if b'\r\n' in raw:
                         raw = raw.replace(b'\r\n', b'\n')
                         changed = True
                         
                     if changed:
-                        with open(get_safe_path(path), 'wb') as f:
-                            f.write(raw)
+                        if dry_run:
+                            log(f"[DRY-RUN] Would fix encoding for: {path}")
+                        else:
+                            with open(get_safe_path(path), 'wb') as f:
+                                f.write(raw)
+                            log(f"[FIXED] {path}", verbose, True)
                         fixed_count += 1
-                        print(f"Fixed encoding: {path}")
                 except Exception as e:
-                    print(f"Failed {path}: {e}")
+                    print(f"[ERROR] Failed {path}: {e}")
                     
-    print(f"Total files fixed: {fixed_count}")
+    log(f"Total files fixed: {fixed_count}")
 
 # --- CLI Setup ---
 
 def main():
     parser = argparse.ArgumentParser(description="AI File Manipulator CLI - Mass rename, sequence, and encode.")
+    
+    # Global flags
+    parser.add_argument('--dry-run', action='store_true', help="Preview changes without modifying files")
+    parser.add_argument('--verbose', action='store_true', help="Enable detailed logging output")
+    
     subparsers = parser.add_subparsers(dest="command", required=True)
     
     # Lowercase
