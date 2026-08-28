@@ -20,8 +20,6 @@ Run again if said: go, continue, or next
 - Ask a clarifying question or log an open ambiguity in `.lovable/ambiguous-questions/01-new-ambiguity/01-<slug>.md` before proceeding.
 - Never invent step counts. Read the actual files and count from them.
 
----
-
 ## Phase 1: Pre-Flight & Gitignore Enforcement (Non-Negotiable)
 
 1. The working tree must be clean. Confirm root readme is strictly lowercase `readme.md`.
@@ -32,32 +30,24 @@ Run again if said: go, continue, or next
    - Wave 2: Business logic and services
    - Wave 3: UI and documentation
 
----
-
 ## Phase 2: Allocation & Execution (Strict 3x3 Rule & Locking Matrix)
 
 1. Strict limits:
    - Spawn up to 3 sub-agents to run in parallel.
-
 2. Chunking micro-tasks:
    - Each agent is assigned a chunk of simple, small micro-tasks (under 15 lines per function) to complete sequentially in its own context.
    - Tasks exceeding 7 steps must be decomposed into subtasks.
-
 3. File collision locking matrix (`active-locks.json`):
    - Register active target files in `.lovable/temp/active-locks.json`.
    - Ensure parallel tasks touch completely disjoint files to prevent git merge conflicts.
-
 4. Temp folder logging and specific titling (mandatory):
    - Spawn the sub-agent with a highly specific title reflecting its exact task (e.g., `Refactoring Auth Service` or `Fixing DB Query Wrapper`). Do not use generic names. If an agent switches chunks, its title must change.
    - Log its assigned chunk of tasks to `.lovable/temp/XX-agent-state.md`.
-
 5. Crash identification and 3-strike rollback:
    - If an agent fails or crashes, inspect its state in `.lovable/temp/`.
    - If an agent fails 3 times, automatically revert dirty changes (`git checkout -- <files>`).
    - Log root cause to `.lovable/memory/last-failure.md` and `.lovable/issues/`.
    - Restart a new agent for the next disjoint chunk.
-
----
 
 ## Phase 3: Code Quality (Non-Negotiable)
 
@@ -69,8 +59,6 @@ While executing tasks, you and your agents must adhere to these strict coding gu
 - Always use explicit boolean state checks (e.g., `response.isFail`). Never invert success booleans (e.g., `!response.isSuccess`).
 - Code must be DRY. Reuse constants and wrappers.
 
----
-
 ## Phase 4: Chunked Delivery, Artifact Purge & File Moving
 
 When a chunk of tasks is completed by the agents, do the following before starting the next loop iteration:
@@ -81,8 +69,6 @@ When a chunk of tasks is completed by the agents, do the following before starti
 4. Artifact sanitizer: Audit staged files. Purge unapproved artifact zip archives, temporary scratch files, or test outputs before committing.
 5. Lovable git history guard: Run local tests (no live API calls). Commit code with a clear descriptive message. Never rewrite published git history (no force push, no rebasing, no squash). Push to git cleanly without failure.
 
----
-
 ## Phase 5: Output Window Stats (Mandatory Every Loop)
 
 Every time you return a response or complete a loop iteration, explicitly output the following statistics:
@@ -91,9 +77,6 @@ Every time you return a response or complete a loop iteration, explicitly output
 - Total Completed: [Total number of tasks in `.lovable/plans/completed/`]
 - Total Pending: [Number of tasks remaining in `.lovable/plans/pending/`]
 - Remaining Tasks List: [List the specific filenames/slugs of the tasks remaining]
-
----
-
 
 ## Execution Reporting (Mandatory Output Format)
 
@@ -139,8 +122,6 @@ Past execution turns were sloppy and failed to pin READMEs or bump versions. To 
 - [ ] Completed task files `mv`'d and `plans/index.md` updated.
 - [ ] Fast-forward commit created and pushed without rewriting git history.
 - [ ] Output window explicitly lists "Done", "Pending", and remaining task names.
-
----
 
 ## Actionable Items & Checklist
 
@@ -188,7 +169,6 @@ To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ dire
 NEVER MAKE THIS EXCUSE: *"I did not literally perform N self-loops or spawn dozens of sub-agents. Instead of artificially spinning up N separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment."*
 If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Utilize the processing power effectively to get the right answer. Avoid stupidity.
 
-
 ## No Automatic Releases (Strict Policy)
 
 You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits. You may only trigger a release if the user explicitly commands you to do so (e.g., "cut a release" or "bump the version").
@@ -203,6 +183,3 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 - slug: execute-batched-loop
 - status: active
-
-
-
