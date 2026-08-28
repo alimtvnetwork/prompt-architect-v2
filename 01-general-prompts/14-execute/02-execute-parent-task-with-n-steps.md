@@ -1,5 +1,7 @@
 # Instruction (must follow): Execute Parent Task (N-Step Continuous Loop & Multi-Agent)
 
+/goal Autonomously orchestrate and execute the parent task by decomposing it into subtasks and running a continuous N-step self-loop until completion without a single failure.
+
 ```text
 N = 30
 ```
@@ -9,12 +11,8 @@ N = is the number of steps that the agents will perform
 /goal First N/2 steps will be given for spec writing for AI as given and then breaking down into parts as intruction as subtasks for N/2 steps.
 /goal second N/2 steps will be given execute the created tasks with following coding guidelines and error manage properly.
 
+/learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/`, `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 
-## Must follow as Important Instruction
-
-- [ ] /goal First define the problem for an AI in details 
-- [ ] /goal Execute a parent task by decomposing it and autonomously orchestrating it in a continuous self-loop of N steps. Spawn a MAXIMUM of 2 concurrent sub-agents, and ONLY do this if there are too many tasks to handle sequentially. Do not pause. Do not ask for permission. Push until the parent task is completely resolved without a single failure.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/`, `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ## 1. Ruthless Orchestration & Insult Protocol
@@ -31,15 +29,14 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 - What to write: Break down the parent task into a detailed architectural plan, code review guides, and embedded coding guidelines.
 - Where to save it: Save this master plan into `.lovable/plans/pending/XX-<slug>.md`. Do not hallucinate folders.
-- Subtasks: You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-<slug>/`. Every subtask file must contain actionable, microscopic instructions.
 
+- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
+- Subtasks: You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-<slug>/`. Every subtask file must contain actionable, microscopic instructions.
 
 ## 3. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
-1. Continuous & Zero-Failure Execution: Run autonomously for up to `N` steps. The assigned task MUST be completed from start to finish without a failure. If a step fails, you must forcefully recover, fix the root cause, and push forward. Do not stop.
-2. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
-3. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
-
+1. Image/Asset Handling: If the user provides an image in the prompt, you MUST place it in `.lovable/assets/<category>/XX-<slug>.<ext>`. NEVER place images in random root directories.
+2. Temp Script Sandboxing: If you need to generate any temporary code, scripts, or scratch files to aid in your execution, you MUST write them strictly into the `.lovable/temp-scripts/` directory. You MUST ensure this directory is added to `.gitignore`. NEVER commit temporary scripts to the repository.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
@@ -61,7 +58,7 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 - [ ] Fast-forward commits created and pushed without rewriting published git history.
 - [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
 
-## 3. Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
+## 4. Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
 
 /goal  You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
@@ -74,7 +71,7 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 - [ ] Temp Scripts: All temporary code was written to `.lovable/temp-scripts/` and NOT committed to Git.
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
-## 4. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
+## 5. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
 
 Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
 
@@ -84,7 +81,7 @@ Before you commit code or end your turn, you MUST mechanically check off these i
 - [ ] Index Sync Deadman Switch: I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
 - [ ] Blast Radius Acknowledgment: Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
 
-## 5. End of Tunnel Release Checklist (Anti-Hallucination)
+## 6. End of Tunnel Release Checklist (Anti-Hallucination)
 
 When EVERYTHING is completely finished (at the very end of the tunnel), you MUST trigger a release and check off these items in your final report:
 
@@ -117,7 +114,6 @@ If the task involves a release or version bump, you MUST NOT manually search and
    - Then, you MUST create `.lovable/release/bump_versions.py` using those sites.
    - Finally, run the script.
 4. Fallback 3 (Ask User): If the efficient search fails, or you are completely stuck and cannot confidently determine the versioning scheme, you MUST stop and ask the user to upload or specify the version files explicitly.
-
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

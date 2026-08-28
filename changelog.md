@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.23.0] 2026-08-28 Execution Prompts Consolidation & Rule Sets
+
+### Install Prompt Architect v1.23.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.23.0/install.sh | bash -s -- ".lovable/prompts" "v1.23.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.23.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.23.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Changed:** Refactored all Execution prompts (`14-execute/*` and `09-commit*`) to place an explicit, overarching `/goal` defining the N-step continuous loop immediately below the document title.
+- **Added:** Injected a strict `Task-Specific Rule Set` directive during Phase 1 (Spec Writing) that forces the AI to analyze the task domain and generate 3-5 explicit custom rules before it is allowed to start coding, preventing domain-specific regressions.
+- **Changed:** Consolidated and aggressively stripped minor repetitive instructions from the core orchestration loops while rigorously preserving the Coding Guidelines and Anti-Hallucination checklists.
+
+
 ## [v1.22.0] 2026-08-28 Write Memory Prompt Restructuring
 
 ### Install Prompt Architect v1.22.0
@@ -277,6 +291,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 

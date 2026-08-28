@@ -1,5 +1,7 @@
 # Instruction (must follow): Execute Pending Tasks (Self-Loop & Commit)
 
+/goal Autonomously orchestrate and execute ALL pending tasks in a continuous N-step self-loop until the entire queue is completely resolved without a single failure.
+
 ## 1. Initial State: Audit, Casing Check & Re-Sequence Pending Tasks
 
 Before starting execution, you must ensure the queue of pending tasks is properly ordered, named, and structured into Execution Waves.
@@ -9,6 +11,8 @@ Before starting execution, you must ensure the queue of pending tasks is properl
 - Count exactly how many pending tasks exist.
 - Naming Correction: Check if the pending task files are correctly sequenced with a 2-digit numerical prefix (e.g., `01-<slug>.md`, `02-<slug>.md`).
 - If naming is incorrect or missing prefixes, fix it immediately. Rename the files to follow sequential `01-`, `02-` format and update `.lovable/plans/index.md` to match in the same operation.
+
+- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
 - Execution Waves: Group tasks into Execution Waves (Wave 1: Schemas/DB/wrappers; Wave 2: Business services; Wave 3: UI & docs).
 
 ## 2. Uninterrupted Autonomous Execution (Self-Looping & Locking Matrix)
@@ -134,7 +138,7 @@ If the task involves a release or version bump, you MUST NOT manually search and
 4. **Fallback 3 (Ask User):** If the efficient search fails, or you are completely stuck and cannot confidently determine the versioning scheme, you MUST stop and ask the user to upload or specify the version files explicitly.
 
 
-## 4. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
+## 5. Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
 
 Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
 

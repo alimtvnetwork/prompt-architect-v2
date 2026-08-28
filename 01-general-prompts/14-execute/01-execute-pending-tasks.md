@@ -1,5 +1,7 @@
 # Instruction (must follow): Execute Pending Tasks (Continuous Loop & Multi-Agent)
 
+/goal Autonomously orchestrate and execute ALL pending tasks in a continuous N-step self-loop until the entire queue is completely resolved without a single failure.
+
 /goal Execute every pending task across `.lovable/plans/pending/` using up to 2 sub-agents in a continuous self-loop. Do not stop until the queue is empty, every plan is committed to git, and all indexes are updated. This run ends only when there is nothing left to execute. You MUST self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
 
 /learn Capture every pattern, convention, fix, and correction discovered during execution into `.lovable/memory/learned/01-<slug>.md` and `.lovable/strictly-avoid.md`. Never repeat a mistake that was logged.
