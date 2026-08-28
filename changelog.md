@@ -1,5 +1,18 @@
 # Changelog
 
+## [v1.24.0] 2026-08-28 Encoding Verification & Line Ending Normalization
+
+### Install Prompt Architect v1.24.0
+To pin your repository to this exact version, run the following one-liner:
+**Unix/Bash:** `curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.24.0/install.sh | bash -s -- ".lovable/prompts" "v1.24.0"`
+**PowerShell:** `Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/v1.24.0/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.24.0"`
+
+### Added / Changed / Fixed / Removed
+
+- **Fixed:** Conducted a repository-wide byte-level audit of all 787 `.md` files. Confirmed zero files were suffering from UTF-8 BOM or UTF-16 corruption. 
+- **Changed:** Normalized CRLF (Windows) line endings to LF (Unix) across 784 markdown files to permanently eliminate Git `LF will be replaced by CRLF` warnings and ensure perfect cross-platform rendering.
+
+
 ## [v1.23.0] 2026-08-28 Execution Prompts Consolidation & Rule Sets
 
 ### Install Prompt Architect v1.23.0
@@ -291,6 +304,7 @@ To pin your repository to this exact version, run the following one-liner:
 - Implemented `MD022` markdown linter rule across the entire repository.
 - Upgraded release prompts to dynamically ban test files from version scanning.
 - Formalized `.lovable/memory/version-json-architecture.md` as Single Source of Truth architecture memory.
+
 
 
 
