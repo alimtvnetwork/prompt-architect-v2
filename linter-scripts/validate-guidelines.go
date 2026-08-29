@@ -836,9 +836,7 @@ func checkBareBoolArgs(lines []string, path string) []Violation {
 	return violations
 }
 
-
-var explicitBoolPat = regexp.MustCompile(`(==|===|!=|!==)\s*(true|false)`)
-
+var explicitBoolPat = regexp.MustCompile(`(==|===|!=|!==)\s*(true|false) `)
 
 func checkMixedPolarity(lines []string, path string) []Violation {
 	var violations []Violation
@@ -948,7 +946,7 @@ func validateFile(path string, maxLines int) []Violation {
 		return nil
 	}
 
-	lines := strings.Split(string(data), "\n")
+	lines := strings.Split(string(data), string(rune(10)))
 	var violations []Violation
 
 	// Universal rules

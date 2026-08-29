@@ -1990,3 +1990,19 @@ Before marking any task complete:
 > - ✅ **GOOD:** `[SSH Commands](.lovable/spec/commands/01-ssh-commands.md) — Why: Defines behavior.`
 > - ✅ **GOOD:** `Target File: cmd/login.go`
 
+---
+
+## 23. Universal File Hygiene, Line Endings (LF `\n` Only) & UTF-8 (No BOM)
+
+Every file across the codebase, documentation, and specs MUST strictly enforce these file hygiene rules:
+
+1. **Unix LF (`\n`) Line Endings Only:** Total ban on Windows CRLF (`\r\n`). All source files (`.go`, `.ts`, `.tsx`, `.py`, `.php`, `.cs`, `.js`, etc.) and markdown files (`.md`) MUST use strictly `\n` line breaks.
+2. **Strict UTF-8 Encoding (NO BOM):** All files MUST be saved in UTF-8 without Byte Order Mark (BOM). Zero `\xef\xbb\xbf` header bytes.
+3. **Mandatory Single Trailing Newline at EOF:** Every file MUST terminate with exactly one newline (`\n`). Zero trailing blank lines, and never omit the final newline.
+4. **No Function Starts with a Blank Line:** Function bodies must begin with executable code immediately on line 1 after `{` (or `:` in Python). Never start a function with an empty line.
+5. **Zero Double Blank Lines in Code & Markdown:** Never use 2 or more consecutive blank lines anywhere inside code or markdown files (`\n\n\n` is strictly banned). Normalize all vertical gaps to exactly one single blank line (`\n\n`).
+6. **Markdown Heading Spacing (H1–H6: `#` through `######`):**
+   - Exactly **ONE blank line BEFORE** every markdown heading (EXCEPT when the heading is on line 1 of the file — line 1 has NO blank line before it).
+   - Exactly **ONE blank line AFTER** every markdown heading.
+
+

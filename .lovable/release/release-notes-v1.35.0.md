@@ -3,15 +3,16 @@
 ## Quick Install (One-Liners)
 
 ### Windows (PowerShell 5.1+)
+
 ```powershell
 irm https://github.com/alimtvnetwork/prompt-architect-v2/releases/download/v1.35.0/install.ps1 | iex
 ```
 
 ### Linux / macOS (Bash)
+
 ```bash
 curl -fsSL https://github.com/alimtvnetwork/prompt-architect-v2/releases/download/v1.35.0/install.sh | bash
 ```
-
 
 ## [v1.35.0] 2026-08-29 Sequenced Coding Guideline Execution Suite (cg-execute) with Prioritized Error-First Routing, Relative Spec Checklists, and Linter Hooks
 

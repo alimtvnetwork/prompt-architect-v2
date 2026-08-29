@@ -1,6 +1,6 @@
 # Instruction (must follow): Execute Coding Guidelines — Coding Style, Formatting & Line-Gaps
 
-Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`, `line gaps audit`
+Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`, `line gaps audit`, `fix line endings`, `enforce utf8 lf`
 
 ```text
 N = 200
@@ -8,16 +8,16 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, blank line before `if`, blank line after `}`, blank line before `return`, nested `if`, function length, and file size violations across the codebase, flattening nested conditionals, decomposing functions to <= 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, blank line before `if`, blank line after `}`, blank line before `return`, nested `if`, function length, file size, LF line ending (`\n`), UTF-8 (no BOM) encoding, and trailing newline violations across the codebase, flattening nested conditionals, decomposing functions to <= 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for missing blank lines before `if` statements, missing blank lines after closing `}`, missing blank lines before `return`/`throw`/`raise`, nested `if` blocks (depth > 1), functions exceeding 8–15 lines, and files exceeding 100 coding lines (recommended <= 80). Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters (`check-newline-styling.py`, `check-function-lengths.py`, `check-nested-ifs.py`).
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, insert mandatory blank lines before `if`, after `}`, and before `return`, separate consecutive guard clauses, flatten nested if statements with early returns, break long functions into <= 8-line single-responsibility helpers, decompose files to <= 100 lines, run style linters and autofixers, and verify local CI gates exit with code 0 (`exit 0`).
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source and markdown files for missing blank lines before `if` statements, missing blank lines after closing `}`, missing blank lines before `return`/`throw`/`raise`, nested `if` blocks (depth > 1), functions starting with empty lines, double blank lines (`\n\n\n`), CRLF line endings (`\r\n`), missing EOF newlines, non-UTF-8 encodings, functions exceeding 8–15 lines, and files exceeding 100 coding lines (recommended <= 80). Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters (`check-newline-styling.py`, `check-function-lengths.py`, `check-nested-ifs.py`, `check-markdown-header-spacing.py`).
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, insert mandatory blank lines before `if`, after `}`, and before `return`, eliminate double blank lines, remove leading empty lines inside functions, convert line endings to LF (`\n`), ensure UTF-8 without BOM, ensure exactly one trailing newline at EOF, separate consecutive guard clauses, flatten nested if statements with early returns, break long functions into <= 8-line single-responsibility helpers, decompose files to <= 100 lines, run style linters and autofixers, and verify local CI gates exit with code 0 (`exit 0`).
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase for Style & Newline Violations, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Insert Newlines Before if / After } / Before return, Flatten Nested Ifs, Verify Local CI)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Insert Newlines Before if / After } / Before return, Normalize LF & UTF-8, Flatten Nested Ifs, Verify Local CI)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
@@ -469,8 +469,8 @@ const record = createAuditEntry(
 
 ### Rule 8: No Double Blank Lines & No Blank Line at Function Body Start
 
-1. **No Consecutive Blank Lines:** Never use 2 or more consecutive blank lines in any code or markdown file. Normalize all multiple blank lines to exactly 1 blank line.
-2. **No Leading Blank Line:** Never place an empty line as the very first line inside a function body (immediately after the opening brace `{`).
+1. **No Consecutive Blank Lines:** Never use 2 or more consecutive blank lines in any code or markdown file (`\n\n\n` is banned). Normalize all multiple blank lines to exactly 1 blank line (`\n\n`).
+2. **No Leading Blank Line:** Never place an empty line as the very first line inside a function body (immediately after the opening brace `{` or `:`).
 
 ```go
 // ❌ WRONG: Empty line right after opening brace, followed by double blank lines
@@ -492,7 +492,33 @@ func ComputeMetrics() int {
 
 ---
 
-### Rule 9: Universal Sizing Tier Limits & Anti-Cheating Rules
+### Rule 9: Universal File Hygiene, Line Endings (LF `\n` Only) & Encoding (UTF-8 No BOM)
+
+1. **Unix LF (`\n`) Line Endings Only:**
+   - Every file MUST use Unix-style line feeds (`\n`, `0x0A`).
+   - Total ban on Windows CRLF (`\r\n`).
+2. **Strict UTF-8 Encoding (NO BOM):**
+   - All source code and markdown files MUST be saved in UTF-8 without Byte Order Mark (BOM).
+   - Zero `\xef\xbb\xbf` header bytes. UTF-16 and UTF-32 are strictly forbidden.
+3. **Mandatory Single Trailing Newline at EOF:**
+   - Every file MUST terminate with **exactly one newline (`\n`)** on the final line.
+   - Zero files missing a newline at EOF (`\ No newline at end of file` in Git diffs is an auto-reject).
+   - Zero multiple trailing blank lines at the end of a file.
+
+---
+
+### Rule 10: Markdown Spacing (MD022 / MD032) & Heading Rules
+
+All markdown files (`.md`) MUST have:
+
+- **Before Header:** Exactly **ONE blank line BEFORE** every markdown heading `#` through `######` (EXCEPT when the heading is on line 1 of the file — line 1 has NO blank line before it).
+- **After Header:** Exactly **ONE blank line AFTER** every markdown heading.
+- **Zero Double Blank Lines:** No `\n\n\n` anywhere in markdown.
+- Exactly one blank line before and after lists (`-`, `1.`), fenced code blocks (` ``` `), and blockquotes (`>`).
+
+---
+
+### Rule 11: Universal Sizing Tier Limits & Anti-Cheating Rules
 
 1. **Functions:** Target <= 8 lines body logic preferred; hard cap <= 15 lines maximum.
 2. **Files:** Standard max <= 100 lines of code (recommended <= 80 lines).
@@ -500,17 +526,6 @@ func ComputeMetrics() int {
    - Cheating by deleting necessary blank lines around `if` or `return` to fit into 8 lines is strictly forbidden.
    - Semicolon packing or multi-statement lines (`a = 1; b = 2; return a + b`) are auto-rejected.
    - Decompose logic into focused, single-responsibility helper functions instead of compressing lines.
-
----
-
-### Rule 10: Markdown Spacing (MD022 / MD032)
-
-All markdown files (`.md`) MUST have:
-
-- Exactly one blank line before and after headers (`#`, `##`, `###`).
-- Exactly one blank line before and after lists (`-`, `1.`).
-- Exactly one blank line before and after fenced code blocks (` ``` `).
-- Exactly one blank line before and after blockquotes (`>`).
 
 ---
 
@@ -550,15 +565,21 @@ All markdown files (`.md`) MUST have:
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
+- [ ] **LF Line Endings (`\n`):** All files use Unix LF line endings. Zero CRLF (`\r\n`).
+- [ ] **UTF-8 Encoding (No BOM):** All files encoded in UTF-8 without BOM.
+- [ ] **Single Trailing Newline:** Every file ends with exactly one terminating newline (`\n`).
 - [ ] **Blank Line Before `if`:** Exactly one blank line precedes every `if` statement (unless at the very top of a block).
 - [ ] **Blank Line After `}`:** Exactly one blank line follows every closing brace `}` (unless closing the enclosing block).
 - [ ] **Blank Line Before `return`:** Exactly one blank line precedes `return` / `throw` in multi-line blocks.
 - [ ] **Guard Clause Separation:** All consecutive guard clauses are separated by clean blank lines.
+- [ ] **No Function Starts with Blank Line:** Functions start immediately on line 1 with code.
+- [ ] **Zero Double Blank Lines:** No `\n\n\n` in code or markdown.
+- [ ] **Markdown Heading Spacing:** Exactly one blank line before and after headings (no leading blank line on line 1).
 - [ ] **Zero Nested `if`:** All conditionals flattened to depth 0 using guard clauses and early returns.
 - [ ] **Function Sizing:** All functions <= 8 lines preferred (hard cap 15 lines).
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
-- [ ] `python linter-scripts/check-newline-styling.py` and `python linter-scripts/check-function-lengths.py` exited with code 0.
+- [ ] `python linter-scripts/check-newline-styling.py`, `python linter-scripts/check-function-lengths.py`, and `python linter-scripts/check-markdown-header-spacing.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
 
 ---
@@ -569,6 +590,7 @@ All markdown files (`.md`) MUST have:
 
 - [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] LF Line Endings & UTF-8 (No BOM): Verified Unix LF and UTF-8 across all files.
 - [ ] Blank Line Before `if`: Verified blank line before every `if` statement across all modified files.
 - [ ] Blank Line After `}`: Verified blank line after every closing brace `}` followed by code.
 - [ ] Blank Line Before `return`: Verified blank line before every `return`/`throw` in multi-line blocks.
@@ -580,7 +602,7 @@ All markdown files (`.md`) MUST have:
 
 ## Mandatory Linter & CI/CD Integration
 
-1. **Linter Scripts:** `linter-scripts/check-newline-styling.py`, `linter-scripts/check-function-lengths.py`, `linter-scripts/check-nested-ifs.py`
+1. **Linter Scripts:** `linter-scripts/check-newline-styling.py`, `linter-scripts/check-function-lengths.py`, `linter-scripts/check-nested-ifs.py`, `linter-scripts/check-markdown-header-spacing.py`
 2. **Local Run Command:** `python linter-scripts/check-newline-styling.py`
 3. **Autofixer Command:** `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>`
 4. **CI/CD Integration (`.github/workflows/ci.yml`):**
@@ -590,6 +612,7 @@ All markdown files (`.md`) MUST have:
        python linter-scripts/check-newline-styling.py
        python linter-scripts/check-function-lengths.py
        python linter-scripts/check-nested-ifs.py
+       python linter-scripts/check-markdown-header-spacing.py
    ```
 5. **Runner Registration (`.lovable/ai-fix-scripts/03-cicd-local-runner.py`):**
    ```python
@@ -597,5 +620,6 @@ All markdown files (`.md`) MUST have:
        "Newline Styling Check": [sys.executable, "linter-scripts/check-newline-styling.py"],
        "Function Lengths Check": [sys.executable, "linter-scripts/check-function-lengths.py"],
        "Nested If Check": [sys.executable, "linter-scripts/check-nested-ifs.py"],
+       "Markdown Header Check": [sys.executable, "linter-scripts/check-markdown-header-spacing.py"],
    }
    ```
