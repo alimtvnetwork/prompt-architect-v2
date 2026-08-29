@@ -1,6 +1,6 @@
 # Instruction (must follow): Execute Coding Guidelines — Coding Style, Formatting & Line-Gaps
 
-Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`
+Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`, `line gaps audit`
 
 ```text
 N = 200
@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, blank line before `if`, blank line after `}`, blank line before `return`, nested `if`, and function size violations across the codebase, flattening nested conditionals, decomposing functions to <= 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, blank line before `if`, blank line after `}`, blank line before `return`, nested `if`, function length, and file size violations across the codebase, flattening nested conditionals, decomposing functions to <= 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for missing blank lines before `if` statements, missing blank lines after closing `}`, missing blank lines before `return`/`throw`/`raise`, nested `if` blocks (depth > 1), functions exceeding 8–15 lines, and files exceeding 100 coding lines (recommended <= 80). Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters (`check-newline-styling.py`, `check-function-lengths.py`).
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, insert mandatory blank lines before `if`, after `}`, and before `return`, flatten nested if statements with guard clauses, break long functions into <= 8-line single-responsibility helpers, decompose files to <= 100 lines, run style linters and autofixers, and verify local CI gates exit with code 0 (`exit 0`).
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for missing blank lines before `if` statements, missing blank lines after closing `}`, missing blank lines before `return`/`throw`/`raise`, nested `if` blocks (depth > 1), functions exceeding 8–15 lines, and files exceeding 100 coding lines (recommended <= 80). Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters (`check-newline-styling.py`, `check-function-lengths.py`, `check-nested-ifs.py`).
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, insert mandatory blank lines before `if`, after `}`, and before `return`, separate consecutive guard clauses, flatten nested if statements with early returns, break long functions into <= 8-line single-responsibility helpers, decompose files to <= 100 lines, run style linters and autofixers, and verify local CI gates exit with code 0 (`exit 0`).
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -24,31 +24,35 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 
 ---
 
-## Dedicated Section: Comprehensive Style, Line-Gaps & Newline Gallery (Zero Tolerance)
+## Dedicated Section: Comprehensive Coding Style, Line-Gaps & Anti-Pattern Gallery (Zero Tolerance)
 
-Proper vertical spacing is essential for readability and mental parsing. Dense, squeezed code without blank lines around control flow statements leads to missed edge cases and severe cognitive fatigue.
+Proper vertical spacing and code hygiene are essential for readability and automated analysis. Dense, squeezed code without blank lines around control flow statements leads to missed edge cases, obscured invariants, and severe cognitive fatigue.
 
 ---
 
-### Rule 1: Mandatory Blank Line BEFORE `if` Statements (The Critical Missing Case)
+### Rule 1: Mandatory Blank Line BEFORE Control Structures (`if`, `for`, `switch`, `while`, `try`)
 
-Whenever an `if` statement is preceded by any executable statement (variable declaration, assignment, method call, loop, or channel operation), there **MUST be exactly one blank line before the `if`**.
+Whenever a control structure (`if`, `for`, `switch`, `while`, `try`) is preceded by **any statement** (variable declaration, assignment, method call, channel receive, or loop), there **MUST be exactly one blank line before the control structure**.
 
-*Exception:* If the `if` statement is the very first line of a function body or immediately follows an opening brace `{`, no blank line is required before it.
+*Exception:* If the control structure is the **very first line** of a function body or immediately follows an opening brace `{`, no blank line is required before it.
 
-#### Go: Blank Line Before `if`
+#### 1a. Go: Blank Line Before `if`
 
 ```go
-// ❌ WRONG: No blank line before if statement (squeezed code)
+// ❌ WRONG: Squeezed variable declaration / map lookup directly against if
 func ProcessUser(id string) error {
     user, isFound := userCache.Get(id)
     if !isFound {
         return ErrUserNotFound
     }
-    return nil
+    config, isLoaded := loadConfig()
+    if !isLoaded {
+        return ErrConfigMissing
+    }
+    return executeUser(user, config)
 }
 
-// ✅ CORRECT: Clean blank line before if statement and before return
+// ✅ CORRECT: Clean blank line before each if statement, after each closing brace, and before return
 func ProcessUser(id string) error {
     user, isFound := userCache.Get(id)
 
@@ -56,24 +60,31 @@ func ProcessUser(id string) error {
         return ErrUserNotFound
     }
 
-    return nil
+    config, isLoaded := loadConfig()
+
+    if !isLoaded {
+        return ErrConfigMissing
+    }
+
+    return executeUser(user, config)
 }
 ```
 
-#### TypeScript / React: Blank Line Before `if`
+#### 1b. TypeScript / React: Blank Line Before `if`
 
 ```typescript
-// ❌ WRONG: Squeezed variable declaration directly against if
+// ❌ WRONG: Squeezed variable declarations and function calls against if
 function getFormattedPrice(item: Item): string {
     const rawPrice = calculateBasePrice(item);
     const hasDiscount = item.discountPercent > 0;
     if (hasDiscount) {
         return applyDiscount(rawPrice, item.discountPercent);
     }
-    return formatCurrency(rawPrice);
+    const formatted = formatCurrency(rawPrice);
+    return formatted;
 }
 
-// ✅ CORRECT: Separated with blank lines before if and before final return
+// ✅ CORRECT: Clean blank line before if and before final return
 function getFormattedPrice(item: Item): string {
     const rawPrice = calculateBasePrice(item);
     const hasDiscount = item.discountPercent > 0;
@@ -82,11 +93,13 @@ function getFormattedPrice(item: Item): string {
         return applyDiscount(rawPrice, item.discountPercent);
     }
 
-    return formatCurrency(rawPrice);
+    const formatted = formatCurrency(rawPrice);
+
+    return formatted;
 }
 ```
 
-#### Python: Blank Line Before `if`
+#### 1c. Python: Blank Line Before `if`
 
 ```python
 # ❌ WRONG: Assignment directly followed by if without blank line
@@ -95,9 +108,12 @@ def fetch_user_profile(user_id: str) -> Profile:
     is_valid_token = verify_token(auth_token)
     if not is_valid_token:
         raise UnauthorizedError()
-    return load_profile_from_db(user_id)
+    user_record = db.find_user(user_id)
+    if user_record is None:
+        raise NotFoundError()
+    return Profile.from_record(user_record)
 
-# ✅ CORRECT: Blank line before if and before return
+# ✅ CORRECT: Clean blank line before if and before returns
 def fetch_user_profile(user_id: str) -> Profile:
     auth_token = get_session_token()
     is_valid_token = verify_token(auth_token)
@@ -105,7 +121,58 @@ def fetch_user_profile(user_id: str) -> Profile:
     if not is_valid_token:
         raise UnauthorizedError()
 
-    return load_profile_from_db(user_id)
+    user_record = db.find_user(user_id)
+
+    if user_record is None:
+        raise NotFoundError()
+
+    return Profile.from_record(user_record)
+```
+
+#### 1d. PHP: Blank Line Before `if` and `foreach`
+
+```php
+// ❌ WRONG: Squeezed statements before if and foreach
+$result = $this->apiRequest($agentId, HttpMethodType::Post->value, $endpoint);
+if (is_wp_error($result)) {
+    return $result;
+}
+$items = $this->fetchItems();
+foreach ($items as $item) {
+    $this->process($item);
+}
+
+// ✅ CORRECT: Separated with blank lines before control structures
+$result = $this->apiRequest($agentId, HttpMethodType::Post->value, $endpoint);
+
+if (is_wp_error($result)) {
+    return $result;
+}
+
+$items = $this->fetchItems();
+
+foreach ($items as $item) {
+    $this->process($item);
+}
+```
+
+#### 1e. C#: Blank Line Before `if`
+
+```csharp
+// ❌ WRONG: Squeezed method invocation against if
+var account = await _accountRepository.GetByIdAsync(accountId);
+if (account is null)
+{
+    return Result.Fail("Account not found");
+}
+
+// ✅ CORRECT: Blank line before if
+var account = await _accountRepository.GetByIdAsync(accountId);
+
+if (account is null)
+{
+    return Result.Fail("Account not found");
+}
 ```
 
 ---
@@ -114,7 +181,9 @@ def fetch_user_profile(user_id: str) -> Profile:
 
 Whenever a closing brace `}` (from an `if`, `for`, `switch`, `while`, or `try/catch` block) is followed by further executable code or another statement, there **MUST be exactly one blank line after `}`**.
 
-#### Go: Blank Line After `}`
+*Exception:* No blank line is needed when `}` is followed by another closing `}`, `else`, `catch`, `finally`, or the end of a function body.
+
+#### 2a. Go: Blank Line After `}` Following Control Flow
 
 ```go
 // ❌ WRONG: Closing brace squeezed against next statement
@@ -129,7 +198,7 @@ func ExecuteStep(step Step) error {
     return saveResult(result)
 }
 
-// ✅ CORRECT: Clean blank line after every closing brace and before every if / return
+// ✅ CORRECT: Clean blank line after every closing brace
 func ExecuteStep(step Step) error {
     if err := step.Validate(); err != nil {
         return err
@@ -144,28 +213,77 @@ func ExecuteStep(step Step) error {
 }
 ```
 
+#### 2b. TypeScript: Blank Line After Loops & Try/Catch
+
+```typescript
+// ❌ WRONG: Loop and try/catch squeezed against subsequent logic
+for (const item of items) {
+    processed.push(transform(item));
+}
+const result = merge(processed);
+
+try {
+    saveToStorage(result);
+} catch (error) {
+    logger.error(error);
+}
+cleanup();
+
+// ✅ CORRECT: Blank line after each closing brace
+for (const item of items) {
+    processed.push(transform(item));
+}
+
+const result = merge(processed);
+
+try {
+    saveToStorage(result);
+} catch (error) {
+    logger.error(error);
+}
+
+cleanup();
+```
+
 ---
 
 ### Rule 3: Mandatory Blank Line BEFORE `return`, `throw`, `raise`, `yield`
 
-In multi-line functions and blocks, there **MUST be a blank line before `return` / `throw` / `raise`**.
+In multi-line functions and blocks, there **MUST be a blank line before `return` / `throw` / `raise` / `yield`**.
 
-*Exception:* Single-statement function body (`func GetId() string { return c.Id }`) or when `return` is the immediate first statement after an opening brace `{`.
+*Exception:* Single-statement function body (`func GetId() string { return c.Id }`) or when `return` is the immediate first statement inside a block.
 
 ```go
-// ❌ WRONG: Multi-line function with return squeezed directly under statement
-func CalculateTax(amount float64, rate float64) float64 {
-    base := amount * rate
-    total := base + surcharge
+// ❌ WRONG: Return squeezed directly under statements
+func CalculateTotal(items []Item, taxRate float64) float64 {
+    subtotal := computeSubtotal(items)
+    tax := subtotal * taxRate
+    total := subtotal + tax
     return total
 }
 
-// ✅ CORRECT: Blank line before return
-func CalculateTax(amount float64, rate float64) float64 {
-    base := amount * rate
-    total := base + surcharge
+// ✅ CORRECT: Blank line before final return
+func CalculateTotal(items []Item, taxRate float64) float64 {
+    subtotal := computeSubtotal(items)
+    tax := subtotal * taxRate
+    total := subtotal + tax
 
     return total
+}
+```
+
+```typescript
+// ❌ WRONG: Throw squeezed under validation
+function validatePayload(payload: Payload): void {
+    const trimmed = payload.name.trim();
+    throw new Error(`Invalid payload name: ${trimmed}`);
+}
+
+// ✅ CORRECT: Blank line before throw
+function validatePayload(payload: Payload): void {
+    const trimmed = payload.name.trim();
+
+    throw new Error(`Invalid payload name: ${trimmed}`);
 }
 ```
 
@@ -173,7 +291,7 @@ func CalculateTax(amount float64, rate float64) float64 {
 
 ### Rule 4: Zero Clumping of Consecutive Guard Clauses
 
-When multiple guard clauses follow one another, each guard clause **MUST be separated by a blank line** after its closing brace `}`. Never stack guard clauses together without vertical space.
+When multiple guard clauses follow one another sequentially, **each guard clause MUST be separated by a blank line** after its closing brace `}`. Never clump or stack guard clauses together without vertical breathing room.
 
 ```go
 // ❌ WRONG: Clumped guard clauses with zero spacing
@@ -187,10 +305,13 @@ func ValidateOrder(order *Order) error {
     if order.TotalAmount <= 0 {
         return ErrInvalidAmount
     }
+    if order.IsExpired() {
+        return ErrOrderExpired
+    }
     return nil
 }
 
-// ✅ CORRECT: Clean blank lines between every guard clause
+// ✅ CORRECT: Clean blank lines between every single guard clause
 func ValidateOrder(order *Order) error {
     if order == nil {
         return ErrNilOrder
@@ -204,6 +325,10 @@ func ValidateOrder(order *Order) error {
         return ErrInvalidAmount
     }
 
+    if order.IsExpired() {
+        return ErrOrderExpired
+    }
+
     return nil
 }
 ```
@@ -212,10 +337,10 @@ func ValidateOrder(order *Order) error {
 
 ### Rule 5: Nested `if` Elimination & Guard Inversion (Zero Tolerance)
 
-Nested `if` statements (nesting depth > 1) are **strictly forbidden**. Invert conditions and return early:
+Nested `if` statements (an `if` inside another `if`, nesting depth > 1) are **strictly forbidden** across all languages. Invert conditions and return early:
 
 ```typescript
-// ❌ FORBIDDEN: Nested if with depth > 1
+// ❌ FORBIDDEN: Deep nested conditionals (depth = 3)
 function processPayment(user: User, order: Order): PaymentResult {
     if (user.isActive) {
         if (order.hasValidItems) {
@@ -229,7 +354,7 @@ function processPayment(user: User, order: Order): PaymentResult {
     return PaymentResult.Failed;
 }
 
-// ✅ REQUIRED: Inverted guard clauses with zero nesting and proper newlines
+// ✅ REQUIRED: Inverted guard clauses with zero nesting and proper line gaps
 function processPayment(user: User, order: Order): PaymentResult {
     if (!user.isActive) {
         return PaymentResult.Failed;
@@ -247,36 +372,144 @@ function processPayment(user: User, order: Order): PaymentResult {
 }
 ```
 
----
-
-### Rule 6: Sizing Tier & Function Parameter Wrapping
-
-1. **Functions:** Target <= 8 lines body logic preferred; hard cap of <= 15 lines maximum.
-2. **Files:** Max 100 coding lines per file (recommended <= 80 lines).
-3. **Parameter Wrapping:** When a function signature exceeds 3 parameters or 100 characters, break each parameter onto its own line:
-
 ```go
-// ✅ CORRECT: Multi-line parameter wrapping
-func CreateInvoice(
-    ctx context.Context,
-    customerId string,
-    billingAddress *Address,
-    lineItems []LineItem,
-) (*Invoice, error) {
-    if ctx == nil {
-        return nil, ErrNilContext
+// ❌ FORBIDDEN: Nested type assertion and error checks
+func HandleResponse(resp *Response) error {
+    if resp != nil {
+        if appErr, ok := resp.Err.(*AppError); ok {
+            if appErr.IsRetryable {
+                return retry(resp)
+            }
+        }
+    }
+    return nil
+}
+
+// ✅ REQUIRED: Flat guard clauses with semantic boolean and clean newlines
+func HandleResponse(resp *Response) error {
+    if resp == nil {
+        return nil
     }
 
-    return invoiceService.Generate(ctx, customerId, billingAddress, lineItems)
+    appErr, isAppErr := resp.Err.(*AppError)
+
+    if !isAppErr {
+        return nil
+    }
+
+    if appErr.IsRetryable {
+        return retry(resp)
+    }
+
+    return nil
 }
 ```
 
 ---
 
-### Rule 7: No Double Blank Lines & No Leading Function Blank Line
+### Rule 6: Mandatory Braces for All Control Blocks (No Single-Line `if`)
 
-1. **Never use 2 or more consecutive blank lines** (always normalize to exactly 1 blank line).
-2. **Never place an empty blank line as the very first line of a function body** (immediately after `{`).
+Every `if`, `for`, `foreach`/`for...of`, `while` block **must** use curly braces `{}` on dedicated lines, even for single-statement bodies (TypeScript, PHP, C#):
+
+```typescript
+// ❌ FORBIDDEN: Single-line unbraced if
+if (isLoading) return null;
+if (hasError) throw new Error("Load failed");
+
+// ✅ REQUIRED: Multi-line braced if with blank lines
+if (isLoading) {
+    return null;
+}
+
+if (hasError) {
+    throw new Error("Load failed");
+}
+```
+
+---
+
+### Rule 7: Multi-Line Parameter & Argument Wrapping (>2 Parameters)
+
+When a function signature or call has **more than two arguments** or exceeds 100 characters, break each parameter onto its own line with consistent indentation, a trailing comma (where permitted), and the closing parenthesis on its own line:
+
+```go
+// ❌ FORBIDDEN: Long single-line signature (>2 params)
+func BuildRecord(label string, path string, isSuccess bool, errMsg string) (*Record, error) {
+
+// ✅ REQUIRED: Multi-line parameter wrapping
+func BuildRecord(
+    label string,
+    path string,
+    isSuccess bool,
+    errMsg string,
+) (*Record, error) {
+    if label == "" {
+        return nil, ErrEmptyLabel
+    }
+
+    return newRecord(label, path, isSuccess, errMsg)
+}
+```
+
+```typescript
+// ❌ FORBIDDEN: Long single-line call
+const record = createAuditEntry(user.id, ActionType.Update, resource.id, StatusType.Success, metadata);
+
+// ✅ REQUIRED: Multi-line call formatting
+const record = createAuditEntry(
+    user.id,
+    ActionType.Update,
+    resource.id,
+    StatusType.Success,
+    metadata,
+);
+```
+
+---
+
+### Rule 8: No Double Blank Lines & No Blank Line at Function Body Start
+
+1. **No Consecutive Blank Lines:** Never use 2 or more consecutive blank lines in any code or markdown file. Normalize all multiple blank lines to exactly 1 blank line.
+2. **No Leading Blank Line:** Never place an empty line as the very first line inside a function body (immediately after the opening brace `{`).
+
+```go
+// ❌ WRONG: Empty line right after opening brace, followed by double blank lines
+func ComputeMetrics() int {
+
+    count := fetchCount()
+
+
+    return count * 2
+}
+
+// ✅ CORRECT: No leading blank line, single blank line before return
+func ComputeMetrics() int {
+    count := fetchCount()
+
+    return count * 2
+}
+```
+
+---
+
+### Rule 9: Universal Sizing Tier Limits & Anti-Cheating Rules
+
+1. **Functions:** Target <= 8 lines body logic preferred; hard cap <= 15 lines maximum.
+2. **Files:** Max 100 coding lines per file (recommended <= 80 lines).
+3. **Cheating Cheats Are Banned:**
+   - Cheating by deleting necessary blank lines around `if` or `return` to fit into 8 lines is strictly forbidden.
+   - Semicolon packing or multi-statement lines (`a = 1; b = 2; return a + b`) are auto-rejected.
+   - Decompose logic into focused, single-responsibility helper functions instead of compressing lines.
+
+---
+
+### Rule 10: Markdown Spacing (MD022 / MD032)
+
+All markdown files (`.md`) MUST have:
+- Exactly one blank line before and after headers (`#`, `##`, `###`).
+- Exactly one blank line before and after lists (`-`, `1.`).
+- Exactly one blank line before and after fenced code blocks (` ``` `).
+- Exactly one blank line before and after blockquotes (`>`).
 
 ---
 
