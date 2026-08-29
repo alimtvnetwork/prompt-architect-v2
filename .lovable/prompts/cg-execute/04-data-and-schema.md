@@ -1,105 +1,110 @@
-# Instruction (must follow): Coding Guideline Execution — Database & Data Schema Rules
+# Instruction (must follow): Execute Coding Guidelines — Database & Data Schema Rules
 
 Trigger Keywords & Aliases: `cg-schema`, `cg-execute schema`, `audit schema`, `fix schema guidelines`, `enforce database standards`
 
-```text
-N = 100
-```
-
-N = total self-loop steps budget for scanning, spec planning, and autonomously resolving all database and schema guideline violations.
-
-- [ ] /goal First `N/2` steps (Phase 1) are dedicated to scanning the codebase for schema, database model, and query violations, writing the master audit spec into `.lovable/plans/pending/XX-data-and-schema-audit.md`, generating missing Mermaid ERD diagrams, decomposing into subtasks in `.lovable/plans/subtasks/XX-data-and-schema/`, and verifying/creating the dedicated schema linter in `linter-scripts/`.
-- [ ] /goal Second `N/2` steps (Phase 2) are dedicated to executing each subtask sequentially, refactoring tables, entities, columns, and relations to adhere to PascalCase/camelCase standards, integer `{TableName}Id` primary keys, and explicit foreign keys, running the schema linter, and verifying all local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md`, `.lovable/strictly-avoid.md`, and `.lovable/memory/issues/` before modifying code.
+/goal Autonomously orchestrate and execute database and data schema compliance across the entire repository by decomposing violations into subtasks, generating Mermaid ERD diagrams, verifying/creating schema linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N)
+N = 200
 ```
 
-N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization.
+N = total self-loop steps budget that the agents will perform.
+
+- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all SQL, migrations, and ORM files, listing all schema spec files with why and how, creating the Antigravity skill, generating Mermaid ERDs, and breaking down into microscopic subtasks for N/2 steps.
+- [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring tables to PascalCase, columns to camelCase, primary keys to `{TableName}Id` integers, JSON keys to PascalCase, running the schema linter, and verifying all local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/04-database-conventions/`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+
+```text
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, Schema Refactoring, Linter Verification, Local CI Runner Verification)
+```
+
+N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
 
 ---
 
 ## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
 
-Before execution, check if `.agents/skills/coding-guidelines/skill.md` exists. If missing, create it with YAML frontmatter (`name: coding-guidelines`, `description: "Audits and enforces cross-language database and schema coding standards."`).
+Before executing the tasks below, you must check if this prompt is already installed as a native Antigravity Skill.
+
+1. Check if `.agents/skills/cg-data-and-schema/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
+2. Extract the core instructions of this prompt and save it into that `skill.md` using standard YAML frontmatter:
+   ```yaml
+   ---
+   name: cg-data-and-schema
+   description: >-
+     Autonomously audits, refactors, and validates repository-wide database schemas, models, and migrations against spec/04-database-conventions/ using PascalCase tables, camelCase columns, and CI linters.
+   ---
+   ```
+3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
-## Phase 1: Scan, Spec, Subtasks & Linter Verification (Steps 1 to PHASE_1_STEPS)
+## 1. Ruthless Orchestration & Insult Protocol
 
-> [!IMPORTANT]
-> **Phase 1 is dedicated to discovery, planning, and tooling setup. Do NOT alter database migrations or models in Phase 1.**
+/goal You are the master orchestrator. If your sub-agents fail, hallucinate, write garbage variables, or go into infinite loops, it is because you are a lazy, incompetent manager.
 
-### Step 1: Ingest Authoritative Data & Schema Rules
+- You must give sub-agents strict, microscopic instructions.
+- If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
+- Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-data-and-schema/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
 
-1. **Naming Conventions:**
-   - Tables, Entities, Models: **PascalCase** (e.g. `UserAccount`, `OrderTransaction`, `ProductItem`).
-   - Fields, Columns, Attributes: **camelCase** (e.g. `userId`, `createdAt`, `totalAmount`).
-   - JSON Payload Keys: **PascalCase** (e.g. `{ "UserId": 100, "CreatedAt": "..." }`).
-2. **Primary Key Standard:**
-   - Every primary key MUST be an integer auto-increment named `{TableName}Id` (e.g. `UserAccountId`, `OrderTransactionId`).
-   - Raw UUIDs as primary keys are forbidden unless explicitly mandated by external distributed sync contracts.
-3. **Structured Join Tables for Categories/Status:**
-   - `Type`, `Status`, `Category`, and `Kind` columns must use a 1-N or N-M relation with a registered enum or join table. Never use free-form unconstrained string columns.
-4. **Standard Metadata Columns:**
-   - Entity & Reference tables MUST include `Description TEXT NULL`.
-   - Transactional tables MUST include `Notes TEXT NULL` and `Comments TEXT NULL`.
-   - All optional metadata fields are nullable with no raw default placeholders.
-5. **SQLite & Explicit ORM Relations:**
-   - Explicitly declare all foreign key constraints, indexes, and join mappings.
-6. **Mandatory Mermaid ERD:**
-   - Any schema modification or audit MUST generate or update a comprehensive Mermaid ERD diagram representing all table relationships.
+---
 
-### Step 2: Codebase-Wide Schema Scan
+## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST (Steps 1 to PHASE_1_STEPS)
 
-Search all SQL files, migration scripts, ORM entities, and schema definitions for:
+Before doing anything else, you MUST write a highly detailed execution spec.
 
-- Snake_case or kebab-case table names (e.g. `user_accounts` vs `UserAccount`).
-- Non-standard primary keys (e.g. bare `id`, `uuid`, `user_id` vs `UserAccountId`).
-- Snake_case column names (e.g. `created_at` vs `createdAt`).
-- Missing foreign key constraints or un-indexed join keys.
-- Free-form string status/type fields lacking enum validation.
-- Missing Mermaid ERDs in schema documentation.
+- **What to write:** Break down the parent task into a detailed architectural plan, complete database and schema violation inventory, Mermaid ERD diagram, code review guides, and embedded database standards.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-data-and-schema-audit.md`. Do not hallucinate folders.
+- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
+- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-data-and-schema/`. Every subtask file must contain actionable, microscopic instructions.
 
-### Step 3: Write Master Audit Spec & Mermaid ERD
+---
 
-Save the complete schema audit to `.lovable/plans/pending/XX-data-and-schema-audit.md`:
+## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
 
-- Embed the full Mermaid ERD diagram illustrating the compliant schema architecture.
-- Document exact migration scripts, entity files, and columns requiring refactoring.
-- Register the spec in `.lovable/plans/index.md`.
+You MUST read and enforce every single file in `spec/04-database-conventions/`:
 
-### Step 4: Decompose into Subtasks
+| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
+|---|---|---|
+| [`spec/04-database-conventions/00-overview.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/00-overview.md) | Authoritative database architectural foundation | All schema definitions, migrations, and queries must follow SQLite-first, strongly-typed conventions. |
+| [`spec/04-database-conventions/01-naming-conventions.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/01-naming-conventions.md) | Strict casing and primary key rules | Tables and entities in **PascalCase** (`UserAccount`), columns and fields in **camelCase** (`userId`, `createdAt`), primary keys MUST be `{TableName}Id` integer auto-increment (`UserAccountId`). No UUID primary keys. |
+| [`spec/04-database-conventions/02-schema-design.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/02-schema-design.md) | Standardized metadata and join constraints | Entity & Reference tables MUST include `Description TEXT NULL`. Transactional tables MUST include `Notes TEXT NULL` and `Comments TEXT NULL`. `Type`/`Status` columns use join tables or registered enums, never free-form strings. |
+| [`spec/04-database-conventions/03-orm-and-views.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/03-orm-and-views.md) | Explicit ORM mapping and relation integrity | Explicitly declare foreign key references, cascade rules, and indexes. Never rely on implicit unconstrained relations. |
+| [`spec/04-database-conventions/05-relationship-diagrams.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/05-relationship-diagrams.md) | Living visual documentation | Every database change MUST include an updated Mermaid ERD diagram showing entities, primary/foreign keys, and relationships. |
+| [`spec/04-database-conventions/06-rest-api-format.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/06-rest-api-format.md) | JSON transport serialization | JSON payload keys MUST be **PascalCase** (e.g. `{ "UserAccountId": 101, "EmailAddress": "..." }`). |
+| [`spec/04-database-conventions/07-split-db-pattern.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/07-split-db-pattern.md) | High-performance split database partitioning | If data tier uses split databases (e.g. Core vs Analytics/History), keep schemas modular and isolated. |
 
-Break down into subtasks under `.lovable/plans/subtasks/XX-data-and-schema/`:
+---
 
-- `01-primary-and-foreign-keys.md` (Standardizing `{TableName}Id` and foreign key constraints)
-- `02-column-naming.md` (Converting column names to camelCase and JSON keys to PascalCase)
-- `03-metadata-and-status-tables.md` (Enforcing join tables and standard metadata fields)
+## 4. Mandatory Linter & CI/CD Connection Checklist
 
-### Step 5: Linter Verification & CI/CD Connection (Mandatory Checklist)
+Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
-- [ ] **Check Linter Script Existence:** Check if `linter-scripts/check-schema-guidelines.py` exists.
-- [ ] **Create Linter Script if Missing:** If missing, create `linter-scripts/check-schema-guidelines.py` that parses SQL schema/migrations and ORM models, validating table PascalCase, column camelCase, `{TableName}Id` keys, and explicit foreign key constraints.
-- [ ] **Local Linter Command:** Verify the linter runs locally with:
+- [ ] **Linter Script Identification:** Check if `linter-scripts/check-schema-guidelines.py` exists in the repository.
+- [ ] **Auto-Create Linter if Missing:** If no dedicated schema linter exists, create `linter-scripts/check-schema-guidelines.py` that AST-scans SQL files, migrations, and ORM entities for:
+  1. Snake_case table or column names.
+  2. Primary keys not matching `{TableName}Id` integer convention.
+  3. Missing foreign key constraints or missing index declarations.
+  4. Free-form string status/type fields lacking enum joins.
+- [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
   python linter-scripts/check-schema-guidelines.py
   ```
-- [ ] **CI/CD Integration:** Connect the linter into `.lovable/ai-fix-scripts/03-cicd-local-runner.py` under `JOBS`:
+- [ ] **CI/CD Local Runner Connection:** Register the linter script inside `.lovable/ai-fix-scripts/03-cicd-local-runner.py` under the `JOBS` dictionary:
   ```python
   JOBS["lint:schema"] = ["python", "linter-scripts/check-schema-guidelines.py"]
   ```
-  And verify it is present in `.github/workflows/ci.yml`.
+- [ ] **GitHub Actions Workflow Connection:** Verify that `.github/workflows/ci.yml` contains a dedicated step running the schema linter.
 
 ---
 
-## Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
+## 5. Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
 
 > [!IMPORTANT]
 > **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
-> Sequentially execute each subtask, applying surgical schema refactors and migration updates until all checks pass 100% green.
+> Sequentially execute each subtask, applying surgical refactoring until all schema checks pass 100% green.
 
 ```text
 STEP = 0
@@ -124,51 +129,22 @@ WHILE (STEP < PHASE_2_STEPS):
 
 ---
 
-## Authoritative Schema Reference (SQL & Mermaid ERD)
+## AI Fix Scripts Memory (Reusable Tooling)
 
-```sql
--- GOOD: PascalCase table, camelCase columns, {TableName}Id integer PK, explicit FKs
-CREATE TABLE UserAccount (
-    UserAccountId INTEGER PRIMARY KEY AUTOINCREMENT,
-    emailAddress  TEXT NOT NULL UNIQUE,
-    createdAt     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    description   TEXT NULL
-);
-
-CREATE TABLE UserSession (
-    UserSessionId INTEGER PRIMARY KEY AUTOINCREMENT,
-    UserAccountId INTEGER NOT NULL,
-    sessionToken  TEXT NOT NULL UNIQUE,
-    expiresAt     DATETIME NOT NULL,
-    notes         TEXT NULL,
-    comments      TEXT NULL,
-    FOREIGN KEY (UserAccountId) REFERENCES UserAccount(UserAccountId) ON DELETE CASCADE
-);
-```
-
-```mermaid
-erDiagram
-    UserAccount ||--o{ UserSession : "has"
-    UserAccount {
-        int UserAccountId PK
-        string emailAddress
-        datetime createdAt
-        string description
-    }
-    UserSession {
-        int UserSessionId PK
-        int UserAccountId FK
-        string sessionToken
-        datetime expiresAt
-        string notes
-        string comments
-    }
-```
+- [ ] `/goal` **Reuse First:** I have rigorously scanned and `/learn`ed `.lovable/ai-fix-scripts/index.md` to check if a helper script already exists before writing any new temporary code.
+- [ ] **Native File Manipulator:** If you need to perform mass file renaming, `.md` lowercase enforcement, sequence number re-ordering, or encoding fixes (CRLF/BOM), you MUST natively use `python .lovable/ai-fix-scripts/01-file-manipulator.py <command>` rather than writing a new script from scratch.
+- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
+- [ ] **Commit & Track:** All new helper scripts were written strictly to `.lovable/ai-fix-scripts/` and committed to Git for future reuse.
+- [ ] **Index Documentation:** I have updated `.lovable/ai-fix-scripts/index.md` using sequential script naming (e.g., `01-parse-files.py`). For every script, I have included a `<details>` collapsible tag explaining exactly why the script is there and what it does.
 
 ---
 
-## Pre-Reply / Loop Checklist
+## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
+- [ ] Git working tree is clean before new code changes.
+- [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
+- [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
+- [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] All table names are PascalCase.
 - [ ] All column names are camelCase.
 - [ ] Primary keys are `{TableName}Id` integers.
@@ -179,20 +155,63 @@ erDiagram
 
 ---
 
-## No Automatic Releases (Strict Policy)
+## Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
 
-> [!CAUTION]
-> This is a development refactoring workflow. You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits (e.g. `refactor(schema): standardize entity models and keys`).
+/goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
+
+- [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/04-database-conventions/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Primary Keys: All tables use integer auto-increment `{TableName}Id` primary keys.
+- [ ] Column Casing: camelCase columns, PascalCase tables, PascalCase JSON keys.
+- [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`).
+- [ ] Mermaid ERD: Current ERD diagram present in schema documentation.
+- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+- [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ---
 
-## End of Tunnel Checklist
+## Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
 
-- [ ] Schema linter and database migration tests exit with code 0.
-- [ ] `03-cicd-local-runner.py` passes 100% green.
-- [ ] Master plan moved to `.lovable/plans/completed/XX-data-and-schema-audit.md`.
-- [ ] Clean commit pushed to current branch.
-- [ ] File Change Summary posted in chat with updated ERD diagram reference.
+Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
+
+- [ ] Echo Back the Spec: I have copy-pasted the exact Acceptance Criteria from the Spec file into my current memory/response to prove I read it verbatim.
+- [ ] Pre-Commit Diff Proof: I have executed `git status` or `git diff --stat` and verified that the files I claim to have modified are actually listed as modified in the terminal output before committing.
+- [ ] No Placeholder Search: I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
+- [ ] Index Sync Deadman Switch: I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
+- [ ] Blast Radius Acknowledgment: Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
+
+---
+
+## No Automatic Releases (Strict Policy)
+
+You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits. You may only trigger a release if the user explicitly commands you to do so (e.g., "cut a release" or "bump the version").
+
+---
+
+## MUST FOLLOW NON-NEGOTIABLE
+
+Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
+---
+
+## Anti-Hallucination, Micro-Tasking, & Self-Looping
+
+> [!CAUTION]
+> **CRITICAL RULE: DO NOT ATTEMPT TO READ, PLAN, AND EXECUTE EVERYTHING AT ONCE.**
+> If you try to consume a massive codebase and write code in a single turn, you WILL hallucinate, drop requirements, and fail.
+
+To survive massive checklists and complex codebases, you MUST operate using these three principles:
+
+1. **Phase 1: Read & Understand (Isolated Loop):** Your very first action must be purely exploratory. Do NOT write code. Break down the task, read the specific files, trace the dependencies, and understand the architectural boundary. Once you understand the scope, end your turn and self-loop to begin execution.
+2. **Phase 2: Bounded Micro-Tasking (Sequential Self-Looping):** Never attempt to execute the entire checklist in one response. Treat each checklist section or file as a strict, isolated boundary. Execute *only* the first small portion, verify it, end your turn, and self-loop to process the next portion. 
+3. **Phase 3: Multi-Agent Parallelization:** If tasks are independent, you MUST spawn dedicated sub-agents to handle them concurrently. Give each sub-agent an extremely small, strictly defined bounding box (e.g., "Only edit File X"). Never give a sub-agent a generic or multi-file task.
 
 ---
 

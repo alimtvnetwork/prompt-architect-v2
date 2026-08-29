@@ -1,94 +1,112 @@
-# Instruction (must follow): Coding Guideline Execution — Error Management & Architecture
+# Instruction (must follow): Execute Coding Guidelines — Error Management & Architecture
 
 Trigger Keywords & Aliases: `cg-error`, `cg-execute error`, `audit error`, `fix error guidelines`, `enforce error management`
 
-```text
-N = 100
-```
-
-N = total self-loop steps budget for scanning, spec planning, and autonomously resolving all error management guideline violations.
-
-- [ ] /goal First `N/2` steps (Phase 1) are dedicated to scanning the entire codebase for error handling violations, writing the master audit spec into `.lovable/plans/pending/XX-error-management-audit.md`, decomposing into subtasks in `.lovable/plans/subtasks/XX-error-management/`, and verifying/creating the dedicated error linter in `linter-scripts/`.
-- [ ] /goal Second `N/2` steps (Phase 2) are dedicated to executing each subtask sequentially, refactoring error handling to adhere to `AppError` context wrapping and universal envelopes, running the error linter, and verifying all local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md`, `spec/03-error-manage/`, `.lovable/strictly-avoid.md`, and `.lovable/memory/issues/` before modifying code.
+/goal Autonomously orchestrate and execute error management compliance across the entire repository by decomposing violations into subtasks, verifying/creating error linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N)
+N = 200
 ```
 
-N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization.
+N = total self-loop steps budget that the agents will perform.
+
+- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all active files, listing all error management spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
+- [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring error handling to follow `AppError` context wrapping and universal envelopes, running the error linter, and verifying all local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+
+```text
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, AppError Refactoring, Linter Verification, Local CI Runner Verification)
+```
+
+N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
 
 ---
 
 ## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
 
-Before execution, check if `.agents/skills/coding-guidelines/skill.md` exists. If missing, create it with YAML frontmatter (`name: coding-guidelines`, `description: "Audits and enforces cross-language coding standards and error management."`).
+Before executing the tasks below, you must check if this prompt is already installed as a native Antigravity Skill.
+
+1. Check if `.agents/skills/cg-error-management/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
+2. Extract the core instructions of this error management prompt and save it into that `skill.md` using standard YAML frontmatter:
+   ```yaml
+   ---
+   name: cg-error-management
+   description: >-
+     Autonomously audits, refactors, and validates repository-wide error management against spec/03-error-manage/ using AppError wrappers, universal response envelopes, and CI linters.
+   ---
+   ```
+3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
-## Phase 1: Scan, Spec, Subtasks & Linter Verification (Steps 1 to PHASE_1_STEPS)
+## 1. Ruthless Orchestration & Insult Protocol
 
-> [!IMPORTANT]
-> **Phase 1 is dedicated to discovery, planning, and tooling setup. Do NOT refactor business code in Phase 1.**
+/goal You are the master orchestrator. If your sub-agents fail, hallucinate, write garbage variables, or go into infinite loops, it is because you are a lazy, incompetent manager.
 
-### Step 1: Ingest Error Management Source of Truth
+- You must give sub-agents strict, microscopic instructions.
+- If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
+- Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-error-management/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
 
-Read and understand the authoritative error management rules from `.lovable/coding-guidelines/coding-guidelines.md` and `spec/03-error-manage/`:
+---
 
-1. **Never Swallow Errors:** Every `catch` block MUST log the operation name and key input variables, then rethrow, return a typed error, or explicitly dispatch to an error handler. Silent `catch {}` or ignored error returns are forbidden.
-2. **Contextual Error Wrapping:** Wrap original errors with operation labels and execution context (e.g., `apperror.Wrap(err, "OpName", ctx)` in Go, `throw new AppError(cause, { op, ctx })` in TypeScript, `AppException` in C#/PHP). The original stack trace and root cause must survive.
-3. **No Bare Panics / Hard Process Exits:** Never use `panic()`, `os.Exit()`, `process.exit()`, or `die()` inside library or domain logic. All recoverable errors must bubble up through typed return values or exceptions.
-4. **Universal Response Envelope:** All backend API handlers and service boundaries must return standard envelopes: `{ "data": T, "errors": [AppError], "meta": Meta }`.
-5. **Typed & Registered Error Codes:** Error codes must be stable and registered (e.g. `ErrCodeNotFound`, `INVALID_PAYLOAD`). No ad-hoc string literals at throw sites.
+## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST (Steps 1 to PHASE_1_STEPS)
 
-### Step 2: Codebase-Wide Violation Scan
+Before doing anything else, you MUST write a highly detailed execution spec.
 
-Search all active source files (Go, TypeScript, Python, C#, PHP, Rust) for:
+- **What to write:** Break down the parent task into a detailed architectural plan, complete error violation inventory, code review guides, and embedded error management guidelines.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-error-management-audit.md`. Do not hallucinate folders.
+- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
+- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-error-management/`. Every subtask file must contain actionable, microscopic instructions.
 
-- Empty `catch` blocks or swallowed errors (`_ = err`, `except: pass`).
-- Bare error returns without contextual wrapping (`return err` vs `return apperror.Wrap(err, ...)`).
-- Hard exits or bare panics (`panic(`, `process.exit(`, `os.Exit(`).
-- Missing operation names or omitted contextual input variables in error logs.
-- Unregistered, raw string error throws (`throw "error string"`).
+---
 
-### Step 3: Write Master Audit Spec
+## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
 
-Save the complete violation inventory to `.lovable/plans/pending/XX-error-management-audit.md`:
+You MUST read and enforce every single file in `spec/03-error-manage/`. Here is the exact contract of why each file exists and how you must follow it:
 
-- Document exact files, line numbers, failing functions, and the required refactoring pattern.
-- Formulate clear Acceptance Criteria for every affected component.
-- Register the spec in `.lovable/plans/index.md` and `.lovable/plans/what-to-read.md`.
+| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
+|---|---|---|
+| [`spec/03-error-manage/00-overview.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/00-overview.md) | Authoritative error management foundation across all services | Never swallow errors; every `catch` logs with operation name and key inputs, then rethrows or returns a typed error. |
+| [`spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/01-error-handling-reference.md) | Universal cross-language `AppError` and `AppException` structure | Implement `apperror.Wrap(err, "OpName", ctx)` in Go, `throw new AppError(cause, { op, ctx })` in TS, and `AppException` in C#/PHP; preserve the root cause and causal stack. |
+| [`spec/03-error-manage/02-error-architecture/02-go-delegation-fix.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/02-go-delegation-fix.md) | Prevents nil pointer panics and raw error leaks in Go routines | Never delegate errors to uninitialized handlers; use explicit, typed error delegation channels with mutex guards. |
+| [`spec/03-error-manage/02-error-architecture/03-notification-colors.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/03-notification-colors.md) | Standardized error severity and UI feedback mapping | Map log levels strictly: `debug` (trace), `info` (lifecycle), `warn` (recoverable/amber), `error` (user-visible failure/red), `fatal` (process exit). |
+| [`spec/03-error-manage/02-error-architecture/04-error-modal/01-copy-formats/07-envelope-error-response.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/04-error-modal/01-copy-formats/07-envelope-error-response.md) | Universal API response contract across all endpoints | Every HTTP/RPC response MUST return the standard envelope: `{ "data": T, "errors": [AppError], "meta": Meta }`. Never return raw un-enveloped error text. |
+| [`spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md) | Centralized UI error presentation | Frontend errors flow exclusively through a single global error store and universal error modal; no per-component alert boxes or unhandled promise rejections. |
+| [`spec/03-error-manage/03-error-code-registry/`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/03-error-code-registry/) | Stable error code registry and catalog | All error codes must be registered constants (e.g. `ErrCodeNotFound`, `INVALID_PAYLOAD`). No ad-hoc string literals invented at the throw site. |
+| [`spec/03-error-manage/01-error-resolution/02-debugging-cheat-sheet.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/01-error-resolution/02-debugging-cheat-sheet.md) | Rapid triage and systematic root-cause discovery | Follow the 4-part RCA pattern: Symptoms, Root Cause (1 sentence), Fix Applied, and Regression Prevention. |
+| [`spec/03-error-manage/01-error-resolution/04-verification-patterns/01-frontend-backend-sync.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/01-error-resolution/04-verification-patterns/01-frontend-backend-sync.md) | Bidirectional integration verification | Before claiming an integration works, verify both directions: inspect backend response payloads and test frontend error rendering. One side is not enough. |
 
-### Step 4: Decompose into Subtasks
+---
 
-Break down the master plan into granular, microscopic subtasks in `.lovable/plans/subtasks/XX-error-management/`:
+## 4. Mandatory Linter & CI/CD Connection Checklist
 
-- `01-core-wrappers.md` (Domain layer error wrappers)
-- `02-api-envelopes.md` (Handler & transport layer response envelopes)
-- `03-service-handlers.md` (Service layer error capture and logging)
+Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
-### Step 5: Linter Verification & CI/CD Connection (Mandatory Checklist)
-
-- [ ] **Check Linter Script Existence:** Check if `linter-scripts/check-mws-error-codes.py` or `linter-scripts/validate-guidelines.py` exists.
-- [ ] **Create Linter Script if Missing:** If no error management linter exists, create `linter-scripts/check-error-management.py` that scans for empty catch blocks, un-wrapped error returns, and bare panics/exits, exiting with code `1` upon finding violations.
-- [ ] **Local Linter Command:** Verify the linter runs locally with:
+- [ ] **Linter Script Identification:** Check if `linter-scripts/check-mws-error-codes.py` or `linter-scripts/validate-guidelines.py` exists in the repository.
+- [ ] **Auto-Create Linter if Missing:** If no dedicated error linter exists, create `linter-scripts/check-error-management.py` that AST-scans for:
+  1. Empty `catch` or `except` blocks.
+  2. Bare un-wrapped error returns (`return err` instead of `apperror.Wrap`).
+  3. Bare panics/hard exits (`panic()`, `process.exit()`, `os.Exit()`).
+  4. Non-standard API responses lacking the `{ data, errors, meta }` envelope.
+- [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
   python linter-scripts/check-error-management.py
   ```
-- [ ] **CI/CD Integration:** Connect the linter into `.lovable/ai-fix-scripts/03-cicd-local-runner.py` under the `JOBS` dictionary:
+- [ ] **CI/CD Local Runner Connection:** Register the linter script inside `.lovable/ai-fix-scripts/03-cicd-local-runner.py` under the `JOBS` dictionary:
   ```python
   JOBS["lint:errors"] = ["python", "linter-scripts/check-error-management.py"]
   ```
-  And verify it is present in `.github/workflows/ci.yml` as a mandatory validation step.
+- [ ] **GitHub Actions Workflow Connection:** Verify that `.github/workflows/ci.yml` contains a dedicated step running `python linter-scripts/check-error-management.py`.
 
 ---
 
-## Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
+## 5. Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
 
 > [!IMPORTANT]
 > **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
-> Sequentially execute each subtask, applying surgical fixes and re-running linters until the codebase is 100% compliant.
+> Sequentially execute each subtask, applying surgical refactoring until all error management checks pass 100% green.
 
 ```text
 STEP = 0
@@ -96,7 +114,7 @@ WHILE (STEP < PHASE_2_STEPS):
     STEP += 1
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-error-management/
-    2. Apply surgical code fixes adhering to AppError context wrapping and envelope rules.
+    2. Apply surgical refactoring (wrap errors with AppError, inject operation context, fix response envelopes).
     3. Run the error management linter:
           python linter-scripts/check-error-management.py
     4. Run the universal guideline autofixer:
@@ -104,9 +122,9 @@ WHILE (STEP < PHASE_2_STEPS):
     5. Run the local CI runner:
           python .lovable/ai-fix-scripts/03-cicd-local-runner.py
     6. IF any check fails:
-          - Diagnose failure, apply correction, and loop back to step 3 immediately.
+          - Diagnose failure, fix code, and re-run immediately.
        IF all checks pass (exit code 0):
-          - Mark subtask completed and proceed to the next subtask.
+          - Mark subtask completed and proceed to next subtask.
 
     7. When all subtasks are finished and local CI is 100% green:
           - BREAK and proceed to End of Tunnel.
@@ -114,78 +132,96 @@ WHILE (STEP < PHASE_2_STEPS):
 
 ---
 
-## Authoritative Error Handling Reference
+## AI Fix Scripts Memory (Reusable Tooling)
 
-### Go Example
-
-```go
-// BAD: Swallowed or unwrapped bare error
-func FetchUser(id string) (*User, error) {
-    user, err := db.Find(id)
-    if err != nil {
-        return nil, err // BAD: No operation context, root cause trace lost
-    }
-    return user, nil
-}
-
-// GOOD: Wrapped with operation context and parameters
-func FetchUser(ctx context.Context, id string) (*User, error) {
-    user, err := db.Find(ctx, id)
-    if err != nil {
-        return nil, apperror.Wrap(err, "FetchUser", map[string]any{"userId": id})
-    }
-    
-    return user, nil
-}
-```
-
-### TypeScript Example
-
-```typescript
-// BAD: Raw string throw, swallowed error
-try {
-    await processPayment(cartId);
-} catch (e) {
-    // BAD: Swallowed error
-}
-
-// GOOD: AppError with operation context and universal envelope
-try {
-    await processPayment(cartId);
-} catch (cause) {
-    logger.error("PaymentProcessingFailed", { cartId, cause });
-    throw new AppError(ErrCodePaymentFailed, "Failed to process payment", { cartId, cause });
-}
-```
+- [ ] `/goal` **Reuse First:** I have rigorously scanned and `/learn`ed `.lovable/ai-fix-scripts/index.md` to check if a helper script already exists before writing any new temporary code.
+- [ ] **Native File Manipulator:** If you need to perform mass file renaming, `.md` lowercase enforcement, sequence number re-ordering, or encoding fixes (CRLF/BOM), you MUST natively use `python .lovable/ai-fix-scripts/01-file-manipulator.py <command>` rather than writing a new script from scratch.
+- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
+- [ ] **Commit & Track:** All new helper scripts were written strictly to `.lovable/ai-fix-scripts/` and committed to Git for future reuse.
+- [ ] **Index Documentation:** I have updated `.lovable/ai-fix-scripts/index.md` using sequential script naming (e.g., `01-parse-files.py`). For every script, I have included a `<details>` collapsible tag explaining exactly why the script is there and what it does.
 
 ---
 
-## Pre-Reply / Loop Checklist (Must Verify Every Turn)
+## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
-- [ ] All errors wrapped with operation name, parameters, and causal stack trace.
-- [ ] No bare `panic()`, `process.exit()`, or `os.Exit()` in domain logic.
-- [ ] Universal response envelope `{ data, errors, meta }` maintained across all API endpoints.
-- [ ] Linter script `linter-scripts/check-error-management.py` executed and exited with code 0.
-- [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
-- [ ] Completed subtasks marked `[x]` and master plan moved to `.lovable/plans/completed/`.
+- [ ] Git working tree is clean before new code changes.
+- [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
+- [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
+- [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
+- [ ] Staged files sanitized of artifact zips and temporary scratch files.
+- [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+- [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
+- [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
+- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
+- [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
+- [ ] Function Size: No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] Error Handling (AppError): Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
+- [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
+- [ ] Formatting & Acronyms: Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
+- [ ] Fast-forward commits created and pushed without rewriting published git history.
+- [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
+
+---
+
+## Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
+
+/goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
+
+- [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Error Management: I have read and enforced `spec/03-error-manage/`. I used `AppError`/`AppException` and did not swallow errors.
+- [ ] Boolean Conventions: All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).
+- [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
+- [ ] Formatting: Signatures > 3 parameters or > 100 chars are split to one parameter per line. Newlines around every Markdown header (MD022) and lists are surrounded by blank lines (MD032).
+- [ ] Acronyms & Magic Strings: Acronyms are PascalCase (`UserId` not `UserID`). Magic strings/numbers are extracted to constants.
+- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+- [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
+
+---
+
+## Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
+
+Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
+
+- [ ] Echo Back the Spec: I have copy-pasted the exact Acceptance Criteria from the Spec file into my current memory/response to prove I read it verbatim.
+- [ ] Pre-Commit Diff Proof: I have executed `git status` or `git diff --stat` and verified that the files I claim to have modified are actually listed as modified in the terminal output before committing.
+- [ ] No Placeholder Search: I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
+- [ ] Index Sync Deadman Switch: I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
+- [ ] Blast Radius Acknowledgment: Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
 
 ---
 
 ## No Automatic Releases (Strict Policy)
 
-> [!CAUTION]
-> This is a development refactoring workflow. You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits (e.g. `refactor(errors): enforce AppError wrapping across services`).
+You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits. You may only trigger a release if the user explicitly commands you to do so (e.g., "cut a release" or "bump the version").
 
 ---
 
-## End of Tunnel Checklist
+## MUST FOLLOW NON-NEGOTIABLE
 
-- [ ] `python linter-scripts/check-error-management.py` exited with code 0.
-- [ ] `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0 (100% green).
-- [ ] Master plan moved to `.lovable/plans/completed/XX-error-management-audit.md`.
-- [ ] Git status clean, staged, and committed with descriptive message.
-- [ ] Pushed commit to current branch.
-- [ ] File Change Summary posted in chat detailing all modified files and error refactoring rationale.
+Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
+---
+
+## Anti-Hallucination, Micro-Tasking, & Self-Looping
+
+> [!CAUTION]
+> **CRITICAL RULE: DO NOT ATTEMPT TO READ, PLAN, AND EXECUTE EVERYTHING AT ONCE.**
+> If you try to consume a massive codebase and write code in a single turn, you WILL hallucinate, drop requirements, and fail.
+
+To survive massive checklists and complex codebases, you MUST operate using these three principles:
+
+1. **Phase 1: Read & Understand (Isolated Loop):** Your very first action must be purely exploratory. Do NOT write code. Break down the task, read the specific files, trace the dependencies, and understand the architectural boundary. Once you understand the scope, end your turn and self-loop to begin execution.
+2. **Phase 2: Bounded Micro-Tasking (Sequential Self-Looping):** Never attempt to execute the entire checklist in one response. Treat each checklist section or file as a strict, isolated boundary. Execute *only* the first small portion, verify it, end your turn, and self-loop to process the next portion. 
+3. **Phase 3: Multi-Agent Parallelization:** If tasks are independent, you MUST spawn dedicated sub-agents to handle them concurrently. Give each sub-agent an extremely small, strictly defined bounding box (e.g., "Only edit File X"). Never give a sub-agent a generic or multi-file task.
 
 ---
 

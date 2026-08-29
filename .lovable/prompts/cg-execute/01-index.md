@@ -2,7 +2,7 @@
 
 Welcome to the **Coding Guideline Execution Prompts (`cg-execute`)** suite. This catalog registers all specialized, sequenced prompts designed to enforce, audit, and autonomously refactor codebases against the master coding standards.
 
-Every prompt in this suite is engineered with the standardized **N-Step Autonomous Self-Loop Architecture** (`N = 100` by default), splitting work equally between deep scanning/spec writing (Phase 1) and autonomous subtask execution with automated linter enforcement (Phase 2).
+Every prompt in this suite is engineered with the standardized **N-Step Autonomous Self-Loop Architecture** (`N = 200` by default), splitting work equally between deep scanning/spec writing/skill creation (Phase 1) and autonomous subtask execution with automated linter enforcement (Phase 2).
 
 ---
 
@@ -12,13 +12,13 @@ Prompts are sequenced according to priority. Error management and reliability mu
 
 | Sequence | File | Title | Trigger Keywords | Focus Area | Linter Hook (`linter-scripts/`) |
 |:---:|---|---|---|---|---|
-| **01** | [`01-index.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/01-index.md) | Prompts Catalog & Registry | `cg-index`, `cg-execute index` | Master overview, lifecycle architecture, prompt routing | — |
-| **02** | [`02-error-management.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/02-error-management.md) | Error Management & Architecture | `cg-error`, `cg-execute error`, `audit error` | `AppError` context wrappers, zero swallowed errors, universal `{ data, errors, meta }` response envelopes, anti-panic/exit rules | `check-mws-error-codes.py`, `validate-guidelines.py` |
-| **03** | [`03-boolean-and-naming.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/03-boolean-and-naming.md) | Booleans, Naming & Enums | `cg-boolean`, `cg-execute boolean`, `audit boolean` | Positive boolean prefixes (`is`, `has`, `can`, `should`), no `== true`, no mixed polarity (`if a && !b`), semantic naming, `*Type` enum suffix | `check-enum-and-boolean.mjs`, `02-guideline-autofixer.py` |
-| **04** | [`04-data-and-schema.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/04-data-and-schema.md) | Database & Data Schema Rules | `cg-schema`, `cg-execute schema`, `audit schema` | PascalCase tables, camelCase columns, `{TableName}Id` primary/foreign keys, Mermaid ERDs, SQLite/ORM explicit relations | `check-schema-guidelines.py` |
-| **05** | [`05-react-frontend-guidelines.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/05-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines), `useEffect` minimization, immutable state updates, named object hook returns (tuple ban) | `check-frontend-guidelines.mjs` |
-| **06** | [`06-code-hygiene.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/06-code-hygiene.md) | Code Hygiene & Project Architecture | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 300 lines), struct/class caps ($\le$ 120 lines), dedicated definition files, zero committed build artifacts/binaries, lowercase files | `check-file-sizes.py`, `check-placeholder-comments.py` |
-| **07** | [`07-style-guidelines.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/05-coding-guidelines/cg-execute/07-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), 15-line function caps, flattening nested `if`, MD022/MD032 markdown spacing | `check-function-lengths.py`, `check-newline-styling.py` |
+| **01** | [`01-index.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/01-index.md) | Prompts Catalog & Registry | `cg-index`, `cg-execute index` | Master overview, lifecycle architecture, prompt routing | — |
+| **02** | [`02-error-management.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/02-error-management.md) | Error Management & Architecture | `cg-error`, `cg-execute error`, `audit error` | `AppError` context wrappers, zero swallowed errors, universal `{ data, errors, meta }` response envelopes, anti-panic/exit rules | `check-mws-error-codes.py`, `validate-guidelines.py` |
+| **03** | [`03-boolean-and-naming.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/03-boolean-and-naming.md) | Booleans, Naming & Enums | `cg-boolean`, `cg-execute boolean`, `audit boolean` | Positive boolean prefixes (`is`, `has`, `can`, `should`), no `== true`, no mixed polarity (`if a && !b`), semantic naming, `*Type` enum suffix | `check-enum-and-boolean.mjs`, `02-guideline-autofixer.py` |
+| **04** | [`04-data-and-schema.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/04-data-and-schema.md) | Database & Data Schema Rules | `cg-schema`, `cg-execute schema`, `audit schema` | PascalCase tables, camelCase columns, `{TableName}Id` primary/foreign keys, Mermaid ERDs, SQLite/ORM explicit relations | `check-schema-guidelines.py` |
+| **05** | [`05-react-frontend-guidelines.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/05-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines), `useEffect` minimization, immutable state updates, named object hook returns (tuple ban) | `check-frontend-guidelines.mjs` |
+| **06** | [`06-code-hygiene.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/06-code-hygiene.md) | Code Hygiene & Project Architecture | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 300 lines), struct/class caps ($\le$ 120 lines), dedicated definition files, zero committed build artifacts/binaries, lowercase files | `check-file-sizes.py`, `check-placeholder-comments.py` |
+| **07** | [`07-style-guidelines.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/07-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), 15-line function caps, flattening nested `if`, MD022/MD032 markdown spacing | `check-function-lengths.py`, `check-newline-styling.py` |
 
 ---
 
@@ -27,9 +27,9 @@ Prompts are sequenced according to priority. Error management and reliability mu
 Every prompt in this suite operates using a strict two-phase loop budget:
 
 ```text
-N = 100
-PHASE_1_STEPS = N / 2   (Steps 1 .. 50: Scan codebase, create .lovable/plans/pending/ spec, break down into .lovable/plans/subtasks/, verify/create linter script)
-PHASE_2_STEPS = N / 2   (Steps 51 .. 100: Autonomous subtask execution, surgical fixes, linter run, CI local runner verification, move completed plans to .lovable/plans/completed/)
+N = 200
+PHASE_1_STEPS = N / 2   (Steps 1 .. 100: Ingest specs, scan codebase, create .agents/skills/ skill, write .lovable/plans/pending/ spec, break down into .lovable/plans/subtasks/, verify/create linter script)
+PHASE_2_STEPS = N / 2   (Steps 101 .. 200: Autonomous subtask execution, surgical fixes, linter run, CI local runner verification, move completed plans to .lovable/plans/completed/)
 ```
 
 ### Phase 1: Scan, Spec & Subtasks (Steps 1 to N/2)

@@ -2,7 +2,7 @@
 
 Welcome to the **Coding Guideline Execution Prompts (`cg-execute`)** suite. This catalog registers all specialized, sequenced prompts designed to enforce, audit, and autonomously refactor codebases against the master coding standards.
 
-Every prompt in this suite is engineered with the standardized **N-Step Autonomous Self-Loop Architecture** (`N = 100` by default), splitting work equally between deep scanning/spec writing (Phase 1) and autonomous subtask execution with automated linter enforcement (Phase 2).
+Every prompt in this suite is engineered with the standardized **N-Step Autonomous Self-Loop Architecture** (`N = 200` by default), splitting work equally between deep scanning/spec writing/skill creation (Phase 1) and autonomous subtask execution with automated linter enforcement (Phase 2).
 
 ---
 
@@ -27,9 +27,9 @@ Prompts are sequenced according to priority. Error management and reliability mu
 Every prompt in this suite operates using a strict two-phase loop budget:
 
 ```text
-N = 100
-PHASE_1_STEPS = N / 2   (Steps 1 .. 50: Scan codebase, create .lovable/plans/pending/ spec, break down into .lovable/plans/subtasks/, verify/create linter script)
-PHASE_2_STEPS = N / 2   (Steps 51 .. 100: Autonomous subtask execution, surgical fixes, linter run, CI local runner verification, move completed plans to .lovable/plans/completed/)
+N = 200
+PHASE_1_STEPS = N / 2   (Steps 1 .. 100: Ingest specs, scan codebase, create .agents/skills/ skill, write .lovable/plans/pending/ spec, break down into .lovable/plans/subtasks/, verify/create linter script)
+PHASE_2_STEPS = N / 2   (Steps 101 .. 200: Autonomous subtask execution, surgical fixes, linter run, CI local runner verification, move completed plans to .lovable/plans/completed/)
 ```
 
 ### Phase 1: Scan, Spec & Subtasks (Steps 1 to N/2)
