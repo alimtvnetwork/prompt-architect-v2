@@ -160,8 +160,10 @@ Using all information gathered, generate `.lovable/ai-fix-scripts/03-cicd-local-
 3. **Captures output per job** in separate buffers and prints them sequentially at the end.
 4. **Exits with code 0** only if ALL jobs pass; exits with non-zero if ANY job fails.
 5. **Prints a clear structured summary** at the end listing which steps passed ✅ and which failed ❌ with their exact error output.
+6. **Runs jobs in parallel batches** of `BATCH_SIZE` (default 3) with a configurable per-job timeout `JOB_TIMEOUT_SEC` (default 300). If a job times out, it is marked ⏱ TIMEOUT and the runner continues.
 
 **Example template structure for the generated script:**
+
 ```python
 #!/usr/bin/env python3
 """Auto-generated CI/CD local runner. Do not edit manually.
@@ -170,40 +172,66 @@ Re-generate by running: python .lovable/ai-fix-scripts/03-cicd-local-runner.py -
 import subprocess
 import sys
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeout
+
+# ── Configurable Variables ──────────────────────────────────────────────────
+BATCH_SIZE      = 3    # Number of jobs to run in parallel per batch
+JOB_TIMEOUT_SEC = 300  # Seconds before a single job is considered timed out
 
 # ── Environment (extracted from CI/CD env: blocks) ─────────────────────────
 os.environ.setdefault("CI", "true")
-os.environ.setdefault("NODE_ENV", "test")  # example, extract real values
+os.environ.setdefault("NODE_ENV", "test")  # adapt from actual CI/CD env: block
 
-# ── Job Definitions (extracted from CI/CD steps) ────────────────────────────
+# ── Job Definitions (extracted from CI/CD steps — adapt JOBS to real config) ─
 JOBS = {
-    "install":    ["npm", "ci"],
-    "lint":       ["npm", "run", "lint"],
-    "typecheck":  ["npx", "tsc", "--noEmit"],
-    "build":      ["npm", "run", "build"],
-    "test":       ["npm", "test", "--", "--watchAll=false"],
+    "install":   ["npm", "ci"],
+    "lint":      ["npm", "run", "lint"],
+    "typecheck": ["npx", "tsc", "--noEmit"],
+    "build":     ["npm", "run", "build"],
+    "test":      ["npm", "test", "--", "--watchAll=false"],
 }
 
 def run_job(name, cmd):
+    start = time.monotonic()
     result = subprocess.run(cmd, capture_output=True, text=True)
-    return name, result.returncode, result.stdout, result.stderr
+    elapsed = round(time.monotonic() - start, 1)
+
+    return name, result.returncode, result.stdout, result.stderr, elapsed
+
+def run_batch(batch):
+    results = {}
+    with ThreadPoolExecutor(max_workers=BATCH_SIZE) as executor:
+        futures = {executor.submit(run_job, name, cmd): name for name, cmd in batch}
+        for future in as_completed(futures, timeout=JOB_TIMEOUT_SEC + 10):
+            try:
+                name, code, out, err, elapsed = future.result(timeout=JOB_TIMEOUT_SEC)
+                results[name] = ("timeout" if code is None else code, out, err, elapsed)
+            except FuturesTimeout:
+                job_name = futures[future]
+                results[job_name] = ("timeout", "", f"Timed out after {JOB_TIMEOUT_SEC}s", 0)
+
+    return results
 
 def main():
-    results = {}
-    with ThreadPoolExecutor() as executor:
-        futures = {executor.submit(run_job, name, cmd): name for name, cmd in JOBS.items()}
-        for future in as_completed(futures):
-            name, code, out, err = future.result()
-            results[name] = (code, out, err)
+    job_items = list(JOBS.items())
+    batches = [job_items[i:i + BATCH_SIZE] for i in range(0, len(job_items), BATCH_SIZE)]
+    all_results = {}
+
+    for batch in batches:
+        batch_results = run_batch(batch)
+        all_results.update(batch_results)
 
     all_passed = True
-    for name, (code, out, err) in results.items():
-        status = "✅ PASS" if code == 0 else "❌ FAIL"
-        print(f"\n{status} [{name}]")
-        if code != 0:
+    for name, (code, out, err, elapsed) in all_results.items():
+        if code == "timeout":
+            print(f"\n⏱ TIMEOUT [{name}] after {JOB_TIMEOUT_SEC}s — {err}")
             all_passed = False
-            print(err or out)
+        elif code == 0:
+            print(f"\n✅ PASS [{name}] ({elapsed}s)")
+        else:
+            print(f"\n❌ FAIL [{name}] ({elapsed}s)\n{err or out}")
+            all_passed = False
 
     sys.exit(0 if all_passed else 1)
 
@@ -251,6 +279,111 @@ IF STEP >= PHASE_2_STEPS AND exit_code != 0:
 - **Each loop iteration = one AI tool call cycle.** After each iteration, self-loop by ending your turn and immediately starting the next iteration.
 - **No output clutter:** Only print progress when a job status changes (new failure or new fix). Do not reprint passing jobs every iteration.
 - **Spawn sub-agents for independent failures:** If multiple unrelated jobs are failing (e.g., lint + test + typecheck all failing independently), spawn one dedicated sub-agent per failure. Give each sub-agent a single-file bounding box. The parent agent collects results and re-runs the runner.
+
+---
+
+## Parallel Batch Execution Rules (Mandatory)
+
+Every time `03-cicd-local-runner.py` is executed, it MUST run jobs in parallel batches, not one at a time:
+
+- `BATCH_SIZE = 3` means at most 3 jobs run simultaneously within a batch.
+- After each batch completes, wait for all futures to resolve before starting the next batch.
+- Jobs within a batch that are NOT order-dependent (e.g., lint, typecheck, and unit tests) run concurrently.
+- Jobs that ARE order-dependent (e.g., install → build → test) must be placed in **sequential batches**, not the same batch.
+- After every batch, inspect the results immediately. Do not wait for the entire run to finish before reading output.
+
+---
+
+## Timeout Detection and Auto-Increase (Mandatory)
+
+If any job is marked ⏱ TIMEOUT in the runner output:
+
+1. **Do NOT treat it as a code failure.** Timeout ≠ broken code; it means the job took longer than `JOB_TIMEOUT_SEC` allows.
+2. **Diagnose the cause:**
+   - Is the job doing work proportional to a large input set (e.g., full test suite, large build)?
+   - Is a network dependency involved (e.g., `npm ci` downloading packages)?
+   - Did a previous step leave a hung process or lock file?
+3. **Increase the timeout intelligently:**
+   - If the job's measured elapsed time (before it was killed) was close to the limit: increase `JOB_TIMEOUT_SEC` by `50%`.
+   - If the job appears to hang indefinitely (no output for >30s): look for a subprocess deadlock or missing stdin; fix the subprocess call, do not just increase the timer.
+   - Open `03-cicd-local-runner.py`, update `JOB_TIMEOUT_SEC` to the new value, and save the file.
+4. Re-run the runner immediately after the timeout fix. The timeout adjustment counts as one Phase 2 loop step.
+5. Document the timeout increase in `.lovable/cicd-issues/` as a standard CI/CD issue entry.
+
+---
+
+## Error Enqueuing — Plan Task & CI/CD Issue (Mandatory on Every Failure)
+
+Every time the runner reports a ❌ FAIL or ⏱ TIMEOUT, you MUST do **both** of the following before applying the code fix:
+
+### A. Enqueue into Plan Tasks
+
+Create (or append to) a pending plan task file at:
+
+```text
+.lovable/plans/pending/XX-cicd-<slug>.md
+```
+
+Where `XX` is the next available sequential number and `<slug>` is a short kebab-case description of the failure (e.g., `03-cicd-lint-unused-import`).
+
+The plan task file MUST contain:
+
+```markdown
+# CI/CD Task: <short failure description>
+
+## Source
+- Runner job: <job-name>
+- Error type: FAIL | TIMEOUT
+- Detected at: <timestamp>
+
+## Error Summary
+<paste the exact error message or timeout log here>
+
+## Required Fix
+<one-sentence description of the fix needed>
+
+## Acceptance Criteria
+- [ ] `03-cicd-local-runner.py` reports ✅ PASS for job `<job-name>`
+- [ ] No regression in any other job
+
+## Status
+- [ ] pending
+```
+
+Update `.lovable/plans/pending/index.md` to register the new task entry immediately.
+
+### B. Record in CI/CD Issues
+
+Create a CI/CD issue record at:
+
+```text
+.lovable/cicd-issues/XX-<slug>.md
+```
+
+The CI/CD issue file MUST contain:
+
+```markdown
+# CI/CD Issue: <short failure description>
+
+- Job: <job-name>
+- Type: FAIL | TIMEOUT
+- Detected: <timestamp>
+- Status: open | resolved
+
+## Error
+<exact error output>
+
+## Root Cause
+<one-sentence root cause>
+
+## Fix Applied
+<what was changed to fix it>
+
+## Plan Task
+Enqueued at `.lovable/plans/pending/XX-cicd-<slug>.md`
+```
+
+Update `.lovable/cicd-issues/index.md` in the same operation. Never delete existing entries.
 
 ---
 
