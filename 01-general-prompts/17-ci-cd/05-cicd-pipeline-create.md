@@ -87,15 +87,19 @@ For every specification folder below, AI agents MUST read `index.md` or `00-over
 
 ---
 
-## 2. Cross-Platform Python-First Mandate
+## 2. Strict In-Repository Execution & Cross-Platform Python-First Mandate
 
 > [!IMPORTANT]
-> **PYTHON-FIRST AUTOMATION (NO FRAGILE SHELL SCRIPTS):**
+> **STRICT IN-REPOSITORY EXECUTION & `.lovable/` STORAGE CONTRACT:**
 >
-> 1. All CI/CD build scripts, test runners, validation checks, and linters MUST be written in **Python 3** using standard library modules (`subprocess`, `sys`, `os`, `pathlib`, `concurrent.futures`, `json`, `shutil`).
-> 2. Python ensures identical, deterministic execution across **Windows, Linux, and macOS** without platform-specific shell quirks (CRLF vs LF, PowerShell vs Bash, path separators).
-> 3. Shell scripts (`.sh`, `.ps1`) must ONLY act as lightweight one-line entrypoints that invoke Python (e.g., `python scripts/build.py "$@"`).
-> 4. All linter scripts (e.g. `linter-scripts/validate-guidelines.py`, `linter-scripts/check-*.py`) must be executable directly via Python without external wrapper dependencies.
+> 1. **In-Codebase Execution Only:** Whenever a Python script (runner, autofixer, linter, test aggregator) is executed or created, it MUST be executed **strictly within the repository root** (current working directory), NEVER outside the codebase or against external arbitrary directories.
+> 2. **Strict Folder Bounding (`.lovable/`):** All AI scripts, local runners, autofixers, helper utilities, memory issue logs, and planning files MUST be created inside the `.lovable/` folder:
+>    - Python AI Scripts: `.lovable/ai-fix-scripts/` (e.g. `01-file-manipulator.py`, `02-guideline-autofixer.py`, `03-cicd-local-runner.py`).
+>    - RCA & Issue Logs: `.lovable/memory/issues/` and `.lovable/cicd-issues/`.
+>    - Execution Plans & Subtasks: `.lovable/plans/pending/`, `.lovable/plans/subtasks/`.
+>    - Coding Guidelines Mirror: `.lovable/coding-guidelines/`.
+> 3. **Python-First Cross-Platform Automation:** All CI/CD build scripts, test runners, validation checks, and linters MUST be written in **Python 3** (`subprocess`, `sys`, `os`, `pathlib`, `concurrent.futures`, `json`, `shutil`) ensuring identical, deterministic execution across **Windows, Linux, and macOS**. Shell scripts (`.sh`, `.ps1`) must ONLY act as lightweight one-line entrypoints invoking Python.
+> 4. **No External or Random File Creation:** NEVER write scripts, temporary test scripts, or scratch files to root, `/tmp`, global system paths, or outside the repository boundary.
 
 ### Standard Cross-Platform Python Scripts Architecture
 
