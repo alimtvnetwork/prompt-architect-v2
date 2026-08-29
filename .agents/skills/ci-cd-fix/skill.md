@@ -8,104 +8,203 @@ description: >-
 
 Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cicd fix`
 
-/goal Autonomously diagnose, execute, and resolve all CI/CD build, lint, and test failures using a local Python runner script. You MUST generate the runner script first (translating Docker to native local execution), run it to identify all failures locally, self-loop continuously to fix the code, record 4-part RCAs, and repeat the verification loop until the local runner and CI checks are 100% green. DO NOT stop after one turn; DO NOT wait for remote pipelines or user feedback to continue fixing.
+/goal Autonomously diagnose, create a local Python CI/CD runner (translating Docker steps to native host execution), and fix all failures by self-looping up to N total steps — split equally across two phases: Phase 1 (script generation) and Phase 2 (execution and fixing). Do NOT stop, do NOT wait for the user, do NOT rely on remote pipelines. Loop until the runner exits with code 0.
 
-/learn Ingest recent Root Cause Analysis (RCA) records from `.lovable/cicd-issues/`, `.lovable/issues/`, and `spec/03-error-manage/` before touching code so past mistakes and build traps are never repeated.
-
----
-
-## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
-
-Before executing or diagnosing CI/CD:
-
-1. Check if `.agents/skills/ci-cd-fix/skill.md` exists in the workspace.
-2. If it does NOT exist, you MUST create it now. Extract the core instructions of this prompt and write it to `.agents/skills/ci-cd-fix/skill.md` with standard YAML frontmatter (`name: ci-cd-fix`, `description: "Use this skill to autonomously diagnose, fix, and verify CI/CD pipelines using local runner scripts and self-looping."`).
-3. Once installed, rely on progressive disclosure for future runs.
+/learn Ingest recent RCAs from `.lovable/cicd-issues/`, `.lovable/issues/`, and `spec/03-error-manage/` before touching any code so past mistakes are never repeated.
 
 ---
 
-## Phase 1: Local Runner Script Bootstrap (`03-cicd-local-runner.py`)
+## Variables — Configurable at Runtime
 
-To fix CI/CD rapidly without waiting 10-15 minutes for remote GitHub Actions or external runners, you MUST operate using a dedicated local test runner.
+```text
+N = 200  (Total self-loop steps budget. The user may override this when triggering the prompt.)
 
-1. **Check Script Existence:** Check if `.lovable/ai-fix-scripts/03-cicd-local-runner.py` exists.
-2. **Mandatory Generation Rule:** If the script is missing, or if forced to rebuild:
-   - Deeply inspect all CI/CD configuration files (e.g., `.github/workflows/*.yml`, `.gitlab-ci.yml`, `azure-pipelines.yml`, etc.).
-   - Extract every test, build, lint, typecheck, and formatting command.
-   - **Docker Translation Rule (CRITICAL):** Strip out all Docker wrappers (`docker run`, containerized mounts). Translate the commands so they execute directly and natively on the host machine using Python's `subprocess`.
-   - Write the complete script to `.lovable/ai-fix-scripts/03-cicd-local-runner.py`. Make sure it supports running checks in parallel and returns exit code `0` only when all checks pass.
-3. **Execute Local Runner Immediately:** Run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` as your first diagnostic action. Capture all failing commands and stack traces in your context window.
+PHASE_1_STEPS = N / 2  (Steps 1 .. N/2: Dedicated to reading codebase and generating 03-cicd-local-runner.py)
+PHASE_2_STEPS = N / 2  (Steps N/2+1 .. N: Dedicated to running the script, fixing failures, looping until exit code = 0)
+```
+
+Both N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after the user sets them.
 
 ---
 
-## Phase 2: Autonomous Self-Looping Fix Cycle (DO NOT STOP)
+## Phase 1: Local Runner Script Generation (Steps 1 to PHASE_1_STEPS)
 
 > [!IMPORTANT]
-> **AUTONOMOUS EXECUTION MANDATE:**
-> Do NOT stop after making one code change. Do NOT tell the user to test or push. Do NOT await remote CI/CD results.
-> You must execute a tight, autonomous loop until the local runner reports ZERO errors:
-> 
-> ```text
-> WHILE (exit_code != 0):
->     1. Parse error output from 03-cicd-local-runner.py
->     2. Document 4-part RCA in .lovable/memory/issues/XX-<slug>.md
->     3. Apply surgical code fixes to the codebase
->     4. Re-run: python .lovable/ai-fix-scripts/03-cicd-local-runner.py
->     5. Check exit code:
->        - If exit_code != 0: Loop immediately to step 1 (DO NOT STOP).
->        - If exit_code == 0: Proceed to commit and push.
-> ```
+> **This phase is dedicated ONLY to creating `.lovable/ai-fix-scripts/03-cicd-local-runner.py`.**
+> Do NOT fix code in this phase. Read, understand, and generate the script.
+
+### Step 1: Check for Existing Script
+
+- If `.lovable/ai-fix-scripts/03-cicd-local-runner.py` EXISTS and user did NOT say "force rebuild": skip to Phase 2.
+- If MISSING or "force rebuild" was requested: execute Steps 2–4 for up to PHASE_1_STEPS iterations.
+
+### Step 2: Deep CI/CD Configuration Scan
+
+Spend up to PHASE_1_STEPS self-loop iterations reading in this order:
+
+1. **CI/CD configuration files:**
+   - GitHub Actions: `.github/workflows/*.yml` (ALL files)
+   - GitLab CI: `.gitlab-ci.yml`
+   - Azure Pipelines: `azure-pipelines.yml`
+   - Bitbucket: `bitbucket-pipelines.yml`
+   - CircleCI: `.circleci/config.yml`
+   - Custom runners: `Makefile`, `scripts/ci.sh`, `run.sh`, `run.ps1`
+2. **Language configuration:** `.nvmrc`, `.python-version`, `go.mod`, `pyproject.toml`, `tsconfig.json`, lockfiles
+3. **For every CI/CD job, record:**
+   - `runs-on` image (e.g., `ubuntu-latest`, `node:20-alpine`)
+   - All `run:` shell commands and `uses:` action steps
+   - Environment variables from `env:` blocks
+   - Dependency install commands (`npm ci`, `go mod download`, `pip install -r requirements.txt`)
+   - Lint, typecheck, build, and test commands
+4. **Check local toolchain:** Run `node --version`, `go version`, `python3 --version`, etc. to know what is available natively.
+
+### Step 3: Docker Translation Rule (CRITICAL)
+
+The host machine IS the Docker container. Strip all Docker wrappers:
+
+- `docker run --rm node:20 npm ci` → `npm ci`
+- `docker run --rm python:3.12 pytest` → `python3 -m pytest`
+- `docker run --rm golang:1.22 go test ./...` → `go test ./...`
+- Replace Docker `env` injection with Python `os.environ` assignments.
+- **Skip entirely:** `docker login`, image tagging, container registry pushes — these are deployment steps, not CI checks.
+
+### Step 4: Write `03-cicd-local-runner.py`
+
+Generate `.lovable/ai-fix-scripts/03-cicd-local-runner.py` that:
+
+1. Runs ALL extracted CI/CD steps natively with `subprocess` and `check=False`.
+2. Runs independent jobs in parallel using `concurrent.futures.ThreadPoolExecutor`.
+3. Captures per-job stdout/stderr in separate buffers.
+4. Exits `0` only when ALL jobs pass; exits non-zero if ANY job fails.
+5. Prints a clear summary: `✅ PASS [job-name]` or `❌ FAIL [job-name]` with exact error output.
+
+**Template (adapt JOBS dict from actual CI/CD config):**
+
+```python
+#!/usr/bin/env python3
+"""Auto-generated CI/CD local runner. Do not edit manually."""
+import subprocess
+import sys
+import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Environment (extracted from CI/CD env: blocks)
+os.environ.setdefault("CI", "true")
+
+# Jobs (extracted from CI/CD steps — adapt to actual project)
+JOBS = {
+    "install":   ["npm", "ci"],
+    "lint":      ["npm", "run", "lint"],
+    "typecheck": ["npx", "tsc", "--noEmit"],
+    "build":     ["npm", "run", "build"],
+    "test":      ["npm", "test", "--", "--watchAll=false"],
+}
+
+def run_job(name, cmd):
+    result = subprocess.run(cmd, capture_output=True, text=True)
+
+    return name, result.returncode, result.stdout, result.stderr
+
+def main():
+    results = {}
+    with ThreadPoolExecutor() as executor:
+        futures = {executor.submit(run_job, name, cmd): name for name, cmd in JOBS.items()}
+        for future in as_completed(futures):
+            name, code, out, err = future.result()
+            results[name] = (code, out, err)
+
+    all_passed = True
+    for name, (code, out, err) in results.items():
+        status = "✅ PASS" if code == 0 else "❌ FAIL"
+        print(f"\n{status} [{name}]")
+        if code != 0:
+            all_passed = False
+            print(err or out)
+
+    sys.exit(0 if all_passed else 1)
+
+if __name__ == "__main__":
+    main()
+```
 
 ---
 
-## Phase 3: The 4-Part RCA Requirement (Mandatory Memory File)
+## Phase 2: Autonomous Fix Loop (Steps PHASE_1_STEPS+1 to N)
 
-For each distinct failure category diagnosed, you MUST document the issue in `.lovable/memory/issues/XX-<slug>.md` (where XX is the next available sequential number). The file MUST contain these exact four sections:
+> [!IMPORTANT]
+> **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
+> Never stop to tell the user "here are the errors". Fix them. Never await remote CI/CD results.
 
-1. **Why it happened:** The high-level business, logical, or architectural breakdown of the failure.
-2. **How it happened:** The technical execution flow that triggered the bug or build failure.
-3. **Root Cause:** The exact file, line, and dependency responsible for the failure.
-4. **Code Fix:** The exact code snippets showing what needed to be changed to fix the root cause.
+```text
+STEP = 0
+WHILE (STEP < PHASE_2_STEPS):
+    STEP += 1
+
+    1. Run: python .lovable/ai-fix-scripts/03-cicd-local-runner.py
+    2. Capture exit_code and full output.
+
+    IF exit_code == 0:
+        BREAK  ← All checks pass. Proceed to End of Tunnel.
+
+    ELSE:
+        3. Parse failure: identify exact failing job, error message, file, and line.
+        4. Document 4-part RCA in .lovable/memory/issues/XX-<slug>.md
+        5. Apply the minimal surgical code fix.
+        6. Run: python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
+        7. Loop immediately to step 1. DO NOT stop.
+
+IF STEP >= PHASE_2_STEPS AND exit_code != 0:
+    Report remaining failures clearly in chat and ask the user for guidance.
+```
+
+**Sub-Agent Parallelization:** If multiple unrelated jobs fail (e.g., lint + test + typecheck), spawn one dedicated sub-agent per failure with a single-file bounding box. Parent agent collects results and re-runs the runner.
 
 ---
 
-## No Automatic Releases (Strict Policy)
+## Phase 3: 4-Part RCA Requirement
 
-> [!CAUTION]
-> **This is a development fix workflow.**
-> You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits (`fix(ci): ...`). You are strictly forbidden from triggering a release or running version bump scripts unless the user explicitly commands you in chat (e.g., "cut a release").
+For each distinct failure write `.lovable/memory/issues/XX-<slug>.md` with:
+
+1. **Why it happened:** High-level architectural reason.
+2. **How it happened:** Exact execution flow that triggered the error.
+3. **Root Cause:** Exact file, line number, and dependency responsible.
+4. **Code Fix:** Before/after code snippet.
+
+Also append any new forbidden patterns to `.lovable/strictly-avoid.md`.
 
 ---
 
 ## STRICT AVOIDANCE: Never Disable CI/CD
 
 > [!CAUTION]
-> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
-> Strictly avoid commenting out, bypassing, deleting CI/CD steps, or adding `|| true` to force a pipeline to pass. Your job is to fix the underlying source code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+> **NEVER** comment out, bypass, delete CI/CD steps, or add `|| true` to force a pass.
+> Fix the source code. Disabling CI/CD is an auto-reject failure.
+
+---
+
+## No Automatic Releases
+
+> [!CAUTION]
+> Do NOT bump versions or cut a release unless the user explicitly says so. Use `fix(ci): <description>` commits only.
 
 ---
 
 ## Non-Negotiable Coding Standards
 
-Before committing, verify all modified files adhere to the project's coding standards:
-
-- [ ] **Return New Line Concept (R13-R16):** One blank line before every `return`, `throw`, or `raise` (unless only statement in block). One blank line after closing `}`. Never two blank lines in a row.
-- [ ] **No Explicit True Checks:** NEVER use `== true` or `=== true` (e.g., write `if isReady`, never `if isReady == true`).
-- [ ] **No Mixed Polarity:** NEVER combine positive and negative checks in a single condition (`if isA && !isB` is banned; extract to a named boolean).
-- [ ] **Function Length:** Hard cap of 15 lines per function. Flatten all nested conditionals.
-- [ ] **Error Management:** No swallowed errors. Wrap all propagated errors with operation context (`apperror.Wrap`).
-- [ ] **Go Generate Sync:** If Go constants, enums, or stringers were modified, run `go generate ./...` in the relevant directory and commit the generated files.
-- [ ] **Strict Lowercase Naming:** All files must be lowercase (`readme.md`, `agents.md`, `skill.md`).
+- [ ] **Return New Line (R13-R16):** Blank line before `return`/`throw` (unless sole statement). Blank line after `}`. Never two blank lines in a row.
+- [ ] **No Explicit True Checks:** Never `== true`. Write `if isReady`.
+- [ ] **No Mixed Polarity:** Never `if isA && !isB`. Extract to a named boolean.
+- [ ] **Strict Lowercase Files:** All generated/modified files use lowercase naming.
 
 ---
 
 ## End of Tunnel Checklist
 
-- [ ] **Local CI Runner Clean:** `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0 (100% green).
-- [ ] **RCA Documented:** Memory files written to `.lovable/memory/issues/XX-<slug>.md` with all 4 parts.
-- [ ] **Stage & Commit:** Group related fixes into a clean commit with descriptive message (e.g., `fix(ci): resolve build and lint failures`).
-- [ ] **Push to Remote:** Push commit to the current branch.
-- [ ] **File Change Summary:** Provide a detailed summary in chat listing exactly which files were changed, what was changed inside them, and why they were changed.
+- [ ] `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
+- [ ] All failures documented in `.lovable/memory/issues/XX-<slug>.md`.
+- [ ] Changes committed: `fix(ci): resolve <summary>`.
+- [ ] Pushed to the current branch.
+- [ ] File change summary posted in chat (file, what changed, why).
 
 ---
 
