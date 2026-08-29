@@ -39,7 +39,7 @@ When in doubt: MINOR.
 - The final release commit and tag MUST be pushed to Git.
 - No em dashes anywhere.
 
-## Strict In-Repository Execution & `.lovable/` Bounding Mandate
+### Strict In-Repository Execution & `.lovable/` Bounding Mandate
 
 > [!IMPORTANT]
 > **STRICT IN-REPOSITORY EXECUTION & `.lovable/` STORAGE CONTRACT:**
@@ -50,7 +50,9 @@ When in doubt: MINOR.
 >    - RCA & Issue Logs: `.lovable/memory/issues/`, `.lovable/cicd-issues/`, and `.lovable/release/issues/`.
 >    - Execution Plans & Subtasks: `.lovable/plans/pending/`, `.lovable/plans/subtasks/`.
 >    - Coding Guidelines Mirror: `.lovable/coding-guidelines/`.
-> 3. **No External or Random File Creation:** NEVER write scripts, temporary test scripts, or scratch files to root, `/tmp`, global system paths, or outside the repository boundary.
+> 3. **Worker Pool & Log Aggregation Architecture:** All pre-release verification gates, tests, and build orchestrators must run tasks concurrently using a worker pool (2–3 workers via `ThreadPoolExecutor`), announce enqueued tasks upfront, show real-time progress, handle failures gracefully without cancelling sibling workers, and print a consolidated final summary with full stdout/stderr error logs.
+> 4. **`force` Keyword Support:** If the user wrote `force`, `force rebuild`, or `force create` on top of the prompt or trigger: **ALWAYS recreate/regenerate the Python release scripts (`bump_versions.py`, `03-cicd-local-runner.py`) from scratch**, regardless of whether the file already exists on disk.
+> 5. **No External or Random File Creation:** NEVER write scripts, temporary test scripts, or scratch files to root, `/tmp`, global system paths, or outside the repository boundary.
 
 ---
 
@@ -60,6 +62,7 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
 ## Pre-flight (before step 1)
 
+- Force Override: If user said `force`, ignore cached scripts and regenerate `.lovable/release/bump_versions.py` from scratch.
 - Idempotency guard: if the canonical version file already equals the computed new version, STOP. Someone half-ran a release. Detect what is already done, resume from the first incomplete step, do NOT double-bump.
 - Placeholder guard: if the previous version's changelog entry is empty or a placeholder (`TBD`, `WIP`, no bullets), refuse to release until it is filled or the user overrides.
 - Date source: the release date is UTC today. Get it from `date -u +%Y-%m-%d`. Do not invent it.
@@ -72,7 +75,7 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 2. **Version Bumping (The Python Auto-Bumper Bootstrap)**:
    You MUST NOT manually hunt and replace versions using `rg` in every release. Instead, rely on a dedicated python script: `.lovable/release/bump_versions.py`.
    
-   **First-Time Bootstrap (If `.lovable/release/bump_versions.py` or `.lovable/memory/release-architecture.md` do NOT exist, or are outdated):**
+   **First-Time Bootstrap (If `.lovable/release/bump_versions.py` or `.lovable/memory/release-architecture.md` do NOT exist, or user said `force`):**
    - **Investigate:** Run a one-time global `rg` scan (`rg -n "<PREV_VERSION>" -g '!node_modules'`) across the repository to discover every file where the version is pinned (e.g., manifests, configs, constants).
    - **Document:** Write `.lovable/memory/release-architecture.md` detailing all discovered pin sites, the version source of truth, and how releases are structured.
    - **Generate Script:** Write the `.lovable/release/bump_versions.py` script. The script MUST:

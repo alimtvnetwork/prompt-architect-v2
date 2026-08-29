@@ -36,6 +36,23 @@ You must update `version.json`, `changelog.md`, and `readme.md` at a minimum dur
 #
 
 
+## Strict In-Repository Execution & `.lovable/` Bounding Mandate
+
+> [!IMPORTANT]
+> **STRICT IN-REPOSITORY EXECUTION & `.lovable/` STORAGE CONTRACT:**
+>
+> 1. **In-Codebase Execution Only:** Whenever a Python script (e.g. `.lovable/release/bump_versions.py`, runner, autofixer, linter) is executed or created, it MUST be executed **strictly within the repository root** (current working directory), NEVER outside the codebase or against external arbitrary directories.
+> 2. **Strict Folder Bounding (`.lovable/`):** All AI scripts, release auto-bumpers, local runners, autofixers, helper utilities, memory issue logs, and planning files MUST be created inside the `.lovable/` folder:
+>    - Python Release Scripts: `.lovable/release/` (e.g. `bump_versions.py`) and `.lovable/ai-fix-scripts/` (e.g. `01-file-manipulator.py`, `03-cicd-local-runner.py`).
+>    - RCA & Issue Logs: `.lovable/memory/issues/`, `.lovable/cicd-issues/`, and `.lovable/release/issues/`.
+>    - Execution Plans & Subtasks: `.lovable/plans/pending/`, `.lovable/plans/subtasks/`.
+>    - Coding Guidelines Mirror: `.lovable/coding-guidelines/`.
+> 3. **Worker Pool & Log Aggregation Architecture:** Pre-release quality gates and test orchestrators must run concurrently using a worker pool (2–3 workers via `ThreadPoolExecutor`), announce enqueued tasks upfront, show real-time progress, handle failures gracefully without cancelling sibling workers, and print a consolidated final summary with full stdout/stderr error logs.
+> 4. **`force` Keyword Support:** If the user wrote `force`, `force rebuild`, or `force create` on top of the prompt or trigger: **ALWAYS recreate/regenerate the Python release scripts (`bump_versions.py`, `03-cicd-local-runner.py`) from scratch**, regardless of whether the file already exists on disk.
+> 5. **No External or Random File Creation:** NEVER write scripts, temporary test scripts, or scratch files to root, `/tmp`, global system paths, or outside the repository boundary.
+
+---
+
 ## STRICT AVOIDANCE: Never Disable CI/CD
 
 > [!CAUTION]

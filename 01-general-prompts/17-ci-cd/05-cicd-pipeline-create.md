@@ -138,24 +138,41 @@ If custom checks or guideline validations are required:
 2. Ensure linters output standard error formats: `file:line:col: [RULE-CODE] message`.
 3. Support `--fix` flag wherever deterministic AST/regex automated repair is possible.
 
-### Step 3: Generate `.lovable/ai-fix-scripts/03-cicd-local-runner.py`
+### Step 3: Check for Existing Script & Force Override
 
-Create the master parallel local runner script that strips Docker wrappers and runs natively:
+- Check if `.lovable/ai-fix-scripts/03-cicd-local-runner.py` already exists.
+- **`force` Keyword Support:** If the user wrote `force`, `force rebuild`, or `force create` on top of the prompt or trigger: **ALWAYS recreate/regenerate the Python runner script from scratch**, regardless of whether the file already exists on disk.
+- If it EXISTS and the user did **not** specify `force`: proceed to verification.
+- If it is MISSING or `force` was requested: generate the script following the worker pool architecture below.
+
+### Step 4: Write `03-cicd-local-runner.py` (Worker Pool & Log Aggregation Architecture)
+
+Generate `.lovable/ai-fix-scripts/03-cicd-local-runner.py` following these architectural requirements:
+
+1. **Round-Robin Worker Process / Thread Pool Architecture:** Runs tasks (tests, linters, builds) concurrently using `concurrent.futures.ThreadPoolExecutor(max_workers=3)` (2–3 concurrent tasks).
+2. **Enqueuing Announcement:** The script MUST announce upfront how many tasks it has enqueued across the worker pool (e.g. `[INFO] Enqueued 20 quality gates across 3 concurrent workers...`).
+3. **Real-Time Progress & Timing:** Prints job completions in real time with individual runtimes (e.g. `PASS [Job Name] (X.XXs)`).
+4. **Graceful Non-Cancelling Failure Handling:** If one job fails in a running batch, the runner DOES NOT abort or cancel other active workers. It lets running tasks finish gracefully, capturing all stdout and stderr.
+5. **Consolidated Summary Report & Full Diagnostic Logs:** Prints a complete final summary with total executed, passed, failed, and timeouts. For every failed or timed-out job, it outputs the full command line, return code, stdout, and stderr so the agent has 100% complete RCA context.
+6. **Clean Exit Code:** Exits with code 0 only when ALL jobs pass; exits non-zero if ANY job fails.
+
+**Standard generated runner template:**
 
 ```python
 #!/usr/bin/env python3
-"""Auto-generated Cross-Platform CI/CD Local Runner."""
+"""Auto-generated Cross-Platform CI/CD Local Runner with concurrent worker pool."""
+from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeout
 import os
+from pathlib import Path
+import subprocess
 import sys
 import time
-import subprocess
-from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# ── Configurable Variables ──────────────────────────────────────────────────
+BATCH_SIZE      = 3    # Number of jobs to run concurrently (round-robin worker pool)
+JOB_TIMEOUT_SEC = 120  # Maximum seconds before a single job is timed out
 
 os.environ.setdefault("CI", "true")
-
-BATCH_SIZE = 3
-JOB_TIMEOUT_SEC = 120
 
 # Populate JOBS dictionary from project requirements
 JOBS = {
@@ -170,36 +187,83 @@ def run_job(name: str, cmd: list):
     try:
         res = subprocess.run(cmd, capture_output=True, text=True, timeout=JOB_TIMEOUT_SEC)
         elapsed = round(time.time() - start_time, 2)
-        return name, res.returncode, res.stdout, res.stderr, elapsed
-    except subprocess.TimeoutExpired:
+        return name, cmd, res.returncode, res.stdout, res.stderr, elapsed
+    except subprocess.TimeoutExpired as e:
         elapsed = round(time.time() - start_time, 2)
-        return name, -1, "", f"Timed out after {JOB_TIMEOUT_SEC}s", elapsed
+        return name, cmd, "timeout", e.stdout or "", f"Timed out after {JOB_TIMEOUT_SEC}s", elapsed
     except Exception as e:
         elapsed = round(time.time() - start_time, 2)
-        return name, 1, "", str(e), elapsed
+        return name, cmd, 1, "", str(e), elapsed
 
 def main():
-    print(f"🚀 Running CI/CD Local Runner ({len(JOBS)} jobs)...")
     job_items = list(JOBS.items())
-    batches = [job_items[i:i + BATCH_SIZE] for i in range(0, len(job_items), BATCH_SIZE)]
+    total_jobs = len(job_items)
+    print(f"[INFO] Enqueued {total_jobs} quality gates across {BATCH_SIZE} concurrent workers...\n")
+
     all_results = {}
+    total_start = time.time()
 
-    for batch in batches:
-        with ThreadPoolExecutor(max_workers=BATCH_SIZE) as executor:
-            futures = {executor.submit(run_job, name, cmd): name for name, cmd in batch}
-            for future in as_completed(futures):
-                name, code, out, err, elapsed = future.result()
-                all_results[name] = (code, out, err, elapsed)
+    with ThreadPoolExecutor(max_workers=BATCH_SIZE) as executor:
+        futures = {executor.submit(run_job, name, cmd): name for name, cmd in job_items}
+        for future in as_completed(futures):
+            try:
+                name, cmd, code, out, err, elapsed = future.result()
+                all_results[name] = (code, out, err, elapsed, cmd)
+                if code == 0:
+                    print(f"  PASS [{name}] ({elapsed}s)")
+                elif code == "timeout":
+                    print(f"  TIMEOUT [{name}] ({elapsed}s)")
+                else:
+                    print(f"  FAIL [{name}] ({elapsed}s)")
+            except Exception as ex:
+                job_name = futures[future]
+                all_results[job_name] = (1, "", str(ex), 0, JOBS.get(job_name, []))
+                print(f"  FAIL [{job_name}] (Exception: {ex})")
 
-    all_passed = True
-    for name, (code, out, err, elapsed) in all_results.items():
+    total_elapsed = round(time.time() - total_start, 2)
+
+    # ── Final Consolidated Summary Report ──────────────────────────────────
+    print("\n" + "=" * 60)
+    print("           CI/CD EXECUTION SUMMARY REPORT")
+    print("=" * 60)
+
+    passed_jobs = []
+    failed_jobs = []
+    timeout_jobs = []
+
+    for name, (code, out, err, elapsed, cmd) in all_results.items():
         if code == 0:
-            print(f"✅ PASS [{name}] ({elapsed}s)")
+            passed_jobs.append((name, elapsed))
+        elif code == "timeout":
+            timeout_jobs.append((name, elapsed, err, cmd))
         else:
-            all_passed = False
-            print(f"❌ FAIL [{name}] ({elapsed}s)\n{err or out}")
+            failed_jobs.append((name, elapsed, out, err, cmd))
 
-    sys.exit(0 if all_passed else 1)
+    print(f"Total: {total_jobs} | Passed: {len(passed_jobs)} | Failed: {len(failed_jobs)} | Timeouts: {len(timeout_jobs)} | Time: {total_elapsed}s\n")
+
+    if failed_jobs or timeout_jobs:
+        print("Detailed Failure Logs:")
+        print("-" * 60)
+        for name, elapsed, out, err, cmd in failed_jobs:
+            print(f"\n[FAILURE LOG] Job: {name} (Duration: {elapsed}s)")
+            print(f"Command: {' '.join(cmd)}")
+            if out.strip():
+                print(f"Stdout:\n{out.strip()}")
+            if err.strip():
+                print(f"Stderr:\n{err.strip()}")
+            print("-" * 60)
+
+        for name, elapsed, err, cmd in timeout_jobs:
+            print(f"\n[TIMEOUT LOG] Job: {name} (Duration: {elapsed}s)")
+            print(f"Command: {' '.join(cmd)}")
+            print(f"Reason: {err}")
+            print("-" * 60)
+
+        print(f"\n[FAILURE] CI/CD quality gates failed with {len(failed_jobs) + len(timeout_jobs)} error(s).")
+        sys.exit(1)
+    else:
+        print(f"\n[SUCCESS] All {total_jobs} CI/CD quality gates passed (exit 0)!")
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
