@@ -59,16 +59,17 @@ Before you write any code to fix the problem, you MUST document the issue in `.l
 > **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
 > Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
 
-## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
+## Anti-Hallucination, Micro-Tasking, & Self-Looping
 
 > [!CAUTION]
-> **CRITICAL RULE: DO NOT ATTEMPT TO DO EVERYTHING AT ONCE.**
-> You have massive checklists and strict architectural guidelines. If you try to execute all tasks in a single response, you WILL hallucinate, drop requirements, and fail the task. 
+> **CRITICAL RULE: DO NOT ATTEMPT TO READ, PLAN, AND EXECUTE EVERYTHING AT ONCE.**
+> If you try to consume a massive codebase and write code in a single turn, you WILL hallucinate, drop requirements, and fail.
 
-To solve this, you MUST operate using these two principles:
+To survive massive checklists and complex codebases, you MUST operate using these three principles:
 
-1. **Sequential Self-Looping:** Break the instructions down. Treat each checklist section or task as a completely separate execution step. Complete *only* the first section, verify it, end your turn, and self-loop (continue execution) to process the next checklist item one by one.
-2. **Multi-Agent Parallelization:** To solve tasks faster, you are highly encouraged to spawn 2 or more sub-agents concurrently to handle independent tasks. If tasks are dependent on one another (e.g., sequential coding guideline audits), you must process them strictly one by one in your self-loop.
+1. **Phase 1: Read & Understand (Isolated Loop):** Your very first action must be purely exploratory. Do NOT write code. Break down the task, read the specific files, trace the dependencies, and understand the architectural boundary. Once you understand the scope, end your turn and self-loop to begin execution.
+2. **Phase 2: Bounded Micro-Tasking (Sequential Self-Looping):** Never attempt to execute the entire checklist in one response. Treat each checklist section or file as a strict, isolated boundary. Execute *only* the first small portion, verify it, end your turn, and self-loop to process the next portion. 
+3. **Phase 3: Multi-Agent Parallelization:** If tasks are independent, you MUST spawn dedicated sub-agents to handle them concurrently. Give each sub-agent an extremely small, strictly defined bounding box (e.g., "Only edit File X"). Never give a sub-agent a generic or multi-file task.
 
 ## Actionable Items & Checklist (must follow)
 
