@@ -35,6 +35,13 @@ You are an expert AI Instruction Architect. Whatever task or instruction the use
 /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/` before taking action.
 
 
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
 ## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
 
 > [!CAUTION]

@@ -191,6 +191,13 @@ This verification happens ONCE at the very end, after all commits and pushes are
 Update the memory so this mistake is not repeated.
 
 
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
 ## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
 
 > [!CAUTION]
@@ -213,6 +220,7 @@ To solve this, you MUST operate using these two principles:
 - [ ] Ensure the plan is highly extensive, explicitly detailing where and how to make changes so sub-agents can easily execute tasks (Non-negotiable).
 - [ ] Write the tasks as a spec file in `.lovable/spec/tasks/XX-<slug>.md` and update plans in `.lovable/plans/pending/XX-<slug>.md`.
 - [ ] Read the memory files, the boolean coding guidelines in the spec folder, and the error manage guidelines before touching code.
+- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
 
 ### 2. Ruthless Management & Subtask Looping
 

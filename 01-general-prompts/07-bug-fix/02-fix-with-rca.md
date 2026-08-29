@@ -25,6 +25,13 @@ Before you write any code to fix the problem, you MUST document the issue in .lo
 4. **Code Fix:** The exact code snippets showing what needed to be changed to fix the root cause.
 
 
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
 ## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
 
 > [!CAUTION]
@@ -57,3 +64,5 @@ eturn/	hrow. One blank line after closing }. Never two blank lines in a row.
 - [ ] Once the fix is verified and the RCA document is written, commit using standard prefixes (e.g., ix(core): ...).
 - [ ] Push changes to git.
 - [ ] Provide the user with a summary of the RCA and exactly what code was modified.
+
+- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.

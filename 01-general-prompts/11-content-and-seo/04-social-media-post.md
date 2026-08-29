@@ -33,6 +33,13 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 Do not generate generic marketing fluff. Keep it punchy, relevant to developers/tech audience, and directly address the value proposition.
 
 
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
 ## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
 
 > [!CAUTION]
@@ -52,3 +59,5 @@ To solve this, you MUST operate using these two principles:
 - [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
+
+- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.

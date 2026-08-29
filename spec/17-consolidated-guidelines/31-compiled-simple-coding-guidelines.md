@@ -151,6 +151,14 @@ If this repository has a `spec/xx-error-manage/` folder, that folder is binding 
 
 ---
 
+
+## Boolean Principles (Cross-Language)
+
+1. **Naming:** All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g. `isValid`, `hasMatch`). Never use generic names like `active` or `loaded`.
+2. **No Negative Names:** Never include negative words like `Not` or `No` in a boolean variable name. Use a positive synonym instead (e.g. `isInvalid` instead of `isNotValid`, `isPending` instead of `notReady`).
+3. **No Explicit True Checks (TOTAL BAN):** NEVER evaluate a boolean explicitly against `true` (e.g., `if isReady == true` or `if (hasMatch === true)`). This is redundant, unidiomatic, and STRICTLY FORBIDDEN. Positive booleans MUST ALWAYS be evaluated implicitly: `if isReady { ... }`.
+4. **No Mixed Polarity:** NEVER combine a positive check and a negative check in the same `if` condition (e.g., `if isA && !isB`). This is a code smell. Extract the combined condition into a single, positively named boolean that captures the actual intent (e.g. `isConflict := isA && !isB; if isConflict { ... }`).
+
 ## Method Documentation (When To Write, When Not To)
 
 Must-follow rule: simple methods do NOT require documentation. Do not write verbose comments. Comments lie, code does not. Names and signatures are the primary documentation. If you feel the need to explain what a method does in prose, first rename it or split it until the code explains itself.

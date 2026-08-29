@@ -25,6 +25,23 @@ To rapidly diagnose and verify CI/CD issues without waiting for remote pipelines
 3. **The Docker Translation Rule (CRITICAL)**: CI/CD pipelines typically execute inside Docker containers (e.g., `docker run ...` or containerized steps). Your generated Python script MUST strip out the Docker layers and translate the commands so they execute directly and natively on the local machine (as the local environment already has the necessary dependencies). Never attempt to invoke Docker in the local runner.
 
 
+
+## The 4-Part RCA Requirement (Mandatory Memory File)
+
+Before you write any code to fix the problem, you MUST document the issue in `.lovable/memory/issues/XX-<slug>.md` (where XX is the next available sequential number). The file MUST contain these exact four sections:
+
+1. **Why it happened:** The high-level business, logical, or architectural breakdown of the failure.
+2. **How it happened:** The technical execution flow that triggered the bug.
+3. **Root Cause:** The exact file, line, and dependency responsible for the failure.
+4. **Code Fix:** The exact code snippets showing what needed to be changed to fix the root cause.
+
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
 ## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
 
 > [!CAUTION]
@@ -117,6 +134,7 @@ When EVERYTHING is completely finished and fixed (at the very end of the tunnel)
 - [ ] If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
 - [ ] You MUST strictly exclude all test files (e.g., `*test*`, `*.spec.*`) from version scanning and modification, as they contain mock data.
 - [ ] You must create and maintain `.lovable/memory/release-architecture-map.md` documenting exactly how releases work in the repository. Ensure it is enqueued in `what-to-read.md` and linked in the root `readme.md`.
+- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
 
 ## Metadata
 

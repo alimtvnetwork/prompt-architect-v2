@@ -129,3 +129,10 @@ Before ending your execution turn or committing any code, you MUST mechanically 
 - [ ] **Error Handling:** I used domain-specific `AppError` types. I did not swallow any errors. All errors are wrapped with context.
 - [ ] **Markdown Formatted:** All markdown lists and headers are surrounded by blank lines (MD022/MD032).
 - [ ] **Artifacts & Generation:** I did not commit generated binaries, cache files, or temp scripts to Git. I updated `.gitignore` if necessary.
+
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.

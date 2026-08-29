@@ -839,6 +839,41 @@ func checkBareBoolArgs(lines []string, path string) []Violation {
 
 var explicitBoolPat = regexp.MustCompile(`(==|===|!=|!==)\s*(true|false)`)
 
+
+func checkMixedPolarity(lines []string, path string) []Violation {
+	var violations []Violation
+
+	for i, line := range lines {
+		stripped := strings.TrimSpace(line)
+
+		if isCommentOrEmpty(stripped) {
+			continue
+		}
+
+		if !strings.HasPrefix(stripped, "if ") {
+			continue
+		}
+
+		if strings.Contains(stripped, " && !") || strings.Contains(stripped, " || !") {
+			// Skip exempt stdlib calls like !strings.HasPrefix or !os.IsNotExist
+			if strings.Contains(stripped, "!strings.") || strings.Contains(stripped, "!os.") {
+				continue
+			}
+
+			violations = append(violations, Violation{
+				File:        path,
+				Line:        i + 1,
+				Rule:        "CODE-RED-027",
+				Severity:    "CODE-RED",
+				Message:     "Mixed polarity (positive and negative) in a single condition is forbidden. Extract the combined condition into a positively named variable (e.g., `isConflict := isA && !isB; if isConflict { ... }`).",
+				CodeSnippet: truncate(stripped, 120),
+			})
+		}
+	}
+
+	return violations
+}
+
 func checkExplicitBoolComparison(lines []string, path string) []Violation {
 	var violations []Violation
 
@@ -927,6 +962,7 @@ func validateFile(path string, maxLines int) []Violation {
 	violations = append(violations, checkNegativeWords(lines, path)...)
 	violations = append(violations, checkBangOnCall(lines, path)...)
 	violations = append(violations, checkBareBoolArgs(lines, path)...)
+	violations = append(violations, checkMixedPolarity(lines, path)...)
 	violations = append(violations, checkExplicitBoolComparison(lines, path)...)
 	violations = append(violations, checkAssignInCondition(lines, path, lang)...)
 

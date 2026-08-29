@@ -22,6 +22,13 @@ Run again if said: go, continue, or next
 
 5. Violation of any rule below is auto-reject on the same tier as RULE 0.
 
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
 ## Anti-Hallucination Rules
 
 - If a spec file, folder, or task is missing or ambiguous, do NOT guess or invent a rule.
@@ -118,6 +125,7 @@ Past execution turns were sloppy and failed to pin READMEs or bump versions. To 
 - [ ] Root readme.md (lowercase always) Pinning (FATAL): I have pinned the latest release version into the root `readme.md` file! I have verified badges and install snippets match the new version.
 - [ ] Changelog Formatting: I have updated the changelog exactly according to the `version.json` format.
 - [ ] Release Architecture Map: I have maintained `.lovable/memory/release-architecture-map.md`, enqueued it in `what-to-read.md`, and linked it in the root `readme.md`.
+- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
 
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
@@ -131,6 +139,13 @@ Past execution turns were sloppy and failed to pin READMEs or bump versions. To 
 - [ ] Fast-forward commit created and pushed without rewriting git history.
 - [ ] Output window explicitly lists "Done", "Pending", and remaining task names.
 
+
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
 
 ## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
 
