@@ -8,9 +8,9 @@ description: >-
 
 Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cicd fix`
 
-/goal Autonomously diagnose, create a local Python CI/CD runner (translating Docker steps to native host execution), and fix all failures by self-looping up to N total steps — split equally across two phases: Phase 1 (script generation) and Phase 2 (execution and fixing). Do NOT stop, do NOT wait for the user, do NOT rely on remote pipelines. Loop until the runner exits with code 0.
+/goal Autonomously diagnose, update or create the local Python CI/CD runner script (`.lovable/ai-fix-scripts/03-cicd-local-runner.py`) from repository workflows or screenshot pipeline names, and fix all failures by executing a singly-done self-looping sequence (zeroing in on one failure at a time) until the runner exits with code 0 without stopping.
 
-/learn Ingest recent RCAs from `.lovable/cicd-issues/`, `.lovable/issues/`, and `spec/03-error-manage/` before touching any code so past mistakes are never repeated.
+/learn Ingest recent RCAs from `.lovable/cicd-issues/`, `.lovable/issues/`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, and `spec/03-error-manage/` before touching any code so past mistakes are never repeated.
 
 ---
 
@@ -19,11 +19,50 @@ Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cic
 ```text
 N = 200  (Total self-loop steps budget. The user may override this when triggering the prompt.)
 
-PHASE_1_STEPS = N / 2  (Steps 1 .. N/2: Dedicated to reading codebase and generating 03-cicd-local-runner.py)
-PHASE_2_STEPS = N / 2  (Steps N/2+1 .. N: Dedicated to running the script, fixing failures, looping until exit code = 0)
+PHASE_1_STEPS = N / 2  (Steps 1 .. N/2: Screenshot Pipeline Discovery, Update 03-cicd-local-runner.py, Register New JOBS)
+PHASE_2_STEPS = N / 2  (Steps N/2+1 .. N: Singly-Done Self-Loop Fixing, Zero in on Errors, 4-Part RCA, Green Gate Verification)
 ```
 
 Both N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after the user sets them.
+
+---
+
+## Screenshot & Pipeline Discovery Protocol (Execute First When Any Image Is Provided)
+
+> [!IMPORTANT]
+> **If the user provides any image or screenshot showing a CI/CD pipeline name, failing workflow, or error log:**
+>
+> 1. **FIRST ACTION — Update Python Runner:** Locate the pipeline/job in `.github/workflows/*.yml` (or repo CI configs) to find whatever new jobs, steps, or linters were added, and **immediately update `.lovable/ai-fix-scripts/03-cicd-local-runner.py`** to include them in the `JOBS` dictionary.
+> 2. **SECOND ACTION — Singly-Done Self-Loop Execution:** Run the Python script iteratively, zeroing in on one failing error at a time using strictly bounded self-loop turns until all checks exit with code 0 (`exit 0`).
+
+### Bounded Single-Step Self-Loop Sequence (Singly Done — No Overloaded Steps)
+
+Every step must be **singly done** using bounded self-looping turns:
+
+- **Self-Loop Step 1 (Extract Pipeline Name from Screenshot):**
+  1. Read image to extract the pipeline name, failing job name, and error snippet.
+  2. Scan `.github/workflows/*.yml` to identify the corresponding shell commands and dependencies.
+
+- **Self-Loop Step 2 (FIRST ACTION: Update Python Runner Script):**
+  1. Open `.lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+  2. If new jobs/steps are found in workflows, strip Docker wrappers and register the new commands in the `JOBS` dictionary.
+  3. Save the runner script and verify syntax.
+
+- **Self-Loop Step 3 (Execute Runner & Baseline Failures):**
+  1. Run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+  2. If exit code = 0, proceed to End of Tunnel. If exit code != 0, zero in on the first specific failure.
+
+- **Self-Loop Step 4 (RCA & Zero In on Error):**
+  1. Write 4-part RCA in `.lovable/memory/issues/XX-<slug>.md`.
+  2. Register in `.lovable/memory/issues/index.md` and `.lovable/strictly-avoid.md`.
+
+- **Self-Loop Step 5 (Surgical Code Fix):**
+  1. Open the specific file and line, apply minimal surgical fix.
+  2. Run `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>`.
+
+- **Self-Loop Step 6 (Re-Verify & Loop):**
+  1. Re-run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+  2. If resolved and more errors remain, self-loop to Step 4 to zero in on the next error until exit code = 0.
 
 ---
 

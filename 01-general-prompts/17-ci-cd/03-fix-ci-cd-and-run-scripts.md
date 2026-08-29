@@ -2,16 +2,54 @@
 
 Trigger Keywords & Aliases: `fix with RCA`, `FRCA : Fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `fix run scripts`
 
-/goal Perform a Root Cause Analysis (RCA) on all failing run scripts and CI/CD workflows, persist the RCA into `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`, implement universal query wrappers with explicit success/failure boolean results and automated error logging, verify clean builds, commit logically, and push to git.
+```text
+N = 200
+```
 
-/learn Ingest recent Root Cause Analysis (RCA) records from `.lovable/cicd-issues/`, `.lovable/issues/`, and `spec/03-error-manage/` so previous mistakes and anti-patterns are never repeated.
+/goal Perform a Root Cause Analysis (RCA) on all failing run scripts and CI/CD workflows, update `.lovable/ai-fix-scripts/03-cicd-local-runner.py` with any newly added pipeline steps from screenshots or workflow files, zero in on each error singly using self-looping, persist the RCA into `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`, implement universal query wrappers with explicit success/failure boolean results and automated error logging, verify clean builds, commit logically, and push to git.
 
-Fix CI CD and run scripts all
+/learn Ingest recent Root Cause Analysis (RCA) records from `.lovable/cicd-issues/`, `.lovable/issues/`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, and `spec/03-error-manage/` so previous mistakes and anti-patterns are never repeated.
 
-Find the root cause analysis write the root cause of it in the avoid part in the .lovable memeory
+---
 
-Please have a look into all the code base, try to make the Git commits properly, try to check the CI/CD, and also try to run the tests, build the code, see if there is any issue, try to fix that. And also, I've given you the screenshot. So when you are making a query in PHP/Python/TS and other places, you should have a wrapper that actually gives you this logging behavior. You don't log it everywhere else, but when you make the query, if it fails, it would log it automatically, it would reduce the code. That is the idea. That needs to be figured out how many places you have messed this up. And also, the result should have its own, like, is success, is failure. So you should have a wrapper type of code that actually yells that. You should update the memory regarding this inside the .lovable folder, the memory aspect so that Next.ai does not make the mistake. So make sure that you do plan this out, whatever you have to make, and you loop it. And also make sure that similar type of code should go all together, not like single commits at a time, with a nice commit message. After you commit the code, finally, before you end your job, you should actually push the code to the repository. Remember this. So if you have any issues, remember to fix those out
+## Screenshot & Pipeline Discovery Protocol (Execute First When Any Image Is Provided)
 
+> [!IMPORTANT]
+> **If the user provides any image or screenshot showing a CI/CD pipeline name, failing workflow, or error log:**
+>
+> 1. **FIRST ACTION — Update Python Runner:** Locate the pipeline/job in `.github/workflows/*.yml` (or repo CI configs) to find whatever new jobs, steps, or linters were added, and **immediately update `.lovable/ai-fix-scripts/03-cicd-local-runner.py`** to include them in the `JOBS` dictionary.
+> 2. **SECOND ACTION — Singly-Done Self-Loop Execution:** Run the Python script iteratively, zeroing in on one failing error at a time using strictly bounded self-loop turns until all checks exit with code 0 (`exit 0`).
+
+### Bounded Single-Step Self-Loop Sequence (Singly Done — No Overloaded Steps)
+
+Every step must be **singly done** using bounded self-looping turns:
+
+- **Self-Loop Step 1 (Extract Pipeline Name from Screenshot):**
+  1. Read image to extract the pipeline name, failing job name, and error snippet.
+  2. Scan `.github/workflows/*.yml` to identify the corresponding shell commands and dependencies.
+
+- **Self-Loop Step 2 (FIRST ACTION: Update Python Runner Script):**
+  1. Open `.lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+  2. If new jobs/steps are found in workflows, strip Docker wrappers and register the new commands in the `JOBS` dictionary.
+  3. Save the runner script and verify syntax.
+
+- **Self-Loop Step 3 (Execute Runner & Baseline Failures):**
+  1. Run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+  2. If exit code = 0, proceed to End of Tunnel. If exit code != 0, zero in on the first specific failure.
+
+- **Self-Loop Step 4 (RCA & Zero In on Error):**
+  1. Write 4-part RCA in `.lovable/memory/issues/XX-<slug>.md`.
+  2. Register in `.lovable/memory/issues/index.md` and `.lovable/strictly-avoid.md`.
+
+- **Self-Loop Step 5 (Surgical Code Fix):**
+  1. Open the specific file and line, apply minimal surgical fix.
+  2. Run `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>`.
+
+- **Self-Loop Step 6 (Re-Verify & Loop):**
+  1. Re-run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+  2. If resolved and more errors remain, self-loop to Step 4 to zero in on the next error until exit code = 0.
+
+---
 
 ## No Automatic Releases (Strict Policy)
 
