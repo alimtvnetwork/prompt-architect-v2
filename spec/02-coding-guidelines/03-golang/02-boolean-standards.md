@@ -98,8 +98,12 @@ When a negated boolean (`!isX`) must be used in any expression, **first** create
 // ❌ FORBIDDEN — negated boolean used directly in compound condition
 isLiveRunWithDeletions := !isDryRun && totalDeleted > 0
 
-// ❌ FORBIDDEN — explicit == false is low priority, still obscure intent
+// ❌ FORBIDDEN — explicit == false or == true is strictly prohibited
 isLiveRunWithDeletions := isDryRun == false && totalDeleted > 0
+// ❌ FORBIDDEN
+if hasMatch == true {
+    ...
+}
 
 // ✅ REQUIRED — create the positive counterpart FIRST, then compose
 isLiveRun := !isDryRun

@@ -53,7 +53,7 @@ Every sub-agent that is spawned MUST follow this lifecycle without exception:
 
 - Ensure a generic result wrapper type exists that exposes both `isFail` and `isSuccess`.
 - Revert every inverted check `!response.isSuccess` to `response.isFail`.
-- Every boolean variable must start with `is*`, `has*`, `can*`, `should*`, `did*`, `will*`, `must*`.
+- Every boolean variable must start with `is*`, `has*`, `can*`, `should*`, `did*`, `will*`, `must*`. NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`).
 - Enums end with `Type` suffix (e.g. `StatusType`). Enum values use `PascalCase`.
 - DRY code is priority one.
 

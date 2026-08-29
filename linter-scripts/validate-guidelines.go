@@ -836,6 +836,41 @@ func checkBareBoolArgs(lines []string, path string) []Violation {
 	return violations
 }
 
+
+var explicitBoolPat = regexp.MustCompile(`(==|===|!=|!==)\s*(true|false)`)
+
+func checkExplicitBoolComparison(lines []string, path string) []Violation {
+	var violations []Violation
+
+	for i, line := range lines {
+		stripped := strings.TrimSpace(line)
+
+		if isCommentOrEmpty(stripped) {
+			continue
+		}
+
+		if !explicitBoolPat.MatchString(stripped) {
+			continue
+		}
+		
+		// Skip if it's returning true/false or similar non-conditional
+		if strings.HasPrefix(stripped, "return ") && !strings.Contains(stripped, "==") {
+		    continue
+		}
+
+		violations = append(violations, Violation{
+			File:        path,
+			Line:        i + 1,
+			Rule:        "CODE-RED-026",
+			Severity:    "CODE-RED",
+			Message:     "Explicit boolean comparison to true/false is forbidden. Use the boolean directly (e.g. `if isReady` instead of `if isReady == true`).",
+			CodeSnippet: truncate(stripped, 120),
+		})
+	}
+
+	return violations
+}
+
 func checkAssignInCondition(lines []string, path string, lang string) []Violation {
 	var violations []Violation
 
@@ -892,6 +927,7 @@ func validateFile(path string, maxLines int) []Violation {
 	violations = append(violations, checkNegativeWords(lines, path)...)
 	violations = append(violations, checkBangOnCall(lines, path)...)
 	violations = append(violations, checkBareBoolArgs(lines, path)...)
+	violations = append(violations, checkExplicitBoolComparison(lines, path)...)
 	violations = append(violations, checkAssignInCondition(lines, path, lang)...)
 
 	// Language-specific
