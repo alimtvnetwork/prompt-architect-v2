@@ -237,6 +237,35 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-enums-and-traits-audit.
 
 ---
 
+---
+
+## Continuous 2-Phase Self-Loop & 2-Agent Concurrency Architecture
+
+To guarantee full execution without stopping after planning mode, the master orchestrator MUST enforce this continuous 2-phase loop:
+
+### 1. 2-Agent Concurrency & Strict `.lovable/` Bounding
+
+- **2-Agent Limit (Max 2 Threads Each):** When dispatching work, spawn **at most 2 sub-agents concurrently**, with **no more than 2 threads per agent**.
+- **Strict Folder Bounding (`.lovable/`):** Subagents can ONLY write planning files, subtasks, status reports, and logs inside `.lovable/` (`.lovable/plans/`, `.lovable/temp/active-locks.json`, `.lovable/memory/issues/`).
+- **Context Diet:** Provide subagents with minimal instructions (e.g. "Read subtask file `.lovable/plans/subtasks/XX/01-task.md` and execute it"). Do not paste huge files into agent prompts.
+
+### 2. Phase 1: Planning Mode & Subtask Generation (Steps 1 .. N/2)
+
+- Spawn 2 planning subagents to scan the codebase for target guideline violations.
+- Write the master architectural specification in `.lovable/plans/pending/XX-audit.md` with an exhaustive Violation Ledger table.
+- Decompose the master plan into granular subtasks in `.lovable/plans/subtasks/XX/01-task.md`, `02-task.md`, etc.
+- **MANDATORY AUTO-LOOP (DO NOT STOP):** Once Phase 1 planning completes, the master orchestrator **MUST NOT STOP or ask the user for confirmation**. It MUST immediately self-loop and transition directly into Phase 2 execution mode.
+
+### 3. Phase 2: Execution Mode & Parallel Refactoring (Steps N/2+1 .. N)
+
+- Spawn 2 execution subagents (max 2 threads each) to execute subtasks in parallel on disjoint files.
+- Subagents refactor code following all coding guidelines (<= 8–15 line functions, single return types, universal `*AppError` wrapping, Unix LF line endings).
+- Move completed subtasks from `.lovable/plans/subtasks/` to `.lovable/plans/completed/` and update `.lovable/plans/index.md`.
+- **Failure Memory & Feedback Loop:** If a subagent fails:
+  - Rollback dirty working tree and log error details to `.lovable/plans/last-failure.md` and `.lovable/memory/issues/XX-failure.md`.
+  - The next subagent spawned MUST read the previous failure log first, record it as a pending memory task, and implement the necessary fix.
+- Execute local linters and `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` ensuring `exit 0` before concluding.
+
 ## Strict In-Repository Execution & `.lovable/` Bounding Mandate
 
 > [!IMPORTANT]
@@ -302,7 +331,6 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-enums-and-traits-audit.
 - [ ] Blank Line Before `return`: Verified blank line before every `return`/`throw` in multi-line blocks.
 - [ ] Zero Nested `if`: Zero nested `if` statements (depth > 1).
 
-### Master Task Checklist (Atomic Numbered Steps)
 
 1. - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 
