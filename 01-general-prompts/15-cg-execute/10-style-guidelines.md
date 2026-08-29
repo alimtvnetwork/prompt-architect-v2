@@ -20,7 +20,7 @@ N = total self-loop steps budget that the agents will perform.
 2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
 3. [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
 4. [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
-5. [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+5. [ ] /goal Phase 2 (Step A): Open each target file in bounded micro-batches of 5–8 files at a time to perform surgical newline and style refactoring without context exhaustion.
 6. [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
 7. [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
 8. [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
@@ -359,6 +359,55 @@ func ValidateExtensionRoundTrip(formats []Format) *apperror.AppError {
 }
 ```
 
+#### 2d. Go: Blank Lines Around Struct Instantiations & Sequential Function Invocations
+
+When instantiating a parameter struct or invoking a multi-line function, there **MUST be a blank line before the invocation** (if preceded by assignments or statements) and **MUST be a blank line after the invocation closing brace `}`** before subsequent statements, `if` conditions, or other function calls.
+
+```go
+// ❌ FORBIDDEN (Unacceptable): Squeezing variable assignments, multiline struct invocations, and following if statements without vertical line gaps
+func PrintIdentityBlock(cwd string) {
+    fmt.Println(" " + constants.ColorCyan + "Identity Block" + constants.ColorReset)
+    src := getSourceDirectory()
+    emitIdentityRows(IdentityRowParams{
+        Dir:            src,
+        RepoOverride:   buildRepo,
+        BranchOverride: buildBranch,
+        ShaOverride:    buildCommit,
+    })
+    if len(buildDate) > 0 {
+        fmt.Printf(" Built: %s\n", buildDate)
+    }
+    emitIdentityRows(IdentityRowParams{
+        Dir: cwd,
+    })
+    fmt.Println()
+}
+
+// ✅ REQUIRED (Right Practice): Clean blank lines before and after multiline struct calls, separating discrete execution stages
+func PrintIdentityBlock(cwd string) {
+    fmt.Println(" " + constants.ColorCyan + "Identity Block" + constants.ColorReset)
+
+    src := getSourceDirectory()
+
+    emitIdentityRows(IdentityRowParams{
+        Dir:            src,
+        RepoOverride:   buildRepo,
+        BranchOverride: buildBranch,
+        ShaOverride:    buildCommit,
+    })
+
+    if len(buildDate) > 0 {
+        fmt.Printf(" Built: %s\n", buildDate)
+    }
+
+    emitIdentityRows(IdentityRowParams{
+        Dir: cwd,
+    })
+
+    fmt.Println()
+}
+```
+
 ---
 
 ### Rule 3: Mandatory Blank Line BEFORE `return`, `throw`, `raise`, `yield`
@@ -664,8 +713,9 @@ To guarantee full execution without stopping after planning mode, the master orc
 
 ### 3. Phase 2: Execution Mode & Parallel Refactoring (Steps N/2+1 .. N)
 
-- Spawn 2 execution subagents (max 2 threads each) to execute subtasks in parallel on disjoint files.
-- Subagents refactor code following all coding guidelines (<= 8–15 line functions, single return types, universal `*AppError` wrapping, Unix LF line endings).
+- **Bounded Micro-Tasking (5–8 Files per Batch):** Subagents MUST process at most **5–8 files per subtask / loop turn**. Bounding each subtask to 5–8 files ensures surgical attention to vertical line gaps, prevents context exhaustion, and eliminates AI hallucination.
+- Spawn 2 execution subagents (max 2 threads each) to execute subtasks in parallel on disjoint batches of 5–8 files.
+- Subagents refactor code following all coding guidelines (<= 8–15 line functions, single return types, universal `*AppError` wrapping, Unix LF line endings, blank lines around control blocks).
 - Move completed subtasks from `.lovable/plans/subtasks/` to `.lovable/plans/completed/` and update `.lovable/plans/index.md`.
 - **Failure Memory & Feedback Loop:** If a subagent fails:
   - Rollback dirty working tree and log error details to `.lovable/plans/last-failure.md` and `.lovable/memory/issues/XX-failure.md`.
