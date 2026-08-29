@@ -28,6 +28,8 @@
 | Coding guidelines / standards | `spec/02-coding-guidelines/` or `01-general-prompts/02-coding-standards/01-coding-guidelines.md` |
 | Error management / handling conventions | `spec/03-error-manage/` |
 | Database conventions & schema rules | `spec/04-database-conventions/` |
+| Strictly avoided anti-patterns & RCA issues | `.lovable/strictly-avoid.md`, `.lovable/cicd-issues/`, `.lovable/memory/issues/` |
+| AI Fix Scripts & Cross-Platform Automation memory | `.lovable/ai-fix-scripts/index.md` |
 | App specification & feature requirements | `spec/21-app/` |
 | Artifact detection & Git history purge | `01-general-prompts/05-commit-and-multi-agent-code-fix/09-clean-artifacts-and-git-history.md` |
 | Unified MUST FOLLOW NON-NEGOTIABLE enforcement text (V2) | `01-general-prompts/09-insults/02-consolidated-insults-v2.md` |
