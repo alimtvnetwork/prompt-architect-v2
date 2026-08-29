@@ -91,6 +91,49 @@ func ValidateAccess(user *User) bool {
 
     return true
 }
+
+// ❌ FORBIDDEN: Squeezed loop, inline assignment condition, and direct comparison
+func ValidateFormat(formats []Format) *apperror.AppError {
+    for _, f := range formats {
+        ext := f.Extension()
+        if len(ext) == 0 {
+            return apperror.New(apperror.ErrCodeValidationFailed, "empty extension", "ValidateFormat")
+        }
+        if got := FormatFromPath("sample" + ext); got != f {
+            return apperror.New(apperror.ErrCodeValidationFailed, "unmatched format", "ValidateFormat")
+        }
+    }
+    return nil
+}
+
+// ✅ REQUIRED: Blank line before for loop, extracted affirmative booleans, blank line before if
+func ValidateFormat(formats []Format) *apperror.AppError {
+    for _, f := range formats {
+        ext := f.Extension()
+        isEmptyExtension := len(ext) == 0
+
+        if isEmptyExtension {
+            return apperror.New(
+                apperror.ErrCodeValidationFailed,
+                "extension returned empty string",
+                "ValidateFormat",
+            )
+        }
+
+        got := FormatFromPath("sample" + ext)
+        isSampleUnmatchFile := got != f
+
+        if isSampleUnmatchFile {
+            return apperror.New(
+                apperror.ErrCodeValidationFailed,
+                "unmatched sample file format",
+                "ValidateFormat",
+            )
+        }
+    }
+
+    return nil
+}
 ```
 
 ```typescript

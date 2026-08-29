@@ -265,6 +265,100 @@ try {
 cleanup();
 ```
 
+#### 2c. Go: Blank Line After Multiline Map/Slice Literals & Loops with Boolean Extraction
+
+```go
+// ❌ FORBIDDEN (Unacceptable): Squeezed loops against map literals, inline conditional assignments, and missing blank lines between if blocks
+func ValidateDoubleExtensionFormats(targetPath string) *apperror.AppError {
+    cases := map[string]Format{
+        "archive.tar.gz":  FormatTarGz,
+        "archive.tgz":     FormatTarGz,
+        "archive.tar.bz2": FormatTarBz2,
+        "archive.tbz2":    FormatTarBz2,
+        "archive.tar.xz":  FormatTarXz,
+        "archive.txz":     FormatTarXz,
+        "archive.tar.zst": FormatTarZst,
+        "archive.tzst":    FormatTarZst,
+    }
+    for path, expectedFormat := range cases {
+        if got := FormatFromPath(path); got != expectedFormat {
+            return apperror.New(apperror.ErrCodeValidationFailed, "mismatch", "ValidateDoubleExtensionFormats")
+        }
+    }
+    return nil
+}
+
+func ValidateExtensionRoundTrip(formats []Format) *apperror.AppError {
+    for _, f := range formats {
+        ext := f.Extension()
+        if len(ext) == 0 {
+            return apperror.New(apperror.ErrCodeValidationFailed, "empty extension", "ValidateExtensionRoundTrip")
+        }
+        if got := FormatFromPath("sample" + ext); got != f {
+            return apperror.New(apperror.ErrCodeValidationFailed, "unmatched format", "ValidateExtensionRoundTrip")
+        }
+    }
+    return nil
+}
+
+// ✅ REQUIRED (Right Practice): Blank line after map literal closing brace, blank line before loops, blank line before if, blank line after closing brace, and extracted affirmative booleans
+func ValidateDoubleExtensionFormats(targetPath string) *apperror.AppError {
+    cases := map[string]Format{
+        "archive.tar.gz":  FormatTarGz,
+        "archive.tgz":     FormatTarGz,
+        "archive.tar.bz2": FormatTarBz2,
+        "archive.tbz2":    FormatTarBz2,
+        "archive.tar.xz":  FormatTarXz,
+        "archive.txz":     FormatTarXz,
+        "archive.tar.zst": FormatTarZst,
+        "archive.tzst":    FormatTarZst,
+    }
+
+    for path, expectedFormat := range cases {
+        resolvedFormat := FormatFromPath(path)
+        isFormatMismatch := resolvedFormat != expectedFormat
+
+        if isFormatMismatch {
+            return apperror.New(
+                apperror.ErrCodeValidationFailed,
+                "format mismatch detected",
+                "ValidateDoubleExtensionFormats",
+            )
+        }
+    }
+
+    return nil
+}
+
+func ValidateExtensionRoundTrip(formats []Format) *apperror.AppError {
+    for _, f := range formats {
+        ext := f.Extension()
+        isEmptyExtension := len(ext) == 0
+
+        if isEmptyExtension {
+            return apperror.New(
+                apperror.ErrCodeValidationFailed,
+                "extension returned empty string",
+                "ValidateExtensionRoundTrip",
+            )
+        }
+
+        got := FormatFromPath("sample" + ext)
+        isSampleUnmatchFile := got != f
+
+        if isSampleUnmatchFile {
+            return apperror.New(
+                apperror.ErrCodeValidationFailed,
+                "unmatched sample file format",
+                "ValidateExtensionRoundTrip",
+            )
+        }
+    }
+
+    return nil
+}
+```
+
 ---
 
 ### Rule 3: Mandatory Blank Line BEFORE `return`, `throw`, `raise`, `yield`
