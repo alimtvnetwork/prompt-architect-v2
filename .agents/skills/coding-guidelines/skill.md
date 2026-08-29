@@ -15,6 +15,7 @@ description: >-
 ## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
 
 Before executing or auditing code, check if this coding standard is installed as a native Antigravity Skill.
+
 1. If `.agents/skills/coding-guidelines/skill.md` does not exist in the workspace, you MUST create it now.
 2. Extract the core instructions of this prompt and save it into `.agents/skills/coding-guidelines/skill.md` with standard YAML frontmatter (`name: coding-guidelines`, `description: "Use this skill to audit, review, and enforce coding guidelines across all languages."`).
 3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire specification in active context when not in use.
@@ -24,6 +25,7 @@ Before executing or auditing code, check if this coding standard is installed as
 ## Phase 1: Read & Understand (Isolated Loop)
 
 Your very first action when reviewing or writing code must be purely exploratory:
+
 1. **Explore & Map:** Read the target files, trace dependencies, inspect existing types, and understand the architectural boundary.
 2. **Consult Spec References:** Read the relevant language-specific guideline in `spec/02-coding-guidelines/` before writing any replacement code.
 3. **End Turn & Self-Loop:** Once the scope and violations are cataloged, end your turn and self-loop into execution.
@@ -86,6 +88,7 @@ When auditing, applying fixes, or creating skills, navigate and respect these ca
 The return new line and whitespace standard governs readability and clean code structure. This is mechanically checked by Rule R13–R20 and auto-fixed by `.lovable/ai-fix-scripts/02-guideline-autofixer.py`.
 
 ### Rule R13: Blank Line Before `return` / `throw` / `raise`
+
 - **Rule:** Exactly ONE blank line before every `return`, `throw`, `raise`, or early exit statement when it is preceded by other statements in the block.
 - **Exception (Single-Statement Blocks):** If `return` or `throw` is the **ONLY statement** in the block or function body, **NO** blank line is placed before it.
 
@@ -147,6 +150,7 @@ def calculate_metrics(data_points: list[int]) -> int:
 ```
 
 ### Rule R14: Blank Line After Closing `}` Brace
+
 - **Rule:** Exactly ONE blank line after every closing brace `}`, **unless** the next line is another `}`, `else`, `catch`, `finally`, or `case`.
 - **In Python:** Exactly one blank line after a dedent ending a block, unless followed by `else`, `elif`, `except`, or `finally`.
 
@@ -165,9 +169,11 @@ return nil
 ```
 
 ### Rule R15: Never Two Blank Lines in a Row
+
 - Never place two consecutive blank lines anywhere in any file.
 
 ### Rule R16: No Padded Braces
+
 - No blank line immediately after an opening `{` brace, and no blank line immediately before a closing `}` brace.
 
 ---
@@ -265,6 +271,7 @@ When tasked with auditing, reviewing, or fixing coding guidelines across a codeb
 > [!CAUTION]
 > **CRITICAL RULE: DO NOT ATTEMPT TO READ, PLAN, AND EXECUTE EVERYTHING AT ONCE.**
 > Operate using the 3-Phase Bounded Execution Model:
+>
 > 1. **Phase 1: Read & Understand (Isolated Loop):** First turn is purely exploratory. Do NOT write code.
 > 2. **Phase 2: Bounded Micro-Tasking:** Fix one file or section at a time.
 > 3. **Phase 3: Multi-Agent Parallelization:** Spawn sub-agents with micro-boundaries (single-file bounding box).
