@@ -35,9 +35,16 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 - What to write: Break down the parent task into a detailed architectural plan, code review guides, and embedded coding guidelines.
 - Where to save it: Save this master plan into `.lovable/plans/pending/XX-<slug>.md`. Do not hallucinate folders.
-
+- **Strict Relative Git Paths Mandate (TOTAL BAN on Absolute Paths / `file:///` URIs):**
+  When breaking down tasks into subtasks (`.lovable/plans/subtasks/XX-<slug>/*.md`), writing specs, updating memory logs (`.lovable/memory/issues/`), or citing guidelines, ALL file paths and markdown links MUST be **strictly relative to the git repository root**. NEVER write absolute paths (`D:\...`, `C:\...`, `/home/...`) or absolute file URIs (`file:///...`) into any committed or created files.
+  - ❌ **BAD (Absolute path / file URI):**
+    `- [SSH Commands](file:///d:/work/gitmap/.lovable/spec/commands/01-ssh-commands.md)`
+    `- [Target File](file:///d:/work/gitmap/gitmap/cmd/ssh_login_install_cmd.go)`
+  - ✅ **GOOD (Strict relative Git path):**
+    `- [SSH Commands](.lovable/spec/commands/01-ssh-commands.md)`
+    `- [Target File](gitmap/cmd/ssh_login_install_cmd.go)`
 - **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
-- Subtasks: You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-<slug>/`. Every subtask file must contain actionable, microscopic instructions.
+- Subtasks: You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-<slug>/`. Every subtask file must contain actionable, microscopic instructions with strictly relative Git paths.
 
 ## 3. Non-Negotiable Core Rules (Auto-Reject on Violation)
 
@@ -60,6 +67,7 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Staged files sanitized of artifact zips and temporary scratch files.
+- [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] /learn and apply as a /goal  `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
 - [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).

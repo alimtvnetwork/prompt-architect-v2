@@ -116,6 +116,7 @@ When auditing, refactoring, or authoring code, AI agents MUST cross-reference th
 12. Assets go to `assets/<NN-folder>/<NN-file>.<ext>` with two-digit sequence prefixes, for example `assets/01-icons/03-logo.svg`.
 13. This coding guideline file MUST be mirrored to `.lovable/coding-guidelines/coding-guidelines.md` and `.cursorrules` at every edit. The mirror script `scripts/sync-guidelines.mjs` is the only allowed writer. Missing or stale mirrors are a build-fail: agent search tools index the mirror, not the spec folder, so a missing mirror means the guideline effectively does not exist for the AI. Never hand-edit the mirrors; always edit the source file and re-run the sync.
 14. No Generated Artifacts. Never commit test results, test reports, `.test-report.*` files, temporary test data, compiled binaries (`.exe`, `.dll`, `.so`), or output directories (`build/`, `bin/`) to the repository. They must be ignored via `.gitignore` to prevent bloat and security leaks.
+15. Strict Relative Git Paths. When generating plans (`.lovable/plans/`), subtasks (`.lovable/plans/subtasks/`), memory logs (`.lovable/memory/issues/`), code comments, or citations, all file paths and markdown links MUST be strictly relative paths from the git repository root (e.g. `.lovable/spec/commands/01-ssh-commands.md`, `cmd/main.go`). Total ban on absolute filesystem paths (`D:\...`, `C:\...`) and `file:///` URIs inside committed repository files.
 
 ---
 

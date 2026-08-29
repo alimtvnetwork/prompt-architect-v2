@@ -297,6 +297,7 @@ When tasked with auditing, reviewing, or fixing coding guidelines across a codeb
 - [ ] **Error Handling (R7):** All errors are wrapped with context (`apperror.Wrap`) and not swallowed.
 - [ ] **No Magic Constants (R8):** All magic strings/numbers are extracted to named constants.
 - [ ] **Strict Lowercase Filenames:** All generated or modified files use strictly lowercase naming (`readme.md`, `agents.md`, `skill.md`).
+- [ ] **Strict Relative Git Paths:** All file paths, markdown links, and citations in plans, subtasks, memory logs, and comments are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] **Tooling Execution:** I ran `.lovable/ai-fix-scripts/02-guideline-autofixer.py` and verified clean output with `linter-scripts/validate-guidelines.go`.
 - [ ] **File Change Summary:** I provided a detailed summary in chat of what files changed, what changed inside them, and why.
 

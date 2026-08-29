@@ -1930,3 +1930,20 @@ Before marking any task complete:
 - Run regex searches for `TODO`, `FIXME`, and `// ...` to ensure zero placeholder stubs remain.
 - Ensure the master violation ledger in `.lovable/plans/pending/` is fully reconciled with all items marked `DONE`.
 
+---
+
+## 22. Strict Relative Git Paths Mandate (TOTAL BAN on Absolute Paths / `file:///` URIs)
+
+> [!CAUTION]
+> **STRICT RELATIVE GIT PATHS ONLY — NO ABSOLUTE PATHS / NO `file:///` URIs:**
+>
+> When generating plans (`.lovable/plans/pending/`), subtasks (`.lovable/plans/subtasks/`), memory logs (`.lovable/memory/issues/`), specs, code comments, or citations:
+> 1. **Strictly Relative to Git Root:** All file paths, markdown links, citations, and task targets MUST be relative paths starting from the repository root (e.g. `spec/02-coding-guidelines/04-error-handling.md`, `.lovable/spec/commands/01-ssh-commands.md`, `cmd/main.go`).
+> 2. **Total Ban on Absolute Paths:** NEVER write drive letters or absolute OS paths (`D:\...`, `C:\...`, `/home/...`) or absolute file URIs (`file:///d:/...`, `file:///C:/...`) into ANY file.
+> 
+> **Examples:**
+> - ❌ **BAD:** `[SSH Commands](file:///d:/work/gitmap/.lovable/spec/commands/01-ssh-commands.md) — Why: Defines behavior.`
+> - ❌ **BAD:** `Target File: D:\work\gitmap\cmd\login.go`
+> - ✅ **GOOD:** `[SSH Commands](.lovable/spec/commands/01-ssh-commands.md) — Why: Defines behavior.`
+> - ✅ **GOOD:** `Target File: cmd/login.go`
+

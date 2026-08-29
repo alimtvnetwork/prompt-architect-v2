@@ -75,9 +75,14 @@ Prompts are sequenced according to priority. Error management, control-flow flat
 
 - NEVER claim a linter or test suite passed without executing the actual command via tool calls and capturing `exit code 0`. Fabricating test outputs results in an immediate strike.
 
-### 5. Spec Citation Requirement
+### 5. Spec Citation & Relative Git Path Requirement (TOTAL BAN on Absolute Paths / `file:///` URIs)
 
-- Every refactoring action must cite the authoritative specification path from `spec/` to prove compliance.
+- Every refactoring action, plan file (`.lovable/plans/pending/`), subtask (`.lovable/plans/subtasks/`), and memory log must cite the authoritative specification path from `spec/` or `.lovable/` using **strictly relative paths from the git root**.
+- **TOTAL BAN:** NEVER write absolute filesystem paths (`D:\...`, `C:\...`, `/home/...`) or absolute file URIs (`file:///d:/...`, `file:///C:/...`) into any committed or created files.
+  - ❌ **BAD:** `[SSH Commands](file:///d:/work/gitmap/.lovable/spec/commands/01-ssh-commands.md)`
+  - ❌ **BAD:** `Target: file:///d:/work/gitmap/gitmap/cmd/login.go`
+  - ✅ **GOOD:** `[SSH Commands](.lovable/spec/commands/01-ssh-commands.md)`
+  - ✅ **GOOD:** `Target: gitmap/cmd/login.go`
 
 ---
 

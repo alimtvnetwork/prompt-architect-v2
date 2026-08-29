@@ -246,6 +246,7 @@ WHILE (STEP < PHASE_2_STEPS):
 
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
+- [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] File Size Caps: All files <= 100 lines coding max (recommended <= 80 lines), structs <= 120 lines, components <= 80–100 lines.
 - [ ] Function Size: All functions <= 8–15 lines.

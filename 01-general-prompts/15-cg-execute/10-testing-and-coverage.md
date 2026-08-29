@@ -198,6 +198,7 @@ WHILE (STEP < PHASE_2_STEPS):
 
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
+- [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Zero Nested Ifs: Absolutely zero nested if statements (flattened with guard clauses).
 - [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.

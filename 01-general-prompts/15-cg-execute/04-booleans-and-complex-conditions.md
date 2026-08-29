@@ -248,6 +248,7 @@ WHILE (STEP < PHASE_2_STEPS):
 
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
+- [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Implicit Booleans: Positive booleans MUST ALWAYS be evaluated implicitly.
 - [ ] No Negatives: No `!isSuccess`, no `isNot*` variables.
