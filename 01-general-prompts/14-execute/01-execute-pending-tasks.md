@@ -1,4 +1,4 @@
-# Execute Pending Tasks (Continuous Loop & Multi-Agent): Instruction (must follow)
+# Pending Tasks Continuous Loop & Multi-Agent Dispatch — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

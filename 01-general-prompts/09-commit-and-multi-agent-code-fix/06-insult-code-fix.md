@@ -1,4 +1,4 @@
-# Insult Code Fix: Instruction (must follow)
+# Strict Discipline Code Remediation — Quality Protocol (must follow)
 
 
 > **Prompt Version:** 2.1.0

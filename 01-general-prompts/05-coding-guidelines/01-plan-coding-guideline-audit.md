@@ -1,4 +1,4 @@
-# Plan: Coding Guideline Audit & Enforcement (v4): Instruction (must follow)
+# Audit Planning for Coding Guidelines — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

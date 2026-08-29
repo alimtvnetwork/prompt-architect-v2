@@ -1,4 +1,4 @@
-# Instruction Library Setup: Instruction (must follow)
+# Library Setup & Prompt Architecture Scaffold — Setup Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

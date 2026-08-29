@@ -1,4 +1,4 @@
-# Canonical Folder Structure (Source of Truth): Instruction (must follow)
+# Canonical Folder Structure & Sizing Rules — Architecture Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

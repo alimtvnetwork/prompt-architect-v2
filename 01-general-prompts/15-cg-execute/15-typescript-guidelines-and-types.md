@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — TypeScript Strict Typing, Discriminated Unions & Architecture: Instruction (must follow)
+# TypeScript Strict Typing & Discriminated Unions — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-typescript`, `cg-ts`, `cg-execute ts`, `audit typescript`, `fix typescript types`, `strict ts types`, `ts discriminated unions`, `typescript result envelope`
 

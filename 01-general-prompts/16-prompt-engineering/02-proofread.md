@@ -1,4 +1,4 @@
-# Proofread instruction, maximum enforcement: Instruction (must follow)
+# Proofreading & Semantic Consistency Verification — Quality Protocol (must follow)
 
 
 

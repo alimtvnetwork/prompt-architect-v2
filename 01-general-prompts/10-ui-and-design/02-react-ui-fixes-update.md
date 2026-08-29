@@ -1,4 +1,4 @@
-# React UI Fixes & Update Instruction: Instruction (must follow)
+# React Component Modernization & Responsive Styling — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

@@ -1,4 +1,4 @@
-# Plan: Maximum Enforcement (v4.2): Instruction (must follow)
+# Legacy High-Discipline Planning Protocol (v5) — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

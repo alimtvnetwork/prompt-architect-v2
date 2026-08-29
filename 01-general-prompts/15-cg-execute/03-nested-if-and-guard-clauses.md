@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Nested `if` Elimination & Guard Clauses: Instruction (must follow)
+# Nested If Elimination & Guard Clauses — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-nested-if`, `cg-execute nested-if`, `audit nested if`, `fix nested if`, `flatten conditionals`, `enforce guard clauses`
 

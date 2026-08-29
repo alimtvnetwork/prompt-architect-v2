@@ -1,4 +1,4 @@
-# Next {{n}} steps or tasks (v3.4): Instruction (must follow)
+# Next Steps Planning & Sprint Prioritization — Workflow (must follow)
 
 
 

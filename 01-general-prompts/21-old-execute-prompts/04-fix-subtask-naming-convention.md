@@ -1,4 +1,4 @@
-# Execute: Fix Subtask Naming Convention: Instruction (must follow)
+# Subtask Naming Normalization & Sequence Repair — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

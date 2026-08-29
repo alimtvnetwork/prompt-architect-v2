@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Constants, Enums & Magic Literal Elimination: Instruction (must follow)
+# Constants & Enums Architecture — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-enums`, `cg-constants`, `cg-execute enums`, `audit constants`, `fix enums`, `eliminate magic strings`, `eliminate magic numbers`, `enforce enum suffix`, `constants and enums audit`
 

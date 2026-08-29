@@ -1,4 +1,4 @@
-# Audit App Spec — blind-AI readiness audit of the app spec (maximum enforcement, v1): Instruction (must follow)
+# Application Specification Blind-AI Audit — Quality Protocol (must follow)
 
 
 > **Prompt Version:** 2.1.0

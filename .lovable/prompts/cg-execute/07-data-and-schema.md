@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Database & Data Schema Rules: Instruction (must follow)
+# Database & Data Schema Rules — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-schema`, `cg-execute schema`, `audit schema`, `fix schema guidelines`, `enforce database standards`
 

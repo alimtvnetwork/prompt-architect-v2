@@ -1,4 +1,4 @@
-# SEO Optimization Instruction: Instruction (must follow)
+# SEO Content Optimization & Meta Tag Auditing — Content Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

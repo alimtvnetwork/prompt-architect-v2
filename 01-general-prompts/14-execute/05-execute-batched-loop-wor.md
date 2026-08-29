@@ -1,4 +1,4 @@
-Run again if said: go, continue, or next
+# Batched Loop Execution Without Release (WOR) — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

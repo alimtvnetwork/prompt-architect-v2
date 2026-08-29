@@ -1,4 +1,4 @@
-# Repo File Naming Convention: Instruction (must follow)
+# Lowercase Filename Enforcement & Sequence Re-Ordering — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

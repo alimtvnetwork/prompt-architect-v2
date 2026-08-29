@@ -1,4 +1,4 @@
-# Release, MINOR bump, MUST enforcement: Instruction (must follow)
+# Release Deployment & Version Bump — Release Management (must follow)
 
 
 > **Prompt Version:** 2.1.0

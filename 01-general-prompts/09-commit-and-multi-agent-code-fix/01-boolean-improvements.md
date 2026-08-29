@@ -1,4 +1,4 @@
-# Boolean Improvements & Multi-Agent Code Fix: Instruction (must follow)
+# Boolean Logic Modernization & Guard Inversion — Coding Guideline (must follow)
 
 
 > **Prompt Version:** 2.1.0

@@ -1,4 +1,4 @@
-# # (Must Follow, Without Negotiation): Instruction (must follow)
+# Uncompromising Quality & Zero-Tolerance Anti-Carelessness — Core Discipline (must follow)
 
 
 > **Prompt Version:** 2.1.0

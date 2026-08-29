@@ -1,4 +1,4 @@
-# Commit Fix: Instruction (must follow)
+# Atomic Commit Organization & Working Tree Sanitization — Workflow (must follow)
 
 
 

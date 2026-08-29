@@ -1,4 +1,4 @@
-# Update Theming Instruction: Instruction (must follow)
+# Theme System Refactoring & CSS Variables Update — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

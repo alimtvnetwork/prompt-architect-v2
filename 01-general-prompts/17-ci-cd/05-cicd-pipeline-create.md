@@ -1,4 +1,4 @@
-# CI/CD Pipeline & Cross-Platform Python Automation Creation: Instruction (must follow)
+# Pipeline Architecture & Cross-Platform Python Automation — Workflow (must follow)
 
 Trigger Keywords & Aliases: `create-ci-cd`, `cicd-create`, `create cicd`, `setup cicd pipeline`, `build ci-cd pipeline`, `cicd create python`, `05-cicd-pipeline-create`
 

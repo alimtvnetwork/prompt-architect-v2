@@ -1,4 +1,4 @@
-# Fix Spec from Audit (Maximum Enforcement): Instruction (must follow)
+# Specification Remediation from Audit Findings — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

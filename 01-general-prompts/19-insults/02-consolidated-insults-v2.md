@@ -1,4 +1,4 @@
-# Consolidated Insults V2 (Single Block Enforcement): Instruction (must follow)
+# Consolidated Discipline & Rigorous Code Quality Protocol — Core Discipline (must follow)
 
 
 > **Prompt Version:** 2.1.0

@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Booleans, Negatives & Complex Conditions: Instruction (must follow)
+# Boolean Principles, Negatives & Complex Conditions — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-boolean`, `cg-execute boolean`, `audit boolean`, `fix boolean negatives`, `fix complex conditions`, `affirmative booleans`
 

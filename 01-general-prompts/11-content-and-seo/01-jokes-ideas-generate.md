@@ -1,4 +1,4 @@
-# Jokes Ideas Generate: Instruction (must follow)
+# Humor Generation & Content Ideation — Content Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

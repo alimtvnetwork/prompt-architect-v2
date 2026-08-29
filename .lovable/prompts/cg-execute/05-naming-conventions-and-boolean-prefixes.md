@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Variable & Boolean Naming Conventions, Anti-`ok` & Positive Framing Guard Clauses: Instruction (must follow)
+# Naming Conventions, Boolean Prefixes & Anti-Ok Variables — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-naming`, `cg-execute naming`, `audit naming`, `fix boolean naming`, `fix naming conventions`, `fix ok boolean`, `affirmative naming`, `positive boolean naming`, `naming conventions audit`
 

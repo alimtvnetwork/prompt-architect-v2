@@ -1,4 +1,4 @@
-# Write Memory (end of session, maximum enforcement): Instruction (must follow)
+# Memory Persistence & Issue Logging — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

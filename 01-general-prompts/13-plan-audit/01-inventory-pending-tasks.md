@@ -1,4 +1,4 @@
-# Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal): Instruction (must follow)
+# Inventory Audit of Pending Tasks — Read-Only Proposal (must follow)
 
 
 > **Prompt Version:** 2.1.0

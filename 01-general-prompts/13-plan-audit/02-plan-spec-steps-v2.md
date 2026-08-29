@@ -1,4 +1,4 @@
-# Plan Enhanced — n-step plan and the subtasks it becomes (maximum enforcement, v4): Instruction (must follow)
+# Specification Decomposition & Subtask Planning (v2) — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

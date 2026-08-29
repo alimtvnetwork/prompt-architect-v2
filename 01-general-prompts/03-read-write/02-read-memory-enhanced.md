@@ -1,4 +1,4 @@
-# Read Memory (Enhanced): Instruction (must follow)
+# Memory Retrieval & Project Context Ingestion — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

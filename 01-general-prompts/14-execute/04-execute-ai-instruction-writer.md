@@ -1,4 +1,4 @@
-# Execute AI Instruction Writer (Generic Spec Generator): Instruction (must follow)
+# AI Instruction Writer & Generic Spec Generator — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

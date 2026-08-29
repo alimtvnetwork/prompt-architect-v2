@@ -1,4 +1,4 @@
-# Social Media Post Generation: Instruction (must follow)
+# Social Media Content Generation & Copywriting — Content Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

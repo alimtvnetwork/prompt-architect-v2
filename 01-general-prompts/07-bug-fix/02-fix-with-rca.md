@@ -1,4 +1,4 @@
-# Fix Bug with Deep Root Cause Analysis (RCA): Instruction (must follow)
+# Bug Fix with 4-Part RCA & Regression Verification — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

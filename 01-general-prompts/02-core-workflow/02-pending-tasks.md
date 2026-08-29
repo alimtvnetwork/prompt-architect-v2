@@ -1,4 +1,4 @@
-# Any pending tasks (full inventory, maximum enforcement): Instruction (must follow)
+# Pending Tasks Discovery & Backlog Prioritization — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

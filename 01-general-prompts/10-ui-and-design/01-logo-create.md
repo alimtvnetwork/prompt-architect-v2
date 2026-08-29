@@ -1,4 +1,4 @@
-# Logo Creation Instruction: Instruction (must follow)
+# Logo Design & Branding Generation — Design Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

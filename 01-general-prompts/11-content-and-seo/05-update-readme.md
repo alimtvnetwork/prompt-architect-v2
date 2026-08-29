@@ -1,4 +1,4 @@
-# Update README Instruction: Instruction (must follow)
+# Documentation Synchronization & README Maintenance — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

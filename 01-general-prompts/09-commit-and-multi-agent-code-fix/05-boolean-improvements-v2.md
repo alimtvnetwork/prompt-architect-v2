@@ -1,4 +1,4 @@
-# Boolean Improvements: Instruction (must follow)
+# Boolean Optimization & Complexity Reduction (v2) — Coding Guideline (must follow)
 
 
 

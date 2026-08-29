@@ -1,4 +1,4 @@
-# Execute Pending Tasks (Self-Loop & Commit): Instruction (must follow)
+# Subtask Execution Engine (v2) — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

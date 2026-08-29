@@ -1,4 +1,4 @@
-# Clean Artifacts and Git History Purge: Instruction (must follow)
+# Artifact Sanitization & Git History Preservation — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

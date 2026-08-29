@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Integration, E2E & Branch Test Coverage: Instruction (must follow)
+# Testing & Branch Coverage Architecture — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-test`, `cg-execute test`, `audit tests`, `add integration tests`, `enforce test coverage`, `write e2e tests`
 

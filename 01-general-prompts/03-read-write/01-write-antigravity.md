@@ -1,4 +1,4 @@
-# Write Antigravity (Write Memory): Instruction (must follow)
+# Antigravity Customization Architecture & Rule Authoring — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

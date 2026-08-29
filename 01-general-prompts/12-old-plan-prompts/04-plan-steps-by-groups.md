@@ -1,4 +1,4 @@
-# Plan: Steps by Groups (Look-Ahead, Standalone Commit): Instruction (must follow)
+# Legacy Grouped Task Decomposition — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

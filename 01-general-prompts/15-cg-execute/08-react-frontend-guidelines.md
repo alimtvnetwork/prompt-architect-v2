@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — React & Frontend Architecture: Instruction (must follow)
+# React & Frontend Architecture — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-react`, `cg-execute react`, `audit react`, `fix frontend guidelines`, `enforce react standards`
 

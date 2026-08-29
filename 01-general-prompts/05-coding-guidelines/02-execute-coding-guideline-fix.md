@@ -1,4 +1,4 @@
-# Execute Coding Guideline Fixes: Instruction (must follow)
+# Guideline Fix Execution & Linter Remediation — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

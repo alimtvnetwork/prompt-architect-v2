@@ -1,4 +1,4 @@
-# Autonomous CI/CD Fix Loop + Release: Instruction (must follow)
+# Release-Triggered CI/CD Fix Loop — Workflow (must follow)
 
 Trigger Keywords & Aliases: `fix and release`, `ci release`, `fix CI/CD and release`, `cicd fix release`
 

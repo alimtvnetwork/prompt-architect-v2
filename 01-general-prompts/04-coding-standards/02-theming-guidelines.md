@@ -1,4 +1,4 @@
-# Theming Guidelines: Instruction (must follow)
+# Theming Architecture & Color Palette Guidelines — Coding Guideline (must follow)
 
 
 > **Prompt Version:** 2.1.0

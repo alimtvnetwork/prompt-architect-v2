@@ -1,4 +1,4 @@
-# SVG Logo Generation: Instruction (must follow)
+# SVG Icon & Vector Graphic Creation — Design Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

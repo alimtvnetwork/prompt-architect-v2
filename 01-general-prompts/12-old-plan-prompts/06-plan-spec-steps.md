@@ -1,4 +1,4 @@
-# Plan: Spec Steps (Look-Ahead, Standard): Instruction (must follow)
+# Legacy Specification Planning Engine — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

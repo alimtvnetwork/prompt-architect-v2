@@ -1,4 +1,4 @@
-# AI Implementation Spec: Python File Manipulation CLI (i-fix-scripts): Instruction (must follow)
+# Python File Manipulator CLI Specification — Tooling Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0

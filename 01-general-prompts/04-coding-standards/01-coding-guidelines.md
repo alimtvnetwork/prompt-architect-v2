@@ -1,4 +1,4 @@
-# Instruction: Master Antigravity Coding Guidelines & Review Standards: Instruction (must follow)
+# Standards Compliance & Coding Rules Audit — Workflow (must follow)
 
 
 > **Prompt Version:** 2.1.0

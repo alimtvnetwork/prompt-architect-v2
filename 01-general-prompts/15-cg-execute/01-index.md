@@ -1,4 +1,4 @@
-# Coding Guideline Execution Suite (`cg-execute`) — Index & Catalog: Instruction (must follow)
+# Coding Guideline Execution Suite (`cg-execute`) — Index & Catalog (must follow)
 
 
 > **Prompt Version:** 2.1.0

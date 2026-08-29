@@ -1,4 +1,4 @@
-Bump the MINOR version (MAJOR.MINOR.PATCH to MAJOR.(MINOR+1).0, PATCH resets to 0).
+# Minor Version Bump — Release Management (must follow)
 
 
 > **Prompt Version:** 2.1.0

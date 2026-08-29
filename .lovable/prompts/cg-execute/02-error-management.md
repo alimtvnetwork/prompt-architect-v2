@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Error Management & Architecture: Instruction (must follow)
+# Error Management & Architecture — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-error`, `cg-execute error`, `audit error`, `fix error guidelines`, `enforce error management`
 

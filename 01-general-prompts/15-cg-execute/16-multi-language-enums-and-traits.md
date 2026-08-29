@@ -1,4 +1,4 @@
-# Execute Coding Guidelines — Multi-Language Enums, Traits & Pattern Matching: Instruction (must follow)
+# Multi-Language Enums, Traits & Pattern Matching — Coding Guideline (must follow)
 
 Trigger Keywords & Aliases: `cg-enums-traits`, `cg-enums`, `cg-execute enums`, `audit enums`, `php enums traits`, `rust enums`, `golang enums`, `multi-language enums`, `pattern matching audit`
 

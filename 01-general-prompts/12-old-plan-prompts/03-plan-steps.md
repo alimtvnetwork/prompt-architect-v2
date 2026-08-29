@@ -1,4 +1,4 @@
-# {{n}} number of steps plan, maximum enforcement (v4.2): Instruction (must follow)
+# Legacy Step-by-Step Task Decomposition — Planning Spec (must follow)
 
 
 > **Prompt Version:** 2.1.0
