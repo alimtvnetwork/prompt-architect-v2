@@ -1,6 +1,6 @@
 # Instruction (must follow): Memory Consolidation — Consolidate Completed Plans & Re-Sequence Milestones
 
-Trigger Keywords & Aliases: `consolidate-plans`, `consolidate completed plans`, `clean completed plans`, `resequence completed plans`, `merge plans`, `archive completed plans`, `cleanup plans completed`, `memory consolidation`
+Trigger Keywords & Aliases: `consolidate-plans`, `consolidate completed plans`, `clean completed plans`, `resequence completed plans`, `merge plans`, `archive completed plans`, `cleanup plans completed`, `memory consolidation`, `backup and consolidate plans`
 
 ```text
 N = 200
@@ -8,19 +8,50 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, analyze, cluster, consolidate, and re-sequence all completed plan files within `.lovable/plans/completed/` into clean, cohesive milestone summaries, while strictly preserving 100% of architectural specifications, root-cause analyses, error contracts, and decision logs with zero data loss or truncation until 100% green without stopping.
+/goal Autonomously create a timestamped backup branch, scan, analyze, cluster, consolidate, and re-sequence all completed plan files within `.lovable/plans/completed/` into clean, cohesive milestone summaries, while strictly preserving 100% of architectural specifications, root-cause analyses, error contracts, and decision logs with zero data loss or truncation until 100% green without stopping.
 
+- [ ] /goal Step 0 (Mandatory Safety Backup): Pull latest changes on the current branch, create and push a timestamped backup branch (`backup/plans-consolidation-YYYYMMDD-HHMMSS`), ensure the working tree remains on the active branch, and record the exact commit SHA and rollback command before modifying or removing any files.
 - [ ] /goal First N/2 steps (Phase 1): Deeply scan `.lovable/plans/completed/`, `.lovable/plans/index.md`, and recent memory logs. Group related micro-task files by feature domain or milestone epic. Write the master consolidation plan in `.lovable/plans/pending/XX-completed-plans-consolidation.md` with an exhaustive inventory mapping table (`| Source Files | Target Consolidated File | Feature / Domain Theme | Preserved Specifications | Status |`), verify that zero core specs or architectural rules will be lost, and decompose into granular subtasks in `.lovable/plans/subtasks/XX-completed-plans/`.
 - [ ] /goal Second N/2 steps (Phase 2): Create unified milestone summary documents for each cluster, remove redundant source files with `git rm`, re-sequence all files in `.lovable/plans/completed/` to continuous numeric prefixes (`01-`, `02-`, `03-`, ...) using `python .lovable/ai-fix-scripts/01-file-manipulator.py fix-seq-files`, update `.lovable/plans/index.md` and `.lovable/memory/00-index.md`, verify with relative path and header spacing linters, and verify local CI quality gates exit with code 0 (`exit 0`).
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Completed Plans, Cluster by Domain, Spec in .lovable/plans/pending/, Subtasks)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Create Backup Branch, Scan Completed Plans, Cluster by Domain, Spec in .lovable/plans/pending/, Subtasks)
 PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Merge Files, Re-sequence Monotonic Prefixes, Update Plans Index, Verify Linters, Verify CI)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Dedicated Section: Mandatory Pre-Consolidation Backup Branch Protocol (Safety First)
+
+> [!IMPORTANT]
+> **SAFETY FIRST — NEVER MODIFY OR DELETE PLANS WITHOUT A DEDICATED BACKUP BRANCH:**
+>
+> Consolidating plans involves removing superseded micro-task files. To guarantee zero data loss and enable instant one-command rollbacks, you MUST execute the safety backup protocol as your **very first action**:
+>
+> 1. **Pull Latest Changes:**
+>    Ensure the current branch is synchronized with origin:
+>    ```bash
+>    git pull origin $(git rev-parse --abbrev-ref HEAD)
+>    ```
+> 2. **Generate Timestamped Backup Branch:**
+>    Branch naming format: `backup/plans-consolidation-YYYYMMDD-HHMMSS`
+>    ```bash
+>    BACKUP_BRANCH="backup/plans-consolidation-$(date +%Y%m%d-%H%M%S)"
+>    git branch "$BACKUP_BRANCH"
+>    git push origin "$BACKUP_BRANCH"
+>    ```
+> 3. **Verify Active Branch Integrity:**
+>    Confirm that you remain on the active working branch (e.g. `main` or active feature branch).
+> 4. **Document Rollback Instructions:**
+>    Record the backup branch name and recovery instructions in `.lovable/plans/pending/XX-completed-plans-consolidation.md`:
+>    ```bash
+>    # Rollback Command (in case of accidental data loss):
+>    git reset --hard backup/plans-consolidation-YYYYMMDD-HHMMSS
+>    ```
 
 ---
 
@@ -46,13 +77,14 @@ A project that runs hundreds of autonomous agent turns quickly produces dozens o
 
 #### C. HOW We Execute (Mechanics)
 
-1. Scan `.lovable/plans/completed/` and `.lovable/plans/index.md`.
-2. Build an AST / topic cluster mapping table in `.lovable/plans/pending/XX-completed-plans-consolidation.md`.
-3. Create the consolidated milestone documents.
-4. Execute `git rm` on the superseded micro-task files.
-5. Re-sequence all remaining files in `.lovable/plans/completed/` using `python .lovable/ai-fix-scripts/01-file-manipulator.py fix-seq-files`.
-6. Update `.lovable/plans/index.md` and `.lovable/memory/00-index.md`.
-7. Verify all relative links with `python linter-scripts/check-relative-paths.py`.
+1. Execute Step 0: Create and push `backup/plans-consolidation-YYYYMMDD-HHMMSS`.
+2. Scan `.lovable/plans/completed/` and `.lovable/plans/index.md`.
+3. Build an AST / topic cluster mapping table in `.lovable/plans/pending/XX-completed-plans-consolidation.md`.
+4. Create the consolidated milestone documents.
+5. Execute `git rm` on the superseded micro-task files.
+6. Re-sequence all remaining files in `.lovable/plans/completed/` using `python .lovable/ai-fix-scripts/01-file-manipulator.py fix-seq-files`.
+7. Update `.lovable/plans/index.md` and `.lovable/memory/00-index.md`.
+8. Verify all relative links with `python linter-scripts/check-relative-paths.py`.
 
 ---
 
@@ -99,9 +131,10 @@ Every consolidated file generated inside `.lovable/plans/completed/` MUST adhere
 
 #### Phase 1: Scan, Inventory & Cluster Mapping (Steps 1 to N/2)
 
-1. **Inventory Scan:** List all files currently in `.lovable/plans/completed/`.
-2. **Domain Clustering:** Identify natural groupings by feature, sprint, or component.
-3. **Master Audit Spec:** Write `.lovable/plans/pending/XX-completed-plans-consolidation.md` containing the inventory mapping table:
+1. **Step 0 Safety Backup:** Pull latest commits, create and push `backup/plans-consolidation-YYYYMMDD-HHMMSS`.
+2. **Inventory Scan:** List all files currently in `.lovable/plans/completed/`.
+3. **Domain Clustering:** Identify natural groupings by feature, sprint, or component.
+4. **Master Audit Spec:** Write `.lovable/plans/pending/XX-completed-plans-consolidation.md` containing the inventory mapping table:
 
 ```markdown
 | Source Files to Merge | Proposed Consolidated File | Domain / Epic Theme | Items Preserved | Status |
@@ -110,7 +143,7 @@ Every consolidated file generated inside `.lovable/plans/completed/` MUST adhere
 | `03-fix-a.md`, `04-fix-b.md` | `02-ci-cd-pipeline.md` | CI/CD Automation | GitHub Actions, Linters | PENDING |
 ```
 
-4. **Decompose Subtasks:** Create `.lovable/plans/subtasks/XX-completed-plans/01-task.md`, `02-task.md`, etc.
+5. **Decompose Subtasks:** Create `.lovable/plans/subtasks/XX-completed-plans/01-task.md`, `02-task.md`, etc.
 
 #### Phase 2: Merge, Re-Sequence, Index & Verify (Steps N/2+1 to N)
 
@@ -135,13 +168,14 @@ Every consolidated file generated inside `.lovable/plans/completed/` MUST adhere
 
 You MUST verify and check off every item during Phase 1:
 
+- [ ] **Step 0 Safety Backup Created & Pushed:** Pulled latest commits, created `backup/plans-consolidation-YYYYMMDD-HHMMSS`, pushed to origin, and documented the rollback SHA.
 - [ ] **Completed Plans Directory Scanned:** Recursively inspected all files in `.lovable/plans/completed/`.
 - [ ] **Domain & Feature Clusters Identified:** Grouped isolated tasks into coherent milestones (e.g. Auth, DB, CI/CD, UI).
 - [ ] **Zero-Data-Loss Audit:** Verified that no core architectural rules, schema models, error envelopes, or RCA logs will be discarded during consolidation.
-- [ ] **Master Audit Spec Written:** Created `.lovable/plans/pending/XX-completed-plans-consolidation.md` containing the full mapping ledger table.
+- [ ] **Master Audit Spec Written:** Created `.lovable/plans/pending/XX-completed-plans-consolidation.md` containing the full mapping ledger table and backup rollback recipe.
 - [ ] **Subtasks Generated:** Created discrete subtasks in `.lovable/plans/subtasks/XX-completed-plans/`.
 - [ ] **Strict Relative Git Paths:** All markdown links in the consolidation spec use relative Git paths (zero `file:///` URIs, zero drive letters).
-- [ ] **No Code Disruption:** Verified that Phase 1 only creates planning specs and makes zero source code deletions.
+- [ ] **No Premature Deletion:** Verified that Phase 1 only creates planning specs and makes zero file deletions.
 
 ---
 
@@ -193,6 +227,7 @@ You MUST verify and check off every item during Phase 2:
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
 - [ ] Git working tree is clean before new file modifications.
+- [ ] **Step 0 Safety Backup Verified:** Timestamped backup branch `backup/plans-consolidation-YYYYMMDD-HHMMSS` exists on origin.
 - [ ] **Spec Protection:** I have manually verified that NONE of the merged files contained critical architectural constraints, domain specifications, or non-negotiable rules that were omitted or summarized away.
 - [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in consolidated files are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
 - [ ] **Strict Lowercase Naming:** Every file in `.lovable/plans/completed/` uses strictly lowercase letters (e.g. `01-auth-system.md`).
@@ -214,6 +249,7 @@ You MUST verify and check off every item during Phase 2:
 
 - [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/08-file-folder-naming/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Backup Integrity: Verified `backup/plans-consolidation-YYYYMMDD-HHMMSS` branch exists on origin before touching plans.
 - [ ] Spec Preservation: Zero truncation, zero placeholder stubs (`TODO`, `[N]`, `// ...`).
 - [ ] Monotonic Sequence: Verified sequential `01-`, `02-`, `03-` numbering across `.lovable/plans/completed/`.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
