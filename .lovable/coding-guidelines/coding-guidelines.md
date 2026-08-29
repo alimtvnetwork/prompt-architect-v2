@@ -107,14 +107,15 @@ When auditing, refactoring, or authoring code, AI agents MUST cross-reference th
 
 ## Boolean Naming
 
-1. Every boolean starts with one of these prefixes: `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`.
-2. Positive framing only. `isEnabled` yes, `isNotDisabled` no. `hasAccess` yes, `hasNoAccess` no.
-3. If the natural name is negative, invert it: replace `isNotReady` with `isReady` and flip the check site.
-4. State prefixes match tense: `is*` for current state, `has*` for possession or completion, `was*` for past state, `will*` for future/pending, `did*` for a completed action.
-5. Capability prefixes: `can*` for permission or feasibility, `should*` for policy or recommendation, `must*` for hard requirements.
-6. Never use `flag`, `bool`, `check`, or bare adjectives as boolean names. `enabled` alone is not allowed, use `isEnabled`.
-7. No boolean flag parameters on functions. Split into two named functions instead. `render(true)` is wrong, `renderExpanded()` and `renderCollapsed()` are right.
-8. Booleans that come back from questions to the user or from external systems get normalized to the same prefix rules at the boundary, never leak the raw name into internal code.
+1. **Only Two Allowed Prefixes (`is` or `has`):** Every boolean variable, struct field, return flag, and predicate function MUST begin strictly with `is` or `has` (e.g., `isReady`, `hasData`, `isValid`, `hasError`, `isSuccess`, `isSafePull`).
+2. **Forbidden Prefixes (NOT Acceptable):** All other prefixes (including `can`, `should`, `was`, `will`, `did`, `must`, `allow`, `enable`, `check`, `flag`) are strictly NOT acceptable.
+3. **Positive Framing Only:** `isEnabled` yes, `isNotDisabled` no. `hasAccess` yes, `hasNoAccess` no. Negative prefixes (`isNot*`, `hasNo*`, `disable*`, `no*`) are strictly forbidden.
+4. **No Inverted Checks on Success:** Never write `!isSuccess`; use affirmative `isFail` or `isFailed` when checking failure states.
+5. **No Explicit True Checks:** NEVER compare booleans against `true` (`if isReady == true` is FORBIDDEN; use `if isReady`).
+6. **No Mixed Polarity:** NEVER combine a positive check and a negative check in the same `if` condition (`if isA && !isB` is forbidden).
+7. **No Boolean Flag Parameters on Functions:** Never pass bare boolean flags to functions (`render(true)` is forbidden). Split into two explicitly named functions instead (`renderExpanded()` and `renderCollapsed()`).
+8. **No Bare Adjectives or Garbage Suffixes:** Never use bare words (`enabled`, `valid`, `ready`, `flag`, `bool`). Always use `isEnabled`, `isValid`, `isReady`.
+9. **Boundary Normalization:** Booleans received from external systems or APIs must be normalized to `is` or `has` at the boundary before consumption.
 
 ---
 
@@ -264,7 +265,7 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 - [ ] **Error Handling (R7 & `spec/03-error-manage/`):** No silent failures or swallowed errors. Every error/failure is wrapped with operation context (`apperror.Wrap`). Never invert success booleans (`!isSuccess` is banned; use explicit `isFail`).
 - [ ] **Magic Strings/Numbers (R8 & `spec/02-coding-guidelines/01-cross-language/26-magic-values-and-immutability.md`):** No magic strings or numbers. Extract named constants. Consult `.lovable/strictly-avoid.md`.
 - [ ] **Naming & Casing (R1, R2 & `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`):** PascalCase everywhere. Acronyms (`Id`, `Json`, `Url`, `Ip`, `Http`) are PascalCase, never all-caps (e.g. `UserId`, not `UserID`). JSON/serialization keys are PascalCase (`{"UserId": "123", "IsActive": true}`).
-- [ ] **Booleans (R3, P1-P9 & `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/`):** Every boolean starts with `is`, `has`, `can`, `should`, `was`, `will`, `did`, or `must`. Positive framing only. No negative booleans (`isNotReady` banned). NEVER evaluate explicitly against `true` or `false` (`if isReady == true` is banned). No mixed polarity (`if isA && !isB` is banned).
+- [ ] **Booleans (R3, P1-P9 & `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/`):** Every boolean starts with `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, or `must`. Positive framing only. No negative booleans (`isNotReady` banned). NEVER evaluate explicitly against `true` or `false` (`if isReady == true` is banned). No mixed polarity (`if isA && !isB` is banned).
 - [ ] **Function Signatures & Parameter Structs (R4, R5, R9):**
   - \> 3 parameters or signature > 100 chars -> **split each line** (one parameter per line).
   - \> 4 parameters or 2+ adjacent same-typed parameters -> use a **param struct** / options object (e.g. `SwapIpParams`).
@@ -1961,7 +1962,7 @@ Every file and function must be audited against these 60 atomic sub-tasks:
 - [ ] **Check 16:** Zero explicit boolean comparisons against `true` (`if isReady == true` is FORBIDDEN).
 - [ ] **Check 17:** Zero explicit boolean comparisons against `false` (`if isReady == false` is FORBIDDEN).
 - [ ] **Check 18:** No mixed polarity (`if isA && !isB` is FORBIDDEN; extract to named boolean).
-- [ ] **Check 19:** Positive boolean prefixes: `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`.
+- [ ] **Check 19:** Positive boolean prefixes: `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, `must`.
 - [ ] **Check 20:** No negative boolean variables (`isNotReady`, `disableCache` are FORBIDDEN).
 - [ ] **Check 21:** No inverted success checks (`!response.isSuccess` banned; use `response.isFail`).
 - [ ] **Check 22:** Zero boolean positional flag parameters on functions.

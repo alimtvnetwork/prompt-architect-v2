@@ -13,7 +13,7 @@
 - [ ] Local variables and parameters use camelCase (`pluginSlug`, `userId`)
 - [ ] Private fields use `_camelCase` (`_logger`, `_connectionString`)
 - [ ] Abbreviations: first-letter-only caps (`UserId` not `UserID`, `ApiClient` not `APIClient`)
-- [ ] All booleans prefixed with `Is`/`Has`/`Can`/`Should`/`Was` (`IsActive`, `HasPermission`)
+- [ ] All booleans prefixed with `is`/`has` (`can`/`should` are not acceptable)/`Was` (`IsActive`, `HasPermission`)
 - [ ] No negative boolean names (`IsPending` not `IsNotReady`)
 - [ ] File names match primary type in PascalCase (`SnapshotManager.cs`)
 - [ ] One type per file

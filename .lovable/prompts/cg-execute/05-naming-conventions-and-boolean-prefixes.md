@@ -12,7 +12,7 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all variable and boolean naming violations across the codebase, directly modifying source files to replace bare `ok` identifiers, eliminate negative boolean variables (`hasNo*`, `isNot*`), enforce affirmative prefixes (`is`, `has`, `can`, `should`), apply positive framing with inverted `if` guard clauses, and normalize acronym casing until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all variable and boolean naming violations across the codebase, directly modifying source files to replace bare `ok` identifiers, eliminate negative boolean variables (`hasNo*`, `isNot*`), enforce affirmative prefixes (`is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable)), apply positive framing with inverted `if` guard clauses, and normalize acronym casing until 100% green without stopping.
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
@@ -54,7 +54,7 @@ Naming clarity is the backbone of robust code. Vague identifiers, bare `ok` vari
 ### 1. Mandatory Boolean Prefix Rule
 
 Every boolean variable, parameter, struct field, or property MUST begin with one of the approved affirmative prefixes:
-`is`, `has`, `can`, `should`, `was`, `will`, `did`, `must` (PascalCase `Is`, `Has`, `Can`, `Should` for exported symbols).
+`is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, `must` (PascalCase `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable) for exported symbols).
 
 - Go: `isValid`, `hasPermission`, `canExecute`, `shouldRetry` (or `IsValid`, `HasPermission`).
 - TypeScript/JavaScript: `isLoaded`, `hasColors`, `hasPayload`, `canSubmit`.
@@ -245,7 +245,7 @@ To guarantee full execution without stopping after planning mode, the master orc
 - [ ] **Zero Bare `ok` Identifiers:** Absolutely zero bare `ok` variables in type assertions, map lookups, or status returns. All renamed to `isAppErr`, `isFound`, `hasValue`, etc.
 - [ ] **Positive Boolean Framing:** All booleans named positively (`hasColors`, `hasPayload`, `isReady`). Zero `hasNo*` or `isNot*` variables.
 - [ ] **Inverted Guard Clauses:** Negative checks handled via inverted guard returns (`if (!hasColors) return null;`).
-- [ ] **Boolean Prefixes:** All booleans begin with `is`, `has`, `can`, `should`.
+- [ ] **Boolean Prefixes:** All booleans begin with `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable).
 - [ ] **PascalCase Acronyms:** All acronyms formatted as `UserId`, `ApiUrl`, `JsonData`.
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
 

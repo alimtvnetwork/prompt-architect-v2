@@ -37,7 +37,7 @@ Maps cross-language coding guidelines to **.NET Analyzers**, **StyleCop.Analyzer
 |---|-----------|----------|---------|----------|-------|
 | 1 | Zero nested `if` | SonarAnalyzer | S134 | Error | `max = 1` nesting depth |
 | 2 | No `Else` after `Return` | Roslynator | RCS1004 | Error | Remove redundant `Else` clause |
-| 3 | Boolean naming (`Is/Has/Can/Should/Was/Will`) | .NET Analyzers | CA1716, CA1720 | Warning | Partial; custom Roslyn analyzer recommended |
+| 3 | Boolean naming (`is`/`has` (`can`/`should` are not acceptable)/Was/Will`) | .NET Analyzers | CA1716, CA1720 | Warning | Partial; custom Roslyn analyzer recommended |
 | 4 | No magic strings | SonarAnalyzer | S1192 | Error | Threshold: 3 occurrences → must be `Const` |
 | 5 | No magic numbers | SonarAnalyzer | S109 | Error | Extract to named `Const` |
 | 6 | Max 15-line functions | SonarAnalyzer | S138 | Error | `max = 15` |

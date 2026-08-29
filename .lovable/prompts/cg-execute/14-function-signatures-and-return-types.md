@@ -15,7 +15,7 @@ N = total self-loop steps budget that the agents will perform.
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
-1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all function definitions (>2 params) on a single line, all function invocations (>2 args) on a single line, functions with generic error returns (`(T, error)`), unformatted boolean predicates missing `is`/`has`/`can` prefixes, raw `fmt.Errorf()` or `errors.New()`, anti-garbage names, and functions lacking typed `Result[T]` envelopes.
+1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all function definitions (>2 params) on a single line, all function invocations (>2 args) on a single line, functions with generic error returns (`(T, error)`), unformatted boolean predicates missing `is`/`has` (`can` is not acceptable) prefixes, raw `fmt.Errorf()` or `errors.New()`, anti-garbage names, and functions lacking typed `Result[T]` envelopes.
 2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/XX-function-signatures-audit.md` with an exhaustive Violation Ledger table.
 3. [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/XX-function-signatures/`.
 4. [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
@@ -534,7 +534,7 @@ final class Result
 1. **Action Functions (Verb + Noun):**
    - Every function performing an action MUST start with a clear, active verb: `fetchUser()`, `calculateTax()`, `renderHelpRow()`, `validatePayload()`.
    - Ban vague garbage names: `handle()`, `process()`, `doStuff()`, `manage()`, `temp()`.
-2. **Boolean Predicate Functions (`is`, `has`, `can`, `should`, `was`):**
+2. **Boolean Predicate Functions (`is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`):**
    - Every function returning a boolean MUST begin with an affirmative prefix: `isValid()`, `hasPermissions()`, `canExecute()`, `shouldRetry()`.
    - Negative prefixes (`isNotReady()`, `hasNoData()`) are **strictly prohibited**. Frame positively (`isReady()`, `hasData()`) and invert at the call site (`if !isReady { ... }`).
 
@@ -622,7 +622,7 @@ To guarantee full execution without stopping after planning mode, the master orc
 - [ ] **Multi-Line Definitions (Rule 9a):** All function/method definitions with >2 parameters are formatted with exactly one parameter per line and trailing commas.
 - [ ] **Multi-Line Invocations (Rule 9b):** All function/method call sites with >2 arguments are formatted with exactly one argument per line and trailing commas.
 - [ ] **No Boolean Flag Parameters:** No boolean parameters used to switch behavior; split into distinct methods.
-- [ ] **Semantic Naming:** All functions start with active verbs; all boolean functions start with `is`, `has`, `can`, `should`.
+- [ ] **Semantic Naming:** All functions start with active verbs; all boolean functions start with `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable).
 - [ ] **Single Return Types:** Multi-value `(T, error)` returns refactored to single `Result[T]` envelopes in services with complete predicate methods (`IsSuccess()`, `IsFailed()`, `HasError()`, `HasNoError()`, `HasValidError()`).
 - [ ] **Universal `AppError`:** Zero generic `error` or `fmt.Errorf()` returns in domain logic.
 - [ ] **LF Line Endings (`\n`):** All files use Unix LF line endings. Zero CRLF (`\r\n`).

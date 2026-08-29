@@ -80,7 +80,7 @@ Maps every cross-language coding guideline to its **StyleCop Analyzers**, **Rosl
 
 | Guideline | Spec Source | Analyzer | Rule ID | Setting |
 |-----------|-------------|----------|---------|---------|
-| Boolean naming (`Is/Has/Can/Should/Was/Will`) | [Boolean Principles](../02-boolean-principles/00-overview.md) | custom `.editorconfig` | `dotnet_naming_rule` | prefix pattern |
+| Boolean naming (`is`/`has` (`can`/`should` are not acceptable)/Was/Will`) | [Boolean Principles](../02-boolean-principles/00-overview.md) | custom `.editorconfig` | `dotnet_naming_rule` | prefix pattern |
 | PascalCase for public members | [Key Naming](../11-key-naming-pascalcase.md) | StyleCop | `SA1300` | Element must begin with upper-case |
 | PascalCase for constants | [Key Naming](../11-key-naming-pascalcase.md) | StyleCop | `SA1303` | Const field names must begin with upper-case |
 | No boolean flag params | [Function Naming](../10-function-naming.md) | SonarAnalyzer | `S2360` | Optional parameters should not be used |
@@ -134,7 +134,7 @@ Maps every cross-language coding guideline to its **StyleCop Analyzers**, **Rosl
 
 ```ini
 [*.cs]
-# Naming: Boolean properties must use Is/Has/Can/Should/Was/Will prefix
+# Naming: Boolean properties must use `is`/`has` (`can`/`should` are not acceptable)/Was/Will prefix
 # (enforced via dotnet_naming_rule — requires custom symbol group)
 
 # Braces
