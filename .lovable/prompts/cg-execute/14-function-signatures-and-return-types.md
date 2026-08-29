@@ -1,6 +1,6 @@
-# Instruction (must follow): Execute Coding Guidelines — Function Naming, Single Return Types & Result Envelope Architecture
+# Instruction (must follow): Execute Coding Guidelines — Function Signatures, Invocations, Single Return Types & Result Envelopes
 
-Trigger Keywords & Aliases: `cg-functions`, `cg-signatures`, `cg-return-types`, `cg-execute functions`, `audit function naming`, `fix return types`, `enforce apperror`, `enforce result envelope`, `single return type audit`
+Trigger Keywords & Aliases: `cg-functions`, `cg-signatures`, `cg-return-types`, `cg-execute functions`, `audit function naming`, `fix return types`, `enforce apperror`, `enforce result envelope`, `single return type audit`, `multi-line arguments`, `function call formatting`
 
 ```text
 N = 200
@@ -8,66 +8,202 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, discover, plan, refactor, and fix all function naming conventions, boolean predicate prefixes, multi-value returns, raw generic errors, and result envelopes across the codebase, enforcing semantic verb/predicate naming, universal `*AppError` wrapping, single `Result[T]` return envelopes with `.IsSuccess()`/`.IsFailed()` methods, and strict relative Git paths until 100% green without stopping.
+/goal Autonomously scan, discover, plan, refactor, and format all function definitions, call-site invocations, parameter lists, boolean predicate prefixes, multi-value returns, raw generic errors, and result envelopes across the codebase, enforcing one-argument-per-line formatting for >2 arguments, semantic verb/predicate naming, universal `*AppError` wrapping, single `Result[T]` return envelopes, and strict relative Git paths until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using AST and grep tools to inventory all functions with generic error returns (`(T, error)`), unformatted boolean predicates missing `is`/`has`/`can` prefixes, raw `fmt.Errorf()` or standard `errors.New()`, anti-garbage names, and functions lacking typed `Result[T]` envelopes. Write the master audit spec in `.lovable/plans/pending/XX-function-signatures-audit.md` with an exhaustive Violation Ledger table, decompose into granular subtasks in `.lovable/plans/subtasks/XX-function-signatures/`, and verify/create the function signature linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file. Refactor function signatures to use semantic verb/predicate names, convert multi-value returns to single `Result[T]` envelopes, replace generic errors with domain-specific `*AppError` wrappers, enforce <= 8–15 line function decomposition, run signature linters, and verify local CI quality gates exit with code 0 (`exit 0`).
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/03-error-manage/01-error-architecture.md`, `spec/03-error-manage/02-response-envelopes.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using AST and grep tools to inventory all function definitions (>2 params) on a single line, all function invocations (>2 args) on a single line, functions with generic error returns (`(T, error)`), unformatted boolean predicates missing `is`/`has`/`can` prefixes, raw `fmt.Errorf()` or `errors.New()`, anti-garbage names, and functions lacking typed `Result[T]` envelopes. Write the master audit spec in `.lovable/plans/pending/XX-function-signatures-audit.md` with an exhaustive Violation Ledger table, decompose into granular subtasks in `.lovable/plans/subtasks/XX-function-signatures/`, and verify/create signature linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file. Format parameter declarations and call-site invocations to one line per argument with trailing commas, refactor signatures to use semantic verb/predicate names, convert multi-value returns to single `Result[T]` envelopes, replace generic errors with domain-specific `*AppError` wrappers, enforce <= 8–15 line function decomposition, run signature linters, and verify local CI quality gates exit with code 0 (`exit 0`).
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md`, `spec/02-coding-guidelines/01-cross-language/10-function-naming.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/03-error-manage/01-error-architecture.md`, `spec/03-error-manage/02-response-envelopes.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Signatures, Build Violation Ledger in .lovable/plans/pending/, Subtasks, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Refactor Signatures, Implement Result[T] Envelopes, Verify Local CI)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Signatures & Calls, Build Violation Ledger in .lovable/plans/pending/, Subtasks, Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Format Multi-Line Params & Calls, Refactor Signatures, Verify Local CI)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
 
 ---
 
-## Dedicated Section: Function Naming, Single Return Types & Result Envelopes
+## Dedicated Section: Function Definitions, Invocations & Multi-Line Standards
 
-A clean codebase relies on deterministic function contracts. Ambiguous function names, raw generic error returns, and unencapsulated multi-value returns obscure domain failures and cause high cognitive friction.
-
----
-
-### 1. Constants vs Enums Architecture
-
-Before structuring function signatures, understand when to use a Constant vs an Enum:
-
-1. **Singular Standalone Values (Use Typed Constants):**
-   - If a literal is an isolated constant (e.g. `IndentSpaces = "    "`, `DefaultTimeoutSeconds = 30`, `MaxCmdColumnWidth = 26`), define it as a typed constant in a centralized `constants` module.
-2. **Selectable Variant Sets (Use Enums with `*Type` Suffix):**
-   - If a concept represents a group or finite set of selectable options in a specific context (e.g. `AlignmentType` with `Left`, `Right`, `Center`; `IndentLevelType` with `Compact`, `Standard`, `Wide`; `OrderStatusType` with `Pending`, `Processing`, `Completed`), it **MUST be defined as a typed Enum** ending with `Type`.
-   - Enums must live in a dedicated `enums/` package/directory in Go, TypeScript, Rust, PHP, Python, and C#.
+A clean codebase relies on deterministic function contracts and clean, scannable call sites. Squeezing long argument lists onto a single line destroys git diff readability and introduces merge conflicts.
 
 ---
 
-### 2. Semantic Function Naming Principles
+### 1. Multi-Line Parameter Declarations (>2 Parameters)
 
-1. **Action Functions (Verb + Noun):**
-   - Every function performing an action MUST start with a clear, active verb: `fetchUser()`, `calculateTax()`, `renderHelpRow()`, `validatePayload()`.
-   - Ban vague garbage names: `handle()`, `process()`, `doStuff()`, `manage()`, `temp()`.
-2. **Boolean Predicate Functions (`is`, `has`, `can`, `should`, `was`):**
-   - Every function returning a boolean MUST begin with an affirmative prefix: `isValid()`, `hasPermissions()`, `canExecute()`, `shouldRetry()`.
-   - Negative prefixes (`isNotReady()`, `hasNoData()`) are **strictly prohibited**. Frame positively (`isReady()`, `hasData()`) and invert at the call site (`if !isReady { ... }`).
+When a function, method, or constructor definition has **more than two parameters** (i.e. 3 or more), or exceeds 100 characters in length, **each parameter MUST be placed on its own line** with consistent indentation and a trailing comma (where syntax permits).
 
----
-
-### 3. The Single Return Type Principle & Universal `Result[T]` Envelope
-
-In domain services, handlers, and internal business logic, functions MUST return a single encapsulated result envelope rather than raw multi-value tuples `(T, error)`.
-
-#### 3a. The Universal `Result[T]` Structure (Go)
+#### ❌ FORBIDDEN (>2 parameters on a single line):
 
 ```go
-// ❌ FORBIDDEN: Raw generic (T, error) multi-value return
-func GetUser(id string) (*User, error) {
-    if id == "" {
-        return nil, errors.New("user ID required") // ❌ Raw stdlib error
-    }
+// Go
+func SaveRecord(label string, path string, isSuccess bool, errMsg string) error { ... }
+
+// TypeScript
+function saveRecord(label: string, path: string, isSuccess: boolean, error?: string): void { ... }
+
+// PHP
+function saveRecord(string $label, string $path, bool $isSuccess, ?string $error): void { ... }
+
+// Python
+def save_record(label: str, path: str, is_success: bool, error: Optional[str] = None) -> None: ...
+```
+
+#### ✅ REQUIRED (One parameter per line with trailing comma):
+
+```go
+// Go
+func SaveRecord(
+    label string,
+    path string,
+    isSuccess bool,
+    errMsg string,
+) Result[bool] {
     // ...
 }
+```
 
+```typescript
+// TypeScript
+function saveRecord(
+    label: string,
+    path: string,
+    isSuccess: boolean,
+    error?: string,
+): Result<void> {
+    // ...
+}
+```
+
+```php
+// PHP
+function saveRecord(
+    string $label,
+    string $path,
+    bool $isSuccess,
+    ?string $error,
+): Result {
+    // ...
+}
+```
+
+```python
+# Python
+def save_record(
+    label: str,
+    path: str,
+    is_success: bool,
+    error: Optional[str] = None,
+) -> Result[bool]:
+    # ...
+```
+
+```rust
+// Rust
+pub fn save_record(
+    label: &str,
+    path: &Path,
+    is_success: bool,
+    error: Option<&str>,
+) -> Result<bool, AppError> {
+    // ...
+}
+```
+
+---
+
+### 2. Multi-Line Function Invocations & Call Sites (>2 Arguments)
+
+When calling any function, method, or constructor with **more than two arguments**, or when the call site exceeds 100 characters, **each argument MUST be placed on its own line** with consistent indentation and a trailing comma.
+
+#### ❌ FORBIDDEN (>2 arguments on a single line):
+
+```go
+// Go
+res := executeQuery(ctx, "SELECT * FROM users WHERE status = ?", statusVal, 50, 0)
+
+// TypeScript
+const res = logAction(userId, ActionType.Login, null, StatusType.Success, null, clientIp);
+
+// PHP
+$this->logAction($agentId, ActionType::AgentTest->value, null, StatusType::Failed->value, $error->getMessage());
+```
+
+#### ✅ REQUIRED (One argument per line with trailing comma):
+
+```go
+// Go
+res := executeQuery(
+    ctx,
+    "SELECT * FROM users WHERE status = ?",
+    statusVal,
+    50,
+    0,
+)
+```
+
+```typescript
+// TypeScript
+const res = logAction(
+    userId,
+    ActionType.Login,
+    null,
+    StatusType.Success,
+    null,
+    clientIp,
+);
+```
+
+```php
+// PHP
+$this->logAction(
+    $agentId,
+    ActionType::AgentTest->value,
+    null,
+    StatusType::Failed->value,
+    $error->getMessage(),
+);
+```
+
+```python
+# Python
+response = dispatch_event(
+    event_name=EventNameType.USER_CREATED,
+    payload=user_payload,
+    retry_count=3,
+    timeout_seconds=30,
+)
+```
+
+---
+
+### 3. No Boolean Flag Parameters (Split Intent-Driven Methods)
+
+When a boolean parameter changes the fundamental **behavior or meaning** of an operation, **NEVER pass a bare boolean flag**. Split the behavior into two explicitly named, self-documenting functions.
+
+```typescript
+// ❌ FORBIDDEN: Boolean flag hides caller intent
+function logMessage(message: string, isWithStack: boolean): void { ... }
+logMessage("Payment failed", true); // What does 'true' do?
+
+// ✅ REQUIRED: Explicitly named functions
+function logMessage(message: string): void { ... }
+function logMessageWithStack(message: string): void { ... }
+
+logMessage("User saved");
+logMessageWithStack("Payment failed");
+```
+
+---
+
+### 4. The Single Return Type Principle & Universal `Result[T]` Envelope
+
+In domain services, handlers, and internal business logic, functions MUST return a single encapsulated result envelope rather than raw multi-value tuples `(T, error)` or unhandled exceptions.
+
+#### 4a. Go `Result[T]` Architecture
+
+```go
 // ✅ REQUIRED: Single Result[T] envelope with *AppError and helper methods
 package models
 
@@ -128,16 +264,13 @@ func GetUser(id string) Result[*User] {
 
 ---
 
-#### 3b. TypeScript `Result<T>` Envelope
+#### 4b. TypeScript `Result<T>` Architecture
 
 ```typescript
-// ❌ FORBIDDEN: Throwing raw errors or returning undefined on failure
-async function fetchAccount(id: string): Promise<Account | undefined> { ... }
-
 // ✅ REQUIRED: Strongly-typed Result<T, AppError> envelope
 export type Result<T> =
-    | { isSuccess: true; isFailed: false; value: T; error: null }
-    | { isSuccess: false; isFailed: true; value: null; error: AppError };
+    | { readonly isSuccess: true; readonly isFailed: false; readonly value: T; readonly error: null }
+    | { readonly isSuccess: false; readonly isFailed: true; readonly value: null; readonly error: AppError };
 
 export function successResult<T>(value: T): Result<T> {
     return { isSuccess: true, isFailed: false, value, error: null };
@@ -146,84 +279,31 @@ export function successResult<T>(value: T): Result<T> {
 export function failureResult<T>(error: AppError): Result<T> {
     return { isSuccess: false, isFailed: true, value: null, error };
 }
-
-export async function fetchAccount(id: string): Promise<Result<Account>> {
-    if (!id) {
-        return failureResult(new AppError(ErrorCodeType.ValidationFailed, "Account ID is required"));
-    }
-
-    const account = await accountRepo.find(id);
-
-    if (!account) {
-        return failureResult(new AppError(ErrorCodeType.NotFound, "Account not found"));
-    }
-
-    return successResult(account);
-}
 ```
 
 ---
 
-#### 3c. Python `Result[T]` Dataclass
+### 5. Semantic Function Naming & Predicate Prefixes
 
-```python
-# ✅ REQUIRED: Generic Result[T] envelope with helper predicates
-from dataclasses import dataclass
-from typing import Generic, TypeVar, Optional
-
-T = TypeVar("T")
-
-@dataclass(frozen=True)
-class Result(Generic[T]):
-    value: Optional[T] = None
-    error: Optional[AppError] = None
-
-    @property
-    def is_success(self) -> bool:
-        return self.error is None
-
-    @property
-    def is_failed(self) -> bool:
-        return self.error is not None
-
-def get_user_profile(user_id: str) -> Result[UserProfile]:
-    if not user_id:
-        return Result(error=AppError(ErrorCodeType.VALIDATION_FAILED, "user_id required"))
-
-    profile = db.find_profile(user_id)
-
-    if profile is None:
-        return Result(error=AppError(ErrorCodeType.NOT_FOUND, "profile not found"))
-
-    return Result(value=profile)
-```
+1. **Action Functions (Verb + Noun):**
+   - Every function performing an action MUST start with a clear, active verb: `fetchUser()`, `calculateTax()`, `renderHelpRow()`, `validatePayload()`.
+   - Ban vague garbage names: `handle()`, `process()`, `doStuff()`, `manage()`, `temp()`.
+2. **Boolean Predicate Functions (`is`, `has`, `can`, `should`, `was`):**
+   - Every function returning a boolean MUST begin with an affirmative prefix: `isValid()`, `hasPermissions()`, `canExecute()`, `shouldRetry()`.
+   - Negative prefixes (`isNotReady()`, `hasNoData()`) are **strictly prohibited**. Frame positively (`isReady()`, `hasData()`) and invert at the call site (`if !isReady { ... }`).
 
 ---
 
-### 4. Total Ban on Generic `error` (Universal `AppError` Mandate)
+## 6. Phase 1 Violation Ledger Format
 
-1. **No Stdlib `error` in Internal Logic:**
-   - NEVER return bare `error`, `errors.New()`, or `fmt.Errorf()` in domain packages.
-   - All errors MUST return `*AppError` (or language equivalent `AppException`) carrying:
-     - `Code`: Strongly-typed error enum (`ErrCodeValidationFailed`, `ErrCodeNotFound`).
-     - `Message`: Human-readable context.
-     - `Op`: Function / operation name (e.g. `"GetUser"`, `"ConnectSsh"`).
-     - `Cause`: Original underlying error.
-2. **Boundary Exception:**
-   - The outermost binary entry point (`main()` in Go, root CLI handler) is the only place where `*AppError` is unwrapped and formatted into a terminal exit code or JSON envelope.
-
----
-
-## 5. Phase 1 Violation Ledger Format
-
-In Phase 1, you MUST generate `.lovable/plans/pending/XX-function-signatures-audit.md` containing the following master inventory table:
+In Phase 1, you MUST generate `.lovable/plans/pending/XX-function-signatures-audit.md` containing the master inventory table:
 
 ```markdown
-| Function / Method | File Path | Line | Current Return Type | Target Return Type | Violations (Naming / Error / Tuple) | Planned Fix | Status |
+| Symbol / Call Site | File Path | Line | Category | Current Layout | Violation | Target Refactoring | Status |
 |---|---|:---:|---|---|---|---|:---:|
-| `GetUser` | `src/services/user.go` | 42 | `(*User, error)` | `Result[*User]` | Multi-value return, stdlib error | Wrap in `Result[*User]` with `*AppError` | PENDING |
-| `validUser` | `src/auth/validate.ts` | 18 | `boolean` | `boolean` | Missing predicate prefix `is`/`has` | Rename to `isValidUser` | PENDING |
-| `Process` | `pkg/worker/job.go` | 89 | `error` | `*apperror.AppError` | Generic error, vague verb name | Rename to `ExecuteJob`, return `*AppError` | PENDING |
+| `SaveRecord` | `src/storage/db.go` | 42 | Definition | Single line (>2 params) | Rule 9a violation | Split to 1 parameter per line | PENDING |
+| `logAction(...)` | `src/logger/log.ts` | 88 | Call Site | Single line (>2 args) | Rule 9b violation | Split to 1 argument per line | PENDING |
+| `GetUser` | `src/services/user.go` | 104 | Return Type | `(*User, error)` | Multi-value return | Wrap in `Result[*User]` with `*AppError` | PENDING |
 ```
 
 ---
@@ -264,6 +344,9 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-function-signatures-aud
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
+- [ ] **Multi-Line Definitions (Rule 9a):** All function/method definitions with >2 parameters are formatted with exactly one parameter per line and trailing commas.
+- [ ] **Multi-Line Invocations (Rule 9b):** All function/method call sites with >2 arguments are formatted with exactly one argument per line and trailing commas.
+- [ ] **No Boolean Flag Parameters:** No boolean parameters used to switch behavior; split into distinct methods.
 - [ ] **Semantic Naming:** All functions start with active verbs; all boolean functions start with `is`, `has`, `can`, `should`.
 - [ ] **Single Return Types:** Multi-value `(T, error)` returns refactored to single `Result[T]` envelopes in services.
 - [ ] **Universal `AppError`:** Zero generic `error` or `fmt.Errorf()` returns in domain logic.
@@ -275,8 +358,6 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-function-signatures-aud
 - [ ] **Blank Line Before `return`:** Exactly one blank line precedes `return` / `throw` in multi-line blocks.
 - [ ] **Zero Nested `if`:** All conditionals flattened to depth 0 using guard clauses and early returns.
 - [ ] **Function Sizing:** All functions <= 8 lines preferred (hard cap 15 lines).
-- [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
 - [ ] `python linter-scripts/check-newline-styling.py` and `python linter-scripts/check-function-lengths.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
 
@@ -287,7 +368,8 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-function-signatures-aud
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
-- [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/` and `spec/03-error-manage/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Rule 9a/9b Multi-Line Formatting: Verified one parameter/argument per line for all definitions and call sites with >2 arguments.
 - [ ] Result Envelope: Enforced `Result[T]` and `*AppError` across domain services.
 - [ ] LF Line Endings & UTF-8 (No BOM): Verified Unix LF and UTF-8 across all files.
 - [ ] Blank Line Before `if`: Verified blank line before every `if` statement across all modified files.
