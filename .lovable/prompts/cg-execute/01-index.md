@@ -33,6 +33,7 @@ Prompts are sequenced according to priority. Error management and reliability mu
 | **05** | [`05-react-frontend-guidelines.md`](./05-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines), `useEffect` minimization, immutable state updates, named object hook returns (tuple ban) | `check-frontend-guidelines.mjs` |
 | **06** | [`06-code-hygiene.md`](./06-code-hygiene.md) | Code Hygiene & Project Architecture | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 300 lines), struct/class caps ($\le$ 120 lines), dedicated definition files, zero committed build artifacts/binaries, lowercase files | `check-file-sizes.py`, `check-placeholder-comments.py` |
 | **07** | [`07-style-guidelines.md`](./07-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), 15-line function caps, flattening nested `if`, MD022/MD032 markdown spacing | `check-function-lengths.py`, `check-newline-styling.py` |
+| **08** | [`08-testing-and-coverage.md`](./08-testing-and-coverage.md) | Integration, E2E & Branch Test Coverage | `cg-test`, `cg-execute test`, `audit tests`, `write e2e tests` | Three-part semantic naming (`TestUnit_Scenario_Outcome`), $\le$ 8-line function decomposition, positive/negative/error branch coverage, table-driven tests | `check-test-coverage.py`, `03-cicd-local-runner.py` |
 
 ---
 
