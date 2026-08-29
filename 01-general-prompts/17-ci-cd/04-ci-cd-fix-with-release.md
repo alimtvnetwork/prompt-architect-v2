@@ -14,16 +14,16 @@ N = total self-loop steps budget. The user may override this number when trigger
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
-1. - [ ] /goal First `N/2` steps (Phase 1): When a screenshot or pipeline name is provided, the FIRST action is to locate new CI/CD steps and update `.lovable/ai-fix-scripts/03-cicd-local-runner.py` with native host commands (Docker stripped out).
-2. - [ ] /goal Second `N/2` steps (Phase 2): Singly execute the local runner script in an autonomous self-loop, zeroing in on one failing error per turn (4-part RCA -> surgical fix -> guideline autofixer -> re-verify) until exit code = 0 without stopping.
-3. - [ ] /goal Once Phase 2 exits green, proceed immediately to Phase 3: Final Verification, then Phase 4: Release (version bump, changelog update, git tag, Quick Install one-liners, push, and release creation).
-4. - [ ] /learn Ingest `.lovable/cicd-issues/` for domain-specific architectural specifications.
-5. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
-6. - [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
-7. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
-8. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
-9. - [ ] /learn Ingest `spec/03-error-manage/` for error handling architectures and AppError.
-10. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+1. [ ] /goal First `N/2` steps (Phase 1): When a screenshot or pipeline name is provided, the FIRST action is to locate new CI/CD steps and update `.lovable/ai-fix-scripts/03-cicd-local-runner.py` with native host commands (Docker stripped out).
+2. [ ] /goal Second `N/2` steps (Phase 2): Singly execute the local runner script in an autonomous self-loop, zeroing in on one failing error per turn (4-part RCA -> surgical fix -> guideline autofixer -> re-verify) until exit code = 0 without stopping.
+3. [ ] /goal Once Phase 2 exits green, proceed immediately to Phase 3: Final Verification, then Phase 4: Release (version bump, changelog update, git tag, Quick Install one-liners, push, and release creation).
+4. [ ] /learn Ingest `.lovable/cicd-issues/` for domain-specific architectural specifications.
+5. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+6. [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+7. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+8. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+9. [ ] /learn Ingest `spec/03-error-manage/` for error handling architectures and AppError.
+10. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
 
 
 ```text

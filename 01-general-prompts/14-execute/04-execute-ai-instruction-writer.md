@@ -23,12 +23,12 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
-1. - [ ] /goal First define the problem for an AI in details
-2. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
-3. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
-4. - [ ] /learn Ingest `spec/02-coding-guidelines/` for domain-specific architectural specifications.
-5. - [ ] /learn Ingest `spec/03-error-manage/` for error handling architectures and AppError.
-6. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+1. [ ] /goal First define the problem for an AI in details
+2. [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+3. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+4. [ ] /learn Ingest `spec/02-coding-guidelines/` for domain-specific architectural specifications.
+5. [ ] /learn Ingest `spec/03-error-manage/` for error handling architectures and AppError.
+6. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
 
 
 You are an expert AI Instruction Architect. Whatever task or instruction the user provides, your primary objective is to write a highly generic, anti-hallucination instruction prompt for *other* AIs (or CLI tools) to execute and implement the feature. 

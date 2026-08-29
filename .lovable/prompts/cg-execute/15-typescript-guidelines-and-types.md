@@ -16,24 +16,24 @@ N = total self-loop steps budget that the agents will perform.
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
-1. - [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
-2. - [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
-3. - [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
-4. - [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
-5. - [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
-6. - [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
-7. - [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
-8. - [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
-9. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
-10. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
-11. - [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
-12. - [ ] /learn Ingest `spec/02-coding-guidelines/04-typescript/` for TypeScript strict typing and discriminated unions.
-13. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
-14. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
-15. - [ ] /learn Ingest `spec/03-error-manage/01-error-architecture.md` for universal AppError wrapping and error envelopes.
-16. - [ ] /learn Ingest `spec/03-error-manage/02-response-envelopes.md` for Result[T] and standardized API envelopes.
-17. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
-18. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
+2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
+3. [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+4. [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
+5. [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+6. [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+7. [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
+8. [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+9. [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+10. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+11. [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+12. [ ] /learn Ingest `spec/02-coding-guidelines/04-typescript/` for TypeScript strict typing and discriminated unions.
+13. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+14. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+15. [ ] /learn Ingest `spec/03-error-manage/01-error-architecture.md` for universal AppError wrapping and error envelopes.
+16. [ ] /learn Ingest `spec/03-error-manage/02-response-envelopes.md` for Result[T] and standardized API envelopes.
+17. [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+18. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
 
 
 ```text
@@ -310,7 +310,7 @@ To guarantee full execution without stopping after planning mode, the master orc
 - [ ] Zero Nested `if`: Zero nested `if` statements (depth > 1).
 
 
-1. - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+1. [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
