@@ -1,9 +1,8 @@
 # Style Guidelines, Formatting & Line-Gaps — Coding Guideline (must follow)
 
-Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`, `line gaps audit`, `fix line endings`, `enforce utf8 lf`
+Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`, `line gaps audit`, `fix line endings`, `enforce utf8 lf`, `fix function newlines`, `newline refactor`
 
-
-> **Prompt Version:** 2.1.0
+> **Prompt Version:** 2.2.0  
 > **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
@@ -12,35 +11,54 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, blank line before `if`, blank line after `}`, blank line before `return`, nested `if`, function length, file size, LF line ending (`\n`), UTF-8 (no BOM) encoding, and trailing newline violations across the codebase, flattening nested conditionals, decomposing functions to <= 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
+/goal Autonomously inventory, scan, partition, refactor, and fix all coding style, vertical newline spacing, blank line before `if`, blank line after `}`, blank line before `return`, blank lines around parameter struct instantiations and sequential function invocations, nested `if` elimination, function length (<= 8–15 lines), file size (<= 100 lines), LF line endings (`\n`), and UTF-8 (no BOM) encoding across ALL source files in the repository in bounded micro-batches of 5–8 files per subtask, running a continuous 2-agent unstoppable self-loop until 100% of codebase files are verified and refactored without stopping.
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
-1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
-2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
-3. [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
-4. [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
-5. [ ] /goal Phase 2 (Step A): Open each target file in bounded micro-batches of 5–8 files at a time to perform surgical newline and style refactoring without context exhaustion.
-6. [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
-7. [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
-8. [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
-9. [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
-10. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
-11. [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
-12. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
-13. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
-14. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/04-code-style/` for domain-specific architectural specifications.
-15. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md` for domain-specific architectural specifications.
-16. [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
-17. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
-
+1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory ALL source code files (`*.go`, `*.ts`, `*.py`, `*.php`, `*.cs`) and discover all squeezed newline violations inside function bodies, loops, guard clauses, and struct instantiations.
+2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/XX-style-guidelines-audit.md` with an exhaustive File Inventory Manifest and Violation Ledger.
+3. [ ] /goal Phase 1 (Step C): Decompose ALL source files into granular, bounded subtask batches of **5–8 files each** in `.lovable/plans/subtasks/XX-style/batch-01.md`, `batch-02.md`, etc.
+4. [ ] /goal Phase 1 (Step D): Verify or create the automated style autofixer in `.lovable/ai-fix-scripts/02-guideline-autofixer.py` and register in `.lovable/ai-fix-scripts/index.md`.
+5. [ ] /goal Phase 2 (Step A): Spawn 2 execution subagents (max 2 threads each) to process subtasks concurrently, opening and surgically editing each 5–8 file batch line-by-line.
+6. [ ] /goal Phase 2 (Step B): Enforce Return New Line rules (R13-R16): blank line before `if`, blank line after `}`, blank line before `return`, blank lines around multiline struct calls, and zero clumped guard clauses.
+7. [ ] /goal Phase 2 (Step C): Decompose functions exceeding 8–15 lines into focused single-responsibility helpers and flatten nested conditionals (depth 0).
+8. [ ] /goal Phase 2 (Step D): Verify that actual source files (`*.go`, `*.ts`, etc.) have real modifications via `git diff --stat` (auto-reject if only `.lovable/` markdown files were changed).
+9. [ ] /goal Phase 2 (Step E): Move completed batch subtasks to `.lovable/plans/completed/` and immediately self-loop to dispatch the next pending batches until 0 batches remain.
+10. [ ] /goal Phase 2 (Step F): Execute local linters (`python linter-scripts/check-newline-styling.py`, `check-function-lengths.py`) to verify 0 remaining violations.
+11. [ ] /goal Phase 2 (Step G): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+12. [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+13. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+14. [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+15. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+16. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+17. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/04-code-style/` for domain-specific architectural specifications.
+18. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md` for newline styling examples.
+19. [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+20. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase for Style & Newline Violations, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Insert Newlines Before if / After } / Before return, Normalize LF & UTF-8, Flatten Nested Ifs, Verify Local CI)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Inventory ALL Source Files, Partition into 5-8 File Batches in .lovable/plans/subtasks/, Verify Autofixer)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Unstoppable 2-Agent Loop over All Batches, Surgical Function Edits, Real Git Diffs, Local CI Runner)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## AI Diagnostic Guide: Why Newline Violations are Missed in Functions & How to Fix Them
+
+> [!IMPORTANT]
+> **CRITICAL FAILURE ROOT CAUSE (PREVENTING PREMATURE COMPLETION):**
+>
+> In past runs, AI agents failed to fix function newlines because they:
+> 1. **Only ran surface linters** (e.g. checking file-level EOF newlines) without opening individual function bodies.
+> 2. **Wrote a planning markdown file and immediately declared completion** without editing a single `.go` or `.ts` file.
+> 3. **Attempted to process the entire codebase in one prompt**, causing context exhaustion and truncated file edits.
+>
+> **THE MANDATORY REMEDY:**
+> - You MUST partition the full list of codebase files into **batches of 5–8 files each**.
+> - Subagents MUST open and edit every single file in their assigned batch line-by-line.
+> - The master orchestrator MUST continuously self-loop across all batches until every single batch in `.lovable/plans/subtasks/` is completed.
 
 ---
 
@@ -90,6 +108,8 @@ func ProcessUser(id string) error {
 }
 ```
 
+---
+
 #### 1b. TypeScript / React: Blank Line Before `if`
 
 ```typescript
@@ -118,6 +138,8 @@ function getFormattedPrice(item: Item): string {
     return formatted;
 }
 ```
+
+---
 
 #### 1c. Python: Blank Line Before `if`
 
@@ -149,6 +171,8 @@ def fetch_user_profile(user_id: str) -> Profile:
     return Profile.from_record(user_record)
 ```
 
+---
+
 #### 1d. PHP: Blank Line Before `if` and `foreach`
 
 ```php
@@ -173,25 +197,6 @@ $items = $this->fetchItems();
 
 foreach ($items as $item) {
     $this->process($item);
-}
-```
-
-#### 1e. C#: Blank Line Before `if`
-
-```csharp
-// ❌ WRONG: Squeezed method invocation against if
-var account = await _accountRepository.GetByIdAsync(accountId);
-if (account is null)
-{
-    return Result.Fail("Account not found");
-}
-
-// ✅ CORRECT: Blank line before if
-var account = await _accountRepository.GetByIdAsync(accountId);
-
-if (account is null)
-{
-    return Result.Fail("Account not found");
 }
 ```
 
@@ -233,6 +238,8 @@ func ExecuteStep(step Step) error {
 }
 ```
 
+---
+
 #### 2b. TypeScript: Blank Line After Loops & Try/Catch
 
 ```typescript
@@ -264,6 +271,8 @@ try {
 
 cleanup();
 ```
+
+---
 
 #### 2c. Go: Blank Line After Multiline Map/Slice Literals & Loops with Boolean Extraction
 
@@ -359,6 +368,8 @@ func ValidateExtensionRoundTrip(formats []Format) *apperror.AppError {
 }
 ```
 
+---
+
 #### 2d. Go: Blank Lines Around Struct Instantiations & Sequential Function Invocations
 
 When instantiating a parameter struct or invoking a multi-line function, there **MUST be a blank line before the invocation** (if preceded by assignments or statements) and **MUST be a blank line after the invocation closing brace `}`** before subsequent statements, `if` conditions, or other function calls.
@@ -435,21 +446,6 @@ func CalculateTotal(items []Item, taxRate float64) float64 {
 }
 ```
 
-```typescript
-// ❌ WRONG: Throw squeezed under validation
-function validatePayload(payload: Payload): void {
-    const trimmed = payload.name.trim();
-    throw new Error(`Invalid payload name: ${trimmed}`);
-}
-
-// ✅ CORRECT: Blank line before throw
-function validatePayload(payload: Payload): void {
-    const trimmed = payload.name.trim();
-
-    throw new Error(`Invalid payload name: ${trimmed}`);
-}
-```
-
 ---
 
 ### Rule 4: Zero Clumping of Consecutive Guard Clauses
@@ -468,13 +464,10 @@ func ValidateOrder(order *Order) error {
     if order.TotalAmount <= 0 {
         return ErrInvalidAmount
     }
-    if order.IsExpired() {
-        return ErrOrderExpired
-    }
     return nil
 }
 
-// ✅ CORRECT: Clean blank lines between every single guard clause
+// ✅ CORRECT: Vertical breathing room between discrete guard clauses
 func ValidateOrder(order *Order) error {
     if order == nil {
         return ErrNilOrder
@@ -488,208 +481,29 @@ func ValidateOrder(order *Order) error {
         return ErrInvalidAmount
     }
 
-    if order.IsExpired() {
-        return ErrOrderExpired
-    }
-
     return nil
 }
 ```
 
 ---
 
-### Rule 5: Nested `if` Elimination & Guard Inversion (Zero Tolerance)
+### Rule 5: Zero Nested `if` Statements (Mandatory Flattening to Depth 0)
 
-Nested `if` statements (an `if` inside another `if`, nesting depth > 1) are **strictly forbidden** across all languages. Invert conditions and return early:
-
-```typescript
-// ❌ FORBIDDEN: Deep nested conditionals (depth = 3)
-function processPayment(user: User, order: Order): PaymentResult {
-    if (user.isActive) {
-        if (order.hasValidItems) {
-            if (user.hasSufficientBalance(order.total)) {
-                return executeCharge(user, order);
-            } else {
-                return PaymentResult.InsufficientFunds;
-            }
-        }
-    }
-    return PaymentResult.Failed;
-}
-
-// ✅ REQUIRED: Inverted guard clauses with zero nesting and proper line gaps
-function processPayment(user: User, order: Order): PaymentResult {
-    if (!user.isActive) {
-        return PaymentResult.Failed;
-    }
-
-    if (!order.hasValidItems) {
-        return PaymentResult.Failed;
-    }
-
-    if (!user.hasSufficientBalance(order.total)) {
-        return PaymentResult.InsufficientFunds;
-    }
-
-    return executeCharge(user, order);
-}
-```
-
-```go
-// ❌ FORBIDDEN: Nested type assertion and error checks
-func HandleResponse(resp *Response) error {
-    if resp != nil {
-        if appErr, ok := resp.Err.(*AppError); ok {
-            if appErr.IsRetryable {
-                return retry(resp)
-            }
-        }
-    }
-    return nil
-}
-
-// ✅ REQUIRED: Flat guard clauses with semantic boolean and clean newlines
-func HandleResponse(resp *Response) error {
-    if resp == nil {
-        return nil
-    }
-
-    appErr, isAppErr := resp.Err.(*AppError)
-
-    if !isAppErr {
-        return nil
-    }
-
-    if appErr.IsRetryable {
-        return retry(resp)
-    }
-
-    return nil
-}
-```
+Conditionals MUST NEVER exceed depth 1 (i.e., **no nested `if` statements inside another `if` block**). Flatten all branching logic using early guard returns or discrete helper functions.
 
 ---
 
-### Rule 6: Mandatory Braces for All Control Blocks (No Single-Line `if`)
+### Rule 6: No Multi-Statement / Semicolon-Packed Lines
 
-Every `if`, `for`, `foreach`/`for...of`, `while` block **must** use curly braces `{}` on dedicated lines, even for single-statement bodies (TypeScript, PHP, C#):
-
-```typescript
-// ❌ FORBIDDEN: Single-line unbraced if
-if (isLoading) return null;
-if (hasError) throw new Error("Load failed");
-
-// ✅ REQUIRED: Multi-line braced if with blank lines
-if (isLoading) {
-    return null;
-}
-
-if (hasError) {
-    throw new Error("Load failed");
-}
-```
+Never compress multiple statements onto a single line using semicolons (`a = 1; b = 2; return a + b`). Each statement MUST occupy its own line.
 
 ---
 
-### Rule 7: Multi-Line Parameter & Argument Wrapping (>2 Parameters)
+### Rule 7: Universal File Hygiene, Line Endings (LF `\n` Only) & Encoding (UTF-8 No BOM)
 
-When a function signature or call has **more than two arguments** or exceeds 100 characters, break each parameter onto its own line with consistent indentation, a trailing comma (where permitted), and the closing parenthesis on its own line:
-
-```go
-// ❌ FORBIDDEN: Long single-line signature (>2 params)
-func BuildRecord(label string, path string, isSuccess bool, errMsg string) (*Record, error) {
-
-// ✅ REQUIRED: Multi-line parameter wrapping
-func BuildRecord(
-    label string,
-    path string,
-    isSuccess bool,
-    errMsg string,
-) (*Record, error) {
-    if label == "" {
-        return nil, ErrEmptyLabel
-    }
-
-    return newRecord(label, path, isSuccess, errMsg)
-}
-```
-
-```typescript
-// ❌ FORBIDDEN: Long single-line call
-const record = createAuditEntry(user.id, ActionType.Update, resource.id, StatusType.Success, metadata);
-
-// ✅ REQUIRED: Multi-line call formatting
-const record = createAuditEntry(
-    user.id,
-    ActionType.Update,
-    resource.id,
-    StatusType.Success,
-    metadata,
-);
-```
-
----
-
-### Rule 8: No Double Blank Lines & No Blank Line at Function Body Start
-
-1. **No Consecutive Blank Lines:** Never use 2 or more consecutive blank lines in any code or markdown file (`\n\n\n` is banned). Normalize all multiple blank lines to exactly 1 blank line (`\n\n`).
-2. **No Leading Blank Line:** Never place an empty line as the very first line inside a function body (immediately after the opening brace `{` or `:`).
-
-```go
-// ❌ WRONG: Empty line right after opening brace, followed by double blank lines
-func ComputeMetrics() int {
-
-    count := fetchCount()
-
-
-    return count * 2
-}
-
-// ✅ CORRECT: No leading blank line, single blank line before return
-func ComputeMetrics() int {
-    count := fetchCount()
-
-    return count * 2
-}
-```
-
----
-
-### Rule 9: Universal File Hygiene, Line Endings (LF `\n` Only) & Encoding (UTF-8 No BOM)
-
-1. **Unix LF (`\n`) Line Endings Only:**
-   - Every file MUST use Unix-style line feeds (`\n`, `0x0A`).
-   - Total ban on Windows CRLF (`\r\n`).
-2. **Strict UTF-8 Encoding (NO BOM):**
-   - All source code and markdown files MUST be saved in UTF-8 without Byte Order Mark (BOM).
-   - Zero `\xef\xbb\xbf` header bytes. UTF-16 and UTF-32 are strictly forbidden.
-3. **Mandatory Single Trailing Newline at EOF:**
-   - Every file MUST terminate with **exactly one newline (`\n`)** on the final line.
-   - Zero files missing a newline at EOF (`\ No newline at end of file` in Git diffs is an auto-reject).
-   - Zero multiple trailing blank lines at the end of a file.
-
----
-
-### Rule 10: Markdown Spacing (MD022 / MD032) & Heading Rules
-
-All markdown files (`.md`) MUST have:
-- **Before Header:** Exactly **ONE blank line BEFORE** every markdown heading `#` through `######` (EXCEPT when the heading is on line 1 of the file — line 1 has NO blank line before it).
-- **After Header:** Exactly **ONE blank line AFTER** every markdown heading.
-- **Zero Double Blank Lines:** No `\n\n\n` anywhere in markdown.
-- Exactly one blank line before and after lists (`-`, `1.`), fenced code blocks (` ``` `), and blockquotes (`>`).
-
----
-
-### Rule 11: Universal Sizing Tier Limits & Anti-Cheating Rules
-
-1. **Functions:** Target <= 8 lines body logic preferred; hard cap <= 15 lines maximum.
-2. **Files:** Standard max <= 100 lines of code (recommended <= 80 lines).
-3. **Cheating Cheats Are Banned:**
-   - Cheating by deleting necessary blank lines around `if` or `return` to fit into 8 lines is strictly forbidden.
-   - Semicolon packing or multi-statement lines (`a = 1; b = 2; return a + b`) are auto-rejected.
-   - Decompose logic into focused, single-responsibility helper functions instead of compressing lines.
-
----
+1. **Unix LF (`\n`) Line Endings Only:** Every file MUST use Unix LF (`\n`). Total ban on Windows CRLF (`\r\n`).
+2. **Strict UTF-8 Encoding (NO BOM):** Save all files in UTF-8 without BOM.
+3. **Mandatory Single Trailing Newline at EOF:** Exactly one newline at the end of every file.
 
 ---
 
@@ -703,23 +517,35 @@ To guarantee full execution without stopping after planning mode, the master orc
 - **Strict Folder Bounding (`.lovable/`):** Subagents can ONLY write planning files, subtasks, status reports, and logs inside `.lovable/` (`.lovable/plans/`, `.lovable/temp/active-locks.json`, `.lovable/memory/issues/`).
 - **Context Diet:** Provide subagents with minimal instructions (e.g. "Read subtask file `.lovable/plans/subtasks/XX/01-task.md` and execute it"). Do not paste huge files into agent prompts.
 
-### 2. Phase 1: Planning Mode & Subtask Generation (Steps 1 .. N/2)
+### 2. Phase 1: Planning Mode & Micro-Batch Subtask Partitioning (Steps 1 .. N/2)
 
-- Spawn 2 planning subagents to scan the codebase for target guideline violations.
-- Write the master architectural specification in `.lovable/plans/pending/XX-audit.md` with an exhaustive Violation Ledger table.
-- Decompose the master plan into granular subtasks in `.lovable/plans/subtasks/XX/01-task.md`, `02-task.md`, etc.
-- **MANDATORY AUTO-LOOP (DO NOT STOP):** Once Phase 1 planning completes, the master orchestrator **MUST NOT STOP or ask the user for confirmation**. It MUST immediately self-loop and transition directly into Phase 2 execution mode.
+1. **Comprehensive File Inventory:** Scan and list EVERY single source code file in the repository (`*.go`, `*.ts`, `*.py`, `*.php`).
+2. **Partition into 5–8 File Batches:** Group the file list into numbered subtasks:
+   - `.lovable/plans/subtasks/XX-style/batch-01.md`: Files 1–8
+   - `.lovable/plans/subtasks/XX-style/batch-02.md`: Files 9–16
+   - `.lovable/plans/subtasks/XX-style/batch-03.md`: Files 17–24
+   - ... (continue until all files in the codebase are assigned to a batch).
+3. **MANDATORY AUTO-LOOP (DO NOT STOP):** Once Phase 1 subtasks are written, the master orchestrator **MUST NOT STOP or ask the user for confirmation**. It MUST immediately self-loop and transition directly into Phase 2 execution mode.
 
-### 3. Phase 2: Execution Mode & Parallel Refactoring (Steps N/2+1 .. N)
+### 3. Phase 2: Unstoppable Execution Mode & Parallel Batch Refactoring (Steps N/2+1 .. N)
 
-- **Bounded Micro-Tasking (5–8 Files per Batch):** Subagents MUST process at most **5–8 files per subtask / loop turn**. Bounding each subtask to 5–8 files ensures surgical attention to vertical line gaps, prevents context exhaustion, and eliminates AI hallucination.
-- Spawn 2 execution subagents (max 2 threads each) to execute subtasks in parallel on disjoint batches of 5–8 files.
-- Subagents refactor code following all coding guidelines (<= 8–15 line functions, single return types, universal `*AppError` wrapping, Unix LF line endings, blank lines around control blocks).
-- Move completed subtasks from `.lovable/plans/subtasks/` to `.lovable/plans/completed/` and update `.lovable/plans/index.md`.
-- **Failure Memory & Feedback Loop:** If a subagent fails:
-  - Rollback dirty working tree and log error details to `.lovable/plans/last-failure.md` and `.lovable/memory/issues/XX-failure.md`.
-  - The next subagent spawned MUST read the previous failure log first, record it as a pending memory task, and implement the necessary fix.
-- Execute local linters and `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` ensuring `exit 0` before concluding.
+1. **Parallel 2-Agent Dispatch:**
+   - Spawn Subagent 1 on `batch-01.md` (Files 1–8).
+   - Spawn Subagent 2 on `batch-02.md` (Files 9–16).
+2. **Surgical Line-by-Line Refactoring:**
+   - Subagents open each file in their batch, examine all function bodies, and apply vertical line gaps before `if`, after `}`, before `for`, before `return`, and around struct calls.
+   - Run `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>` to automate newline insertions.
+3. **Anti-Cheating Reality Check:**
+   - Subagents MUST verify that actual source files (`*.go`, `*.ts`, etc.) were edited via `git diff --stat`.
+   - If 0 source code files were modified, the batch is rejected as a hallucination.
+4. **Continuous Self-Looping:**
+   - Move completed batch subtasks from `.lovable/plans/subtasks/` to `.lovable/plans/completed/`.
+   - Orchestrator checks for remaining pending batches. If any exist, immediately self-loop and dispatch the next 2 batches (`batch-03`, `batch-04`).
+   - **DO NOT STOP until ALL batches are in `plans/completed/` and 0 pending batches remain.**
+5. **Quality Gate Verification:**
+   - Execute local linters (`python linter-scripts/check-newline-styling.py`, `check-function-lengths.py`) and `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` ensuring `exit 0` before concluding.
+
+---
 
 ## Strict In-Repository Execution & `.lovable/` Bounding Mandate
 
@@ -738,86 +564,44 @@ To guarantee full execution without stopping after planning mode, the master orc
 
 ---
 
-## AI Fix Scripts Memory (Reusable Tooling)
-
-- [ ] `/goal` **Reuse First:** I have rigorously scanned and `/learn`ed `.lovable/ai-fix-scripts/index.md` to check if a helper script already exists before writing any new temporary code.
-- [ ] **Strict In-Repository Execution:** All Python scripts (`.lovable/ai-fix-scripts/*.py`) MUST be executed strictly within the codebase repository root, NEVER outside the codebase.
-- [ ] **Strict .lovable/ Folder Storage:** All AI scripts, local runners, autofixers, and helper utilities MUST be created inside `.lovable/ai-fix-scripts/`. NEVER create scripts in root or external paths.
-- [ ] **Automated Style & Newline Fixer:** Use `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>` to automatically fix newlines before `return`, after `}`, and before `if`.
-- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
-- [ ] **Commit & Track:** All new helper scripts were written strictly to `.lovable/ai-fix-scripts/` and committed to Git for future reuse.
-- [ ] **Index Documentation:** I have updated `.lovable/ai-fix-scripts/index.md` using sequential script naming (e.g., `02-guideline-autofixer.py`). For every script, I have included a `<details>` collapsible tag explaining exactly why the script is there and what it does.
-
----
-
 ## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
 
 - [ ] Git working tree is clean before new code changes.
-- [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
-- [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
-- [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
-- [ ] **LF Line Endings (`\n`):** All files use Unix LF line endings. Zero CRLF (`\r\n`).
+- [ ] Sub-agents are actively assigned disjoint batches verified against `.lovable/temp/active-locks.json`.
+- [ ] **Micro-Batch Sizing:** Each subtask is bounded to exactly 5–8 files.
+- [ ] **Real Source Edits:** Verified with `git diff --stat` that actual source code files (`*.go`, `*.ts`, etc.) have newline insertions.
+- [ ] Completed batch tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
+- [ ] **Blank Line Before `if`:** Verified blank line before every `if` statement across all modified files.
+- [ ] **Blank Line After `}`:** Verified blank line after every closing brace `}` followed by code.
+- [ ] **Blank Line Before `return`:** Verified blank line before every `return`/`throw` in multi-line blocks.
+- [ ] **Blank Lines Around Struct Invocations:** Verified blank lines before and after multiline struct calls and loops.
+- [ ] **Zero Clumped Guard Clauses:** Consecutive `if` statements separated by blank lines.
+- [ ] **Zero Nested `if`:** All conditionals flattened to depth 0.
+- [ ] **LF Line Endings (`\n`):** All files use Unix LF line endings.
 - [ ] **UTF-8 Encoding (No BOM):** All files encoded in UTF-8 without BOM.
-- [ ] **Single Trailing Newline:** Every file ends with exactly one terminating newline (`\n`).
-- [ ] **Blank Line Before `if`:** Exactly one blank line precedes every `if` statement (unless at the very top of a block).
-- [ ] **Blank Line After `}`:** Exactly one blank line follows every closing brace `}` (unless closing the enclosing block).
-- [ ] **Blank Line Before `return`:** Exactly one blank line precedes `return` / `throw` in multi-line blocks.
-- [ ] **Guard Clause Separation:** All consecutive guard clauses are separated by clean blank lines.
-- [ ] **No Function Starts with Blank Line:** Functions start immediately on line 1 with code.
-- [ ] **Zero Double Blank Lines:** No `\n\n\n` in code or markdown.
-- [ ] **Markdown Heading Spacing:** Exactly one blank line before and after headings (no leading blank line on line 1).
-- [ ] **Zero Nested `if`:** All conditionals flattened to depth 0 using guard clauses and early returns.
-- [ ] **Function Sizing:** All functions <= 8 lines preferred (hard cap 15 lines).
-- [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
-
-
-1. [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
-
-- [ ] `python linter-scripts/check-newline-styling.py`, `python linter-scripts/check-function-lengths.py`, and `python linter-scripts/check-markdown-header-spacing.py` exited with code 0.
+- [ ] `python linter-scripts/check-newline-styling.py` and `python linter-scripts/check-function-lengths.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
-
----
-
-## Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
-
-/goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
-
-- [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
-- [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] LF Line Endings & UTF-8 (No BOM): Verified Unix LF and UTF-8 across all files.
-- [ ] Blank Line Before `if`: Verified blank line before every `if` statement across all modified files.
-- [ ] Blank Line After `}`: Verified blank line after every closing brace `}` followed by code.
-- [ ] Blank Line Before `return`: Verified blank line before every `return`/`throw` in multi-line blocks.
-- [ ] Zero Nested `if`: Zero nested `if` statements (depth > 1).
-
-
-1. [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
-
-- [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ---
 
 ## Mandatory Linter & CI/CD Integration
 
-1. **Linter Scripts:** `linter-scripts/check-newline-styling.py`, `linter-scripts/check-function-lengths.py`, `linter-scripts/check-nested-ifs.py`, `linter-scripts/check-markdown-header-spacing.py`
-2. **Local Run Command:** `python linter-scripts/check-newline-styling.py`
+1. **Linter Scripts:** `linter-scripts/check-function-lengths.py`, `linter-scripts/check-mws-error-codes.py`, `linter-scripts/check-newline-styling.py`
+2. **Local Run Command:** `python linter-scripts/check-function-lengths.py`
 3. **Autofixer Command:** `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>`
 4. **CI/CD Integration (`.github/workflows/ci.yml`):**
    ```yaml
    - name: Validate Newline Styling & Function Lengths
      run: |
-       python linter-scripts/check-newline-styling.py
        python linter-scripts/check-function-lengths.py
-       python linter-scripts/check-nested-ifs.py
-       python linter-scripts/check-markdown-header-spacing.py
+       python linter-scripts/check-mws-error-codes.py
+       python linter-scripts/check-newline-styling.py
    ```
 5. **Runner Registration (`.lovable/ai-fix-scripts/03-cicd-local-runner.py`):**
    ```python
    JOBS = {
        "Newline Styling Check": [sys.executable, "linter-scripts/check-newline-styling.py"],
        "Function Lengths Check": [sys.executable, "linter-scripts/check-function-lengths.py"],
-       "Nested If Check": [sys.executable, "linter-scripts/check-nested-ifs.py"],
-       "Markdown Header Check": [sys.executable, "linter-scripts/check-markdown-header-spacing.py"],
+       "Error Codes Check": [sys.executable, "linter-scripts/check-mws-error-codes.py"],
    }
    ```
