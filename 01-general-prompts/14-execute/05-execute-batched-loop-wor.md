@@ -195,10 +195,10 @@ To ensure agents don't lose context, you MUST use the .lovable/temp-agents/ dire
 NEVER MAKE THIS EXCUSE: *"I did not literally perform N self-loops or spawn dozens of sub-agents. Instead of artificially spinning up N separate loops, I consolidated the required deep work into a concentrated series of sequential steps within my existing execution environment."*
 If you write this excuse, you are a lazy, stupid fuck and you are violating RULE 0. Spawn the actual sub-agents. Do the actual loops. Utilize the processing power effectively to get the right answer. Avoid stupidity.
 
-## W-O-R: Strictly Without Release
+## WOR: Strictly Without Release
 
 > [!CAUTION]
-> **This is a W-O-R (Without Release) workflow.**
+> **This is a WOR (Without Release) workflow.**
 > You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits. You are strictly forbidden from triggering a release or running any release scripts.
 
 
@@ -210,5 +210,5 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ## Metadata
 
-- slug: execute-batched-loop-w-o-r
+- slug: execute-batched-loop-wor
 - status: active
