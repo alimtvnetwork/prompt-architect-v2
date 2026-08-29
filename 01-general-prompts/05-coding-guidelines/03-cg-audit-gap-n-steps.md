@@ -3,7 +3,7 @@
 Trigger Keywords & Aliases: `cg-audit`, `audit gap`, `cg audit gap`, `cg-audit-gap`, `audit coding guidelines`, `verify coding guidelines`, `cg-audit-gap-n-steps`
 
 ```text
-N = 100
+N = 400
 ```
 
 N = total self-loop steps budget across the codebase. The user may override this number when triggering the prompt (e.g., N = 100 or N = 200).

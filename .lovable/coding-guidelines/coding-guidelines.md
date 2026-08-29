@@ -595,6 +595,49 @@ public bool IsEnabled { get; init; }
 public bool HasAdminRole() { }
 ```
 
+### Comma-`ok` & Type Assertion Renaming (Total Ban on `ok`)
+
+In Go type assertions, map lookups, and channel receives, bare `ok` is strictly banned. Always use a domain-specific affirmative boolean:
+
+```go
+// ❌ FORBIDDEN: Nested if with bare ok
+if appErr, ok := err.(*apperror.AppError); ok {
+    if appErr.Code != "E_INTERNAL_ERROR" {
+        t.Errorf("expected E_INTERNAL_ERROR, got %s", appErr.Code)
+    }
+} else {
+    t.Errorf("expected AppError, got %T", err)
+}
+
+// ✅ REQUIRED: Semantic isAppErr + inverted guard clause
+appErr, isAppErr := err.(*apperror.AppError)
+if !isAppErr {
+    t.Fatalf("expected AppError, got %T", err)
+}
+
+if appErr.Code != "E_INTERNAL_ERROR" {
+    t.Errorf("expected E_INTERNAL_ERROR, got %s", appErr.Code)
+}
+```
+
+### Positive Boolean Framing with Inverted Guard Clauses
+
+Never name booleans with negative words (`hasNo*`, `isNot*`). Declare positively, then invert inside the `if` guard clause:
+
+```tsx
+// ❌ FORBIDDEN: Negative boolean names
+const hasNoColors = !colorConfig.length;
+if (hasNoColors) {
+    return null;
+}
+
+// ✅ REQUIRED: Positive framing + inverted guard condition
+const hasColors = colorConfig.length > 0;
+if (!hasColors) {
+    return null;
+}
+```
+
 ---
 
 ## 5. R4 — Split the parameter list
