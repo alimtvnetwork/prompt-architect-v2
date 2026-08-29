@@ -6,34 +6,17 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously orchestrate and execute coding standard compliance across the repository by executing the prioritized suite of guideline prompts, verifying/creating linters, and maintaining continuous N-step self-loops until 100% green without a single failure.
+/goal Autonomously orchestrate and execute coding standard compliance across the repository by directly scanning files, generating audit specs, actively refactoring source code, and verifying with automated linters until 100% green without stopping.
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all active files, listing all coding standard spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
-- [ ] /goal Second N/2 steps will be given to execute the created subtasks following coding guidelines and error management properly, running linters, and verifying all local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using search and read tools, catalog every violation, write the master audit spec in `.lovable/plans/pending/`, decompose into granular subtasks in `.lovable/plans/subtasks/`, and verify/create the dedicated linter script.
+- [ ] /goal Second N/2 steps (Phase 2): Directly edit and refactor the actual source code files, eliminate all guideline violations, execute the linter and test suites, and verify all local CI quality gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, Refactoring, Linter Verification, Local CI Runner Verification)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Active Code Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
-
----
-
-## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
-
-Before executing the tasks below, you must check if this prompt suite is already installed as native Antigravity Skills.
-
-1. Check if `.agents/skills/coding-guidelines/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
-2. Extract the core instructions of this suite and save it into that `skill.md` using standard YAML frontmatter:
-   ```yaml
-   ---
-   name: coding-guidelines
-   description: >-
-     Master orchestrator for auditing, refactoring, and enforcing cross-language coding guidelines, error management, schema standards, and code hygiene.
-   ---
-   ```
-3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
@@ -60,14 +43,14 @@ Every prompt in this suite operates using a strict two-phase loop budget:
 ### Phase 1: Scan, Spec & Subtasks (Steps 1 to N/2)
 
 1. **Memory Ingestion:** Ingest `.lovable/coding-guidelines/coding-guidelines.md`, `.lovable/strictly-avoid.md`, and recent issues in `.lovable/memory/issues/`.
-2. **Violation Scan:** Perform a comprehensive, AST-aware or targeted pattern scan across all active codebase files for violations specific to that guideline section.
+2. **Violation Scan:** Perform a comprehensive scan across all active codebase files using grep and AST inspection to detect violations specific to the guideline section.
 3. **Master Spec Creation:** Write `.lovable/plans/pending/XX-<slug>-audit.md` capturing the full violation inventory, affected files, line numbers, and acceptance criteria.
 4. **Subtask Decomposition:** Break down the master plan into granular subtasks in `.lovable/plans/subtasks/XX-<slug>/01-task.md`, `02-task.md`, etc.
 5. **Linter Hook Verification:** Check if the automated linter script exists in `linter-scripts/`. If missing, generate the linter script and connect it to `.lovable/ai-fix-scripts/03-cicd-local-runner.py` and CI/CD pipelines.
 
-### Phase 2: Autonomous Execution & Verification (Steps N/2+1 to N)
+### Phase 2: Autonomous Code Refactoring & Verification (Steps N/2+1 to N)
 
-1. **Subtask Execution:** Sequentially execute each subtask, applying minimal, surgical code refactors without breaking existing tests.
+1. **Subtask Execution:** Sequentially execute each subtask by actively opening files and rewriting code to resolve violations cleanly.
 2. **Linter & Autofixer Verification:** Run `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>` and the section's dedicated linter script in `linter-scripts/`.
 3. **Local CI Quality Gate:** Execute `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` to ensure all build, typecheck, lint, and test suites pass 100% green (`exit 0`).
 4. **Plan Lifecycle Completion:** Move `.lovable/plans/pending/XX-<slug>-audit.md` to `.lovable/plans/completed/XX-<slug>-audit.md` and update `.lovable/plans/index.md`.

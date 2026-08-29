@@ -8,36 +8,19 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously orchestrate and execute database and data schema compliance across the entire repository by decomposing violations into subtasks, generating Mermaid ERD diagrams, verifying/creating schema linters, and running a continuous N-step self-loop until 100% green without a single failure.
+/goal Autonomously scan, plan, refactor, and fix all database schema, model, and query violations across the codebase, modifying migration scripts and ORM entities directly to enforce PascalCase tables, camelCase columns, `{TableName}Id` integer keys, and Mermaid ERDs until 100% green without stopping.
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all SQL, migrations, and ORM files, listing all schema spec files with why and how, creating the Antigravity skill, generating Mermaid ERDs, and breaking down into microscopic subtasks for N/2 steps.
-- [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring tables to PascalCase, columns to camelCase, primary keys to `{TableName}Id` integers, JSON keys to PascalCase, running the schema linter, and verifying all local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active SQL schemas, migrations, and ORM model definitions for snake_case naming, non-standard primary keys, unconstrained foreign keys, and free-form status strings. Write the master audit spec in `.lovable/plans/pending/XX-data-and-schema-audit.md`, generate the Mermaid ERD, break it down into `.lovable/plans/subtasks/XX-data-and-schema/`, and verify/create the schema linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending schema migration, model, and repository file, refactor tables to PascalCase, columns to camelCase, and keys to `{TableName}Id` integers, run the schema linter and tests, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/04-database-conventions/`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, Schema Refactoring, Linter Verification, Local CI Runner Verification)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Schema Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
-
----
-
-## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
-
-Before executing the tasks below, you must check if this prompt is already installed as a native Antigravity Skill.
-
-1. Check if `.agents/skills/cg-data-and-schema/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
-2. Extract the core instructions of this prompt and save it into that `skill.md` using standard YAML frontmatter:
-   ```yaml
-   ---
-   name: cg-data-and-schema
-   description: >-
-     Autonomously audits, refactors, and validates repository-wide database schemas, models, and migrations against spec/04-database-conventions/ using PascalCase tables, camelCase columns, and CI linters.
-   ---
-   ```
-3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
@@ -51,14 +34,20 @@ Before executing the tasks below, you must check if this prompt is already insta
 
 ---
 
-## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST (Steps 1 to PHASE_1_STEPS)
+## 2. Phase 1: Scan Codebase & Write Implementation Spec First (Steps 1 to PHASE_1_STEPS)
 
-Before doing anything else, you MUST write a highly detailed execution spec.
+Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
-- **What to write:** Break down the parent task into a detailed architectural plan, complete database and schema violation inventory, Mermaid ERD diagram, code review guides, and embedded database standards.
-- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-data-and-schema-audit.md`. Do not hallucinate folders.
-- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
-- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-data-and-schema/`. Every subtask file must contain actionable, microscopic instructions.
+- **Actionable Scan:** Use search/grep tools across all SQL files, migrations, and ORM entities to identify:
+  1. Snake_case or kebab-case table names (e.g. `user_accounts` vs `UserAccount`).
+  2. Non-standard primary keys (e.g. bare `id`, `uuid`, `user_id` vs `UserAccountId`).
+  3. Snake_case column names (e.g. `created_at` vs `createdAt`).
+  4. Missing foreign key constraints or un-indexed join keys.
+  5. Free-form string status/type fields lacking join tables or registered enums.
+  6. Missing Mermaid ERDs in schema documentation.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-data-and-schema-audit.md` listing every affected file, exact line numbers, and the updated Mermaid ERD.
+- **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-data-and-schema/` (e.g. `01-primary-and-foreign-keys.md`, `02-column-naming.md`).
 
 ---
 
@@ -112,11 +101,11 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 ---
 
-## 5. Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
+## 5. Phase 2: Active Code Refactoring & Autonomous Fix Loop (Steps PHASE_1_STEPS+1 to N)
 
 > [!IMPORTANT]
 > **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
-> Sequentially execute each subtask, applying surgical refactoring until all schema checks pass 100% green.
+> Open the offending schema and model files and directly rewrite the code to eliminate violations. Maintain continuous self-looping until all checks pass 100% green.
 
 ```text
 STEP = 0
@@ -124,19 +113,27 @@ WHILE (STEP < PHASE_2_STEPS):
     STEP += 1
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-data-and-schema/
-    2. Apply surgical refactoring to schema migrations, ORM entities, and repository queries.
+    2. Open and modify the actual source code and migration files:
+       - Refactor table names to PascalCase and column names to camelCase.
+       - Standardize primary keys to {TableName}Id integer auto-increments.
+       - Enforce explicit foreign keys and join tables for status fields.
+       - Update JSON serializers to output PascalCase payload keys.
     3. Run the schema linter:
           python linter-scripts/check-schema-guidelines.py
     4. Run database unit and integration test suites.
     5. Run the local CI runner:
           python .lovable/ai-fix-scripts/03-cicd-local-runner.py
     6. IF any check fails:
-          - Diagnose failure, fix entity/migration mismatch, and re-test immediately.
+          - Diagnose failure, fix schema/entity code directly, and re-run immediately.
        IF all checks pass (exit code 0):
           - Mark subtask completed and proceed to next subtask.
 
     7. When all subtasks are finished and local CI is 100% green:
-          - BREAK and proceed to End of Tunnel.
+          - Move .lovable/plans/pending/XX-data-and-schema-audit.md to .lovable/plans/completed/
+          - Update .lovable/plans/index.md
+          - Stage modified files with git add and create semantic commit:
+            git commit -m "refactor(schema): standardize PascalCase entities, camelCase columns, and {TableName}Id keys"
+          - BREAK and finish turn.
 ```
 
 ---

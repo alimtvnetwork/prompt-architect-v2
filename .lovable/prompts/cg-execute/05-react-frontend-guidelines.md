@@ -8,36 +8,19 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously orchestrate and execute React and frontend architecture compliance across the entire repository by decomposing violations into subtasks, verifying/creating frontend linters, and running a continuous N-step self-loop until 100% green without a single failure.
+/goal Autonomously scan, plan, refactor, and fix all React and frontend architecture violations across the codebase, decomposing oversized components ($\le$ 100 lines), converting custom hook tuple returns to named objects, and eliminating redundant `useEffect` hooks until 100% green without stopping.
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all `.tsx`, `.jsx`, and `.ts` frontend files, listing all React & frontend spec files with why and how, creating the Antigravity skill, generating component hierarchy diagrams, and breaking down into microscopic subtasks for N/2 steps.
-- [ ] /goal Second N/2 steps will be given to execute the created subtasks, decomposing monolithic components ($\le$ 100 lines), eliminating redundant `useEffect` hooks, converting custom hook tuple returns to named objects, running the frontend linter, and verifying all local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active `.tsx` and `.jsx` component files for line counts exceeding 100 lines, custom hooks returning raw tuples (`[state, setState]`), and redundant `useEffect` syncing. Write the master audit spec in `.lovable/plans/pending/XX-react-frontend-audit.md`, generate the component hierarchy diagram, break it down into `.lovable/plans/subtasks/XX-react-frontend/`, and verify/create the frontend linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending component and hook file, decompose UI blocks into sub-components $\le$ 100 lines, convert hook return signatures to named property objects, run the frontend linter, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/02-typescript/`, `spec/07-design-system/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, Component Refactoring, Linter Verification, Local CI Runner Verification)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Component Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
-
----
-
-## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
-
-Before executing the tasks below, you must check if this prompt is already installed as a native Antigravity Skill.
-
-1. Check if `.agents/skills/cg-react-frontend/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
-2. Extract the core instructions of this prompt and save it into that `skill.md` using standard YAML frontmatter:
-   ```yaml
-   ---
-   name: cg-react-frontend
-   description: >-
-     Autonomously audits, refactors, and validates repository-wide React and frontend code against spec/02-coding-guidelines/02-typescript/ using 100-line caps, named hook objects, and CI linters.
-   ---
-   ```
-3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
@@ -51,14 +34,19 @@ Before executing the tasks below, you must check if this prompt is already insta
 
 ---
 
-## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST (Steps 1 to PHASE_1_STEPS)
+## 2. Phase 1: Scan Codebase & Write Implementation Spec First (Steps 1 to PHASE_1_STEPS)
 
-Before doing anything else, you MUST write a highly detailed execution spec.
+Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
-- **What to write:** Break down the parent task into a detailed architectural plan, complete React component line count audit, custom hook return signature catalog, Mermaid component tree diagram, code review guides, and embedded frontend standards.
-- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-react-frontend-audit.md`. Do not hallucinate folders.
-- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
-- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-react-frontend/`. Every subtask file must contain actionable, microscopic instructions.
+- **Actionable Scan:** Use search/grep and line-count tools across all `.tsx` and `.jsx` files to identify:
+  1. Component files exceeding 100 lines of code.
+  2. Custom hooks returning array literals (tuples) instead of named objects (`return [val, setVal]` vs `return { val, onUpdate }`).
+  3. Redundant `useEffect` hooks used for derived calculations or local state sync.
+  4. Direct state mutations (`state.items.push()` or `state.prop = x`).
+  5. Missing Mermaid component tree diagrams in UI documentation.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-react-frontend-audit.md` listing every affected file, exact line numbers, and the extraction plan.
+- **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-react-frontend/` (e.g. `01-decompose-oversized-components.md`, `02-hook-named-objects.md`).
 
 ---
 
@@ -111,11 +99,11 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 ---
 
-## 5. Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
+## 5. Phase 2: Active Code Refactoring & Autonomous Fix Loop (Steps PHASE_1_STEPS+1 to N)
 
 > [!IMPORTANT]
 > **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
-> Sequentially execute each subtask, decomposing components and refactoring hooks until all frontend checks pass 100% green.
+> Open the offending component files and directly rewrite the code to eliminate violations. Maintain continuous self-looping until all checks pass 100% green.
 
 ```text
 STEP = 0
@@ -123,19 +111,27 @@ WHILE (STEP < PHASE_2_STEPS):
     STEP += 1
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-react-frontend/
-    2. Extract sub-components into dedicated files (ensuring each is <= 100 lines).
-    3. Convert hook returns to named property objects and update caller sites.
-    4. Run the frontend linter:
+    2. Open and modify the actual source code files:
+       - Decompose oversized components into modular sub-components <= 100 lines.
+       - Convert custom hook return tuples to named property objects and update callers.
+       - Eliminate redundant useEffect by computing derived state inline.
+       - Enforce immutable state updates across all handlers.
+    3. Run the frontend linter:
           node linter-scripts/check-frontend-guidelines.mjs
+    4. Run frontend unit tests and type checks.
     5. Run the local CI runner:
           python .lovable/ai-fix-scripts/03-cicd-local-runner.py
     6. IF any check fails:
-          - Diagnose failure, fix component structure, and re-test immediately.
+          - Diagnose failure, fix component code directly, and re-run immediately.
        IF all checks pass (exit code 0):
           - Mark subtask completed and proceed to next subtask.
 
     7. When all subtasks are finished and local CI is 100% green:
-          - BREAK and proceed to End of Tunnel.
+          - Move .lovable/plans/pending/XX-react-frontend-audit.md to .lovable/plans/completed/
+          - Update .lovable/plans/index.md
+          - Stage modified files with git add and create semantic commit:
+            git commit -m "refactor(ui): decompose component hierarchy and enforce named hook objects"
+          - BREAK and finish turn.
 ```
 
 ---

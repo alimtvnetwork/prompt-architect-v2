@@ -8,36 +8,19 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously orchestrate and execute coding style, newline formatting, and function size compliance across the entire repository by decomposing violations into subtasks, running automated autofixers, verifying/creating style linters, and running a continuous N-step self-loop until 100% green without a single failure.
+/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, and function size violations across the codebase, decomposing oversized functions ($\le$ 15 lines), flattening nested `if`s, and applying Return New Line rules (R13-R16) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all source files for newline styling (R13-R16), function length (> 15 lines), nested `if`s, listing all style spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
-- [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring functions to $\le$ 15 lines, flattening nested conditionals, applying Return New Line rules, running style linters and autofixers, and verifying all local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for functions exceeding 15 lines, nested `if` branches ($> 1$ level), and missing newlines before `return`/`throw` and after `}`. Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, break long functions into single-responsibility helpers, flatten nested conditionals with early returns, apply the automated newline autofixer, run style linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, Style Refactoring, Linter Verification, Local CI Runner Verification)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Style Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
-
----
-
-## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
-
-Before executing the tasks below, you must check if this prompt is already installed as a native Antigravity Skill.
-
-1. Check if `.agents/skills/cg-style-guidelines/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
-2. Extract the core instructions of this prompt and save it into that `skill.md` using standard YAML frontmatter:
-   ```yaml
-   ---
-   name: cg-style-guidelines
-   description: >-
-     Autonomously audits, refactors, and validates repository-wide code style, newline rules (R13-R16), and 15-line function caps using autofixers and CI linters.
-   ---
-   ```
-3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
@@ -51,14 +34,20 @@ Before executing the tasks below, you must check if this prompt is already insta
 
 ---
 
-## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST (Steps 1 to PHASE_1_STEPS)
+## 2. Phase 1: Scan Codebase & Write Implementation Spec First (Steps 1 to PHASE_1_STEPS)
 
-Before doing anything else, you MUST write a highly detailed execution spec.
+Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
-- **What to write:** Break down the parent task into a detailed architectural plan, complete function length audit, newline violation inventory, code review guides, and embedded style standards.
-- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-style-guidelines-audit.md`. Do not hallucinate folders.
-- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
-- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-style-guidelines/`. Every subtask file must contain actionable, microscopic instructions.
+- **Actionable Scan:** Use search/grep and AST tools across all source files to identify:
+  1. Functions exceeding 15 lines of logic.
+  2. Nested `if` statements ($> 1$ level deep).
+  3. Missing blank lines before `return`, `throw`, or `raise` (R13).
+  4. Missing blank lines after closing `}` (R14).
+  5. Consecutive blank lines (R15).
+  6. Function signatures $> 3$ parameters or $> 100$ characters not split across lines.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-style-guidelines-audit.md` listing every affected function, exact line numbers, and decomposition plans.
+- **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-style-guidelines/` (e.g. `01-function-length-refactoring.md`, `02-return-newline-styling.md`).
 
 ---
 
@@ -106,11 +95,11 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 ---
 
-## 5. Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
+## 5. Phase 2: Active Code Refactoring & Autonomous Fix Loop (Steps PHASE_1_STEPS+1 to N)
 
 > [!IMPORTANT]
 > **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
-> Sequentially execute each subtask, decomposing functions and applying autofixers until all style linters pass 100% green.
+> Open the offending source code files and directly rewrite the code to eliminate violations. Maintain continuous self-looping until all checks pass 100% green.
 
 ```text
 STEP = 0
@@ -118,21 +107,28 @@ WHILE (STEP < PHASE_2_STEPS):
     STEP += 1
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-style-guidelines/
-    2. Decompose functions > 15 lines into concise helpers and flatten nested `if`s.
-    3. Run the guideline autofixer to automatically enforce newline rules (R13-R16):
-          python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
-    4. Run style linters:
+    2. Open and modify the actual source code files:
+       - Break functions > 15 lines into concise single-purpose helpers.
+       - Flatten nested if statements using guard clauses and early returns.
+       - Apply the automated newline autofixer to ensure R13-R16 compliance:
+         python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
+    3. Run style and function length linters:
           python linter-scripts/check-function-lengths.py
           python linter-scripts/check-newline-styling.py
+    4. Run project test suites to verify zero functional regression.
     5. Run the local CI runner:
           python .lovable/ai-fix-scripts/03-cicd-local-runner.py
     6. IF any check fails:
-          - Diagnose failure, fix formatting, and re-test immediately.
+          - Diagnose failure, fix formatting directly, and re-run immediately.
        IF all checks pass (exit code 0):
           - Mark subtask completed and proceed to next subtask.
 
     7. When all subtasks are finished and local CI is 100% green:
-          - BREAK and proceed to End of Tunnel.
+          - Move .lovable/plans/pending/XX-style-guidelines-audit.md to .lovable/plans/completed/
+          - Update .lovable/plans/index.md
+          - Stage modified files with git add and create semantic commit:
+            git commit -m "style(guidelines): enforce newline styling, guard clauses, and 15-line function caps"
+          - BREAK and finish turn.
 ```
 
 ---

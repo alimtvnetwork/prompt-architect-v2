@@ -8,36 +8,19 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously orchestrate and execute error management compliance across the entire repository by decomposing violations into subtasks, verifying/creating error linters, and running a continuous N-step self-loop until 100% green without a single failure.
+/goal Autonomously scan, plan, refactor, and fix all error management violations across the codebase, modifying source files directly to implement `AppError` wrappers, contextual logging, and universal response envelopes until 100% green without stopping.
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all active files, listing all error management spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
-- [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring error handling to follow `AppError` context wrapping and universal envelopes, running the error linter, and verifying all local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active backend, frontend, and service files for swallowed errors, bare un-wrapped returns, unhandled promises, and raw error responses. Write the master audit spec in `.lovable/plans/pending/XX-error-management-audit.md`, break it down into `.lovable/plans/subtasks/XX-error-management/`, and verify/create the error linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, refactor error handling to use `AppError`/`AppException` with operation names and parameters, run the error linter, execute tests, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, AppError Refactoring, Linter Verification, Local CI Runner Verification)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, AppError Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
-
----
-
-## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
-
-Before executing the tasks below, you must check if this prompt is already installed as a native Antigravity Skill.
-
-1. Check if `.agents/skills/cg-error-management/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
-2. Extract the core instructions of this error management prompt and save it into that `skill.md` using standard YAML frontmatter:
-   ```yaml
-   ---
-   name: cg-error-management
-   description: >-
-     Autonomously audits, refactors, and validates repository-wide error management against spec/03-error-manage/ using AppError wrappers, universal response envelopes, and CI linters.
-   ---
-   ```
-3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
@@ -51,14 +34,18 @@ Before executing the tasks below, you must check if this prompt is already insta
 
 ---
 
-## 2. Phase 1: Write the Implementation Spec & Subtasks FIRST (Steps 1 to PHASE_1_STEPS)
+## 2. Phase 1: Scan Codebase & Write Implementation Spec First (Steps 1 to PHASE_1_STEPS)
 
-Before doing anything else, you MUST write a highly detailed execution spec.
+Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
-- **What to write:** Break down the parent task into a detailed architectural plan, complete error violation inventory, code review guides, and embedded error management guidelines.
-- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-error-management-audit.md`. Do not hallucinate folders.
-- **Create a Task-Specific Rule Set:** Before executing, analyze the specific task domain and explicitly write down 3-5 custom rules or constraints unique to this task inside the spec file. This prevents domain-specific regressions and forces sub-agents to follow exact architectures.
-- **Subtasks:** You MUST break the plan down and create detailed subtask files inside `.lovable/plans/subtasks/XX-error-management/`. Every subtask file must contain actionable, microscopic instructions.
+- **Actionable Scan:** Use search/grep tools across all Go, TypeScript, PHP, and Python files to identify:
+  1. Empty `catch` / `except` blocks or swallowed errors (`_ = err`).
+  2. Bare error returns without contextual wrapping (`return err` instead of `apperror.Wrap`).
+  3. Raw panic / exit invocations (`panic()`, `process.exit()`, `os.Exit()`).
+  4. API endpoints returning raw text or unformatted error payloads instead of the `{ data, errors, meta }` envelope.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-error-management-audit.md` listing every affected file and exact line number.
+- **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-error-management/` (e.g. `01-wrap-database-errors.md`, `02-api-response-envelopes.md`).
 
 ---
 
@@ -118,11 +105,11 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 ---
 
-## 5. Phase 2: Autonomous Subtask Execution Loop (Steps PHASE_1_STEPS+1 to N)
+## 5. Phase 2: Active Code Refactoring & Autonomous Fix Loop (Steps PHASE_1_STEPS+1 to N)
 
 > [!IMPORTANT]
 > **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
-> Sequentially execute each subtask, applying surgical refactoring until all error management checks pass 100% green.
+> Open the offending source code files and directly rewrite the code to eliminate violations. Maintain continuous self-looping until all checks pass 100% green.
 
 ```text
 STEP = 0
@@ -130,7 +117,10 @@ WHILE (STEP < PHASE_2_STEPS):
     STEP += 1
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-error-management/
-    2. Apply surgical refactoring (wrap errors with AppError, inject operation context, fix response envelopes).
+    2. Open and modify the actual source code files:
+       - Wrap errors with AppError / AppException preserving root causes.
+       - Inject operation name and parameter context into all error logs.
+       - Enforce the universal { data, errors, meta } API envelope.
     3. Run the error management linter:
           python linter-scripts/check-error-management.py
     4. Run the universal guideline autofixer:
@@ -138,12 +128,16 @@ WHILE (STEP < PHASE_2_STEPS):
     5. Run the local CI runner:
           python .lovable/ai-fix-scripts/03-cicd-local-runner.py
     6. IF any check fails:
-          - Diagnose failure, fix code, and re-run immediately.
+          - Diagnose failure, fix code directly, and re-run immediately.
        IF all checks pass (exit code 0):
           - Mark subtask completed and proceed to next subtask.
 
     7. When all subtasks are finished and local CI is 100% green:
-          - BREAK and proceed to End of Tunnel.
+          - Move .lovable/plans/pending/XX-error-management-audit.md to .lovable/plans/completed/
+          - Update .lovable/plans/index.md
+          - Stage modified files with git add and create semantic commit:
+            git commit -m "refactor(errors): enforce AppError context wrapping and universal envelopes"
+          - BREAK and finish turn.
 ```
 
 ---
