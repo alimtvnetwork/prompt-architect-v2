@@ -1,4 +1,8 @@
-# Instruction (must follow): Social Media Post Generation
+# Social Media Post Generation: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

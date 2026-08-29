@@ -1,4 +1,8 @@
-# Instruction (must follow): Repo File Naming Convention
+# Repo File Naming Convention: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 Enforce these naming rules across the entire repository:
 

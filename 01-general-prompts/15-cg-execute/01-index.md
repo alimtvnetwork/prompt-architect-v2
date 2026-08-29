@@ -1,4 +1,8 @@
-# Instruction (must follow): Coding Guideline Execution Suite (`cg-execute`) — Index & Catalog
+# Coding Guideline Execution Suite (`cg-execute`) — Index & Catalog: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

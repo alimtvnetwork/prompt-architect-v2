@@ -1,4 +1,8 @@
-# Instruction (must follow): Any pending tasks (full inventory, maximum enforcement)
+# Any pending tasks (full inventory, maximum enforcement): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## RULE 0, list EVERY pending task or the run is a failure
 

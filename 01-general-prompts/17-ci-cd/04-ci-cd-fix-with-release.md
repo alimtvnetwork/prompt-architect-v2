@@ -1,6 +1,10 @@
-# Instruction (must follow): Autonomous CI/CD Fix Loop + Release
+# Autonomous CI/CD Fix Loop + Release: Instruction (must follow)
 
 Trigger Keywords & Aliases: `fix and release`, `ci release`, `fix CI/CD and release`, `cicd fix release`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

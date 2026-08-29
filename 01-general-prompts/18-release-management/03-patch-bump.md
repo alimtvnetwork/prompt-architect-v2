@@ -1,5 +1,9 @@
 Bump the PATCH version (MAJOR.MINOR.PATCH to MAJOR.MINOR.(PATCH+1)).
 
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
+
 Only use this prompt when the user explicitly says "patch bump" or "patch release". Otherwise a release trigger defaults to MINOR.
 
 ## MUST FOLLOW NON-NEGOTIABLE

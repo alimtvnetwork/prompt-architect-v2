@@ -1,4 +1,8 @@
-# Instruction (must follow): Read Memory (Enhanced)
+# Read Memory (Enhanced): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Load the project's identity, specifications, conventions, active plans, and recent Root Cause Analysis (RCA) records into your context before starting any task. Never repeat a logged past failure.
 

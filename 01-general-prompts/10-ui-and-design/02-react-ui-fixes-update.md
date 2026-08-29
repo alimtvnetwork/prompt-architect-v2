@@ -1,4 +1,8 @@
-# Instruction (must follow): React UI Fixes & Update Instruction
+# React UI Fixes & Update Instruction: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When applying UI fixes or updates to a React component, follow these rules strictly:
 

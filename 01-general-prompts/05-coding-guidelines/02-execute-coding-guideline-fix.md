@@ -1,4 +1,8 @@
-# Instruction (must follow): Execute Coding Guideline Fixes
+# Execute Coding Guideline Fixes: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Apply concrete, surgical fixes for all coding guideline violations listed in the pending tasks. Strictly adhere to all style rules, boolean principles, function size limits (< 8 lines), and type-safety standards without introducing regressions.
 

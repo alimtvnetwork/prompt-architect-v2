@@ -1,5 +1,9 @@
-# Instruction (must follow): Commit Fix
+# Commit Fix: Instruction (must follow)
 
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## No Automatic Releases (Strict Policy)
 

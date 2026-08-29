@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Code Hygiene & Project Architecture
+# Execute Coding Guidelines — Code Hygiene & Project Architecture: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-hygiene`, `cg-execute hygiene`, `audit hygiene`, `fix file sizes`, `enforce code hygiene`, `parameter reduction`, `fix line endings`, `fix encoding`, `enforce utf8 lf`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Coding Style, Formatting & Line-Gaps
+# Execute Coding Guidelines — Coding Style, Formatting & Line-Gaps: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`, `flatten nested if`, `newline before if`, `return newline style`, `style guidelines audit`, `line gaps audit`, `fix line endings`, `enforce utf8 lf`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

@@ -1,4 +1,8 @@
-# Instruction (must follow): Update Theming Instruction
+# Update Theming Instruction: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When updating the theming configuration:
 

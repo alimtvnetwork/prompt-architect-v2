@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Variable & Boolean Naming Conventions, Anti-`ok` & Positive Framing Guard Clauses
+# Execute Coding Guidelines — Variable & Boolean Naming Conventions, Anti-`ok` & Positive Framing Guard Clauses: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-naming`, `cg-execute naming`, `audit naming`, `fix boolean naming`, `fix naming conventions`, `fix ok boolean`, `affirmative naming`, `positive boolean naming`, `naming conventions audit`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

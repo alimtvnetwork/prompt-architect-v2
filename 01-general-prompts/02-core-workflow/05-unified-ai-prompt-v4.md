@@ -1,5 +1,9 @@
-# Instruction (must follow): Unified AI Instruction - v4
+# Unified AI Instruction - v4: Instruction (must follow)
 
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## STRICT AVOIDANCE: Never Disable CI/CD
 

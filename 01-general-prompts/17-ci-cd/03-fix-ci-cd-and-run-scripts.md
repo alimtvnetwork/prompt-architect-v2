@@ -1,6 +1,10 @@
-# Instruction (must follow): Fix CI CD and Run Scripts All
+# Fix CI CD and Run Scripts All: Instruction (must follow)
 
 Trigger Keywords & Aliases: `fix with RCA`, `FRCA : Fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `fix run scripts`, `force rebuild`, `force create`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 - **`force` Keyword Support:** If the user wrote `force`, `force rebuild`, or `force create` on top of the prompt or trigger: **ALWAYS recreate/regenerate the Python runner script `.lovable/ai-fix-scripts/03-cicd-local-runner.py` from scratch**, regardless of whether the file already exists on disk.
 

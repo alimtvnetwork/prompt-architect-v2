@@ -1,4 +1,8 @@
-# Instruction (must follow): Boolean Improvements & Multi-Agent Code Fix
+# Boolean Improvements & Multi-Agent Code Fix: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## 1. Initial State: Clean the Git Tree & Casing Check First
 

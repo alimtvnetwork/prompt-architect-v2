@@ -1,4 +1,8 @@
-# Instruction (must follow): SEO Optimization Instruction
+# SEO Optimization Instruction: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When tasked with SEO optimization for a page or component, enforce the following:
 

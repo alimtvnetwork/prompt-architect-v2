@@ -1,6 +1,10 @@
-# Instruction (must follow): Coding Guideline Gap Audit (0-100 Scoring & N-Step Continuous Loop)
+# Coding Guideline Gap Audit (0-100 Scoring & N-Step Continuous Loop): Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-audit`, `audit gap`, `cg audit gap`, `cg-audit-gap`, `audit coding guidelines`, `verify coding guidelines`, `cg-audit-gap-n-steps`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 400

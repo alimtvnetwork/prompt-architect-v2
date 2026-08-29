@@ -1,4 +1,8 @@
-# Instruction (must follow): Autonomous QA & Unit Testing Loop (v4)
+# Autonomous QA & Unit Testing Loop (v4): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Create a comprehensive execution plan to achieve 100% test coverage across the repository, split the work into logical subtasks, and autonomously spawn subagents in a continuous self-loop to execute the testing plan until complete. 
 

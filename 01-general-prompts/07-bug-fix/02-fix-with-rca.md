@@ -1,4 +1,8 @@
-# Instruction (must follow): Fix Bug with Deep Root Cause Analysis (RCA)
+# Fix Bug with Deep Root Cause Analysis (RCA): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Autonomously fix the provided bug/issue, strictly enforcing coding guidelines, and document the complete RCA before pushing the code.
 
@@ -62,7 +66,8 @@ eturn/	hrow. One blank line after closing }. Never two blank lines in a row.
 
 ## End of Tunnel
 
-- [ ] Once the fix is verified and the RCA document is written, commit using standard prefixes (e.g., ix(core): ...).
+- [ ] Once the fix is verified and the RCA document is written, commit using standard prefixes (e.g., 
+ix(core): ...).
 - [ ] Push changes to git.
 - [ ] Provide the user with a summary of the RCA and exactly what code was modified.
 

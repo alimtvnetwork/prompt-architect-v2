@@ -1,4 +1,8 @@
-# Instruction (must follow): Plan: Maximum Enforcement (v4.2)
+# Plan: Maximum Enforcement (v4.2): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## RULE 0, step count is law
 

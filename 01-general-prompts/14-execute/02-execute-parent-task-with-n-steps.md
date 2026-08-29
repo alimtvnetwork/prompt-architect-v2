@@ -1,4 +1,8 @@
-# Instruction (must follow): Execute Parent Task (N-Step Continuous Loop & Multi-Agent)
+# Execute Parent Task (N-Step Continuous Loop & Multi-Agent): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Autonomously orchestrate and execute the parent task by decomposing it into subtasks and running a continuous N-step self-loop until completion without a single failure.
 

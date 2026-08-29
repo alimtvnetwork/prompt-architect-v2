@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Integration, E2E & Branch Test Coverage
+# Execute Coding Guidelines — Integration, E2E & Branch Test Coverage: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-test`, `cg-execute test`, `audit tests`, `add integration tests`, `enforce test coverage`, `write e2e tests`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 300

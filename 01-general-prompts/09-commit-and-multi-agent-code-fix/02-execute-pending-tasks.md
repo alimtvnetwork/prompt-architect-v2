@@ -1,4 +1,8 @@
-# Instruction (must follow): Execute Pending Tasks (Autonomous Execution)
+# Execute Pending Tasks (Autonomous Execution): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Autonomously orchestrate and execute ALL pending tasks in a continuous N-step self-loop until the entire queue is completely resolved without a single failure.
 

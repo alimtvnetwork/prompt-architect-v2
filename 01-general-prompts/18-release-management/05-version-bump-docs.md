@@ -1,4 +1,8 @@
-# Instruction (must follow): Version Bump Docs Instruction
+# Version Bump Docs Instruction: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When instructed to bump the version in documentation:
 

@@ -1,6 +1,10 @@
-# Instruction (must follow): Memory Consolidation — Consolidate Completed Plans & Re-Sequence Milestones
+# Memory Consolidation — Consolidate Completed Plans & Re-Sequence Milestones: Instruction (must follow)
 
 Trigger Keywords & Aliases: `consolidate-plans`, `consolidate completed plans`, `clean completed plans`, `resequence completed plans`, `merge plans`, `archive completed plans`, `cleanup plans completed`, `memory consolidation`, `backup and consolidate plans`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

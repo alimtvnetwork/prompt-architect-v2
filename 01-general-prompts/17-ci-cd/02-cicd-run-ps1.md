@@ -1,4 +1,8 @@
-# Instruction (must follow): CI/CD Pipeline & Run Script Creation
+# CI/CD Pipeline & Run Script Creation: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 You are responsible for creating or fixing CI/CD pipelines (e.g., GitHub Actions workflows) and dynamic execution scripts (e.g., `run.ps1`, `run.sh`, `run.config.json`). 
 

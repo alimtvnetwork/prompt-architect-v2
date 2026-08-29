@@ -1,4 +1,8 @@
-# Instruction (must follow): Plan: Coding Guideline Audit & Enforcement (v4)
+# Plan: Coding Guideline Audit & Enforcement (v4): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Deeply audit the entire codebase for coding guideline violations, boolean anti-patterns, missing enums, cyclomatic complexity, and error-handling flaws. Structure all findings into actionable, fine-grained tasks in .lovable/plans/pending/ and subtasks before stopping.
 

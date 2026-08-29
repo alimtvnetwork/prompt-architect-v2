@@ -1,5 +1,9 @@
 Run again if said: go, continue, or next
 
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
+
 # Instruction (must follow): Execute Batched Loop (3 Agents, Chunked Commits)
 
 /goal Execute pending tasks from `.lovable/plans/pending/` using a strictly batched multi-agent loop. Use exactly 3 sub-agents, assign small micro-task chunks per agent, enforce file collision safety through a locking matrix, sanitize artifacts before commits, handle crashes via `.lovable/temp/`, and push chunked commits to git without failure. At the end of every loop, explicitly list task statistics in your output window. You MUST self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.

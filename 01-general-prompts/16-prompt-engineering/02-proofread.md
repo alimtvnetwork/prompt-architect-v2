@@ -1,5 +1,9 @@
-# Instruction (must follow): Proofread instruction, maximum enforcement
+# Proofread instruction, maximum enforcement: Instruction (must follow)
 
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## STRICT AVOIDANCE: Never Disable CI/CD
 

@@ -1,4 +1,8 @@
-# Release, MINOR bump, MUST enforcement
+# Release, MINOR bump, MUST enforcement: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 Trigger phrases: `release`, `bump version`, `bump version + add changelog + pin to root readme`, `abump version ...` (typo variants count).
 

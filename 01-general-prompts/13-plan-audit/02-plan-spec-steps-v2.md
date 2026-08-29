@@ -1,4 +1,8 @@
-# Plan Enhanced — n-step plan and the subtasks it becomes (maximum enforcement, v4)
+# Plan Enhanced — n-step plan and the subtasks it becomes (maximum enforcement, v4): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — CLI Commands, Help Text Parity & Help UI Architecture
+# Execute Coding Guidelines — CLI Commands, Help Text Parity & Help UI Architecture: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-cli`, `cg-help`, `cg-execute cli`, `audit cli commands`, `audit help text`, `cli help parity`, `enforce cli help`, `fix cli help`, `cli help ui audit`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

@@ -1,4 +1,8 @@
-# Instruction (must follow): Execute AI Instruction Writer (Generic Spec Generator)
+# Execute AI Instruction Writer (Generic Spec Generator): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Autonomously act as an AI instruction writer, decomposing complex requirements into actionable sub-agents and specs in a continuous N-step self-loop.
 

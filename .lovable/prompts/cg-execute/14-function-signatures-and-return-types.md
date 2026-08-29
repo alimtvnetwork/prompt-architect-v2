@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Function Signatures, Invocations, Single Return Types & Result Envelopes
+# Execute Coding Guidelines — Function Signatures, Invocations, Single Return Types & Result Envelopes: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-functions`, `cg-signatures`, `cg-return-types`, `cg-execute functions`, `audit function naming`, `fix return types`, `enforce apperror`, `enforce result envelope`, `single return type audit`, `multi-line arguments`, `function call formatting`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

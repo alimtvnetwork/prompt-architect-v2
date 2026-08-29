@@ -1,4 +1,8 @@
-# Instruction (must follow): Jokes Ideas Generate
+# Jokes Ideas Generate: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## MUST FOLLOW NON-NEGOTIABLE
 

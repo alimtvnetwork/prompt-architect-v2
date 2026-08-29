@@ -1,4 +1,8 @@
-# Instruction (must follow): Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal)
+# Inventory Pending Tasks (Read-Only Scan & 3-Agent Dispatch Proposal): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Perform a strictly read-only scan of the entire repository, `spec/`, and `.lovable/` directory to compile a comprehensive, deduplicated inventory of every pending task, subtask, unresolved issue, and open requirement structured into Execution Waves.
 

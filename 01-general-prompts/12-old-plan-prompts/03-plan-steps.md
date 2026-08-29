@@ -1,4 +1,8 @@
-# Instruction (must follow): {{n}} number of steps plan, maximum enforcement (v4.2)
+# {{n}} number of steps plan, maximum enforcement (v4.2): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 {{n}} = ?
 

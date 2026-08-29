@@ -1,4 +1,8 @@
-# Instruction (must follow): Clean Artifacts and Git History Purge
+# Clean Artifacts and Git History Purge: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Ensure that NO assets, zip files from artifacts, test data, temporary scratch scripts, or extraneous generated code are accidentally committed to or retained in the Git repository.
 

@@ -1,4 +1,8 @@
-# Instruction (must follow): Plan: Spec Steps (Look-Ahead, Standard)
+# Plan: Spec Steps (Look-Ahead, Standard): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 Follow the above instructions.
 

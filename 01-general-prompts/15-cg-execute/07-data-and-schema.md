@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Database & Data Schema Rules
+# Execute Coding Guidelines — Database & Data Schema Rules: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-schema`, `cg-execute schema`, `audit schema`, `fix schema guidelines`, `enforce database standards`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

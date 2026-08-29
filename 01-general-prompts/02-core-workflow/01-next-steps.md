@@ -1,5 +1,9 @@
-# Instruction (must follow): Next {{n}} steps or tasks (v3.4)
+# Next {{n}} steps or tasks (v3.4): Instruction (must follow)
 
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 {{n}} = 1
 

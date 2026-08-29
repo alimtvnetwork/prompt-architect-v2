@@ -1,4 +1,8 @@
-# Instruction (must follow): SVG Logo Generation
+# SVG Logo Generation: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When generating an SVG logo from a text description:
 

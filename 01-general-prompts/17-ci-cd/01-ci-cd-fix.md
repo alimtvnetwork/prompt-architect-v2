@@ -1,6 +1,10 @@
-# Instruction (must follow): Autonomous CI/CD Fix Loop (with Local Runner & RCA)
+# Autonomous CI/CD Fix Loop (with Local Runner & RCA): Instruction (must follow)
 
 Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cicd fix`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

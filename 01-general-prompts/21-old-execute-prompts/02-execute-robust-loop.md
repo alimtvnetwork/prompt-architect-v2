@@ -1,4 +1,8 @@
-# Instruction (must follow): Execute Robust Loop (Resilient Multi-Agent)
+# Execute Robust Loop (Resilient Multi-Agent): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Read all pending tasks from `.lovable/`, allocate small micro-portions of work to sub-agents, and execute them in a continuous self-loop. Manage sub-agent crashes gracefully, enforce file collision safety, sanitize artifacts before commits, and ensure the pipeline runs without halting until the queue is empty. You MUST self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
 

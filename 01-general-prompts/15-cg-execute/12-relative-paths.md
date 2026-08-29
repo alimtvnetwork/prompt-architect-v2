@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Strict Relative Git Paths & Absolute Path Elimination
+# Execute Coding Guidelines — Strict Relative Git Paths & Absolute Path Elimination: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-relative-paths`, `cg-execute relative-paths`, `audit relative paths`, `fix absolute paths`, `fix file paths`, `fix full paths`, `fix paths`, `relative paths audit`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

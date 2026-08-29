@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — React & Frontend Architecture
+# Execute Coding Guidelines — React & Frontend Architecture: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-react`, `cg-execute react`, `audit react`, `fix frontend guidelines`, `enforce react standards`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

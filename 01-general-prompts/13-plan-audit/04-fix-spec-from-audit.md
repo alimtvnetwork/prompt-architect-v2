@@ -1,4 +1,8 @@
-# Fix Spec from Audit (Maximum Enforcement)
+# Fix Spec from Audit (Maximum Enforcement): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## Goal
 

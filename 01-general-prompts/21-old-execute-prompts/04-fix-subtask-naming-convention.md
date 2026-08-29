@@ -1,4 +1,8 @@
-# Instruction (must follow): Execute: Fix Subtask Naming Convention
+# Execute: Fix Subtask Naming Convention: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 /goal Your objective is to deeply audit the `.lovable/plans/` directory for any subtask files that incorrectly use the `SS-` or `SS-XX-` prefix and fix them. The correct prefix MUST always be strictly `XX-<subslug>.md` (where `XX` is the zero-padded sequence number).
 You must also update all markdown files that reference the old filenames, and update the project's memory.

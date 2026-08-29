@@ -1,4 +1,8 @@
-# Instruction (must follow): Update README Instruction
+# Update README Instruction: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When instructed to update the README:
 

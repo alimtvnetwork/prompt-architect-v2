@@ -1,4 +1,8 @@
-# Instruction (must follow): Plan: Steps by Groups (Look-Ahead, Standalone Commit)
+# Plan: Steps by Groups (Look-Ahead, Standalone Commit): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 Follow the above instructions.
 

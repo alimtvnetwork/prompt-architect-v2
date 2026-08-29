@@ -1,4 +1,8 @@
-# Instruction (must follow): Theming Guidelines
+# Theming Guidelines: Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 When implementing or updating theming (colors, typography, spacing):
 

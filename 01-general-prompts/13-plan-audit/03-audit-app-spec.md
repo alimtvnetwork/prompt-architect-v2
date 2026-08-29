@@ -1,4 +1,8 @@
-# Audit App Spec — blind-AI readiness audit of the app spec (maximum enforcement, v1)
+# Audit App Spec — blind-AI readiness audit of the app spec (maximum enforcement, v1): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## Variables — Auto-Discovered at Runtime
 

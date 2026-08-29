@@ -1,4 +1,8 @@
-# Canonical Folder Structure (Source of Truth)
+# Canonical Folder Structure (Source of Truth): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 Every prompt in this set MUST write into this exact tree. No invented folders, no alternate paths. If a prompt seems to want a folder not listed here, the prompt is wrong, not the tree.
 

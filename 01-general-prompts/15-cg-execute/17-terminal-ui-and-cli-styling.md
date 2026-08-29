@@ -1,6 +1,10 @@
-# Instruction (must follow): Execute Coding Guidelines — Terminal UI, CLI Styling, Lipgloss & Animation Architecture
+# Execute Coding Guidelines — Terminal UI, CLI Styling, Lipgloss & Animation Architecture: Instruction (must follow)
 
 Trigger Keywords & Aliases: `cg-terminal-ui`, `cg-cli-style`, `cg-lipgloss`, `cg-execute terminal-ui`, `audit terminal ui`, `terminal colors`, `clone animation`, `cli help banners`
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
 N = 200

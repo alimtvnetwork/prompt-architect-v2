@@ -1,4 +1,8 @@
-# Instruction (must follow): Consolidated Insults V2 (Single Block Enforcement)
+# Consolidated Insults V2 (Single Block Enforcement): Instruction (must follow)
+
+
+> **Prompt Version:** 2.1.0
+> **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ## Actionable Items & Checklist
 
