@@ -106,7 +106,7 @@ Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/ali
 
 # Import a specific version into a specific folder
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1 -OutFile install.ps1
-.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.32.0"
+.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.33.0"
 ```
 
 **Using Bash (macOS/Linux):**
@@ -117,7 +117,7 @@ curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/mai
 # Import a specific version into a specific folder
 curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh
 chmod +x install.sh
-./install.sh ".lovable/prompts" "v1.32.0"
+./install.sh ".lovable/prompts" "v1.33.0"
 ```
 
 
