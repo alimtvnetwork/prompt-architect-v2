@@ -11,7 +11,7 @@ N = total self-loop steps budget that the agents will perform.
 /goal Autonomously scan, plan, refactor, and fix all database schema, model, and query violations across the codebase, modifying migration scripts and ORM entities directly to enforce PascalCase tables, camelCase columns, `{TableName}Id` integer keys, 100-line file caps, and Mermaid ERDs until 100% green without stopping.
 
 - [ ] /goal First N/2 steps (Phase 1): Deeply scan all active SQL schemas, migrations, and ORM model definitions for snake_case naming, non-standard primary keys, unconstrained foreign keys, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-data-and-schema-audit.md`, generate the Mermaid ERD, break it down into `.lovable/plans/subtasks/XX-data-and-schema/`, and verify/create the schema linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending schema migration, model, and repository file, refactor tables to PascalCase, columns to camelCase, keys to `{TableName}Id` integers, decompose files ($\le$ 100 lines), run the schema linter and tests, and verify local CI gates exit with code 0.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending schema migration, model, and repository file, refactor tables to PascalCase, columns to camelCase, keys to `{TableName}Id` integers, decompose files (<= 100 lines), run the schema linter and tests, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/04-database-conventions/`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -44,7 +44,7 @@ Before modifying application code, you MUST thoroughly scan the repository and w
   3. Snake_case column names (e.g. `created_at` vs `createdAt`).
   4. Missing foreign key constraints or un-indexed join keys.
   5. Free-form string status/type fields lacking join tables or registered enums.
-  6. Files exceeding 100 coding lines (rec $\le$ 80) or functions exceeding 8 lines (hard cap 15 lines).
+  6. Files exceeding 100 coding lines (recommended <= 80) or functions exceeding 8 lines (hard cap 15 lines).
   7. Missing Mermaid ERDs in schema documentation.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-data-and-schema-audit.md` listing every affected file, exact line numbers, and the updated Mermaid ERD.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
@@ -58,7 +58,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line compression.
+  - **How:** Functions <= 8 lines preferred (hard cap 15 lines). Files <= 100 lines coding max (recommended <= 80 lines). Zero line compression.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -131,7 +131,7 @@ WHILE (STEP < PHASE_2_STEPS):
        - Refactor table names to PascalCase and column names to camelCase.
        - Standardize primary keys to {TableName}Id integer auto-increments.
        - Enforce explicit foreign keys and join tables for status fields.
-       - Decompose files <= 100 coding lines (rec <= 80) and functions <= 8 lines.
+       - Decompose files <= 100 coding lines (recommended <= 80) and functions <= 8 lines.
        - Update JSON serializers to output PascalCase payload keys.
     3. Run the schema linter:
           python linter-scripts/check-schema-guidelines.py
@@ -174,8 +174,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Primary keys are `{TableName}Id` integers.
 - [ ] Foreign keys explicitly defined with index support.
 - [ ] Zero Nested Ifs: Flattened with guard clauses.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Mermaid ERD diagram updated in schema docs.
 - [ ] `python linter-scripts/check-schema-guidelines.py` exited with code 0.
@@ -188,9 +188,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/04-database-conventions/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
-- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Zero Nested Ifs: Absolutely zero nested if statements (flattened with guard clauses).
+- [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.
+- [ ] File Limits: <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Primary Keys: All tables use integer auto-increment `{TableName}Id` primary keys.
 - [ ] Column Casing: camelCase columns, PascalCase tables, PascalCase JSON keys.

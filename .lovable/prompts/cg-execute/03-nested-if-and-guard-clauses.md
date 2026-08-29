@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all nested `if` statements across the codebase, directly modifying source files to flatten conditional branching with guard clauses, early returns, inverted conditions, and function decomposition ($\le$ 8–15 lines) until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all nested `if` statements across the codebase, directly modifying source files to flatten conditional branching with guard clauses, early returns, inverted conditions, and function decomposition (<= 8–15 lines) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all nested `if` blocks (nesting depth $> 1$), complex condition pyramids, functions $> 8$ lines, and files $> 100$ coding lines. Write the master audit spec in `.lovable/plans/pending/XX-nested-if-audit.md`, break it down into `.lovable/plans/subtasks/XX-nested-if/`, and verify/create the nested-if linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, invert conditions, introduce early guard returns, decompose multi-branch blocks into $\le 8$-line helper functions, apply proper newline gaps, run the nested-if linter, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all nested `if` blocks (nesting depth > 1), complex condition pyramids, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-nested-if-audit.md`, break it down into `.lovable/plans/subtasks/XX-nested-if/`, and verify/create the nested-if linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, invert conditions, introduce early guard returns, decompose multi-branch blocks into <= 8-line helper functions, apply proper newline gaps, run the nested-if linter, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -26,13 +26,13 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 
 ## Dedicated Section: Nested `if` Elimination & Guard Clause Architecture (Zero Tolerance)
 
-Nested `if` statements (placing an `if` block inside another `if` block, nesting depth $> 1$) are **strictly forbidden** across all languages (Go, TypeScript, Python, PHP, C#).
+Nested `if` statements (placing an `if` block inside another `if` block, nesting depth > 1) are **strictly forbidden** across all languages (Go, TypeScript, Python, PHP, C#).
 
 ### Why Nested `if` Is Strictly Banned
 
 1. **Cognitive Load Explosion:** Every indentation layer multiplies the number of state permutations an engineer must track simultaneously.
 2. **Hidden Invariant Bugs:** Deeply nested branches frequently lead to forgotten error handlers, partial state mutations, and unhandled `else` edge cases.
-3. **Bloated Function Size:** Nested blocks prevent functions from meeting the mandatory $\le 8$ lines preferred ($\le 15$ lines max) limit.
+3. **Bloated Function Size:** Nested blocks prevent functions from meeting the mandatory <= 8 lines preferred (<= 15 lines max) limit.
 
 ### Mandatory Flattening Strategies (Generic Code Patterns with Compliant Newline Gaps)
 
@@ -72,7 +72,7 @@ func ProcessUserSession(session *Session, token string) error {
 }
 ```
 
-#### Pattern 2: Extracting Validation Helpers ($\le 8$ lines)
+#### Pattern 2: Extracting Validation Helpers (<= 8 lines)
 
 When multiple validations exist, extract a single-purpose boolean helper function:
 
@@ -137,11 +137,11 @@ if err != nil {
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
 - **Actionable Scan:** Use search/grep and AST tools across all source files to identify:
-  1. All nested `if` statements (nesting depth $> 1$).
+  1. All nested `if` statements (nesting depth > 1).
   2. Single-line `if` statements without curly braces or collapsed on one line.
   3. Mixed polarity conditions (`&& !`, `|| !`) that should be split into discrete guard clauses.
   4. Functions exceeding 8 lines (hard cap 15 lines) caused by nested conditionals.
-  5. Source files exceeding 100 coding lines (rec $\le$ 80).
+  5. Source files exceeding 100 coding lines (recommended <= 80).
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-nested-if-audit.md` listing every affected file, exact line numbers, and flattening plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-nested-if/` (e.g. `01-flatten-service-handlers.md`, `02-flatten-controllers.md`).
@@ -154,7 +154,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits and zero nested `if` mandate.
-  - **How:** Zero nested `if` blocks. Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line-compression cheating.
+  - **How:** Zero nested `if` blocks. Functions <= 8 lines preferred (hard cap 15 lines). Files <= 100 lines coding max (recommended <= 80 lines). Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -163,13 +163,13 @@ You MUST read, follow, and mechanically verify every single specification file b
   - **How:** Cite authoritative spec files for every code modification made.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Elimination of nested conditional pyramids and mandatory braces.
-  - **How:** Use guard clauses and early returns to flatten all nested `if` statements ($> 1$ level deep).
+  - **How:** Use guard clauses and early returns to flatten all nested `if` statements (> 1 level deep).
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`**
   - **Why:** Spacing around guard clauses and return statements (R13-R16).
   - **How:** Exactly one blank line before `return`/`throw` and after closing `}`.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`**
   - **Why:** Function size limits.
-  - **How:** Target $\le 8$ lines per function. Decompose multi-condition checks into small helper functions.
+  - **How:** Target <= 8 lines per function. Decompose multi-condition checks into small helper functions.
 
 ---
 
@@ -179,7 +179,7 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-nested-ifs.py` or `linter-scripts/check-enum-and-boolean.mjs` exists in the repository.
 - [ ] **Auto-Create Linter if Missing:** If no dedicated nested-if linter exists, create `linter-scripts/check-nested-ifs.py` that AST-scans for:
-  1. `if` blocks nested inside another `if` block (depth $> 1$).
+  1. `if` blocks nested inside another `if` block (depth > 1).
   2. Single-line `if` statements.
 - [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
@@ -213,7 +213,7 @@ WHILE (STEP < PHASE_2_STEPS):
        - NEVER collapse if/else onto a single line to cheat line caps.
        - Decompose complex validation into <= 8-line helper functions.
        - Apply proper blank lines before return and after closing braces (R13-R16).
-       - Keep file lengths <= 100 coding lines (rec <= 80).
+       - Keep file lengths <= 100 coding lines (recommended <= 80).
     3. Run the nested-if linter:
           python linter-scripts/check-nested-ifs.py
     4. Run the guideline autofixer:
@@ -252,8 +252,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] `python linter-scripts/check-nested-ifs.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
@@ -265,9 +265,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
-- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Zero Nested Ifs: Absolutely zero nested if statements (flattened with guard clauses).
+- [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.
+- [ ] File Limits: <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.

@@ -34,16 +34,16 @@ When auditing, refactoring, or authoring code, AI agents MUST cross-reference th
 
 ### Cross-Language Foundations (`spec/02-coding-guidelines/01-cross-language/`)
 
-- [ ] `00-canonical-size-tier.md`: Standard file size $\le 100$ coding lines (recommended $\le 80$, max 200–300), function size $\le 15$ lines (preferred $\le 8$).
-- [ ] `01-cross-language/02-boolean-principles.md` & `02-boolean-principles/`: Implicit positive booleans, zero explicit `true`/`false` checks, no mixed polarity (`isA && !isB` banned).
-- [ ] `01-cross-language/04-code-style/01-braces-and-nesting.md`: Zero nested `if`s, invert conditions into early return guard clauses, cyclomatic complexity $\le 5$.
+- [ ] `00-canonical-size-tier.md`: Standard file size under 100 coding lines (recommended 80 lines or fewer, max 200–300 lines), function size under 15 lines (preferred 8 lines or fewer).
+- [ ] `01-cross-language/02-boolean-principles.md` & `02-boolean-principles/`: Implicit positive booleans, zero explicit `true` or `false` checks, no mixed polarity (`isA && !isB` banned).
+- [ ] `01-cross-language/04-code-style/01-braces-and-nesting.md`: Zero nested if statements, invert conditions into early return guard clauses, cyclomatic complexity 5 or less.
 - [ ] `01-cross-language/04-code-style/03-blank-lines-and-spacing.md` & `21-newline-styling-examples.md`: Rule R13–R20 return new line and brace spacing rules.
 - [ ] `01-cross-language/04-code-style/04-function-and-type-size.md`: 8 lines preferred, 15 lines max.
-- [ ] `01-cross-language/04-code-style/05-multi-line-formatting.md`: Parameter splitting for $>3$ params or $>100$ characters.
-- [ ] `01-cross-language/08-dry-principles.md` & `09-dry-refactoring-summary.md`: DRY extraction for duplicated code across 2+ call sites.
+- [ ] `01-cross-language/04-code-style/05-multi-line-formatting.md`: Parameter splitting for more than 3 parameters or over 100 characters.
+- [ ] `01-cross-language/08-dry-principles.md` & `09-dry-refactoring-summary.md`: DRY extraction for duplicated code across 2 or more call sites.
 - [ ] `01-cross-language/10-function-naming.md` & `11-key-naming-pascalcase.md`: PascalCase identifiers and PascalCase abbreviation casing (`Id`, `Url`, `Api`).
 - [ ] `01-cross-language/12-no-negatives.md`: Strict prohibition against negative booleans and inverted logic.
-- [ ] `01-cross-language/13-strict-typing.md`: Narrow types only, zero `any`/`unknown`/`interface{}`.
+- [ ] `01-cross-language/13-strict-typing.md`: Narrow types only, zero `any`, `unknown`, or `interface{}`.
 - [ ] `01-cross-language/14-test-naming-and-structure.md`: Semantic 3-part test naming `TestUnit_Scenario_Outcome`.
 - [ ] `01-cross-language/15-master-coding-guidelines/`: Chapters 01 through 07 for comprehensive patterns.
 - [ ] `01-cross-language/16-static-analysis/`: Quality gates for Go (`golangci-lint`), PHP (`phpcs`/`phpstan`), C# (`StyleCop`), Rust (`clippy`), Node (`eslint`).
@@ -51,7 +51,7 @@ When auditing, refactoring, or authoring code, AI agents MUST cross-reference th
 
 ### Language-Specific Implementations (`spec/02-coding-guidelines/`)
 
-- [ ] `02-typescript/`: Strict TS, immutability, React component caps ($\le 100$ lines), named hook objects.
+- [ ] `02-typescript/`: Strict TypeScript, immutability, React component caps (100 lines max), named hook objects.
 - [ ] `03-golang/`: Single result struct with `IsSuccess`/`IsFailed`, enum bytes with `iota`, error wrapping.
 - [ ] `04-php/`: Strict typing, enum methods `->isEqual()`, spacing and imports.
 - [ ] `05-rust/`: Immutability-first, error handling, clippy validation.
@@ -71,7 +71,7 @@ When auditing, refactoring, or authoring code, AI agents MUST cross-reference th
 - [ ] `06-ai-optimization/05-citation-requirement.md`: Mandatory rule citations on all reviews and fixes.
 - [ ] `06-ai-optimization/06-hallucination-checks.md`: Pre-commit diff proof and disk reality checks.
 - [ ] `06-cicd-integration/04-ci-templates.md`: Quality gates; total ban on disabling or bypassing CI/CD checks.
-- [ ] `26-coding-guideline-audit/00-overview.md`: Master 0-100 scoring and drop-by-drop gap audit.
+- [ ] `26-coding-guideline-audit/00-overview.md`: Master 0 to 100 scoring and drop-by-drop gap audit.
 
 ---
 
@@ -1825,21 +1825,21 @@ Every file and function must be audited against these 60 atomic sub-tasks:
 
 #### A. Size & Structural Boundaries (Checks 1–8)
 
-- [ ] **Check 01:** Function line count $\le 15$ lines (preferred $\le 8$ lines excluding blank lines/comments).
-- [ ] **Check 02:** File coding lines $\le 100$ lines (recommended $\le 80$ lines).
-- [ ] **Check 03:** File hard cap $\le 300$ total lines maximum.
-- [ ] **Check 04:** React component files (`.tsx`) $\le 100$ lines.
-- [ ] **Check 05:** Class or struct body $\le 120$ lines.
+- [ ] **Check 01:** Function line count: 8 lines preferred, 15 lines max (excluding blank lines and comments).
+- [ ] **Check 02:** File coding lines: max 100 lines (recommended 80 lines or fewer).
+- [ ] **Check 03:** File total lines: hard cap 300 lines maximum.
+- [ ] **Check 04:** React component files (`.tsx`): 100 lines max (recommended 80 lines or fewer).
+- [ ] **Check 05:** Class or struct body: 120 lines max.
 - [ ] **Check 06:** Anti-line compression check: zero removed indentation, zero single-line if/else blocks to cheat line caps.
-- [ ] **Check 07:** Function signature $\le 100$ characters.
-- [ ] **Check 08:** Parameter count $\le 3$ parameters (split $>3$ to one per line or parameter struct).
+- [ ] **Check 07:** Function signature: 100 characters max.
+- [ ] **Check 08:** Parameter count: max 3 parameters (split more than 3 parameters to one per line or use a parameter struct).
 
 #### B. Braces, Nesting & Control Flow (Checks 9–15)
 
-- [ ] **Check 09:** Zero nested `if` statements.
+- [ ] **Check 09:** Zero nested if statements.
 - [ ] **Check 10:** Inversion of conditions into guard clauses and early returns.
-- [ ] **Check 11:** Cyclomatic complexity $\le 5$ per function.
-- [ ] **Check 12:** No `else` after a returning/throwing `if`.
+- [ ] **Check 11:** Cyclomatic complexity: 5 or less per function.
+- [ ] **Check 12:** No `else` after a returning or throwing `if`.
 - [ ] **Check 13:** Strict conditional joins: at most 2 operands (1 logical join).
 - [ ] **Check 14:** Never mix `&&` and `||` within the same `if` condition.
 - [ ] **Check 15:** No inverted complex conditions with `!` (apply De Morgan's laws or extract a named boolean).
@@ -1918,7 +1918,7 @@ During execution or fix phases:
 
 1. **Isolated Micro-Tasking:** Never attempt to refactor multiple files in one turn. Process exactly **one file per turn**.
 2. **Run Guideline Autofixer:** Execute `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>` to handle formatting and boolean cleanup.
-3. **Apply Surgical Fix:** Refactor functions $> 15$ lines, flatten nested `if`s, and wrap errors.
+3. **Apply Surgical Fix:** Refactor functions > 15 lines, flatten nested if statements, and wrap errors.
 4. **Local Verification:** Run local tests and linters to verify zero regressions.
 5. **End Turn & Self-Loop:** Check off the verified item and self-loop into the next turn.
 

@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, nested `if`, and function size violations across the codebase, flattening nested conditionals, decomposing functions to $\le$ 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, nested `if`, and function size violations across the codebase, flattening nested conditionals, decomposing functions to <= 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for nested `if` blocks (depth > 1), functions exceeding 8–15 lines, files exceeding 100 coding lines (rec $\le$ 80), and missing newlines before `return`/`throw` and after `}`. Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, flatten nested `if`s with guard clauses, break long functions into $\le$ 8-line single-responsibility helpers, decompose files to $\le$ 100 lines, apply the automated newline autofixer, run style linters, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for nested `if` blocks (depth > 1), functions exceeding 8–15 lines, files exceeding 100 coding lines (recommended <= 80), and missing newlines before `return`/`throw` and after `}`. Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, flatten nested if statements with guard clauses, break long functions into <= 8-line single-responsibility helpers, decompose files to <= 100 lines, apply the automated newline autofixer, run style linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -26,7 +26,7 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 
 ## Dedicated Section: Nested `if` Elimination & Inversion Rules (Zero Tolerance)
 
-Nested `if` statements (an `if` block inside another `if` block, nesting depth $> 1$) are **strictly forbidden** across all languages.
+Nested `if` statements (an `if` block inside another `if` block, nesting depth > 1) are **strictly forbidden** across all languages.
 
 ### Why Nested `if` Is Forbidden
 
@@ -55,10 +55,10 @@ Nested `if` statements (an `if` block inside another `if` block, nesting depth $
 
    executeAdminAction();
    ```
-2. **Decompose into Small Helpers ($\le 8$ lines):** Extract complex composite validation checks into dedicated boolean helper functions.
+2. **Decompose into Small Helpers (<= 8 lines):** Extract complex composite validation checks into dedicated boolean helper functions.
 3. **Mandatory Sizing Hierarchy:**
-   - **Functions:** Target $\le 8$ lines preferred; hard cap $\le 15$ lines maximum.
-   - **Files:** Standard max $\le 100$ lines of code (recommended $\le 80$ lines).
+   - **Functions:** Target <= 8 lines preferred; hard cap <= 15 lines maximum.
+   - **Files:** Standard max <= 100 lines of code (recommended <= 80 lines).
 
 ---
 
@@ -79,11 +79,11 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 - **Actionable Scan:** Use search/grep and AST tools across all source files to identify:
   1. Nested `if` blocks (any `if` nested inside an outer `if`).
   2. Functions exceeding 8 lines (hard cap 15 lines).
-  3. Source files exceeding 100 coding lines (rec $\le$ 80).
+  3. Source files exceeding 100 coding lines (recommended <= 80).
   4. Missing blank lines before `return`, `throw`, or `raise` (R13).
   5. Missing blank lines after closing `}` (R14).
   6. Consecutive blank lines (R15).
-  7. Function signatures $> 3$ parameters or $> 100$ characters not split across lines.
+  7. Function signatures > 3 parameters or > 100 characters not split across lines.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-style-guidelines-audit.md` listing every affected function, exact line numbers, and decomposition plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-style-guidelines/` (e.g. `01-flatten-nested-ifs.md`, `02-function-length-decomposition.md`, `03-return-newline-styling.md`).
@@ -96,7 +96,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits and zero nested `if` mandate.
-  - **How:** Functions $\le 8$ lines preferred, hard cap 15 lines. Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero nested `if` blocks. Zero line-compression cheating.
+  - **How:** Functions <= 8 lines preferred, hard cap 15 lines. Files <= 100 lines coding max (recommended <= 80 lines). Zero nested `if` blocks. Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -105,16 +105,16 @@ You MUST read, follow, and mechanically verify every single specification file b
   - **How:** Cite authoritative spec files for every code modification made.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Elimination of nested conditional pyramids and mandatory braces.
-  - **How:** Use guard clauses and early returns to flatten all nested `if` statements ($> 1$ level deep).
+  - **How:** Use guard clauses and early returns to flatten all nested `if` statements (> 1 level deep).
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`**
   - **Why:** The Return New Line Concept (R13-R16).
   - **How:** Exactly ONE blank line before `return`, `throw`, or `raise` (unless sole statement in block). Exactly ONE blank line after closing `}` (unless followed by `}`, `else`, `catch`). NEVER two blank lines in a row.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`**
   - **Why:** Function length & readability limits.
-  - **How:** Target **$\le 8$ lines per function** (hard cap 15 lines). Decompose long functions into single-responsibility helpers.
+  - **How:** Target **<= 8 lines per function** (hard cap 15 lines). Decompose long functions into single-responsibility helpers.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md`**
   - **Why:** Multi-line call and signature wrapping.
-  - **How:** Function signatures with $> 3$ parameters or $> 100$ characters MUST be split into one parameter per line with trailing comma.
+  - **How:** Function signatures with > 3 parameters or > 100 characters MUST be split into one parameter per line with trailing comma.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`**
   - **Why:** Concrete code formatting examples.
   - **How:** Cross-language reference demonstrating compliant whitespace for Go, TypeScript, PHP, Python, and C#.
@@ -126,7 +126,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-function-lengths.py`, `linter-scripts/check-newline-styling.py`, and `linter-scripts/check-markdown-header-spacing.py` exist in the repository.
-- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-function-lengths.py` (flags functions $> 15$ lines and warns $> 8$ lines) and `linter-scripts/check-newline-styling.py` (flags missing newlines before return and after `}`).
+- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-function-lengths.py` (flags functions > 15 lines and warns > 8 lines) and `linter-scripts/check-newline-styling.py` (flags missing newlines before return and after `}`).
 - [ ] **Local Linter Command:** Execute and verify the linters and autofixers locally:
   ```bash
   python linter-scripts/check-function-lengths.py
@@ -200,8 +200,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Exactly one blank line before every `return`/`throw` (unless sole statement).
 - [ ] Exactly one blank line after closing `}` (unless next line is `}`, `else`, `catch`).
@@ -217,9 +217,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Zero Nested Ifs: Absolutely zero nested if statements (flattened with guard clauses).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Return New Line: Blank line before return and after `}` (R13-R16).
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)

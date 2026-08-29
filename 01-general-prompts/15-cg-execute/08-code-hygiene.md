@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, parameter bloat, and architectural violations across the codebase, enforcing 100-line standard file caps (recommended $\le$ 80 lines), 8–15 line function caps, specialized parameter-reducing helper functions, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, parameter bloat, and architectural violations across the codebase, enforcing 100-line standard file caps (recommended <= 80 lines), 8–15 line function caps, specialized parameter-reducing helper functions, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 100 coding lines (rec $\le$ 80), functions exceeding 8–15 lines, repeated constant arguments across call sites, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages ($\le$ 80–100 lines), decompose long functions ($\le$ 8 lines), extract repeated parameters into specialized helper functions, extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 100 coding lines (recommended <= 80), functions exceeding 8–15 lines, repeated constant arguments across call sites, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages (<= 80–100 lines), decompose long functions (<= 8 lines), extract repeated parameters into specialized helper functions, extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -30,7 +30,7 @@ Passing repeated constant arguments or flags across multiple call sites is a maj
 
 ### Why Parameter Bloat & Repetition Is Forbidden
 
-1. **Violates the $\le 3$ Parameters Limit:** Functions with excessive arguments are difficult to read, test, and maintain.
+1. **Violates the <= 3 Parameters Limit:** Functions with excessive arguments are difficult to read, test, and maintain.
 2. **Duplication of Context:** Hardcoding the same enum, flag, or code at 10 different call sites creates maintenance hazards when behavior changes.
 3. **Impaired Readability:** Callers should express intent directly through semantic function names rather than passing tuples of flags and constants.
 
@@ -76,14 +76,14 @@ You MUST adhere to the single source of truth defined in `spec/02-coding-guideli
 
 | Metric | Limit | Enforcement |
 |---|---|---|
-| **Function body (preferred)** | $\le$ 8 lines | warn |
-| **Function body (hard cap)** | $\le$ 15 lines | error (build fails) |
-| **File length (standard max)** | $\le$ 100 lines | error (coding lines) |
-| **File length (recommended)** | $\le$ 80 lines | info |
-| **React component file** | $\le$ 80–100 lines | error (max 100 lines) |
-| **Struct / class** | $\le$ 120 lines | error |
+| **Function body (preferred)** | <= 8 lines | warn |
+| **Function body (hard cap)** | <= 15 lines | error (build fails) |
+| **File length (standard max)** | <= 100 lines | error (coding lines) |
+| **File length (recommended)** | <= 80 lines | info |
+| **React component file** | <= 80–100 lines | error (max 100 lines) |
+| **Struct / class** | <= 120 lines | error |
 | **Nested `if` statements** | 0 (No nesting) | error (flatten with guard clauses) |
-| **Function Parameters** | $\le$ 3 parameters | error (use specialized helpers / structs) |
+| **Function Parameters** | <= 3 parameters | error (use specialized helpers / structs) |
 
 ---
 
@@ -102,7 +102,7 @@ You MUST adhere to the single source of truth defined in `spec/02-coding-guideli
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
 - **Actionable Scan:** Use search/grep and line-count tools across all repository files to identify:
-  1. Source code files exceeding 100 coding lines (rec $\le$ 80).
+  1. Source code files exceeding 100 coding lines (recommended <= 80).
   2. Functions exceeding 8 lines (hard cap 15 lines).
   3. Functions with repeated constant parameters that can be simplified into specialized helpers.
   4. Classes or structs exceeding 120 lines.
@@ -123,7 +123,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Files $\le 100$ lines coding max (recommended $\le 80$ lines). Functions $\le 8$ lines preferred, hard cap 15 lines. Structs/classes $\le 120$ lines. Zero line-compression cheating.
+  - **How:** Files <= 100 lines coding max (recommended <= 80 lines). Functions <= 8 lines preferred, hard cap 15 lines. Structs/classes <= 120 lines. Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -153,7 +153,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-file-sizes.py`, `linter-scripts/check-placeholder-comments.py`, and `linter-scripts/check-forbidden-strings.py` exist in the repository.
-- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-file-sizes.py` (enforcing $\le$ 100 coding lines per file, 8–15 lines per function, 120 lines max per struct/class) and `linter-scripts/check-placeholder-comments.py` (flagging `TODO`, `WIP`, `[N]`).
+- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-file-sizes.py` (enforcing <= 100 coding lines per file, 8–15 lines per function, 120 lines max per struct/class) and `linter-scripts/check-placeholder-comments.py` (flagging `TODO`, `WIP`, `[N]`).
 - [ ] **Local Linter Command:** Execute and verify the linters locally:
   ```bash
   python linter-scripts/check-file-sizes.py
@@ -181,7 +181,7 @@ WHILE (STEP < PHASE_2_STEPS):
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-code-hygiene/
     2. Open and modify the actual source code files:
-       - Split oversized files into cohesive sub-modules <= 100 coding lines (rec <= 80).
+       - Split oversized files into cohesive sub-modules <= 100 coding lines (recommended <= 80).
        - Decompose functions > 8 lines into small helpers (max 15 lines).
        - Extract repeated parameters into specialized helper functions.
        - Flatten nested if statements with guard clauses.
@@ -226,9 +226,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines; structs $\le$ 120 lines).
-- [ ] Function Size: Functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] Parameter Count: Functions $\le$ 3 parameters; repeated constants extracted into specialized helpers.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines; structs <= 120 lines).
+- [ ] Function Size: Functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] Parameter Count: Functions <= 3 parameters; repeated constants extracted into specialized helpers.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Definitions live in dedicated files.
@@ -245,8 +245,8 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] File Size Caps: All files $\le$ 100 lines coding max (recommended $\le$ 80 lines), structs $\le$ 120 lines, components $\le$ 80–100 lines.
-- [ ] Function Size: All functions $\le$ 8–15 lines.
+- [ ] File Size Caps: All files <= 100 lines coding max (recommended <= 80 lines), structs <= 120 lines, components <= 80–100 lines.
+- [ ] Function Size: All functions <= 8–15 lines.
 - [ ] Parameter Reduction: Repeated constant parameters extracted into dedicated specialized helpers.
 - [ ] Zero Nested Ifs: Flat structure with guard clauses.
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.

@@ -11,7 +11,7 @@ N = total self-loop steps budget that the agents will perform.
 /goal Autonomously scan every function across the codebase, decompose oversized functions (> 8 lines) into testable units, enforce 100-line file caps, and author comprehensive positive, negative, edge-case, and error-branch integration and E2E test suites with semantic three-part naming until 100% test pass rate and high coverage are achieved without stopping.
 
 - [ ] /goal First N/2 steps (Phase 1): Deeply scan the codebase function-by-function, inventory all functions missing unit/integration/E2E coverage, identify oversized functions (> 8 lines) and files (> 100 lines) needing decomposition, map required positive and negative test cases, write the master audit spec in `.lovable/plans/pending/XX-testing-and-coverage-audit.md`, break it down into `.lovable/plans/subtasks/XX-testing-and-coverage/`, and verify/create coverage scripts.
-- [ ] /goal Second N/2 steps (Phase 2): Sequentially execute each subtask, decompose large functions into single-responsibility helpers ($\le$ 8 lines), author table-driven tests covering every branch (positive, negative, boundary values, error returns), run unit/integration/E2E test runners, and verify local CI gates exit with code 0.
+- [ ] /goal Second N/2 steps (Phase 2): Sequentially execute each subtask, decompose large functions into single-responsibility helpers (<= 8 lines), author table-driven tests covering every branch (positive, negative, boundary values, error returns), run unit/integration/E2E test runners, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`, `spec/04-database-conventions/04-testing-strategy.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -26,8 +26,8 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 
 ## Canonical Sizing & Testing Hierarchy
 
-- **Function Body:** Preferred $\le$ 8 lines; hard cap $\le$ 15 lines (functions $> 8$ lines must be decomposed into testable helpers).
-- **Standard File Sizing:** Max 100 coding lines per file (recommended $\le$ 80 lines).
+- **Function Body:** Preferred <= 8 lines; hard cap <= 15 lines (functions > 8 lines must be decomposed into testable helpers).
+- **Standard File Sizing:** Max 100 coding lines per file (recommended <= 80 lines).
 - **Nested `if` Statements:** Zero tolerance (must be flattened with guard clauses).
 - **Test Naming:** Strictly `Test{Unit}_{Scenario}_{ExpectedOutcome}`.
 - **NO Line-Compression Cheating:** Never collapse `if/else` onto a single line or delete blank lines to fit under line caps. Reduce size by decomposing into separate files.
@@ -51,7 +51,7 @@ Before writing tests or modifying functions, you MUST perform a deep function-by
 - **Actionable Function-by-Function Scan:** Use search/grep and AST analysis tools across all Go, TypeScript, PHP, and Python files to identify:
   1. Functions lacking dedicated unit or integration test files (e.g., `UserService.go` without `UserService_test.go`).
   2. Oversized functions exceeding 8 lines of logic (hard cap 15 lines) that must be decomposed into smaller, single-purpose helpers before testing.
-  3. Source files exceeding 100 coding lines (rec $\le$ 80).
+  3. Source files exceeding 100 coding lines (recommended <= 80).
   4. Conditional branches (`if/else`, `switch/case`, `guard clauses`) lacking positive and negative condition test cases.
   5. Error return pathways and `AppError` handlers lacking explicit failure assertion tests.
   6. Integration and E2E endpoints lacking request/response envelope validation.
@@ -67,7 +67,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line compression.
+  - **How:** Functions <= 8 lines preferred (hard cap 15 lines). Files <= 100 lines coding max (recommended <= 80 lines). Zero line compression.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -82,7 +82,7 @@ You MUST read, follow, and mechanically verify every single specification file b
   - **How:** Name every test strictly as `Test{Unit}_{Scenario}_{ExpectedOutcome}` (e.g. `TestCreateSession_WithExpiredToken_ReturnsAuthError`). Colocate unit tests and name integration tests with `_integration_test.go` or `.integration.test.tsx`.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`**
   - **Why:** Function testability and branch simplicity.
-  - **How:** Target $\le$ 8 lines per function (hard cap 15 lines). Decompose complex multi-branch functions into pure, isolated sub-functions so each branch can be tested individually.
+  - **How:** Target <= 8 lines per function (hard cap 15 lines). Decompose complex multi-branch functions into pure, isolated sub-functions so each branch can be tested individually.
 - [ ] **`spec/04-database-conventions/04-testing-strategy.md`**
   - **Why:** Database integration and query testing standards.
   - **How:** Test schema migrations, repository CRUD methods, and foreign key cascades against isolated test SQLite instances with transactional rollbacks.
@@ -136,7 +136,7 @@ WHILE (STEP < PHASE_2_STEPS):
     1. Read the next subtask from .lovable/plans/subtasks/XX-testing-and-coverage/
     2. Open the source file:
        - IF the function exceeds 8 lines: Decompose it into single-responsibility helper functions.
-       - Ensure file length is <= 100 coding lines (rec <= 80).
+       - Ensure file length is <= 100 coding lines (recommended <= 80).
        - Flatten nested if statements with guard clauses.
        - NEVER collapse if/else onto a single line to cheat line caps.
     3. Open or create the corresponding test file:
@@ -180,8 +180,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] Function Size: All functions tested are $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions tested are <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] All test functions follow `Test{Unit}_{Scenario}_{ExpectedOutcome}` naming.
@@ -197,13 +197,13 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
-- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Zero Nested Ifs: Absolutely zero nested if statements (flattened with guard clauses).
+- [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.
+- [ ] File Limits: <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Test Naming: Three-part convention strictly adhered to (`TestUnit_Scenario_Outcome`).
 - [ ] Zero Generic Test Names: Absolutely NO generic test names like `TestHandleComp100` or `Test1`.
-- [ ] Function Sizing: Functions decomposed to $\le$ 8 lines before writing branch tests.
+- [ ] Function Sizing: Functions decomposed to <= 8 lines before writing branch tests.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 

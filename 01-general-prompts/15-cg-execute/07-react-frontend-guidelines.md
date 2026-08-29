@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all React and frontend architecture violations across the codebase, decomposing oversized components ($\le$ 80–100 lines), enforcing 8–15 line function caps, converting custom hook tuple returns to named objects, and eliminating redundant `useEffect` hooks until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all React and frontend architecture violations across the codebase, decomposing oversized components (<= 80–100 lines), enforcing 8–15 line function caps, converting custom hook tuple returns to named objects, and eliminating redundant `useEffect` hooks until 100% green without stopping.
 
 - [ ] /goal First N/2 steps (Phase 1): Deeply scan all active `.tsx` and `.jsx` component files for line counts exceeding 80–100 lines, functions exceeding 8–15 lines, nested `if` blocks, custom hooks returning raw tuples (`[state, setState]`), and redundant `useEffect` syncing. Write the master audit spec in `.lovable/plans/pending/XX-react-frontend-audit.md`, generate the component hierarchy diagram, break it down into `.lovable/plans/subtasks/XX-react-frontend/`, and verify/create the frontend linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending component and hook file, decompose UI blocks into sub-components $\le$ 80–100 lines, flatten nested `if`s, convert hook return signatures to named property objects, run the frontend linter, and verify local CI gates exit with code 0.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending component and hook file, decompose UI blocks into sub-components <= 80–100 lines, flatten nested if statements, convert hook return signatures to named property objects, run the frontend linter, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/02-typescript/`, `spec/07-design-system/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -26,10 +26,10 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 
 ## Canonical Sizing & Nesting Hierarchy
 
-- **React Components:** Recommended $\le$ 80 lines; standard max $\le$ 100 lines.
-- **Functions & Hooks:** Preferred $\le$ 8 lines; hard cap $\le$ 15 lines.
+- **React Components:** Recommended <= 80 lines; standard max <= 100 lines.
+- **Functions & Hooks:** Preferred <= 8 lines; hard cap <= 15 lines.
 - **Nested `if` Statements:** Zero tolerance (flatten with guard clauses and early returns).
-- **Standard File Sizing:** Max 100 coding lines per file (recommended $\le$ 80 lines).
+- **Standard File Sizing:** Max 100 coding lines per file (recommended <= 80 lines).
 
 ---
 
@@ -67,7 +67,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Components $\le 80$ lines recommended (max 100 lines). Functions $\le 8$ lines preferred (max 15 lines). Max 100 lines for any file. Zero line-compression cheating.
+  - **How:** Components <= 80 lines recommended (max 100 lines). Functions <= 8 lines preferred (max 15 lines). Max 100 lines for any file. Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -88,7 +88,7 @@ You MUST read, follow, and mechanically verify every single specification file b
   - **How:** Handle all async flows with `try/catch` and `AppError` wrappers; avoid unhandled promises in `useEffect`.
 - [ ] **`spec/07-design-system/01-design-principles.md`**
   - **Why:** Modular UI architecture & sizing caps.
-  - **How:** Hard 100-line cap per React component file (target $\le 80$ lines). Decompose large UI blocks into single-responsibility child components.
+  - **How:** Hard 100-line cap per React component file (target <= 80 lines). Decompose large UI blocks into single-responsibility child components.
 - [ ] **`spec/07-design-system/02-theme-variable-architecture.md`**
   - **Why:** Theme token usage.
   - **How:** Zero hardcoded hex color codes in components. Consume CSS theme custom properties and semantic tokens.
@@ -181,8 +181,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] All `.tsx`/`.jsx` component files are $\le$ 80–100 lines.
-- [ ] All functions/hooks are $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] All `.tsx`/`.jsx` component files are <= 80–100 lines.
+- [ ] All functions/hooks are <= 8 lines preferred, hard cap 15 lines.
 - [ ] Zero Nested Ifs: Flattened with guard clauses.
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Custom hooks return named objects `{ data, isLoading }`, not tuples.
@@ -197,8 +197,8 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/02-typescript/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Component Sizing: All component files are $\le$ 80–100 lines (hard cap 100 lines).
-- [ ] Function Sizing: All functions $\le$ 8–15 lines.
+- [ ] Component Sizing: All component files are <= 80–100 lines (hard cap 100 lines).
+- [ ] Function Sizing: All functions <= 8–15 lines.
 - [ ] Zero Nested Ifs: Flat flow with early returns.
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Hook Return Signatures: Named property objects only, zero tuple returns.

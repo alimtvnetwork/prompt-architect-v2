@@ -133,7 +133,7 @@ If the install command exits non-zero:
 | JSON-fallback file write | yes | Atomic write via `tmp + rename`; rollback by deleting tmp |
 | Install command exec | yes | Captures stdout/stderr/exitCode |
 
-Try/catch blocks MUST NOT contain nested `if`s (CODE RED P6) — extract
+Try/catch blocks MUST NOT contain nested if statements (CODE RED P6) — extract
 helpers.
 
 ---

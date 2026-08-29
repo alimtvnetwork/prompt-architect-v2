@@ -30,9 +30,9 @@ Score = 100 - (Critical_Count * 10) - (Major_Count * 5) - (Minor_Count * 2)
 Score is bounded between 0 and 100: final_score = max(0, min(100, Score))
 ```
 
-- **Critical (-10 pts):** Swallowed errors, panic + return dual handling, explicit `== true` checks, files $> 300$ lines, disabled CI/CD.
-- **Major (-5 pts):** Functions $> 15$ lines, nested `if` statements, inverted booleans (`!isSuccess`), magic strings/numbers without enums, missing `*Type` enum suffix.
-- **Minor (-2 pts):** Return new lines missing (R13), uppercase acronyms (`ID`/`URL` instead of `Id`/`Url`), missing parameter line breaks ($> 3$ params / $> 100$ chars).
+- **Critical (-10 pts):** Swallowed errors, panic + return dual handling, explicit `== true` checks, files > 300 lines, disabled CI/CD.
+- **Major (-5 pts):** Functions > 15 lines, nested `if` statements, inverted booleans (`!isSuccess`), magic strings/numbers without enums, missing `*Type` enum suffix.
+- **Minor (-2 pts):** Return new lines missing (R13), uppercase acronyms (`ID`/`URL` instead of `Id`/`Url`), missing parameter line breaks (> 3 params / > 100 chars).
 
 ---
 

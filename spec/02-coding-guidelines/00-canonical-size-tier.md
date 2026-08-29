@@ -19,8 +19,8 @@
 
 ## Counting & Anti-Compression Rules (Strictly Enforced)
 
-- **Standard File Size:** Every code file MUST stay under 100 coding lines (recommended $\le$ 80 lines).
-- **Functions:** Target $\le$ 8 lines of body logic; hard cap of $\le$ 15 lines.
+- **Standard File Size:** Every code file MUST stay under 100 coding lines (recommended <= 80 lines).
+- **Functions:** Target <= 8 lines of body logic; hard cap of <= 15 lines.
 - **NO Line-Compression Cheating (TOTAL BAN):**
   - **NEVER** collapse `if/else`, return statements, or blocks into a single line to artificially reduce line count (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden).
   - **NEVER** delete required blank lines (R13-R16: blank line before `return`/`throw`, blank line after `}`) to cram code into fewer lines.

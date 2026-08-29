@@ -10,7 +10,7 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously scan, plan, refactor, and fix all constants, enums, magic string literals, and magic number violations across the codebase, modifying source files directly to enforce the `*Type` enum suffix, extract magic numbers/strings into dedicated constant files, and use typed enums in function signatures until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all enums missing the `*Type` suffix, raw magic strings (e.g. `"pending"`, `"active"`, `"admin"`), magic numbers (e.g. exit code `1`, status `404`, timeouts `5000`), inline enum definitions, functions $> 8$ lines, and files $> 100$ coding lines. Write the master audit spec in `.lovable/plans/pending/XX-constants-and-enums-audit.md`, break it down into `.lovable/plans/subtasks/XX-constants-and-enums/`, and verify/create the enum linter.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all enums missing the `*Type` suffix, raw magic strings (e.g. `"pending"`, `"active"`, `"admin"`), magic numbers (e.g. exit code `1`, status `404`, timeouts `5000`), inline enum definitions, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-constants-and-enums-audit.md`, break it down into `.lovable/plans/subtasks/XX-constants-and-enums/`, and verify/create the enum linter.
 - [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, rename enums to include `*Type`, extract magic literals to centralized definition packages (`constants/`, `enums/`, `types/`), update call sites to use typed enum symbols, run the enum linter, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
@@ -134,7 +134,7 @@ Before modifying application code, you MUST thoroughly scan the repository and w
   2. Magic string literals used in equality comparisons (`== "active"`, `=== "failed"`).
   3. Magic integer literals passed into handlers or API calls (`HandleError(err, 1)`).
   4. Enums defined inline inside service/component files instead of dedicated definition files.
-  5. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
+  5. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (recommended <= 80).
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-constants-and-enums-audit.md` listing every affected file, exact line numbers, and extraction plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-constants-and-enums/` (e.g. `01-enum-type-suffix-renaming.md`, `02-extract-magic-literals.md`, `03-update-call-sites.md`).
@@ -147,7 +147,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal sizing limits and enum type enforcement.
-  - **How:** Structs/classes $\le 120$ lines. Functions $\le 8$ lines preferred. Files $\le 100$ lines coding max (recommended $\le 80$ lines).
+  - **How:** Structs/classes <= 120 lines. Functions <= 8 lines preferred. Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -243,8 +243,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] All Enums end with `Type` suffix (`UserRoleType`, `ExitCodeType`).
 - [ ] Zero Magic Strings: All string constants centralized and exported.
 - [ ] Zero Magic Numbers: All integer codes and timeouts extracted to constants.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] If Go enums modified, `go generate ./...` was executed and committed.
 - [ ] `python linter-scripts/check-enum-guidelines.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
@@ -258,8 +258,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Enum Suffix: Every single enum ends with `Type`.
 - [ ] Zero Magic Literals: All strings and numbers extracted to constants.
-- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.
+- [ ] File Limits: <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.

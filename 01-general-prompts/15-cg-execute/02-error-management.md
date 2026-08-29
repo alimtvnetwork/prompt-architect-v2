@@ -11,7 +11,7 @@ N = total self-loop steps budget that the agents will perform.
 /goal Autonomously scan, plan, refactor, and fix all error management violations across the codebase, modifying source files directly to implement `AppError` wrappers, outer error handling, specialized exit helpers, and universal response envelopes until 100% green without stopping.
 
 - [ ] /goal First N/2 steps (Phase 1): Deeply scan all active backend, frontend, and service files for swallowed errors, internal exit/panic calls returning `nil` (dual handling), bare un-wrapped returns, unhandled promises, raw error responses, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-error-management-audit.md`, break it down into `.lovable/plans/subtasks/XX-error-management/`, and verify/create the error linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, eliminate internal exit calls from leaf functions, return errors to callers (`return err`), implement specialized exit helpers with typed enums, decompose functions ($\le$ 8 lines) and files ($\le$ 100 lines), run the error linter, execute tests, and verify local CI gates exit with code 0.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, eliminate internal exit calls from leaf functions, return errors to callers (`return err`), implement specialized exit helpers with typed enums, decompose functions (<= 8 lines) and files (<= 100 lines), run the error linter, execute tests, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -115,7 +115,7 @@ Before modifying application code, you MUST thoroughly scan the repository and w
   4. Raw panic / exit invocations (`panic()`, `process.exit()`, `os.Exit()`).
   5. Magic integer exit codes (`HandleError(err, 1)` instead of enums).
   6. API endpoints returning raw text or unformatted error payloads instead of the `{ data, errors, meta }` envelope.
-  7. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
+  7. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (recommended <= 80).
   8. Nested `if` conditionals.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-error-management-audit.md` listing every affected file and exact line number.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
@@ -129,7 +129,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line-compression cheating.
+  - **How:** Functions <= 8 lines preferred (hard cap 15 lines). Files <= 100 lines coding max (recommended <= 80 lines). Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -258,8 +258,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Parameter Reduction: Repeated handler parameters extracted into specialized helper functions.
 - [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines. Long arguments are split across lines (max 100 chars).
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
 - [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
@@ -279,9 +279,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Error Return Sovereignty: Leaf functions return `error` directly to caller; no internal exit calls returning `nil`.
 - [ ] Typed Exit Codes: Enums used for exit codes, zero magic numbers.
-- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
-- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Zero Nested Ifs: Absolutely zero nested if statements (flattened with guard clauses).
+- [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.
+- [ ] File Limits: <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Error Management: I have read and enforced `spec/03-error-manage/`. I used `AppError`/`AppException` and did not swallow errors.
 - [ ] Boolean Conventions: All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).

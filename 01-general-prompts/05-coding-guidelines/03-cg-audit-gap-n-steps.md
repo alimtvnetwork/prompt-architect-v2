@@ -52,14 +52,14 @@ You MUST verify and audit every item on this checklist across every file and fun
 ### Tier 2: Sizing, Nesting & Code Hygiene
 
 - [ ] **Canonical Size Tiers (`spec/02-coding-guidelines/00-canonical-size-tier.md`):**
-  - **Functions:** Ideal $\le 8$ lines, hard cap 15 coding lines max.
-  - **Source Files:** Recommended $\le 80$ lines, standard cap 100 coding lines, absolute limit 200–300 lines max.
+  - **Functions:** Ideal 8 lines or fewer, hard cap 15 coding lines max.
+  - **Source Files:** Recommended 80 lines or fewer, standard cap 100 coding lines, absolute limit 200–300 lines max.
   - **React Components (`.tsx`):** Hard cap 100 lines max per component file.
   - **Class / Struct:** Hard cap 120 lines max.
   - **Anti-Line Compression Cheating:** STRICTLY BAN collapsing whitespace, removing indentation, merging if/else onto single lines, or stripping formatting to cheat line limits.
-- [ ] **Braces & Nesting (`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`):** Zero nested `if` statements. Invert conditions into guard clauses and early returns. Maximum cyclomatic complexity $\le 5$.
+- [ ] **Braces & Nesting (`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`):** Zero nested if statements. Invert conditions into guard clauses and early returns. Maximum cyclomatic complexity 5 or less.
 - [ ] **Return New Line Standards (R13–R16):** Exactly one blank line before every `return`/`throw`/`raise` (unless sole statement in block). Exactly one blank line after closing `}`. Never two consecutive blank lines.
-- [ ] **Function Signatures (R4, R5, R9):** Functions with $> 3$ parameters or signatures $> 100$ characters MUST be formatted with exactly one parameter per line.
+- [ ] **Function Signatures (R4, R5, R9):** Functions with more than 3 parameters or signatures over 100 characters MUST be formatted with exactly one parameter per line.
 
 ### Tier 3: Boolean Principles & Logic
 
@@ -100,9 +100,9 @@ Score is bounded between 0 and 100: final_score = max(0, min(100, Score))
 
 | Severity | Deduction | Violation Types |
 | :--- | :--- | :--- |
-| **Critical** | **-10 pts** | Swallowed errors (`catch {}`, `_ = err`), panic + return dual-handling, explicit `== true` checks, files $> 300$ lines, disabled CI/CD or CLI linter commands. |
-| **Major** | **-5 pts** | Monolithic functions $> 15$ lines, nested `if` statements, inverted booleans (`!isSuccess`), magic strings/numbers without enums, missing `*Type` enum suffix, line compression cheating. |
-| **Minor** | **-2 pts** | Missing return new lines (R13), uppercase acronyms (`ID`/`URL` instead of `Id`/`Url`), missing parameter line breaks ($> 3$ params / $> 100$ chars), missing docstrings or semantic naming gaps. |
+| **Critical** | **-10 pts** | Swallowed errors (`catch {}`, `_ = err`), panic + return dual-handling, explicit `== true` checks, files > 300 lines, disabled CI/CD or CLI linter commands. |
+| **Major** | **-5 pts** | Monolithic functions > 15 lines, nested `if` statements, inverted booleans (`!isSuccess`), magic strings/numbers without enums, missing `*Type` enum suffix, line compression cheating. |
+| **Minor** | **-2 pts** | Missing return new lines (R13), uppercase acronyms (`ID`/`URL` instead of `Id`/`Url`), missing parameter line breaks (> 3 params / > 100 chars), missing docstrings or semantic naming gaps. |
 
 ### Score Tier Ratings
 
@@ -148,9 +148,9 @@ To audit massive codebases quickly without context fatigue or hallucination:
 
 For every file, perform the exhaustive check sequence:
 
-1. File line count check (flag if $> 100$ lines, critical if $> 300$ lines). Check for line-compression cheating.
-2. Function line count check (flag every function $> 15$ lines).
-3. Braces and nested `if` check (flag every nested `if` or cyclomatic complexity $> 5$).
+1. File line count check (flag if > 100 lines, critical if > 300 lines). Check for line-compression cheating.
+2. Function line count check (flag every function > 15 lines).
+3. Braces and nested `if` check (flag every nested `if` or cyclomatic complexity > 5).
 4. Boolean syntax check (search for `== true`, `== false`, `!isSuccess`, `isNot*`, `!is* && *`).
 5. Error handling check (search for empty catch blocks, unchecked error returns, dual handling).
 6. Constant & Enum check (search for raw magic strings, inline union types, missing `*Type` suffix).
@@ -195,7 +195,7 @@ Save the final comprehensive report to:
 ## Remediation Roadmap & Priority Matrix
 
 1. **Sprint 1 (Critical Zero-Tolerance):** Eliminate all swallowed errors, explicit true checks, and dual-handling.
-2. **Sprint 2 (Major Architecture):** Refactor monolithic functions $> 15$ lines and flatten nested `if` statements.
+2. **Sprint 2 (Major Architecture):** Refactor monolithic functions > 15 lines and flatten nested `if` statements.
 3. **Sprint 3 (Cleanliness & Hygiene):** Enforce `*Type` enums, PascalCase abbreviations (`Id`, `Url`), and return new lines.
 ```
 
@@ -226,7 +226,7 @@ Save the final comprehensive report to:
      - [ ] [Rule Code] Line YY: `<snippet>` -> `<fix-description>`
 
      ## Acceptance Criteria
-     - [ ] Function lengths $\le 15$ lines.
+     - [ ] Function lengths 15 lines max.
      - [ ] Implicit booleans only (no `== true`).
      - [ ] Zero swallowed errors; wrapped with `AppError`.
      - [ ] Return new lines verified (R13–R16).

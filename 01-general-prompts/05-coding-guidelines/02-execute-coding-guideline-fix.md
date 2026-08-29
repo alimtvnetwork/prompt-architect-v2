@@ -21,7 +21,7 @@ Context & References:
   - Functions must be strictly < 8 lines. (NON-NEGOTIABLE)
   - Source files must be ≤ 80 lines.
   - No code mutation – only apply fixes, never introduce new bugs.
-  - Positive boolean naming (`is` / `has`). No `isNot`. Use inverse naming (e.g., `isHonest` / `isDishonest` instead of `isNotHonest`). No nested `if`s, no magic values.
+  - Positive boolean naming (`is` / `has`). No `isNot`. Use inverse naming (e.g., `isHonest` / `isDishonest` instead of `isNotHonest`). No nested if statements, no magic values.
   - Style: Ensure a blank line before every `return` statement.
   - Golang Single Return & Wrapped Booleans: Strictly return a single parameter (bundle multiple returns into a struct). No raw booleans returned in Go. Return a single Result struct (bundling Data, AppError, and Status together) with two flags (`IsSuccess` and `IsFailed`) managed by a constructor (`NewSuccess`/`NewFailure`).
   - Example usage (Note the explicit variable name `paymentStatus`, no short names like `res`):

@@ -10,7 +10,7 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously scan, plan, refactor, and fix all boolean naming, double negatives, mixed polarity, and complex condition violations across the codebase, modifying source files directly to enforce affirmative prefixes (`is`, `has`, `can`, `should`), implicit evaluation (no `== true`), positive framing (no `!isSuccess`), and discrete condition decomposition until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all explicit `== true` / `=== true` checks, negative boolean variables (`isNotReady`), inverted success checks (`!isSuccess`), mixed polarity chains (`if a && !b`), functions $> 8$ lines, and files $> 100$ coding lines. Write the master audit spec in `.lovable/plans/pending/XX-booleans-and-complex-conditions-audit.md`, break it down into `.lovable/plans/subtasks/XX-booleans/`, and verify/create the boolean linter.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all explicit `== true` / `=== true` checks, negative boolean variables (`isNotReady`), inverted success checks (`!isSuccess`), mixed polarity chains (`if a && !b`), functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-booleans-and-complex-conditions-audit.md`, break it down into `.lovable/plans/subtasks/XX-booleans/`, and verify/create the boolean linter.
 - [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, rename negative booleans to positive framing, convert explicit comparisons to implicit checks, split mixed polarity chains into discrete guard clauses, run the boolean linter and autofixer, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md`, `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
@@ -116,7 +116,7 @@ Before modifying application code, you MUST thoroughly scan the repository and w
   3. Negative boolean variable declarations (`isNotActive`, `isNotReady`, `disableFeature`).
   4. Mixed polarity condition joins (`&& !`, `|| !`, `and not`).
   5. Functions accepting boolean flag parameters (`process(true)`).
-  6. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
+  6. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (recommended <= 80).
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-booleans-and-complex-conditions-audit.md` listing every affected file, exact line numbers, and refactoring plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-booleans/` (e.g. `01-implicit-booleans.md`, `02-negative-inversion.md`, `03-split-mixed-polarity.md`).
@@ -129,7 +129,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits and boolean complexity rules.
-  - **How:** Cognitive complexity $\le 10$. Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines).
+  - **How:** Cognitive complexity <= 10. Functions <= 8 lines preferred (hard cap 15 lines). Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
   - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
   - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
@@ -235,8 +235,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Positive Framing: Zero negative boolean variables (`isNotReady`), zero `!isSuccess` checks.
 - [ ] Zero Mixed Polarity: No `if a && !b` conditions.
 - [ ] Zero Boolean Flag Parameters on functions.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Function Size: All functions <= 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files <= 100 lines coding max (recommended <= 80 lines).
 - [ ] `python linter-scripts/check-boolean-guidelines.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
 
@@ -250,8 +250,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Implicit Booleans: Positive booleans MUST ALWAYS be evaluated implicitly.
 - [ ] No Negatives: No `!isSuccess`, no `isNot*` variables.
 - [ ] No Mixed Polarity: Zero combined positive and negative checks in a single `if`.
-- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Function Limits: <= 8 lines preferred, <= 15 lines max.
+- [ ] File Limits: <= 100 lines coding max (recommended <= 80 lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.

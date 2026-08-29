@@ -126,7 +126,7 @@ func ProcessUpload(ctx context.Context, req UploadRequest) error {
 
 ### 6d — Parameter Reduction & Specialized Function Helpers
 
-When a function call frequently repeats identical constant arguments, enums, or exit codes across multiple call sites, extract a specialized helper function. This eliminates parameter bloat, keeps parameter counts $\le 3$, and enforces single-responsibility design.
+When a function call frequently repeats identical constant arguments, enums, or exit codes across multiple call sites, extract a specialized helper function. This eliminates parameter bloat, keeps parameter counts <= 3, and enforces single-responsibility design.
 
 ```go
 // ❌ FORBIDDEN: Repeating magic constants and parameters across call sites
