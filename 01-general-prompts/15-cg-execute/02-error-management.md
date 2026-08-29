@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all error management violations across the codebase, modifying source files directly to implement `AppError` wrappers, contextual logging, and universal response envelopes until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all error management violations across the codebase, modifying source files directly to implement `AppError` wrappers, outer error handling, specialized exit helpers, and universal response envelopes until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active backend, frontend, and service files for swallowed errors, bare un-wrapped returns, unhandled promises, raw error responses, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-error-management-audit.md`, break it down into `.lovable/plans/subtasks/XX-error-management/`, and verify/create the error linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, refactor error handling to use `AppError`/`AppException` with operation names and parameters, decompose functions ($\le$ 8 lines) and files ($\le$ 100 lines), run the error linter, execute tests, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active backend, frontend, and service files for swallowed errors, internal exit/panic calls returning `nil` (dual handling), bare un-wrapped returns, unhandled promises, raw error responses, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-error-management-audit.md`, break it down into `.lovable/plans/subtasks/XX-error-management/`, and verify/create the error linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, eliminate internal exit calls from leaf functions, return errors to callers (`return err`), implement specialized exit helpers with typed enums, decompose functions ($\le$ 8 lines) and files ($\le$ 100 lines), run the error linter, execute tests, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -21,6 +21,76 @@ PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, AppError Refactor
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Dedicated Section: Error Return Contract & Outer Handling Principle (Zero Dual-Handling)
+
+A function that declares an `error` return type MUST return the actual error instance directly to the caller (`return err`). It MUST NEVER invoke an exit handler, terminate the process, or panic internally and then return `nil`.
+
+### Why Dual-Handling & Internal Exit Is Forbidden
+
+1. **Broken Caller Sovereignty:** When a leaf function handles its own exit internally and returns `nil`, the caller is deceived into believing the operation succeeded.
+2. **Impossible Testability:** Unit tests cannot assert returned error types or values if the helper function kills the process or handles errors internally.
+3. **Dual Execution Hazards:** Calling an exit handler inside a helper while returning a result creates race conditions, partial database mutations, and skipped resource cleanups.
+
+### Mandatory Rules & Generic Patterns
+
+1. **Leaf Functions Must Return the Error (`return err`):**
+   Leaf/business functions must construct or wrap the `AppError` and return it directly.
+
+   ```go
+   // ❌ FORBIDDEN: Handling exit inside leaf function and returning nil
+   func ExecuteOperation(items []string) error {
+       if len(items) == 0 {
+           err := apperror.NewValidationError("items cannot be empty")
+           exitHandler.HandleError(err, 1) // ❌ Banned internal exit call
+           return nil                      // ❌ Deceptive return
+       }
+
+       return nil
+   }
+
+   // ✅ REQUIRED: Return error directly with proper newline gaps
+   func ExecuteOperation(items []string) error {
+       if len(items) == 0 {
+           return apperror.NewValidationError("items cannot be empty")
+       }
+
+       return nil
+   }
+   ```
+
+2. **Outer Caller Handles the Error:**
+   Only the top-level orchestrator, root command dispatcher, or HTTP router receives the error and decides how to present it or terminate.
+
+   ```go
+   // ✅ REQUIRED: Top-level caller handles the error and exit
+   func MainCommandDispatcher(args []string) {
+       err := ExecuteOperation(args)
+       if err != nil {
+           exitHandler.HandleValidationError(err)
+           return
+       }
+
+       exitHandler.HandleSuccess()
+   }
+   ```
+
+3. **No Magic Literal Exit Codes (Enums Required):**
+   - NEVER pass raw integer literals (`1`, `2`, `0`) to exit handlers.
+   - Use strongly-typed enums ending in `Type`: `ExitCodeType` (`ExitCodeSuccess`, `ExitCodeValidationError`, `ExitCodeGeneralError`).
+
+4. **Parameter Reduction via Specialized Helpers:**
+   - If a handler parameter is frequently repeated (such as passing a constant exit code), create a dedicated specialized helper to reduce function arguments:
+
+   ```go
+   // ❌ FORBIDDEN: Repeating magic exit code parameter
+   exitHandler.Handle(err, ExitCodeValidationError)
+
+   // ✅ REQUIRED: Dedicated specialized helper function
+   exitHandler.HandleValidationError(err)
+   ```
 
 ---
 
@@ -39,15 +109,17 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
 - **Actionable Scan:** Use search/grep tools across all Go, TypeScript, PHP, and Python files to identify:
-  1. Empty `catch` / `except` blocks or swallowed errors (`_ = err`).
-  2. Bare error returns without contextual wrapping (`return err` instead of `apperror.Wrap`).
-  3. Raw panic / exit invocations (`panic()`, `process.exit()`, `os.Exit()`).
-  4. API endpoints returning raw text or unformatted error payloads instead of the `{ data, errors, meta }` envelope.
-  5. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
-  6. Nested `if` conditionals.
+  1. Internal exit handler calls in leaf functions followed by `return nil`.
+  2. Empty `catch` / `except` blocks or swallowed errors (`_ = err`).
+  3. Bare error returns without contextual wrapping (`return err` instead of `apperror.Wrap`).
+  4. Raw panic / exit invocations (`panic()`, `process.exit()`, `os.Exit()`).
+  5. Magic integer exit codes (`HandleError(err, 1)` instead of enums).
+  6. API endpoints returning raw text or unformatted error payloads instead of the `{ data, errors, meta }` envelope.
+  7. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
+  8. Nested `if` conditionals.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-error-management-audit.md` listing every affected file and exact line number.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
-- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-error-management/` (e.g. `01-wrap-database-errors.md`, `02-api-response-envelopes.md`).
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-error-management/` (e.g. `01-leaf-error-returns.md`, `02-specialized-exit-helpers.md`, `03-api-response-envelopes.md`).
 
 ---
 
@@ -97,10 +169,11 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-mws-error-codes.py` or `linter-scripts/validate-guidelines.py` exists in the repository.
 - [ ] **Auto-Create Linter if Missing:** If no dedicated error linter exists, create `linter-scripts/check-error-management.py` that AST-scans for:
-  1. Empty `catch` or `except` blocks.
-  2. Bare un-wrapped error returns (`return err` instead of `apperror.Wrap`).
-  3. Bare panics/hard exits (`panic()`, `process.exit()`, `os.Exit()`).
-  4. Non-standard API responses lacking the `{ data, errors, meta }` envelope.
+  1. Internal exit handler invocations in non-main functions.
+  2. Empty `catch` or `except` blocks.
+  3. Bare un-wrapped error returns (`return err` instead of `apperror.Wrap`).
+  4. Bare panics/hard exits (`panic()`, `process.exit()`, `os.Exit()`).
+  5. Non-standard API responses lacking the `{ data, errors, meta }` envelope.
 - [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
   python linter-scripts/check-error-management.py
@@ -126,6 +199,9 @@ WHILE (STEP < PHASE_2_STEPS):
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-error-management/
     2. Open and modify the actual source code files:
+       - Ensure leaf functions return errors (return err) and do not call exit handlers internally.
+       - Use typed Enums (ExitCodeType) for exit codes instead of magic numbers.
+       - Create specialized helper functions to reduce repeated handler parameters.
        - Wrap errors with AppError / AppException preserving root causes.
        - Inject operation name and parameter context into all error logs.
        - Enforce the universal { data, errors, meta } API envelope.
@@ -146,7 +222,7 @@ WHILE (STEP < PHASE_2_STEPS):
           - Move .lovable/plans/pending/XX-error-management-audit.md to .lovable/plans/completed/
           - Update .lovable/plans/index.md
           - Stage modified files with git add and create semantic commit:
-            git commit -m "refactor(errors): enforce AppError context wrapping and universal envelopes"
+            git commit -m "refactor(errors): enforce AppError context wrapping, outer error handling, and universal envelopes"
           - BREAK and finish turn.
 ```
 
@@ -171,6 +247,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Staged files sanitized of artifact zips and temporary scratch files.
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+- [ ] Error Return Sovereignty: Leaf functions return `error` (`return err`); NO leaf functions call exit handlers or panics and return `nil`.
+- [ ] Typed Exit Codes: Exit codes use strongly typed enums (`ExitCodeType`), zero magic integers.
+- [ ] Parameter Reduction: Repeated handler parameters extracted into specialized helper functions.
 - [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines. Long arguments are split across lines (max 100 chars).
@@ -192,6 +271,8 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Error Return Sovereignty: Leaf functions return `error` directly to caller; no internal exit calls returning `nil`.
+- [ ] Typed Exit Codes: Enums used for exit codes, zero magic numbers.
 - [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
 - [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
 - [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).

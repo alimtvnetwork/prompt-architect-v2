@@ -1,6 +1,6 @@
 # Instruction (must follow): Execute Coding Guidelines — Code Hygiene & Project Architecture
 
-Trigger Keywords & Aliases: `cg-hygiene`, `cg-execute hygiene`, `audit hygiene`, `fix file sizes`, `enforce code hygiene`
+Trigger Keywords & Aliases: `cg-hygiene`, `cg-execute hygiene`, `audit hygiene`, `fix file sizes`, `enforce code hygiene`, `parameter reduction`
 
 ```text
 N = 200
@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, and architectural violations across the codebase, enforcing 100-line standard file caps (recommended $\le$ 80 lines), 8–15 line function caps, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, parameter bloat, and architectural violations across the codebase, enforcing 100-line standard file caps (recommended $\le$ 80 lines), 8–15 line function caps, specialized parameter-reducing helper functions, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 100 coding lines (rec $\le$ 80), functions exceeding 8–15 lines, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages ($\le$ 80–100 lines), decompose long functions ($\le$ 8 lines), extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 100 coding lines (rec $\le$ 80), functions exceeding 8–15 lines, repeated constant arguments across call sites, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages ($\le$ 80–100 lines), decompose long functions ($\le$ 8 lines), extract repeated parameters into specialized helper functions, extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -21,6 +21,52 @@ PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, File & Function S
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Dedicated Section: Parameter Reduction & Specialized Helper Function Paradigm
+
+Passing repeated constant arguments or flags across multiple call sites is a major source of code smell, parameter bloat, and boilerplate.
+
+### Why Parameter Bloat & Repetition Is Forbidden
+
+1. **Violates the $\le 3$ Parameters Limit:** Functions with excessive arguments are difficult to read, test, and maintain.
+2. **Duplication of Context:** Hardcoding the same enum, flag, or code at 10 different call sites creates maintenance hazards when behavior changes.
+3. **Impaired Readability:** Callers should express intent directly through semantic function names rather than passing tuples of flags and constants.
+
+### The Specialized Helper Paradigm (Generic Example with Proper Newlines)
+
+When a function call frequently repeats identical constants, enums, or exit codes, extract a specialized single-argument or zero-argument helper:
+
+```go
+// ❌ FORBIDDEN: Passing repeated constant/enum arguments at every call site
+func ProcessPayload(data []byte) {
+    if len(data) == 0 {
+        reporter.ReportEvent(data, EventTypeValidationFailure, SeverityLevelError)
+        return
+    }
+
+    reporter.ReportEvent(data, EventTypeProcessingSuccess, SeverityLevelInfo)
+}
+
+// ✅ REQUIRED: Specialized helper functions reducing parameter count and boilerplate
+func ReportValidationError(data []byte) {
+    reporter.ReportEvent(data, EventTypeValidationFailure, SeverityLevelError)
+}
+
+func ReportSuccess(data []byte) {
+    reporter.ReportEvent(data, EventTypeProcessingSuccess, SeverityLevelInfo)
+}
+
+func ProcessPayload(data []byte) {
+    if len(data) == 0 {
+        ReportValidationError(data)
+        return
+    }
+
+    ReportSuccess(data)
+}
+```
 
 ---
 
@@ -37,6 +83,7 @@ You MUST adhere to the single source of truth defined in `spec/02-coding-guideli
 | **React component file** | $\le$ 80–100 lines | error (max 100 lines) |
 | **Struct / class** | $\le$ 120 lines | error |
 | **Nested `if` statements** | 0 (No nesting) | error (flatten with guard clauses) |
+| **Function Parameters** | $\le$ 3 parameters | error (use specialized helpers / structs) |
 
 ---
 
@@ -57,15 +104,16 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 - **Actionable Scan:** Use search/grep and line-count tools across all repository files to identify:
   1. Source code files exceeding 100 coding lines (rec $\le$ 80).
   2. Functions exceeding 8 lines (hard cap 15 lines).
-  3. Classes or structs exceeding 120 lines.
-  4. Nested `if` statements (nesting depth > 1).
-  5. Inline enum/interface/struct definitions mixed in with business functions.
-  6. Committed build artifacts (`.pyc`, compiled binaries, temp test dumps).
-  7. Leftover `TODO`, `WIP`, or placeholder comments.
-  8. Any uppercase filenames across the tree.
+  3. Functions with repeated constant parameters that can be simplified into specialized helpers.
+  4. Classes or structs exceeding 120 lines.
+  5. Nested `if` statements (nesting depth > 1).
+  6. Inline enum/interface/struct definitions mixed in with business functions.
+  7. Committed build artifacts (`.pyc`, compiled binaries, temp test dumps).
+  8. Leftover `TODO`, `WIP`, or placeholder comments.
+  9. Any uppercase filenames across the tree.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-code-hygiene-audit.md` listing every affected file, exact line counts, and decomposition plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
-- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-code-hygiene/` (e.g. `01-oversized-file-splits.md`, `02-definition-extractions.md`).
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-code-hygiene/` (e.g. `01-oversized-file-splits.md`, `02-parameter-reducing-helpers.md`, `03-definition-extractions.md`).
 
 ---
 
@@ -129,6 +177,7 @@ WHILE (STEP < PHASE_2_STEPS):
     2. Open and modify the actual source code files:
        - Split oversized files into cohesive sub-modules <= 100 coding lines (rec <= 80).
        - Decompose functions > 8 lines into small helpers (max 15 lines).
+       - Extract repeated parameters into specialized helper functions.
        - Flatten nested if statements with guard clauses.
        - NEVER collapse if/else onto a single line to cheat line caps.
        - Extract inline interfaces and enums into dedicated definition files.
@@ -149,7 +198,7 @@ WHILE (STEP < PHASE_2_STEPS):
           - Move .lovable/plans/pending/XX-code-hygiene-audit.md to .lovable/plans/completed/
           - Update .lovable/plans/index.md
           - Stage modified files with git add and create semantic commit:
-            git commit -m "refactor(hygiene): split oversized modules, decompose functions, and extract dedicated definition files"
+            git commit -m "refactor(hygiene): split oversized modules, extract specialized helpers, and enforce definition files"
           - BREAK and finish turn.
 ```
 
@@ -173,6 +222,7 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines; structs $\le$ 120 lines).
 - [ ] Function Size: Functions $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] Parameter Count: Functions $\le$ 3 parameters; repeated constants extracted into specialized helpers.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Definitions live in dedicated files.
@@ -191,6 +241,7 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] File Size Caps: All files $\le$ 100 lines coding max (recommended $\le$ 80 lines), structs $\le$ 120 lines, components $\le$ 80–100 lines.
 - [ ] Function Size: All functions $\le$ 8–15 lines.
+- [ ] Parameter Reduction: Repeated constant parameters extracted into dedicated specialized helpers.
 - [ ] Zero Nested Ifs: Flat structure with guard clauses.
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Dedicated Files: Enums and types are in dedicated definition files.
