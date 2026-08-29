@@ -914,25 +914,94 @@ receives `oldIp` and never forwards it) is a defect, not a style issue.
 
 ---
 
-## 9. R8 — No magic literals as arguments
+## 9. R8 — No magic literals as arguments, characters, or string comparisons
+
+Every magic number, hardcoded string, character code (`rune(10)`), or delimiter must be extracted to a centralized typed constant or enum.
+
+### 9a. Character Codes, Runes & Delimiters (No Raw Conversions)
 
 ```go
-// BEFORE
-netshExecutor(ctx, "netsh", "interface", "ip", "set", "address", "name="+interfaceName, "static", newIp, "255.255.255.0")
-```
+// ❌ FORBIDDEN: Raw rune casts and hardcoded delimiters
+lines := strings.Split(string(data), string(rune(10)))
+header := strings.Join(fields, ",")
 
-```go
-// AFTER
+// ✅ REQUIRED: Centralized typed constants
 const (
-	defaultInterfaceName = "Ethernet"
-	defaultSubnetMask    = "255.255.255.0"
-	netshBinary          = "netsh"
-	addressModeStatic    = "static"
+	NewLineUnix    = "\n"
+	DelimiterComma = ","
 )
+
+lines := strings.Split(string(data), NewLineUnix)
+header := strings.Join(fields, DelimiterComma)
 ```
 
-The same applies in every language: `const`, `final`, `enum`, module-level constants, or a config
-struct — never a bare literal at the call site.
+### 9b. Logging & Test Assertion Exemption
+
+- **Exempt:** Informational log strings (`logger.Info("user logged in")`), format templates (`fmt.Sprintf(...)`), and test expectation descriptions (`t.Errorf("expected %v, got %v")`).
+- **Required as Constants:** Status codes, error codes, HTTP headers, timeouts, entity states, delimiters, and business flags.
+
+### 9c. TypeScript: Native Enums or `as const` Object Enums
+
+```typescript
+// ❌ FORBIDDEN: String union for enums
+type Role = "admin" | "editor";
+
+// ✅ REQUIRED: TypeScript Enum with *Type suffix
+export enum UserRoleType {
+    Admin = "ADMIN",
+    Editor = "EDITOR",
+}
+
+// ✅ REQUIRED Alternative: `as const` Object Enum
+export const UserRoleType = {
+    Admin: "ADMIN",
+    Editor: "EDITOR",
+} as const;
+
+export type UserRoleType = (typeof UserRoleType)[keyof typeof UserRoleType];
+```
+
+### 9d. PHP: Backed Enums & Trait Helpers (PHP 8.1+)
+
+```php
+namespace App\Traits;
+
+trait HasEnumHelpers {
+    public static function values(): array {
+        return array_column(self::cases(), 'value');
+    }
+}
+
+namespace App\Enums;
+
+use App\Traits\HasEnumHelpers;
+
+enum OrderStatusType: string {
+    use HasEnumHelpers;
+
+    case Pending = 'pending';
+    case Completed = 'completed';
+
+    public function label(): string {
+        return match($this) {
+            self::Pending => 'Pending Review',
+            self::Completed => 'Order Completed',
+        };
+    }
+}
+```
+
+### 9e. Python: `StrEnum`
+
+```python
+from enum import StrEnum
+
+class TaskPriorityType(StrEnum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+```
+
 
 ---
 

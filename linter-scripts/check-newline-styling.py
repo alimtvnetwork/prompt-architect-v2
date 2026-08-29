@@ -93,10 +93,10 @@ def check_file(filepath):
                 ):
                     violations.append((i + 1, "Blank line required after '}' if followed by more code"))
 
-        # 5. Check for \n in Go files
+        # 5. Check for \n in Go files (exempt constant declarations)
         if filepath.endswith(".go"):
-            if '"\\n"' in line:
-                violations.append((i + 1, 'Use constants.NewLineUnix instead of "\\n"'))
+            if '"\\n"' in line and not stripped.startswith("const ") and not stripped.startswith("NewLine"):
+                violations.append((i + 1, 'Use constants.NewLineUnix instead of literal "\\n"'))
 
     return violations
 

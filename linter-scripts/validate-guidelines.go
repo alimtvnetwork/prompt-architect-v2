@@ -43,6 +43,10 @@ import (
 	"strings"
 )
 
+const (
+	NewLineUnix = "\n"
+)
+
 // ═══════════════════════════════════════════════════════════════════════
 // Types
 // ═══════════════════════════════════════════════════════════════════════
@@ -946,7 +950,7 @@ func validateFile(path string, maxLines int) []Violation {
 		return nil
 	}
 
-	lines := strings.Split(string(data), string(rune(10)))
+	lines := strings.Split(string(data), NewLineUnix)
 	var violations []Violation
 
 	// Universal rules
