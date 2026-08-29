@@ -8,11 +8,11 @@ N = 300
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan every function across the codebase, decompose oversized functions (> 8 lines) into testable units, and author comprehensive positive, negative, edge-case, and error-branch integration and E2E test suites with semantic three-part naming until 100% test pass rate and high coverage are achieved without stopping.
+/goal Autonomously scan every function across the codebase, decompose oversized functions (> 8 lines) into testable units, enforce 100-line file caps, and author comprehensive positive, negative, edge-case, and error-branch integration and E2E test suites with semantic three-part naming until 100% test pass rate and high coverage are achieved without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the codebase function-by-function, inventory all functions missing unit/integration/E2E coverage, identify oversized functions (> 8 lines) needing decomposition, map required positive and negative test cases, write the master audit spec in `.lovable/plans/pending/XX-testing-and-coverage-audit.md`, break it down into `.lovable/plans/subtasks/XX-testing-and-coverage/`, and verify/create coverage scripts.
-- [ ] /goal Second N/2 steps (Phase 2): Sequentially execute each subtask, decompose large functions into single-responsibility helpers, author table-driven tests covering every branch (positive, negative, boundary values, error returns), run unit/integration/E2E test runners, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`, `spec/04-database-conventions/04-testing-strategy.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan the codebase function-by-function, inventory all functions missing unit/integration/E2E coverage, identify oversized functions (> 8 lines) and files (> 100 lines) needing decomposition, map required positive and negative test cases, write the master audit spec in `.lovable/plans/pending/XX-testing-and-coverage-audit.md`, break it down into `.lovable/plans/subtasks/XX-testing-and-coverage/`, and verify/create coverage scripts.
+- [ ] /goal Second N/2 steps (Phase 2): Sequentially execute each subtask, decompose large functions into single-responsibility helpers ($\le$ 8 lines), author table-driven tests covering every branch (positive, negative, boundary values, error returns), run unit/integration/E2E test runners, and verify local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`, `spec/04-database-conventions/04-testing-strategy.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
@@ -21,6 +21,16 @@ PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Function Decomposition, Test Writing,
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Canonical Sizing & Testing Hierarchy
+
+- **Function Body:** Preferred $\le$ 8 lines; hard cap $\le$ 15 lines (functions $> 8$ lines must be decomposed into testable helpers).
+- **Standard File Sizing:** Max 100 coding lines per file (recommended $\le$ 80 lines).
+- **Nested `if` Statements:** Zero tolerance (must be flattened with guard clauses).
+- **Test Naming:** Strictly `Test{Unit}_{Scenario}_{ExpectedOutcome}`.
+- **NO Line-Compression Cheating:** Never collapse `if/else` onto a single line or delete blank lines to fit under line caps. Reduce size by decomposing into separate files.
 
 ---
 
@@ -41,9 +51,10 @@ Before writing tests or modifying functions, you MUST perform a deep function-by
 - **Actionable Function-by-Function Scan:** Use search/grep and AST analysis tools across all Go, TypeScript, PHP, and Python files to identify:
   1. Functions lacking dedicated unit or integration test files (e.g., `UserService.go` without `UserService_test.go`).
   2. Oversized functions exceeding 8 lines of logic (hard cap 15 lines) that must be decomposed into smaller, single-purpose helpers before testing.
-  3. Conditional branches (`if/else`, `switch/case`, `guard clauses`) lacking positive and negative condition test cases.
-  4. Error return pathways and `AppError` handlers lacking explicit failure assertion tests.
-  5. Integration and E2E endpoints lacking request/response envelope validation.
+  3. Source files exceeding 100 coding lines (rec $\le$ 80).
+  4. Conditional branches (`if/else`, `switch/case`, `guard clauses`) lacking positive and negative condition test cases.
+  5. Error return pathways and `AppError` handlers lacking explicit failure assertion tests.
+  6. Integration and E2E endpoints lacking request/response envelope validation.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-testing-and-coverage-audit.md` listing every function, its line count, missing test cases (positive, negative, error), and decomposition plan.
 - **Create a Task-Specific Rule Set:** Analyze the domain and define 3-5 testing rules (e.g., table-driven structure, mock contracts, DB isolation) inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-testing-and-coverage/` (e.g. `01-auth-service-tests.md`, `02-order-flow-integration-tests.md`).
@@ -56,7 +67,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines.
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line compression.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Absolute zero tolerance for nested conditionals.
   - **How:** Flatten all nested `if` statements with guard clauses and early returns.
@@ -119,6 +130,9 @@ WHILE (STEP < PHASE_2_STEPS):
     1. Read the next subtask from .lovable/plans/subtasks/XX-testing-and-coverage/
     2. Open the source file:
        - IF the function exceeds 8 lines: Decompose it into single-responsibility helper functions.
+       - Ensure file length is <= 100 coding lines (rec <= 80).
+       - Flatten nested if statements with guard clauses.
+       - NEVER collapse if/else onto a single line to cheat line caps.
     3. Open or create the corresponding test file:
        - Implement table-driven tests with multiple input variations.
        - Cover the positive path with valid data and expected return values.
@@ -161,8 +175,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Function Size: All functions tested are $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute limit 200–300 lines.
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
+- [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] All test functions follow `Test{Unit}_{Scenario}_{ExpectedOutcome}` naming.
 - [ ] Both positive and negative branches are explicitly tested.
 - [ ] All error return pathways are verified with assertions.
@@ -178,7 +193,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
 - [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 80$ lines recommended, $\le 100$ lines standard max, absolute limit 200–300 lines.
+- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Test Naming: Three-part convention strictly adhered to (`TestUnit_Scenario_Outcome`).
 - [ ] Zero Generic Test Names: Absolutely NO generic test names like `TestHandleComp100` or `Test1`.
 - [ ] Function Sizing: Functions decomposed to $\le$ 8 lines before writing branch tests.
@@ -208,6 +224,19 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 ## MUST FOLLOW NON-NEGOTIABLE
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
 
 ---
 

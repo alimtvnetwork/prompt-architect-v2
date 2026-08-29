@@ -8,9 +8,9 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, and architectural violations across the codebase, enforcing 80-line recommended file caps (standard max 100 lines, hard cap 200–300 lines), 8–15 line function caps, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, and architectural violations across the codebase, enforcing 100-line standard file caps (recommended $\le$ 80 lines), 8–15 line function caps, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 80–100 lines (hard cap 200–300 lines), functions exceeding 8–15 lines, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 100 coding lines (rec $\le$ 80), functions exceeding 8–15 lines, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
 - [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages ($\le$ 80–100 lines), decompose long functions ($\le$ 8 lines), extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
@@ -32,9 +32,8 @@ You MUST adhere to the single source of truth defined in `spec/02-coding-guideli
 |---|---|---|
 | **Function body (preferred)** | $\le$ 8 lines | warn |
 | **Function body (hard cap)** | $\le$ 15 lines | error (build fails) |
+| **File length (standard max)** | $\le$ 100 lines | error (coding lines) |
 | **File length (recommended)** | $\le$ 80 lines | info |
-| **File length (standard max)** | $\le$ 100 lines | warn |
-| **File length (hard cap)** | $\le$ 200–300 lines | error (max 300 lines) |
 | **React component file** | $\le$ 80–100 lines | error (max 100 lines) |
 | **Struct / class** | $\le$ 120 lines | error |
 | **Nested `if` statements** | 0 (No nesting) | error (flatten with guard clauses) |
@@ -56,7 +55,7 @@ You MUST adhere to the single source of truth defined in `spec/02-coding-guideli
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
 - **Actionable Scan:** Use search/grep and line-count tools across all repository files to identify:
-  1. Source code files exceeding 80–100 lines (absolute hard cap 200–300 lines).
+  1. Source code files exceeding 100 coding lines (rec $\le$ 80).
   2. Functions exceeding 8 lines (hard cap 15 lines).
   3. Classes or structs exceeding 120 lines.
   4. Nested `if` statements (nesting depth > 1).
@@ -76,7 +75,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines. Functions $\le 8$ lines preferred, hard cap 15 lines. Structs/classes $\le 120$ lines.
+  - **How:** Files $\le 100$ lines coding max (recommended $\le 80$ lines). Functions $\le 8$ lines preferred, hard cap 15 lines. Structs/classes $\le 120$ lines. Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Zero tolerance for nested conditionals.
   - **How:** Flatten all nested `if` statements with guard clauses and early returns.
@@ -100,7 +99,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-file-sizes.py`, `linter-scripts/check-placeholder-comments.py`, and `linter-scripts/check-forbidden-strings.py` exist in the repository.
-- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-file-sizes.py` (enforcing 80–100 line standard max, max 300 lines per file, 8–15 lines per function, 120 lines max per struct/class) and `linter-scripts/check-placeholder-comments.py` (flagging `TODO`, `WIP`, `[N]`).
+- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-file-sizes.py` (enforcing $\le$ 100 coding lines per file, 8–15 lines per function, 120 lines max per struct/class) and `linter-scripts/check-placeholder-comments.py` (flagging `TODO`, `WIP`, `[N]`).
 - [ ] **Local Linter Command:** Execute and verify the linters locally:
   ```bash
   python linter-scripts/check-file-sizes.py
@@ -128,9 +127,10 @@ WHILE (STEP < PHASE_2_STEPS):
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-code-hygiene/
     2. Open and modify the actual source code files:
-       - Split oversized files into cohesive sub-modules <= 80–100 lines (hard cap 200–300 lines).
+       - Split oversized files into cohesive sub-modules <= 100 coding lines (rec <= 80).
        - Decompose functions > 8 lines into small helpers (max 15 lines).
        - Flatten nested if statements with guard clauses.
+       - NEVER collapse if/else onto a single line to cheat line caps.
        - Extract inline interfaces and enums into dedicated definition files.
        - Clean up any TODO/WIP placeholder comments.
        - Purge untracked build artifacts and update .gitignore.
@@ -171,9 +171,10 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] File Size: Files $\le$ 80 lines recommended, $\le$ 100 lines standard max, absolute limit 200–300 lines (classes $\le$ 120 lines).
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines; structs $\le$ 120 lines).
 - [ ] Function Size: Functions $\le$ 8 lines preferred, hard cap 15 lines.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
+- [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Definitions live in dedicated files.
 - [ ] `.gitignore` contains `__pycache__/`, `*.pyc`, and build artifact patterns.
 - [ ] Zero committed binaries or generated artifacts.
@@ -188,9 +189,10 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] File Size Caps: All files $\le$ 80–100 lines (hard cap 200–300 lines), structs $\le$ 120 lines, components $\le$ 80–100 lines.
+- [ ] File Size Caps: All files $\le$ 100 lines coding max (recommended $\le$ 80 lines), structs $\le$ 120 lines, components $\le$ 80–100 lines.
 - [ ] Function Size: All functions $\le$ 8–15 lines.
 - [ ] Zero Nested Ifs: Flat structure with guard clauses.
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Dedicated Files: Enums and types are in dedicated definition files.
 - [ ] Lowercase Naming: All repository filenames are strictly lowercase.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
@@ -219,6 +221,19 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 ## MUST FOLLOW NON-NEGOTIABLE
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
 
 ---
 

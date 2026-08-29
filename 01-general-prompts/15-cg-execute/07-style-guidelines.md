@@ -8,10 +8,10 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, nested `if`, and function size violations across the codebase, flattening nested conditionals, decomposing functions to $\le$ 8–15 lines, and applying Return New Line rules (R13-R16) until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all coding style, newline formatting, nested `if`, and function size violations across the codebase, flattening nested conditionals, decomposing functions to $\le$ 8–15 lines, enforcing standard 100-line file caps, and applying Return New Line rules (R13-R16) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for nested `if` blocks (depth > 1), functions exceeding 8–15 lines, files exceeding 80–100 lines, and missing newlines before `return`/`throw` and after `}`. Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, flatten nested `if`s with guard clauses, break long functions into $\le$ 8-line single-responsibility helpers, apply the automated newline autofixer, run style linters, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for nested `if` blocks (depth > 1), functions exceeding 8–15 lines, files exceeding 100 coding lines (rec $\le$ 80), and missing newlines before `return`/`throw` and after `}`. Write the master audit spec in `.lovable/plans/pending/XX-style-guidelines-audit.md`, break it down into `.lovable/plans/subtasks/XX-style-guidelines/`, and verify/create the style linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, flatten nested `if`s with guard clauses, break long functions into $\le$ 8-line single-responsibility helpers, decompose files to $\le$ 100 lines, apply the automated newline autofixer, run style linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/`, `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
@@ -58,7 +58,7 @@ Nested `if` statements (an `if` block inside another `if` block, nesting depth $
 2. **Decompose into Small Helpers ($\le 8$ lines):** Extract complex composite validation checks into dedicated boolean helper functions.
 3. **Mandatory Sizing Hierarchy:**
    - **Functions:** Target $\le 8$ lines preferred; hard cap $\le 15$ lines maximum.
-   - **Files:** Recommended $\le 80$ lines; standard max $\le 100$ lines; absolute hard cap $\le 200–300$ lines (never exceed 300 lines).
+   - **Files:** Standard max $\le 100$ lines of code (recommended $\le 80$ lines).
 
 ---
 
@@ -79,7 +79,7 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 - **Actionable Scan:** Use search/grep and AST tools across all source files to identify:
   1. Nested `if` blocks (any `if` nested inside an outer `if`).
   2. Functions exceeding 8 lines (hard cap 15 lines).
-  3. Source files exceeding 80–100 lines (absolute cap 200–300 lines).
+  3. Source files exceeding 100 coding lines (rec $\le$ 80).
   4. Missing blank lines before `return`, `throw`, or `raise` (R13).
   5. Missing blank lines after closing `}` (R14).
   6. Consecutive blank lines (R15).
@@ -96,7 +96,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal sizing limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, max 100 lines, absolute hard cap 200–300 lines (never exceed 300).
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Elimination of nested conditional pyramids and mandatory braces.
   - **How:** Use guard clauses and early returns to flatten all nested `if` statements ($> 1$ level deep).
@@ -152,7 +152,8 @@ WHILE (STEP < PHASE_2_STEPS):
     2. Open and modify the actual source code files:
        - Flatten nested if statements using guard clauses and early returns.
        - Break functions > 8 lines into concise single-purpose helpers (max 15 lines).
-       - Ensure file sizes stay <= 80 lines recommended (max 100 lines, hard cap 200–300 lines).
+       - Ensure file sizes stay <= 100 coding lines (recommended <= 80 lines).
+       - NEVER collapse if/else onto a single line to cheat line caps.
        - Apply the automated newline autofixer to ensure R13-R16 compliance:
          python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
     3. Run style and function length linters:
@@ -194,7 +195,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute cap 200–300 lines.
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Exactly one blank line before every `return`/`throw` (unless sole statement).
 - [ ] Exactly one blank line after closing `}` (unless next line is `}`, `else`, `catch`).
 - [ ] Zero consecutive blank lines anywhere in the codebase.
@@ -211,7 +213,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
 - [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 80 lines recommended, $\le$ 100 lines standard max, absolute limit 200–300 lines.
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Return New Line: Blank line before return and after `}` (R13-R16).
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
@@ -239,6 +242,19 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 ## MUST FOLLOW NON-NEGOTIABLE
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
 
 ---
 

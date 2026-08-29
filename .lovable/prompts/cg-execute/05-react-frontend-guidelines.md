@@ -29,7 +29,7 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 - **React Components:** Recommended $\le$ 80 lines; standard max $\le$ 100 lines.
 - **Functions & Hooks:** Preferred $\le$ 8 lines; hard cap $\le$ 15 lines.
 - **Nested `if` Statements:** Zero tolerance (flatten with guard clauses and early returns).
-- **Files (Code):** Recommended $\le$ 80 lines; standard max $\le$ 100 lines; hard cap $\le$ 200–300 lines (max 300 lines).
+- **Standard File Sizing:** Max 100 coding lines per file (recommended $\le$ 80 lines).
 
 ---
 
@@ -67,7 +67,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Components $\le 80$ lines recommended (max 100 lines). Functions $\le 8$ lines preferred (max 15 lines). Hard cap 200–300 lines for any file.
+  - **How:** Components $\le 80$ lines recommended (max 100 lines). Functions $\le 8$ lines preferred (max 15 lines). Max 100 lines for any file. Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Zero tolerance for nested conditionals.
   - **How:** Flatten all nested `if` statements with guard clauses and early returns.
@@ -101,9 +101,10 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
   1. Component file line counts exceeding 80–100 lines.
   2. Functions and hooks exceeding 8–15 lines.
   3. Nested `if` statements.
-  4. Custom hooks returning array literals (tuples) instead of object literals.
-  5. Redundant `useEffect` calls syncing derived state.
-  6. Direct state mutations (`state.items.push()` or `state.prop = x`).
+  4. Single-line `if/else` violations.
+  5. Custom hooks returning array literals (tuples) instead of object literals.
+  6. Redundant `useEffect` calls syncing derived state.
+  7. Direct state mutations (`state.items.push()` or `state.prop = x`).
 - [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
   node linter-scripts/check-frontend-guidelines.mjs
@@ -134,6 +135,7 @@ WHILE (STEP < PHASE_2_STEPS):
        - Decompose oversized components into modular sub-components <= 80–100 lines.
        - Break functions/hooks > 8 lines into concise helpers (max 15 lines).
        - Flatten nested if statements with guard clauses.
+       - NEVER collapse if/else onto a single line to cheat line caps.
        - Convert custom hook return tuples to named property objects and update callers.
        - Eliminate redundant useEffect by computing derived state inline.
        - Enforce immutable state updates across all handlers.
@@ -176,6 +178,7 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] All `.tsx`/`.jsx` component files are $\le$ 80–100 lines.
 - [ ] All functions/hooks are $\le$ 8 lines preferred, hard cap 15 lines.
 - [ ] Zero Nested Ifs: Flattened with guard clauses.
+- [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Custom hooks return named objects `{ data, isLoading }`, not tuples.
 - [ ] No redundant `useEffect` for derived computations.
 - [ ] `node linter-scripts/check-frontend-guidelines.mjs` exited with code 0.
@@ -188,9 +191,10 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/02-typescript/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Component Sizing: All component files are $\le$ 80–100 lines (hard cap 200–300 lines).
+- [ ] Component Sizing: All component files are $\le$ 80–100 lines (hard cap 100 lines).
 - [ ] Function Sizing: All functions $\le$ 8–15 lines.
 - [ ] Zero Nested Ifs: Flat flow with early returns.
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Hook Return Signatures: Named property objects only, zero tuple returns.
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`).
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
@@ -219,6 +223,19 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 ## MUST FOLLOW NON-NEGOTIABLE
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
 
 ---
 

@@ -8,11 +8,11 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all boolean, naming, enum, and nested `if` violations across the codebase, modifying source files directly to enforce positive boolean prefixes, implicit checks, zero nested `if` blocks, 8–15 line function caps, and semantic naming until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all boolean, naming, enum, and nested `if` violations across the codebase, modifying source files directly to enforce positive boolean prefixes, implicit checks, zero nested `if` blocks, 8–15 line function caps, and standard 100-line file limits until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active codebase files for explicit `== true` checks, nested `if` conditions (depth > 1), mixed polarity (`if a && !b`), missing `is/has/can/should` prefixes, functions > 8 lines, and files > 80–100 lines. Write the master audit spec in `.lovable/plans/pending/XX-boolean-and-naming-audit.md`, break it down into `.lovable/plans/subtasks/XX-boolean-and-naming/`, and verify/create the boolean linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, flatten nested `if`s with guard clauses, refactor boolean evaluations to implicit form, decompose functions to $\le$ 8 lines, enforce `*Type` enum suffixes, run the boolean linter and autofixer, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active codebase files for explicit `== true` checks, nested `if` conditions (depth > 1), mixed polarity (`if a && !b`), missing `is/has/can/should` prefixes, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-boolean-and-naming-audit.md`, break it down into `.lovable/plans/subtasks/XX-boolean-and-naming/`, and verify/create the boolean linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, flatten nested `if`s with guard clauses, refactor boolean evaluations to implicit form, decompose functions to $\le$ 8 lines and files to $\le$ 100 lines, enforce `*Type` enum suffixes, run the boolean linter and autofixer, and verify local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
@@ -59,7 +59,7 @@ Nested `if` statements (an `if` block placed inside another `if` block, nesting 
 3. **Decompose into Small Helper Functions ($\le 8$ lines):** If an operation requires multiple checks, extract the validation logic into a dedicated boolean helper function that returns `true`/`false`.
 4. **Canonical Sizing Rules:**
    - **Functions:** Target $\le 8$ lines preferred; hard cap of $\le 15$ lines maximum.
-   - **Files:** Recommended $\le 80$ lines; standard max $\le 100$ lines; absolute hard cap $\le 200–300$ lines (never exceed 300 lines).
+   - **Files:** Standard max $\le 100$ lines of code (recommended $\le 80$ lines).
 
 ---
 
@@ -82,7 +82,7 @@ Before modifying application code, you MUST thoroughly scan the repository and w
   2. Explicit boolean comparisons (`== true`, `=== true`, `== false`, `=== false`).
   3. Mixed polarity conditional chains (`&& !`, `|| !`, `and not`).
   4. Functions exceeding 8 lines (hard cap 15 lines).
-  5. Source files exceeding 80–100 lines (absolute cap 200–300 lines).
+  5. Source files exceeding 100 coding lines (rec $\le$ 80).
   6. Boolean variables missing affirmative prefixes (`is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`).
   7. Generic variable names (`temp`, `data`, `obj`, `item`, `input100`).
   8. Enums missing the `Type` suffix.
@@ -98,7 +98,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal sizing limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, max 100 lines, absolute hard cap 200–300 lines (never exceed 300).
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line compression.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Absolute zero tolerance for nested `if` statements.
   - **How:** Flatten all nested `if`s using guard clauses, early returns, and extracted helper functions.
@@ -133,10 +133,11 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-enum-and-boolean.mjs` or `linter-scripts/validate-guidelines.py` exists in the repository.
 - [ ] **Auto-Create Linter if Missing:** If no dedicated boolean linter exists, create `linter-scripts/check-enum-and-boolean.mjs` (or python equivalent) that AST-scans for:
   1. Nested `if` statements (nesting depth > 1).
-  2. Explicit `== true`, `=== true`, `== false`, `=== false` checks.
-  3. Mixed polarity conditional joins (`&& !`, `|| !`, `and not`).
-  4. Boolean variables missing `is/has/can/should/was/will/did/must` prefixes.
-  5. Enums missing the `Type` suffix.
+  2. Single-line `if/else` violations (missing braces or collapsed line).
+  3. Explicit `== true`, `=== true`, `== false`, `=== false` checks.
+  4. Mixed polarity conditional joins (`&& !`, `|| !`, `and not`).
+  5. Boolean variables missing `is/has/can/should/was/will/did/must` prefixes.
+  6. Enums missing the `Type` suffix.
 - [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
   node linter-scripts/check-enum-and-boolean.mjs
@@ -167,7 +168,8 @@ WHILE (STEP < PHASE_2_STEPS):
        - Flatten nested if statements with guard clauses and early returns.
        - Refactor booleans to implicit checks (if isReady { ... }).
        - Eliminate mixed polarity (if isA && !isB -> split or extract).
-       - Decompose functions to <= 8 lines (hard cap 15 lines).
+       - Decompose functions to <= 8 lines (hard cap 15 lines) and files to <= 100 lines.
+       - NEVER collapse if/else onto a single line to cheat line caps.
        - Rename generic variables to domain-specific semantic identifiers.
        - Append Type suffix to all enums and extract to dedicated files.
     3. Run the guideline autofixer to automatically clean boolean patterns:
@@ -212,7 +214,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
-- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute cap 200–300 lines.
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Boolean Conventions: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
 - [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
 - [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
@@ -229,7 +232,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
 - [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 80$ lines recommended, $\le 100$ lines standard max, absolute limit 200–300 lines.
+- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Boolean Conventions: All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).
 - [ ] Implicit Booleans: Zero explicit `== true` / `=== true` checks.
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
@@ -261,6 +265,19 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 ## MUST FOLLOW NON-NEGOTIABLE
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
 
 ---
 

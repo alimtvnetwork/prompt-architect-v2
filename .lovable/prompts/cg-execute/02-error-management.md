@@ -10,9 +10,9 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously scan, plan, refactor, and fix all error management violations across the codebase, modifying source files directly to implement `AppError` wrappers, contextual logging, and universal response envelopes until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active backend, frontend, and service files for swallowed errors, bare un-wrapped returns, unhandled promises, and raw error responses. Write the master audit spec in `.lovable/plans/pending/XX-error-management-audit.md`, break it down into `.lovable/plans/subtasks/XX-error-management/`, and verify/create the error linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, refactor error handling to use `AppError`/`AppException` with operation names and parameters, run the error linter, execute tests, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active backend, frontend, and service files for swallowed errors, bare un-wrapped returns, unhandled promises, raw error responses, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-error-management-audit.md`, break it down into `.lovable/plans/subtasks/XX-error-management/`, and verify/create the error linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, refactor error handling to use `AppError`/`AppException` with operation names and parameters, decompose functions ($\le$ 8 lines) and files ($\le$ 100 lines), run the error linter, execute tests, and verify local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
@@ -43,6 +43,8 @@ Before modifying application code, you MUST thoroughly scan the repository and w
   2. Bare error returns without contextual wrapping (`return err` instead of `apperror.Wrap`).
   3. Raw panic / exit invocations (`panic()`, `process.exit()`, `os.Exit()`).
   4. API endpoints returning raw text or unformatted error payloads instead of the `{ data, errors, meta }` envelope.
+  5. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
+  6. Nested `if` conditionals.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-error-management-audit.md` listing every affected file and exact line number.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-error-management/` (e.g. `01-wrap-database-errors.md`, `02-api-response-envelopes.md`).
@@ -55,7 +57,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines.
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Absolute zero tolerance for nested conditionals.
   - **How:** Flatten all nested `if` statements with guard clauses and early returns.
@@ -127,6 +129,8 @@ WHILE (STEP < PHASE_2_STEPS):
        - Wrap errors with AppError / AppException preserving root causes.
        - Inject operation name and parameter context into all error logs.
        - Enforce the universal { data, errors, meta } API envelope.
+       - Keep function bodies <= 8 lines (max 15 lines) and files <= 100 coding lines.
+       - Flatten any nested ifs with guard clauses.
     3. Run the error management linter:
           python linter-scripts/check-error-management.py
     4. Run the universal guideline autofixer:
@@ -168,12 +172,13 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
 - [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
+- [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
+- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
 - [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
 - [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
 - [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
-- [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
-- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines. Long arguments are split across lines (max 100 chars).
-- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute limit 200–300 lines.
 - [ ] Error Handling (AppError): Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
 - [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
 - [ ] Formatting & Acronyms: Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
@@ -189,7 +194,8 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
 - [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
-- [ ] File Limits: $\le 80$ lines recommended, $\le 100$ lines standard max, absolute limit 200–300 lines.
+- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
 - [ ] Error Management: I have read and enforced `spec/03-error-manage/`. I used `AppError`/`AppException` and did not swallow errors.
 - [ ] Boolean Conventions: All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
@@ -221,6 +227,19 @@ You MUST NOT bump versions, update changelogs, or cut a release at the end of th
 ## MUST FOLLOW NON-NEGOTIABLE
 
 Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
 
 ---
 

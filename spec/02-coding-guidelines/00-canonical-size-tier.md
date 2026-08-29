@@ -9,22 +9,23 @@
 |---------------------------|---------------|-----------------------|---------------|
 | Function body (preferred) | ≤ 8 lines     | warn                  | CODE-RED-005  |
 | Function body (hard cap)  | ≤ 15 lines    | error (build-fails)   | CODE-RED-004  |
+| File length (standard max)| ≤ 100 lines   | error (coding lines)  | CODE-RED-006  |
 | File length (recommended) | ≤ 80 lines    | info                  | CODE-RED-006A |
-| File length (standard max)| ≤ 100 lines   | warn                  | CODE-RED-006B |
-| File length (hard cap)    | ≤ 200–300 lines| error (max 300 lines) | CODE-RED-006  |
 | React component file      | ≤ 80–100 lines| error (max 100 lines) | CODE-RED-006R |
 | Struct / class            | ≤ 120 lines   | error                 | CODE-RED-017  |
 | Nested `if` statements    | 0 (No nesting)| error (flatten depth) | CODE-RED-002  |
 | Parameters per function   | ≤ 3           | error                 | CODE-RED-008  |
 | Cognitive complexity      | ≤ 10          | error                 | CODE-RED-CC10 |
 
-## Counting rules
+## Counting & Anti-Compression Rules (Strictly Enforced)
 
-- Line counts **skip** blank lines and pure-comment lines.
-- Function signature line is **not** counted; body lines are (target ≤ 8 lines, hard cap ≤ 15 lines).
-- Error-handling scaffold (`if err != nil { return apperror.Wrap(err) }` in Go, `catch (e) { throw apperror.wrap(e) }` in TS) is **not** counted.
-- Files should ideally stay under 80 lines and at most 100 lines. Absolute ceiling across all files is 200–300 lines; exceeding 300 lines fails the build.
-- Nested `if` blocks (an `if` inside an `if`) are strictly forbidden; use guard clauses and early returns to flatten all conditionals.
+- **Standard File Size:** Every code file MUST stay under 100 coding lines (recommended $\le$ 80 lines).
+- **Functions:** Target $\le$ 8 lines of body logic; hard cap of $\le$ 15 lines.
+- **NO Line-Compression Cheating (TOTAL BAN):**
+  - **NEVER** collapse `if/else`, return statements, or blocks into a single line to artificially reduce line count (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden).
+  - **NEVER** delete required blank lines (R13-R16: blank line before `return`/`throw`, blank line after `}`) to cram code into fewer lines.
+  - **NEVER** remove code formatting, indentation, or comments to cheat line limits.
+  - Sizing MUST be achieved legitimately through **modular decomposition**: extracting helper functions, splitting files into smaller focused modules, and creating dedicated components.
 
 ## Waivers
 
