@@ -140,7 +140,10 @@ To survive massive checklists and complex codebases, you MUST operate using thes
 
 ## Actionable Items & Checklist (must follow)
 
-- [ ] /learn previous RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn previous RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`.
+
 - [ ] Read the overarching main task plan.
 - [ ] Ensure the git repository starts completely clean.
 - [ ] Complete all work on the current branch only.

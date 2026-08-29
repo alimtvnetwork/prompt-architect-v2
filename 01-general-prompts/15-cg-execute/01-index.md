@@ -12,10 +12,26 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously orchestrate and execute coding standard compliance across the repository by directly scanning files, generating verifiable audit specs, actively refactoring source code, and verifying with automated linters until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using search and read tools, catalog every violation into an exhaustive ledger table, write the master audit spec in `.lovable/plans/pending/`, decompose into granular subtasks in `.lovable/plans/subtasks/`, and verify/create the dedicated linter script.
-- [ ] /goal Second N/2 steps (Phase 2): Directly edit and refactor the actual source code files, eliminate all guideline violations, execute the linter and test suites, verify changes with `git status`/`git diff`, and verify all local CI quality gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
-- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
+2. - [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
+3. - [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+4. - [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
+5. - [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+6. - [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+7. - [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
+8. - [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+9. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+10. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+11. - [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+12. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+13. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+14. - [ ] /learn Ingest `spec/02-coding-guidelines/` for domain-specific architectural specifications.
+15. - [ ] /learn Ingest `spec/03-error-manage/` for error handling architectures and AppError.
+16. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+17. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec with Violation Ledger in .lovable/plans/pending/, Subtasks, Linter Hook)

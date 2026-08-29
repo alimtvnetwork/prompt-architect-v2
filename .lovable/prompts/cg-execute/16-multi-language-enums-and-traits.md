@@ -14,10 +14,26 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously scan, plan, refactor, and fix all Enum, Trait, and Pattern Matching architectures across Go, TypeScript, PHP, Rust, and Python codebases, enforcing string-backed enums, `HasEnumHelpers` traits, exhaustive pattern matching, `*Type` suffixes, central `enums/` folder collocation, and strict relative Git paths until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using AST and grep tools to inventory all magic strings, bare integer flags, unsuffixed enums, untyped PHP arrays, and non-exhaustive Rust `match` expressions. Write the master audit spec in `.lovable/plans/pending/XX-enums-and-traits-audit.md` with an exhaustive Enum & Trait Ledger table, decompose into granular subtasks in `.lovable/plans/subtasks/XX-enums-and-traits/`, and verify enum linters and type checkers.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file. Refactor constants and magic strings into strongly-typed Enums with `*Type` suffixes, implement reusable `HasEnumHelpers` traits in PHP, enforce exhaustive `match` expressions in Rust/PHP/TS, generate Go stringers (`go generate ./...`), and verify local CI quality gates exit with code 0 (`exit 0`).
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/02-constants-enums.md`, `spec/02-coding-guidelines/05-php/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
-- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
+2. - [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
+3. - [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+4. - [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
+5. - [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+6. - [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+7. - [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
+8. - [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+9. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+10. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+11. - [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+12. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+13. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+14. - [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/02-constants-enums.md` for cross-language enum and constant architectures.
+15. - [ ] /learn Ingest `spec/02-coding-guidelines/05-php/` for PHP 8.1+ backed enums and helper traits.
+16. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+17. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Enums & Traits, Build Violation Ledger in .lovable/plans/pending/, Subtasks)
@@ -285,5 +301,9 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-enums-and-traits-audit.
 - [ ] Blank Line After `}`: Verified blank line after every closing brace `}` followed by code.
 - [ ] Blank Line Before `return`: Verified blank line before every `return`/`throw` in multi-line blocks.
 - [ ] Zero Nested `if`: Zero nested `if` statements (depth > 1).
-- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.

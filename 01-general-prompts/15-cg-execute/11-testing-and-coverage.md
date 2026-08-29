@@ -14,10 +14,26 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously scan every function across the codebase, decompose oversized functions (> 8 lines) into testable units, enforce 100-line file caps, and author comprehensive positive, negative, edge-case, and error-branch integration and E2E test suites with semantic three-part naming until 100% test pass rate and high coverage are achieved without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the codebase function-by-function, inventory all functions missing unit/integration/E2E coverage, identify oversized functions (> 8 lines) and files (> 100 lines) needing decomposition, map required positive and negative test cases, write the master audit spec in `.lovable/plans/pending/XX-testing-and-coverage-audit.md`, break it down into `.lovable/plans/subtasks/XX-testing-and-coverage/`, and verify/create coverage scripts.
-- [ ] /goal Second N/2 steps (Phase 2): Sequentially execute each subtask, decompose large functions into single-responsibility helpers (<= 8 lines), author table-driven tests covering every branch (positive, negative, boundary values, error returns), run unit/integration/E2E test runners, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`, `spec/04-database-conventions/04-testing-strategy.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
-- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
+2. - [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
+3. - [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+4. - [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
+5. - [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+6. - [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+7. - [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
+8. - [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+9. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+10. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+11. - [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+12. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+13. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+14. - [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md` for domain-specific architectural specifications.
+15. - [ ] /learn Ingest `spec/04-database-conventions/04-testing-strategy.md` for domain-specific architectural specifications.
+16. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+17. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Function-by-Function, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Coverage Hook)
@@ -211,7 +227,11 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Test Naming: Three-part convention strictly adhered to (`TestUnit_Scenario_Outcome`).
 - [ ] Zero Generic Test Names: Absolutely NO generic test names like `TestHandleComp100` or `Test1`.
 - [ ] Function Sizing: Functions decomposed to <= 8 lines before writing branch tests.
-- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ---

@@ -12,9 +12,26 @@ N = 300
 
 N = total self-loop steps budget for end-to-end CI/CD creation and cross-platform automation.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the repository, ingest all CI/CD and pipeline specifications (`index.md` or `00-overview.md` and all subfiles), design cross-platform Python automation scripts (build, test, lint, validate), and configure `.lovable/ai-fix-scripts/03-cicd-local-runner.py`.
-- [ ] /goal Second N/2 steps (Phase 2): Generate complete GitHub Actions workflows (`.github/workflows/*.yml`) and GitLab CI configurations (`.gitlab-ci.yml`), implement Python linters and test harnesses, and execute autonomous self-loops until all local and remote CI checks pass with exit code 0.
-- [ ] /learn Ingest `spec/12-cicd-pipeline-workflows/`, `spec/02-coding-guidelines/06-cicd-integration/`, `spec/11-powershell-integration/`, `spec/14-update/`, `spec/15-distribution-and-runner/`, `spec/16-generic-release/`, `spec/17-consolidated-guidelines/15-cicd-pipeline-workflows.md`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
+2. - [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
+3. - [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+4. - [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
+5. - [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+6. - [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+7. - [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
+8. - [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+9. - [ ] /learn Ingest `spec/12-cicd-pipeline-workflows/` for domain-specific architectural specifications.
+10. - [ ] /learn Ingest `spec/02-coding-guidelines/06-cicd-integration/` for domain-specific architectural specifications.
+11. - [ ] /learn Ingest `spec/11-powershell-integration/` for domain-specific architectural specifications.
+12. - [ ] /learn Ingest `spec/14-update/` for domain-specific architectural specifications.
+13. - [ ] /learn Ingest `spec/15-distribution-and-runner/` for domain-specific architectural specifications.
+14. - [ ] /learn Ingest `spec/16-generic-release/` for domain-specific architectural specifications.
+15. - [ ] /learn Ingest `spec/17-consolidated-guidelines/15-cicd-pipeline-workflows.md` for domain-specific architectural specifications.
+16. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+17. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. 150: Spec Ingestion, Python Automation Design, Local Runner Setup)

@@ -12,10 +12,17 @@ N = 30
 
 N = is the number of steps that the agents will perform
 
-- [ ] /goal First N/2 steps will be given for spec writing for AI as given and then breaking down into parts as instruction as subtasks for N/2 steps.
-- [ ] /goal second N/2 steps will be given execute the created tasks with following coding guidelines and error manage properly.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, and `spec/03-error-manage/`, `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
-- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal First N/2 steps will be given for spec writing for AI as given and then breaking down into parts as instruction as subtasks for N/2 steps.
+2. - [ ] /goal second N/2 steps will be given execute the created tasks with following coding guidelines and error manage properly.
+3. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+4. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+5. - [ ] /learn Ingest `spec/02-coding-guidelines/` for domain-specific architectural specifications.
+6. - [ ] /learn Ingest `spec/03-error-manage/` for error handling architectures and AppError.
+7. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+8. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+
 
 ## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
 
@@ -73,7 +80,11 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 - [ ] Staged files sanitized of artifact zips and temporary scratch files.
 - [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] /learn and apply as a /goal  `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn and apply as a /goal  `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+
 - [ ] Error Manage Checklist: I have fully read and enforced the error management files at `spec/03-error-manage/`. I understand which files to follow (architecture, response envelopes) and how to follow them (never swallow errors, always wrap with context).
 - [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e. NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`).g., `isReady`, `hasData`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
 - [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
@@ -95,12 +106,19 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
 - [ ] Formatting: Signatures > 3 parameters or > 100 chars are split to one parameter per line. Newlines around every Markdown header (MD022) and lists are surrounded by blank lines (MD032).
 - [ ] Acronyms & Magic Strings: Acronyms are PascalCase (`UserId` not `UserID`). Magic strings/numbers are extracted to constants.
-- [ ] /learn the section as a /goal (AI Fix Scripts Memory)[#AI Fix Scripts Memory]
+
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn the section as a /goal (AI Fix Scripts Memory)[#AI Fix Scripts Memory]
+
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ## 4. AI Fix Scripts Memory
 
-- [ ] /goal All helper scripts were written to `.lovable/ai-fix-scripts/`, documented in its `lovable/ai-fix-scripts/index.md`, and committed to Git for reuse.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal All helper scripts were written to `.lovable/ai-fix-scripts/`, documented in its `lovable/ai-fix-scripts/index.md`, and committed to Git for reuse.
+
 - [ ] `lovable/ai-fix-scripts/index.md` Should contain details tag, sequence of the script naming and why it is there and what it should do.
 - [ ] Should first scan /learn all from that index.md file what is exist and can be reused.
 

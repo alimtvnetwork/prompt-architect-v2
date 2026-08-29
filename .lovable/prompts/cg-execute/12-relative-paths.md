@@ -14,10 +14,25 @@ N = total self-loop steps budget that the agents will perform.
 
 /goal Autonomously scan, plan, refactor, and fix all absolute filesystem paths (`D:\...`, `C:\...`, `/home/...`) and `file:///` URIs across the codebase, directly updating markdown documents, specifications, plans, subtasks, citations, and code comments to use strictly relative Git repository paths until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository markdown files, specs, plans, subtasks, and code comments using regex and grep tools to inventory all absolute filesystem paths (e.g. drive letters `D:\...`, `C:\...`, Unix `/home/...`) and `file:///` URIs. Write the master audit spec in `.lovable/plans/pending/XX-relative-paths-audit.md`, break it down into `.lovable/plans/subtasks/XX-relative-paths/`, verify or create `.lovable/ai-fix-scripts/04-relative-path-fixer.py`, index it in `.lovable/ai-fix-scripts/index.md`, and verify `linter-scripts/check-relative-paths.py`.
-- [ ] /goal Second N/2 steps (Phase 2): Execute `python .lovable/ai-fix-scripts/04-relative-path-fixer.py .` to convert all absolute paths to strictly relative Git root paths, verify zero remaining violations with `python linter-scripts/check-relative-paths.py`, check disk reality with `git status` / `git diff`, verify local CI quality gates exit with code 0 (`exit 0`), and complete the plan lifecycle.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
-- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
+2. - [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
+3. - [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+4. - [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
+5. - [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
+6. - [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+7. - [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
+8. - [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+9. - [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+10. - [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+11. - [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+12. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+13. - [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+14. - [ ] /learn Ingest `spec/02-coding-guidelines/` for domain-specific architectural specifications.
+15. - [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+16. - [ ] /goal Create or update agent rules in the repository if missing from agent memory.
+
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase for Absolute Paths, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
@@ -97,7 +112,11 @@ All markdown links, citations, subtask paths, and file references MUST start fro
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
 - [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
 - [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+
 - [ ] `python linter-scripts/check-relative-paths.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
 
@@ -109,7 +128,11 @@ All markdown links, citations, subtask paths, and file references MUST start fro
 
 - [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+
+### Master Task Checklist (Atomic Numbered Steps)
+
+1. - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ---
