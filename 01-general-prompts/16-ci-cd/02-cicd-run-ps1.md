@@ -244,16 +244,10 @@ Before finalizing any code modification, you MUST manually verify the following:
 
 - [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
 
-## End of Tunnel Release & Version Bump (Mandatory)
+## End of Tunnel Checklist
 
-When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.
-
-- You must bump the MINOR version.
-- You must focus on the `version.json` file as the source of truth for the release.
-     - Root README Pinning (FATAL): You MUST pin the latest release version into the root `readme.md` file! Do not skip this! Also, update the changelog according to `version.json` format.
-- If you do not know how to cut a release for this specific repository, or if `version.json` is missing/unclear, you must either search the repository for release instructions or explicitly ask the user for help. Do not guess.
-- You MUST strictly exclude all test files (e.g., `*test*`, `*.spec.*`) from version scanning and modification, as they contain mock data.
-- You must create and maintain `.lovable/memory/release-architecture-map.md` documenting exactly how releases work in the repository. Ensure it is enqueued in `what-to-read.md` and linked in the root `readme.md`.
-
-
-
+- [ ] **Local CI Runner Clean:** `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
+- [ ] **All Scripts & Workflows Verified:** All tests, builds, and query wrappers run without errors.
+- [ ] **RCA Documented:** Memory files written to `.lovable/cicd-issues/` and `.lovable/memory/issues/`.
+- [ ] **Commit & Push:** Group changes into clean development commit and push to remote. No automatic release.
+- [ ] **File Change Summary:** Provide a detailed summary in chat listing exactly which files were changed, what was changed inside them, and why they were changed.

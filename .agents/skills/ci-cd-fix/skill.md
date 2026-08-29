@@ -1,3 +1,9 @@
+---
+name: ci-cd-fix
+description: >-
+  Use this skill to autonomously diagnose, fix, and verify CI/CD pipelines using local runner scripts, 4-part RCA, and self-looping.
+---
+
 # Instruction (must follow): Autonomous CI/CD Fix Loop (with Local Runner & RCA)
 
 Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cicd fix`
