@@ -8,19 +8,36 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, and architectural violations across the codebase, splitting oversized files ($\le$ 300 lines), extracting inline types, and sanitizing build artifacts until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all code hygiene, file size, and architectural violations across the codebase, enforcing 80-line recommended file caps (standard max 100 lines, hard cap 200–300 lines), 8–15 line function caps, extracting inline types, and sanitizing build artifacts until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 300 lines, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages, extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 80–100 lines (hard cap 200–300 lines), functions exceeding 8–15 lines, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages ($\le$ 80–100 lines), decompose long functions ($\le$ 8 lines), extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, File Splits, Linter Verification, Local CI Runner Verification, Plan Completion)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, File & Function Splits, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Canonical Size Tier Reference
+
+You MUST adhere to the single source of truth defined in `spec/02-coding-guidelines/00-canonical-size-tier.md`:
+
+| Metric | Limit | Enforcement |
+|---|---|---|
+| **Function body (preferred)** | $\le$ 8 lines | warn |
+| **Function body (hard cap)** | $\le$ 15 lines | error (build fails) |
+| **File length (recommended)** | $\le$ 80 lines | info |
+| **File length (standard max)** | $\le$ 100 lines | warn |
+| **File length (hard cap)** | $\le$ 200–300 lines | error (max 300 lines) |
+| **React component file** | $\le$ 80–100 lines | error (max 100 lines) |
+| **Struct / class** | $\le$ 120 lines | error |
+| **Nested `if` statements** | 0 (No nesting) | error (flatten with guard clauses) |
 
 ---
 
@@ -39,12 +56,14 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
 - **Actionable Scan:** Use search/grep and line-count tools across all repository files to identify:
-  1. Source code files exceeding 300 lines of logic.
-  2. Classes or structs exceeding 120 lines.
-  3. Inline enum/interface/struct definitions mixed in with business functions.
-  4. Committed build artifacts (`.pyc`, compiled binaries, temp test dumps).
-  5. Leftover `TODO`, `WIP`, or placeholder comments.
-  6. Any uppercase filenames across the tree.
+  1. Source code files exceeding 80–100 lines (absolute hard cap 200–300 lines).
+  2. Functions exceeding 8 lines (hard cap 15 lines).
+  3. Classes or structs exceeding 120 lines.
+  4. Nested `if` statements (nesting depth > 1).
+  5. Inline enum/interface/struct definitions mixed in with business functions.
+  6. Committed build artifacts (`.pyc`, compiled binaries, temp test dumps).
+  7. Leftover `TODO`, `WIP`, or placeholder comments.
+  8. Any uppercase filenames across the tree.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-code-hygiene-audit.md` listing every affected file, exact line counts, and decomposition plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-code-hygiene/` (e.g. `01-oversized-file-splits.md`, `02-definition-extractions.md`).
@@ -57,7 +76,10 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
-  - **How:** Hard cap of **300 lines per file**, **120 lines per struct/class**, and **100 lines per React component**. Break large modules into focused, cohesive sub-packages.
+  - **How:** Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines. Functions $\le 8$ lines preferred, hard cap 15 lines. Structs/classes $\le 120$ lines.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
+  - **Why:** Zero tolerance for nested conditionals.
+  - **How:** Flatten all nested `if` statements with guard clauses and early returns.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`**
   - **Why:** Dedicated definition files.
   - **How:** Types, interfaces, structs, enums, and constants must live in dedicated definition files (e.g. `src/types/`, `models/`, `enums/`). Never define types inline next to first use.
@@ -78,7 +100,7 @@ You MUST read, follow, and mechanically verify every single specification file b
 Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-file-sizes.py`, `linter-scripts/check-placeholder-comments.py`, and `linter-scripts/check-forbidden-strings.py` exist in the repository.
-- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-file-sizes.py` (enforcing 300 lines max per file and 120 lines max per struct/class) and `linter-scripts/check-placeholder-comments.py` (flagging `TODO`, `WIP`, `[N]`).
+- [ ] **Auto-Create Linters if Missing:** If missing, create `linter-scripts/check-file-sizes.py` (enforcing 80–100 line standard max, max 300 lines per file, 8–15 lines per function, 120 lines max per struct/class) and `linter-scripts/check-placeholder-comments.py` (flagging `TODO`, `WIP`, `[N]`).
 - [ ] **Local Linter Command:** Execute and verify the linters locally:
   ```bash
   python linter-scripts/check-file-sizes.py
@@ -106,7 +128,9 @@ WHILE (STEP < PHASE_2_STEPS):
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-code-hygiene/
     2. Open and modify the actual source code files:
-       - Split oversized files into cohesive sub-modules <= 300 lines.
+       - Split oversized files into cohesive sub-modules <= 80–100 lines (hard cap 200–300 lines).
+       - Decompose functions > 8 lines into small helpers (max 15 lines).
+       - Flatten nested if statements with guard clauses.
        - Extract inline interfaces and enums into dedicated definition files.
        - Clean up any TODO/WIP placeholder comments.
        - Purge untracked build artifacts and update .gitignore.
@@ -125,7 +149,7 @@ WHILE (STEP < PHASE_2_STEPS):
           - Move .lovable/plans/pending/XX-code-hygiene-audit.md to .lovable/plans/completed/
           - Update .lovable/plans/index.md
           - Stage modified files with git add and create semantic commit:
-            git commit -m "refactor(hygiene): split oversized modules and extract dedicated definition files"
+            git commit -m "refactor(hygiene): split oversized modules, decompose functions, and extract dedicated definition files"
           - BREAK and finish turn.
 ```
 
@@ -147,7 +171,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] All source files are $\le$ 300 lines (classes $\le$ 120 lines).
+- [ ] File Size: Files $\le$ 80 lines recommended, $\le$ 100 lines standard max, absolute limit 200–300 lines (classes $\le$ 120 lines).
+- [ ] Function Size: Functions $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] Definitions live in dedicated files.
 - [ ] `.gitignore` contains `__pycache__/`, `*.pyc`, and build artifact patterns.
 - [ ] Zero committed binaries or generated artifacts.
@@ -162,7 +188,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] File Size Caps: All files $\le$ 300 lines, structs $\le$ 120 lines, components $\le$ 100 lines.
+- [ ] File Size Caps: All files $\le$ 80–100 lines (hard cap 200–300 lines), structs $\le$ 120 lines, components $\le$ 80–100 lines.
+- [ ] Function Size: All functions $\le$ 8–15 lines.
+- [ ] Zero Nested Ifs: Flat structure with guard clauses.
 - [ ] Dedicated Files: Enums and types are in dedicated definition files.
 - [ ] Lowercase Naming: All repository filenames are strictly lowercase.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)

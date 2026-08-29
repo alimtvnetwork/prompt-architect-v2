@@ -53,6 +53,12 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 
 You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
+- [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
+  - **Why:** Universal size limits across all languages.
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
+  - **Why:** Absolute zero tolerance for nested conditionals.
+  - **How:** Flatten all nested `if` statements with guard clauses and early returns.
 - [ ] **`spec/03-error-manage/00-overview.md`**
   - **Why:** Authoritative error management foundation across all services.
   - **How:** Never swallow errors; every `catch` logs with operation name and key inputs, then rethrows or returns a typed error.
@@ -165,7 +171,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Boolean Examples & Fixations: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
 - [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
 - [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
-- [ ] Function Size: No function exceeds 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
+- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines. Long arguments are split across lines (max 100 chars).
+- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute limit 200–300 lines.
 - [ ] Error Handling (AppError): Errors use domain-specific `AppError` or custom `AppException` (for C#/OOP), not generic base `Error`.
 - [ ] Code adheres to explicit booleans, `Type` suffixed Enums, and error wrapper rules.
 - [ ] Formatting & Acronyms: Spacing rules are strictly followed. Acronyms are strictly PascalCase (`SwapIpWindows` not `SwapIPWindows`).
@@ -179,6 +187,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
+- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
+- [ ] File Limits: $\le 80$ lines recommended, $\le 100$ lines standard max, absolute limit 200–300 lines.
 - [ ] Error Management: I have read and enforced `spec/03-error-manage/`. I used `AppError`/`AppException` and did not swallow errors.
 - [ ] Boolean Conventions: All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).

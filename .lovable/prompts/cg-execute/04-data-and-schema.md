@@ -55,6 +55,12 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 
 You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
+- [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
+  - **Why:** Universal size limits across all languages.
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
+  - **Why:** Absolute zero tolerance for nested conditionals.
+  - **How:** Flatten all nested `if` statements with guard clauses and early returns.
 - [ ] **`spec/04-database-conventions/00-overview.md`**
   - **Why:** Authoritative database architectural foundation.
   - **How:** All schema definitions, migrations, and queries must follow SQLite-first, strongly-typed conventions.
@@ -158,6 +164,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] All column names are camelCase.
 - [ ] Primary keys are `{TableName}Id` integers.
 - [ ] Foreign keys explicitly defined with index support.
+- [ ] Zero Nested Ifs: Flattened with guard clauses.
+- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute limit 200–300 lines.
 - [ ] Mermaid ERD diagram updated in schema docs.
 - [ ] `python linter-scripts/check-schema-guidelines.py` exited with code 0.
 - [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
@@ -169,6 +178,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/04-database-conventions/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
+- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
+- [ ] File Limits: $\le 80$ lines recommended, $\le 100$ lines standard max, absolute limit 200–300 lines.
 - [ ] Primary Keys: All tables use integer auto-increment `{TableName}Id` primary keys.
 - [ ] Column Casing: camelCase columns, PascalCase tables, PascalCase JSON keys.
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`).

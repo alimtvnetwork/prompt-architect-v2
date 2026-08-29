@@ -54,6 +54,12 @@ Before writing tests or modifying functions, you MUST perform a deep function-by
 
 You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
+- [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
+  - **Why:** Universal size limits across all languages.
+  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 80$ lines recommended, $\le 100$ lines standard max, absolute hard cap $\le 200–300$ lines.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
+  - **Why:** Absolute zero tolerance for nested conditionals.
+  - **How:** Flatten all nested `if` statements with guard clauses and early returns.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`**
   - **Why:** Mandatory three-part semantic test naming and table-driven structure.
   - **How:** Name every test strictly as `Test{Unit}_{Scenario}_{ExpectedOutcome}` (e.g. `TestCreateSession_WithExpiredToken_ReturnsAuthError`). Colocate unit tests and name integration tests with `_integration_test.go` or `.integration.test.tsx`.
@@ -154,7 +160,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] All functions tested are $\le$ 15 lines (target $\le$ 8 lines).
+- [ ] Function Size: All functions tested are $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files $\le$ 80 lines recommended, max 100 lines, absolute limit 200–300 lines.
+- [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] All test functions follow `Test{Unit}_{Scenario}_{ExpectedOutcome}` naming.
 - [ ] Both positive and negative branches are explicitly tested.
 - [ ] All error return pathways are verified with assertions.
@@ -168,6 +176,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
+- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
+- [ ] File Limits: $\le 80$ lines recommended, $\le 100$ lines standard max, absolute limit 200–300 lines.
 - [ ] Test Naming: Three-part convention strictly adhered to (`TestUnit_Scenario_Outcome`).
 - [ ] Zero Generic Test Names: Absolutely NO generic test names like `TestHandleComp100` or `Test1`.
 - [ ] Function Sizing: Functions decomposed to $\le$ 8 lines before writing branch tests.

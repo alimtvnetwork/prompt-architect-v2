@@ -8,11 +8,11 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all React and frontend architecture violations across the codebase, decomposing oversized components ($\le$ 100 lines), converting custom hook tuple returns to named objects, and eliminating redundant `useEffect` hooks until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all React and frontend architecture violations across the codebase, decomposing oversized components ($\le$ 80–100 lines), enforcing 8–15 line function caps, converting custom hook tuple returns to named objects, and eliminating redundant `useEffect` hooks until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active `.tsx` and `.jsx` component files for line counts exceeding 100 lines, custom hooks returning raw tuples (`[state, setState]`), and redundant `useEffect` syncing. Write the master audit spec in `.lovable/plans/pending/XX-react-frontend-audit.md`, generate the component hierarchy diagram, break it down into `.lovable/plans/subtasks/XX-react-frontend/`, and verify/create the frontend linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending component and hook file, decompose UI blocks into sub-components $\le$ 100 lines, convert hook return signatures to named property objects, run the frontend linter, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/02-typescript/`, `spec/07-design-system/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active `.tsx` and `.jsx` component files for line counts exceeding 80–100 lines, functions exceeding 8–15 lines, nested `if` blocks, custom hooks returning raw tuples (`[state, setState]`), and redundant `useEffect` syncing. Write the master audit spec in `.lovable/plans/pending/XX-react-frontend-audit.md`, generate the component hierarchy diagram, break it down into `.lovable/plans/subtasks/XX-react-frontend/`, and verify/create the frontend linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending component and hook file, decompose UI blocks into sub-components $\le$ 80–100 lines, flatten nested `if`s, convert hook return signatures to named property objects, run the frontend linter, and verify local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/02-typescript/`, `spec/07-design-system/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
@@ -21,6 +21,15 @@ PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Component Refacto
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Canonical Sizing & Nesting Hierarchy
+
+- **React Components:** Recommended $\le$ 80 lines; standard max $\le$ 100 lines.
+- **Functions & Hooks:** Preferred $\le$ 8 lines; hard cap $\le$ 15 lines.
+- **Nested `if` Statements:** Zero tolerance (flatten with guard clauses and early returns).
+- **Files (Code):** Recommended $\le$ 80 lines; standard max $\le$ 100 lines; hard cap $\le$ 200–300 lines (max 300 lines).
 
 ---
 
@@ -39,11 +48,13 @@ N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never mo
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
 - **Actionable Scan:** Use search/grep and line-count tools across all `.tsx` and `.jsx` files to identify:
-  1. Component files exceeding 100 lines of code.
-  2. Custom hooks returning array literals (tuples) instead of named objects (`return [val, setVal]` vs `return { val, onUpdate }`).
-  3. Redundant `useEffect` hooks used for derived calculations or local state sync.
-  4. Direct state mutations (`state.items.push()` or `state.prop = x`).
-  5. Missing Mermaid component tree diagrams in UI documentation.
+  1. Component files exceeding 80–100 lines of code.
+  2. Functions and hooks exceeding 8 lines (hard cap 15 lines).
+  3. Nested `if` conditionals (nesting depth > 1).
+  4. Custom hooks returning array literals (tuples) instead of named objects (`return [val, setVal]` vs `return { val, onUpdate }`).
+  5. Redundant `useEffect` hooks used for derived calculations or local state sync.
+  6. Direct state mutations (`state.items.push()` or `state.prop = x`).
+  7. Missing Mermaid component tree diagrams in UI documentation.
 - **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-react-frontend-audit.md` listing every affected file, exact line numbers, and the extraction plan.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
 - **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-react-frontend/` (e.g. `01-decompose-oversized-components.md`, `02-hook-named-objects.md`).
@@ -54,6 +65,12 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 
 You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
+- [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
+  - **Why:** Universal size limits across all languages.
+  - **How:** Components $\le 80$ lines recommended (max 100 lines). Functions $\le 8$ lines preferred (max 15 lines). Hard cap 200–300 lines for any file.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
+  - **Why:** Zero tolerance for nested conditionals.
+  - **How:** Flatten all nested `if` statements with guard clauses and early returns.
 - [ ] **`spec/02-coding-guidelines/02-typescript/08-typescript-standards-reference.md`**
   - **Why:** Authoritative TypeScript standards.
   - **How:** Strict typing, zero `any`, explicit function return types, and discriminated unions for polymorphic data.
@@ -65,7 +82,7 @@ You MUST read, follow, and mechanically verify every single specification file b
   - **How:** Handle all async flows with `try/catch` and `AppError` wrappers; avoid unhandled promises in `useEffect`.
 - [ ] **`spec/07-design-system/01-design-principles.md`**
   - **Why:** Modular UI architecture & sizing caps.
-  - **How:** Hard 100-line cap per React component file. Decompose large UI blocks into single-responsibility child components.
+  - **How:** Hard 100-line cap per React component file (target $\le 80$ lines). Decompose large UI blocks into single-responsibility child components.
 - [ ] **`spec/07-design-system/02-theme-variable-architecture.md`**
   - **Why:** Theme token usage.
   - **How:** Zero hardcoded hex color codes in components. Consume CSS theme custom properties and semantic tokens.
@@ -81,10 +98,12 @@ Code standards must be mechanically enforced by automated linters. You MUST veri
 
 - [ ] **Linter Script Identification:** Check if `linter-scripts/check-frontend-guidelines.mjs` exists in the repository.
 - [ ] **Auto-Create Linter if Missing:** If no dedicated frontend linter exists, create `linter-scripts/check-frontend-guidelines.mjs` that AST-scans `.tsx` and `.jsx` files for:
-  1. Component file line counts exceeding 100 lines.
-  2. Custom hooks returning array literals (tuples) instead of object literals.
-  3. Redundant `useEffect` calls syncing derived state.
-  4. Direct state mutations (`state.items.push()` or `state.prop = x`).
+  1. Component file line counts exceeding 80–100 lines.
+  2. Functions and hooks exceeding 8–15 lines.
+  3. Nested `if` statements.
+  4. Custom hooks returning array literals (tuples) instead of object literals.
+  5. Redundant `useEffect` calls syncing derived state.
+  6. Direct state mutations (`state.items.push()` or `state.prop = x`).
 - [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
   node linter-scripts/check-frontend-guidelines.mjs
@@ -112,7 +131,9 @@ WHILE (STEP < PHASE_2_STEPS):
 
     1. Read the next subtask from .lovable/plans/subtasks/XX-react-frontend/
     2. Open and modify the actual source code files:
-       - Decompose oversized components into modular sub-components <= 100 lines.
+       - Decompose oversized components into modular sub-components <= 80–100 lines.
+       - Break functions/hooks > 8 lines into concise helpers (max 15 lines).
+       - Flatten nested if statements with guard clauses.
        - Convert custom hook return tuples to named property objects and update callers.
        - Eliminate redundant useEffect by computing derived state inline.
        - Enforce immutable state updates across all handlers.
@@ -130,7 +151,7 @@ WHILE (STEP < PHASE_2_STEPS):
           - Move .lovable/plans/pending/XX-react-frontend-audit.md to .lovable/plans/completed/
           - Update .lovable/plans/index.md
           - Stage modified files with git add and create semantic commit:
-            git commit -m "refactor(ui): decompose component hierarchy and enforce named hook objects"
+            git commit -m "refactor(ui): decompose component hierarchy, flatten nested ifs, and enforce named hook objects"
           - BREAK and finish turn.
 ```
 
@@ -152,7 +173,9 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] All `.tsx`/`.jsx` component files are $\le$ 100 lines.
+- [ ] All `.tsx`/`.jsx` component files are $\le$ 80–100 lines.
+- [ ] All functions/hooks are $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] Zero Nested Ifs: Flattened with guard clauses.
 - [ ] Custom hooks return named objects `{ data, isLoading }`, not tuples.
 - [ ] No redundant `useEffect` for derived computations.
 - [ ] `node linter-scripts/check-frontend-guidelines.mjs` exited with code 0.
@@ -165,7 +188,9 @@ WHILE (STEP < PHASE_2_STEPS):
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
 - [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/02-typescript/` and `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] Component Sizing: All component files are $\le$ 100 lines.
+- [ ] Component Sizing: All component files are $\le$ 80–100 lines (hard cap 200–300 lines).
+- [ ] Function Sizing: All functions $\le$ 8–15 lines.
+- [ ] Zero Nested Ifs: Flat flow with early returns.
 - [ ] Hook Return Signatures: Named property objects only, zero tuple returns.
 - [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`).
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
