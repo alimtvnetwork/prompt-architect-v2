@@ -52,7 +52,51 @@ cause in one sentence, apply the minimum correct fix, verify it in the
 logs, list EVERY remaining task, bump the version, update changelog
 and release notes. Going deep IS the job. If you are not going deep,
 you are not doing the job. This section is a MUST. Violating it is
-auto-reject on the same tier as RULE 0.
+
+## Master Coding Guidelines Specification & Architecture Checklist
+
+When auditing, refactoring, or authoring code, AI agents MUST cross-reference this comprehensive checklist of authoritative specification documents across the repository:
+
+### Cross-Language Foundations (`spec/02-coding-guidelines/01-cross-language/`)
+
+- [ ] `00-canonical-size-tier.md`: Standard file size $\le 100$ coding lines (recommended $\le 80$, max 200–300), function size $\le 15$ lines (preferred $\le 8$).
+- [ ] `01-cross-language/02-boolean-principles.md` & `02-boolean-principles/`: Implicit positive booleans, zero explicit `true`/`false` checks, no mixed polarity (`isA && !isB` banned).
+- [ ] `01-cross-language/04-code-style/01-braces-and-nesting.md`: Zero nested `if`s, invert conditions into early return guard clauses, cyclomatic complexity $\le 5$.
+- [ ] `01-cross-language/04-code-style/03-blank-lines-and-spacing.md` & `21-newline-styling-examples.md`: Rule R13–R20 return new line and brace spacing rules.
+- [ ] `01-cross-language/04-code-style/04-function-and-type-size.md`: 8 lines preferred, 15 lines max.
+- [ ] `01-cross-language/04-code-style/05-multi-line-formatting.md`: Parameter splitting for $>3$ params or $>100$ characters.
+- [ ] `01-cross-language/08-dry-principles.md` & `09-dry-refactoring-summary.md`: DRY extraction for duplicated code across 2+ call sites.
+- [ ] `01-cross-language/10-function-naming.md` & `11-key-naming-pascalcase.md`: PascalCase identifiers and PascalCase abbreviation casing (`Id`, `Url`, `Api`).
+- [ ] `01-cross-language/12-no-negatives.md`: Strict prohibition against negative booleans and inverted logic.
+- [ ] `01-cross-language/13-strict-typing.md`: Narrow types only, zero `any`/`unknown`/`interface{}`.
+- [ ] `01-cross-language/14-test-naming-and-structure.md`: Semantic 3-part test naming `TestUnit_Scenario_Outcome`.
+- [ ] `01-cross-language/15-master-coding-guidelines/`: Chapters 01 through 07 for comprehensive patterns.
+- [ ] `01-cross-language/16-static-analysis/`: Quality gates for Go (`golangci-lint`), PHP (`phpcs`/`phpstan`), C# (`StyleCop`), Rust (`clippy`), Node (`eslint`).
+- [ ] `01-cross-language/23-solid-principles.md`: Single Responsibility and Interface Segregation.
+
+### Language-Specific Implementations (`spec/02-coding-guidelines/`)
+
+- [ ] `02-typescript/`: Strict TS, immutability, React component caps ($\le 100$ lines), named hook objects.
+- [ ] `03-golang/`: Single result struct with `IsSuccess`/`IsFailed`, enum bytes with `iota`, error wrapping.
+- [ ] `04-php/`: Strict typing, enum methods `->isEqual()`, spacing and imports.
+- [ ] `05-rust/`: Immutability-first, error handling, clippy validation.
+- [ ] `07-csharp/`: `I` prefix interfaces, custom `AppException`, PascalCase properties.
+- [ ] `12-python/`: Strict type hints, `@dataclass`, `pydantic` models, no global pip install.
+
+### Error Management Architecture (`spec/03-error-manage/`)
+
+- [ ] `00-overview.md` & `02-error-architecture/01-error-handling-reference.md`: Zero swallowed errors, universal `AppError` wrapping with operation context.
+- [ ] `02-error-architecture/02-response-envelopes.md`: Universal response envelopes `{ data, errors[], meta }`.
+- [ ] Zero dual-handling: never panic/log AND return error in the same branch.
+- [ ] Typed exit enums for error categories.
+
+### Anti-Hallucination, AI Optimization & CI/CD
+
+- [ ] `06-ai-optimization/01-anti-hallucination-rules.md`: Rule AH-N1 abbreviation casing, AH-O1 zero truncation.
+- [ ] `06-ai-optimization/05-citation-requirement.md`: Mandatory rule citations on all reviews and fixes.
+- [ ] `06-ai-optimization/06-hallucination-checks.md`: Pre-commit diff proof and disk reality checks.
+- [ ] `06-cicd-integration/04-ci-templates.md`: Quality gates; total ban on disabling or bypassing CI/CD checks.
+- [ ] `26-coding-guideline-audit/00-overview.md`: Master 0-100 scoring and drop-by-drop gap audit.
 
 ---
 
@@ -280,3 +324,127 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 
 - **Configurable Installation Path:** While `version.json` and prompt architectural mapping files are installed in `.lovable/memory/` and `.lovable/prompts/` by default, this path MUST be treated as dynamically configurable. 
 - Any AI agent or script (including the `cg` reporting guideline commands) that reads or installs `version.json` information must allow the path to be overridden via a root JSON configuration (e.g., if the user wants memory files stored outside `.lovable`).
+
+---
+
+## 12. Autonomous Agent Execution & Phase-by-Phase Self-Looping Protocol (Anti-Hallucination Framework)
+
+To prevent AI hallucination, context drift, premature turn exit, or superficial reviews, AI agents operating on this codebase MUST follow this strict 5-phase execution lifecycle.
+
+### Phase 1: Deep Read & Exploratory Bounded Scan (Turn 1 .. N/2)
+
+- **Zero-Mutation Rule:** The AI must NEVER modify code during Phase 1.
+- **Dependency & Scope Mapping:** Walk all target source files, read local types and imported modules, and locate the architectural boundaries.
+- **Spec Verification:** Cross-check the target code against the Master Checklist and language-specific specs.
+
+### Phase 2: Microscopic Task Decomposition (60-Item Fine-Grained Atomic Verification Matrix)
+
+Every file and function must be audited against these 60 atomic sub-tasks:
+
+#### A. Size & Structural Boundaries (Checks 1–8)
+
+- [ ] **Check 01:** Function line count $\le 15$ lines (preferred $\le 8$ lines excluding blank lines/comments).
+- [ ] **Check 02:** File coding lines $\le 100$ lines (recommended $\le 80$ lines).
+- [ ] **Check 03:** File hard cap $\le 300$ total lines maximum.
+- [ ] **Check 04:** React component files (`.tsx`) $\le 100$ lines.
+- [ ] **Check 05:** Class or struct body $\le 120$ lines.
+- [ ] **Check 06:** Anti-line compression check: zero removed indentation, zero single-line if/else blocks to cheat line caps.
+- [ ] **Check 07:** Function signature $\le 100$ characters.
+- [ ] **Check 08:** Parameter count $\le 3$ parameters (split $>3$ to one per line or parameter struct).
+
+#### B. Braces, Nesting & Control Flow (Checks 9–15)
+
+- [ ] **Check 09:** Zero nested `if` statements.
+- [ ] **Check 10:** Inversion of conditions into guard clauses and early returns.
+- [ ] **Check 11:** Cyclomatic complexity $\le 5$ per function.
+- [ ] **Check 12:** No `else` after a returning/throwing `if`.
+- [ ] **Check 13:** Strict conditional joins: at most 2 operands (1 logical join).
+- [ ] **Check 14:** Never mix `&&` and `||` within the same `if` condition.
+- [ ] **Check 15:** No inverted complex conditions with `!` (apply De Morgan's laws or extract a named boolean).
+
+#### C. Boolean Syntax & Logic (Checks 16–24)
+
+- [ ] **Check 16:** Zero explicit boolean comparisons against `true` (`if isReady == true` is FORBIDDEN).
+- [ ] **Check 17:** Zero explicit boolean comparisons against `false` (`if isReady == false` is FORBIDDEN).
+- [ ] **Check 18:** No mixed polarity (`if isA && !isB` is FORBIDDEN; extract to named boolean).
+- [ ] **Check 19:** Positive boolean prefixes: `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`.
+- [ ] **Check 20:** No negative boolean variables (`isNotReady`, `disableCache` are FORBIDDEN).
+- [ ] **Check 21:** No inverted success checks (`!response.isSuccess` banned; use `response.isFail`).
+- [ ] **Check 22:** Zero boolean positional flag parameters on functions.
+- [ ] **Check 23:** Wrapped boolean multi-returns (struct/object wrapper, no bare tuples `(int, bool)`).
+- [ ] **Check 24:** Normalized booleans at external and user-input boundaries.
+
+#### D. Error Management & Architecture (Checks 25–33)
+
+- [ ] **Check 25:** Zero swallowed errors (no empty `catch {}` or `_ = err`).
+- [ ] **Check 26:** Universal `AppError` wrapping with operation context (`op` name + key parameters).
+- [ ] **Check 27:** Universal response envelopes (`{ data, errors[], meta }`).
+- [ ] **Check 28:** Zero dual-handling (never panic/log AND return error in the same branch).
+- [ ] **Check 29:** Typed exit enums for error categories (no raw string error codes).
+- [ ] **Check 30:** Preserved original error cause and stack trace.
+- [ ] **Check 31:** Context logging on every error (sanitized parameters, no raw secrets).
+- [ ] **Check 32:** Log levels match severity (`debug`, `info`, `warn`, `error`, `fatal`).
+- [ ] **Check 33:** Zero raw string throws (`throw "msg"` or bare `panic("msg")` is FORBIDDEN).
+
+#### E. Types, Enums & Centralized Constants (Checks 34–41)
+
+- [ ] **Check 34:** Zero magic strings or raw numeric literals.
+- [ ] **Check 35:** All Enum names MUST end with the `Type` suffix (e.g., `UserRoleType`).
+- [ ] **Check 36:** TypeScript string unions banned (`type Role = "admin" | "user"` -> `enum RoleType`).
+- [ ] **Check 37:** Dedicated files for definitions (types, enums, constants in `src/types/`, `src/enums/`).
+- [ ] **Check 38:** Exhaustive switch / pattern matching on enums.
+- [ ] **Check 39:** Narrow types only (zero `any`, `unknown`, `interface{}`, `object`, `dynamic`).
+- [ ] **Check 40:** Type guards at trust boundaries (external JSON, API inputs, catch blocks).
+- [ ] **Check 41:** Single `version.json` at root as sole version authority.
+
+#### F. Naming, Casing & Formatting (Checks 42–50)
+
+- [ ] **Check 42:** PascalCase for types, structs, interfaces, and database tables.
+- [ ] **Check 43:** camelCase for variables, methods, properties, and database columns.
+- [ ] **Check 44:** Abbreviation casing strictly PascalCase (`UserId`, `Url`, `Api`, not `UserID`, `URL`, `API`).
+- [ ] **Check 45:** Strictly lowercase file and folder names (`01-file.ts`, not `01-File.ts`).
+- [ ] **Check 46:** Blank line before `return`/`throw` (R13) unless sole statement in block.
+- [ ] **Check 47:** Blank line after closing `}` (R14) unless followed by `else`/`catch`/`case`.
+- [ ] **Check 48:** Never two consecutive blank lines anywhere in the file (R15).
+- [ ] **Check 49:** No padded braces (R16).
+- [ ] **Check 50:** Import grouping (std lib, third-party, first-party) with blank lines between groups (R18).
+
+#### G. Testing, QA & AI Optimization (Checks 51–60)
+
+- [ ] **Check 51:** Semantic 3-part unit test naming (`TestUnit_Scenario_Outcome`).
+- [ ] **Check 52:** Multi-variable positive and negative branch coverage.
+- [ ] **Check 53:** Zero generic garbage names (`temp`, `data`, `obj`, `comp_100`).
+- [ ] **Check 54:** Immutable-first variable declarations (`const`, `final`, no unnecessary `let`/`var`).
+- [ ] **Check 55:** DRY principle enforced (extract any logic duplicated across 2+ call sites).
+- [ ] **Check 56:** Zero generated files or build artifacts in Git (proactive `.gitignore`).
+- [ ] **Check 57:** Never disable or bypass CLI linters or CI/CD checks (no `|| true`, no suppression flags).
+- [ ] **Check 58:** Verifiable tool execution (real command execution with `exit code 0`).
+- [ ] **Check 59:** Zero truncation and no placeholder stubs (`TODO`, `FIXME`, `// ...`, `/* ... */`).
+- [ ] **Check 60:** Pre-commit diff proof via `git status --porcelain` and `git diff --stat`.
+
+### Phase 3: Multi-Agent Parallelization (2–3 Concurrent Threads Max)
+
+When analyzing large repositories, the parent agent MUST divide the workload:
+
+1. **Disjoint Bounding Boxes:** Assign non-overlapping directory trees to 2 or 3 parallel sub-agents (e.g., Sub-Agent A = Backend, Sub-Agent B = Frontend, Sub-Agent C = Shared/Scripts).
+2. **Context Diet:** Pass only the target file paths and specific subtask references to sub-agents. Never paste giant prompt texts or memory logs into sub-agent contexts.
+3. **Structured Response Gathering:** Sub-agents return markdown violation tables (`| Id | File | Line | Snippet | Planned Fix | Status |`) that the parent reconciles into the master ledger.
+
+### Phase 4: Bounded Sequential Self-Looping Execution (1 File per Turn)
+
+During execution or fix phases:
+
+1. **Isolated Micro-Tasking:** Never attempt to refactor multiple files in one turn. Process exactly **one file per turn**.
+2. **Run Guideline Autofixer:** Execute `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>` to handle formatting and boolean cleanup.
+3. **Apply Surgical Fix:** Refactor functions $> 15$ lines, flatten nested `if`s, and wrap errors.
+4. **Local Verification:** Run local tests and linters to verify zero regressions.
+5. **End Turn & Self-Loop:** Check off the verified item and self-loop into the next turn.
+
+### Phase 5: Disk Reality Check & Verifiable Resolution
+
+Before marking any task complete:
+
+- Execute `git status --porcelain` and `git diff --stat` to verify modified files actually exist on disk.
+- Run regex searches for `TODO`, `FIXME`, and `// ...` to ensure zero placeholder stubs remain.
+- Ensure the master violation ledger in `.lovable/plans/pending/` is fully reconciled with all items marked `DONE`.
+
