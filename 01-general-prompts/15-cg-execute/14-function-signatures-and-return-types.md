@@ -2,8 +2,7 @@
 
 Trigger Keywords & Aliases: `cg-functions`, `cg-signatures`, `cg-return-types`, `cg-execute functions`, `audit function naming`, `fix return types`, `enforce apperror`, `enforce result envelope`, `single return type audit`, `multi-line arguments`, `function call formatting`
 
-
-> **Prompt Version:** 2.1.0
+> **Prompt Version:** 2.1.0  
 > **Synchronization:** Main Meta-Repo & Connected Workspaces
 
 ```text
@@ -12,30 +11,30 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, discover, plan, refactor, and format all function definitions, call-site invocations, parameter lists, boolean predicate prefixes, multi-value returns, raw generic errors, and result envelopes across the codebase, enforcing one-argument-per-line formatting for >2 arguments, semantic verb/predicate naming, universal `*AppError` wrapping, single `Result[T]` return envelopes, and strict relative Git paths until 100% green without stopping.
+/goal Autonomously scan, discover, plan, refactor, and format all function definitions, call-site invocations, parameter lists, boolean predicate prefixes, multi-value returns, raw generic errors, and result envelopes across the codebase, enforcing one-argument-per-line formatting for >2 arguments, semantic verb/predicate naming, universal `*AppError` wrapping, single `Result[T]` return envelopes with complete predicate methods (`IsSuccess`, `IsFailed`, `HasError`, `HasNoError`, `HasValidError`), and strict relative Git paths until 100% green without stopping.
 
 ### Master Task Checklist (Atomic Numbered Steps)
 
-1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all architectural violations and anti-patterns.
-2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/` with an exhaustive Violation Ledger.
-3. [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/`.
+1. [ ] /goal Phase 1 (Step A): Deeply scan the target codebase to inventory all function definitions (>2 params) on a single line, all function invocations (>2 args) on a single line, functions with generic error returns (`(T, error)`), unformatted boolean predicates missing `is`/`has`/`can` prefixes, raw `fmt.Errorf()` or `errors.New()`, anti-garbage names, and functions lacking typed `Result[T]` envelopes.
+2. [ ] /goal Phase 1 (Step B): Write the master audit specification in `.lovable/plans/pending/XX-function-signatures-audit.md` with an exhaustive Violation Ledger table.
+3. [ ] /goal Phase 1 (Step C): Decompose the master plan into granular, atomic subtasks in `.lovable/plans/subtasks/XX-function-signatures/`.
 4. [ ] /goal Phase 1 (Step D): Verify or create the automated quality linter and register in `.lovable/ai-fix-scripts/index.md`.
-5. [ ] /goal Phase 2 (Step A): Open each target file and perform surgical refactoring following authoritative guidelines.
-6. [ ] /goal Phase 2 (Step B): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
-7. [ ] /goal Phase 2 (Step C): Execute local linters to verify 0 remaining violations across all modified files.
-8. [ ] /goal Phase 2 (Step D): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
-9. [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
-10. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
-11. [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
-12. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md` for Rule 9a/9b multi-line parameter and call formatting.
-13. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/10-function-naming.md` for semantic verb and predicate prefix standards.
-14. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
-15. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
-16. [ ] /learn Ingest `spec/03-error-manage/01-error-architecture.md` for universal AppError wrapping and error envelopes.
-17. [ ] /learn Ingest `spec/03-error-manage/02-response-envelopes.md` for Result[T] and standardized API envelopes.
-18. [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
-19. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
-
+5. [ ] /goal Phase 2 (Step A): Open each target file and format parameter declarations and call-site invocations to one line per argument with trailing commas.
+6. [ ] /goal Phase 2 (Step B): Refactor signatures to use semantic verb/predicate names, convert multi-value returns to single `Result[T]` envelopes with `*AppError` wrappers.
+7. [ ] /goal Phase 2 (Step C): Enforce <= 8–15 line function decomposition, single return types, and clean formatting.
+8. [ ] /goal Phase 2 (Step D): Execute local linters (`python linter-scripts/check-function-lengths.py`, `check-newline-styling.py`) to verify 0 remaining violations.
+9. [ ] /goal Phase 2 (Step E): Execute local CI quality gates via `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` with exit code 0 (`exit 0`).
+10. [ ] /learn Ingest `.lovable/memory/00-index.md` for project memory index and past learnings.
+11. [ ] /learn Ingest `.lovable/strictly-avoid.md` for banned anti-patterns and strict constraints.
+12. [ ] /learn Ingest `spec/02-coding-guidelines/00-canonical-size-tier.md` for canonical file and function size tiers.
+13. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md` for Rule 9a/9b multi-line parameter and call formatting.
+14. [ ] /learn Ingest `spec/02-coding-guidelines/01-cross-language/10-function-naming.md` for semantic verb and predicate prefix standards.
+15. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md` for hallucination prevention and micro-tasking.
+16. [ ] /learn Ingest `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md` for strict relative path citation requirements.
+17. [ ] /learn Ingest `spec/03-error-manage/01-error-architecture.md` for universal AppError wrapping and error envelopes.
+18. [ ] /learn Ingest `spec/03-error-manage/02-response-envelopes.md` for Result[T] and standardized API envelopes.
+19. [ ] /learn Ingest `.lovable/coding-guidelines/coding-guidelines.md` for master consolidated coding guidelines.
+20. [ ] /goal Create or update agent rules in the repository if missing from agent memory.
 
 ```text
 PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Signatures & Calls, Build Violation Ledger in .lovable/plans/pending/, Subtasks, Linter Hook)
@@ -219,87 +218,312 @@ logMessageWithStack("Payment failed");
 
 ---
 
-### 4. The Single Return Type Principle & Universal `Result[T]` Envelope
+### 4. The Single Return Type Principle & Universal `Result[T]` Envelope Architecture
 
 In domain services, handlers, and internal business logic, functions MUST return a single encapsulated result envelope rather than raw multi-value tuples `(T, error)` or unhandled exceptions.
 
-#### 4a. Go `Result[T]` Architecture
+#### 4a. Production-Ready Go `Result[T]` Architecture
 
 ```go
-// ✅ REQUIRED: Single Result[T] envelope with *AppError and helper methods
-package models
+package result
 
 import "gitmap/apperror"
 
+// Result encapsulates a computation outcome with typed value or *apperror.AppError.
 type Result[T any] struct {
-    Value T
-    Err   *apperror.AppError
+    Value    T
+    Err      *apperror.AppError
+    Data     T
+    AppError error
 }
 
+// IsSuccess reports whether the result represents a successful operation.
 func (r Result[T]) IsSuccess() bool {
-    return r.Err == nil
+    return r.Err == nil && r.AppError == nil
 }
 
+// IsFailed reports whether the result represents a failed operation.
 func (r Result[T]) IsFailed() bool {
-    return r.Err != nil
+    return r.Err != nil || r.AppError != nil
 }
 
+// IsFailure reports whether the result represents a failed operation (alias).
+func (r Result[T]) IsFailure() bool {
+    return r.IsFailed()
+}
+
+// IsInvalid reports whether the result is invalid or failed.
+func (r Result[T]) IsInvalid() bool {
+    return r.IsFailed()
+}
+
+// HasError reports whether an error is present.
+func (r Result[T]) HasError() bool {
+    return r.Err != nil || r.AppError != nil
+}
+
+// HasNoError reports whether no error exists.
+func (r Result[T]) HasNoError() bool {
+    return r.Err == nil && r.AppError == nil
+}
+
+// HasValidError reports whether an AppError exists and is properly structured.
+func (r Result[T]) HasValidError() bool {
+    if r.Err != nil {
+        return r.Err.IsValid()
+    }
+
+    return r.AppError != nil
+}
+
+// Unwrap returns the value and error tuple.
 func (r Result[T]) Unwrap() (T, *apperror.AppError) {
-    return r.Value, r.Err
+    if r.Err != nil {
+        return r.Value, r.Err
+    }
+
+    if r.AppError != nil {
+        if appErr, isAppErr := r.AppError.(*apperror.AppError); isAppErr {
+            return r.Value, appErr
+        }
+
+        return r.Value, apperror.WrapSimple(r.AppError, "result.Unwrap")
+    }
+
+    return r.Value, nil
 }
 
+// UnwrapOr returns the value if success, or defaultVal if failed.
+func (r Result[T]) UnwrapOr(defaultVal T) T {
+    if r.IsSuccess() {
+        return r.Value
+    }
+
+    return defaultVal
+}
+
+// ValueOrPanic returns the value if success, or panics with the error.
+func (r Result[T]) ValueOrPanic() T {
+    if r.IsSuccess() {
+        return r.Value
+    }
+
+    if r.Err != nil {
+        panic(r.Err.Error())
+    }
+
+    panic(r.AppError.Error())
+}
+
+// SuccessResult constructs a successful Result envelope with Value and Data.
 func SuccessResult[T any](val T) Result[T] {
-    return Result[T]{Value: val}
+    return Result[T]{
+        Value: val,
+        Data:  val,
+    }
 }
 
+// FailureResult constructs a failed Result envelope with *apperror.AppError.
 func FailureResult[T any](err *apperror.AppError) Result[T] {
-    return Result[T]{Err: err}
+    return Result[T]{
+        Err:      err,
+        AppError: err,
+    }
 }
-```
 
-```go
-// ✅ REQUIRED: Service function returning single Result[T]
-func GetUser(id string) Result[*User] {
-    if id == "" {
-        appErr := apperror.New(
-            apperror.ErrCodeValidationFailed,
-            "user ID is required",
-            "GetUser",
-        )
-        return FailureResult[*User](appErr)
+// NewSuccess constructs a successful Result envelope with Data.
+func NewSuccess[T any](data T) Result[T] {
+    return SuccessResult(data)
+}
+
+// NewFailure constructs a failed Result envelope from any error.
+func NewFailure[T any](err error) Result[T] {
+    if appErr, isAppErr := err.(*apperror.AppError); isAppErr {
+        return FailureResult[T](appErr)
     }
 
-    user, isFound := userRepo.Find(id)
-
-    if !isFound {
-        appErr := apperror.New(
-            apperror.ErrCodeNotFound,
-            "user not found",
-            "GetUser",
-        )
-        return FailureResult[*User](appErr)
+    if err == nil {
+        return Result[T]{}
     }
 
-    return SuccessResult[*User](user)
+    appErr := apperror.WrapSimple(err, "result.NewFailure")
+
+    return FailureResult[T](appErr)
+}
+
+// NewFailureWithType constructs a typed failed Result with code, message, and caller.
+func NewFailureWithType[T any](
+    errCode apperror.ErrorCodeType,
+    msg string,
+    caller string,
+) Result[T] {
+    appErr := apperror.New(errCode, msg, caller)
+    return FailureResult[T](appErr)
 }
 ```
 
 ---
 
-#### 4b. TypeScript `Result<T>` Architecture
+#### 4b. `AppError` Methods & Error Code Comparison
 
-```typescript
-// ✅ REQUIRED: Strongly-typed Result<T, AppError> envelope
-export type Result<T> =
-    | { readonly isSuccess: true; readonly isFailed: false; readonly value: T; readonly error: null }
-    | { readonly isSuccess: false; readonly isFailed: true; readonly value: null; readonly error: AppError };
+```go
+package apperror
 
-export function successResult<T>(value: T): Result<T> {
-    return { isSuccess: true, isFailed: false, value, error: null };
+// HasError reports whether an error exists.
+func (e *AppError) HasError() bool {
+    return e != nil
 }
 
-export function failureResult<T>(error: AppError): Result<T> {
-    return { isSuccess: false, isFailed: true, value: null, error };
+// HasNoError reports whether no error exists.
+func (e *AppError) HasNoError() bool {
+    return e == nil
+}
+
+// HasValidError reports whether the AppError is non-nil and has a valid code.
+func (e *AppError) HasValidError() bool {
+    return e != nil && e.Code != ""
+}
+
+// IsErrorCode reports whether the AppError matches the specified ErrorCodeType.
+func (e *AppError) IsErrorCode(code ErrorCodeType) bool {
+    return e != nil && e.Code == code
+}
+
+// IsCode alias for IsErrorCode.
+func (e *AppError) IsCode(code ErrorCodeType) bool {
+    return e.IsErrorCode(code)
+}
+```
+
+---
+
+#### 4c. TypeScript `Result<T>` Envelope Architecture
+
+```typescript
+import { AppError, ErrorCodeType } from "./apperror";
+
+export type Result<T> = {
+    readonly isSuccess: boolean;
+    readonly isFailed: boolean;
+    readonly hasError: boolean;
+    readonly hasNoError: boolean;
+    readonly value: T | null;
+    readonly data: T | null;
+    readonly error: AppError | null;
+    unwrap(): [T | null, AppError | null];
+    unwrapOr(defaultVal: T): T;
+};
+
+export function successResult<T>(val: T): Result<T> {
+    return {
+        isSuccess: true,
+        isFailed: false,
+        hasError: false,
+        hasNoError: true,
+        value: val,
+        data: val,
+        error: null,
+        unwrap: () => [val, null],
+        unwrapOr: () => val,
+    };
+}
+
+export function failureResult<T>(err: AppError): Result<T> {
+    return {
+        isSuccess: false,
+        isFailed: true,
+        hasError: true,
+        hasNoError: false,
+        value: null,
+        data: null,
+        error: err,
+        unwrap: () => [null, err],
+        unwrapOr: (defaultVal: T) => defaultVal,
+    };
+}
+
+export function newFailure<T>(
+    code: ErrorCodeType,
+    message: string,
+    caller: string,
+): Result<T> {
+    const appErr = new AppError(code, message, caller);
+    return failureResult<T>(appErr);
+}
+```
+
+---
+
+#### 4d. PHP 8.1+ `Result<T>` Class Architecture
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Common;
+
+use App\Common\Exceptions\AppException;
+
+final class Result
+{
+    public function __construct(
+        public readonly mixed $value = null,
+        public readonly ?AppException $error = null,
+    ) {}
+
+    public function isSuccess(): bool
+    {
+        return $this->error === null;
+    }
+
+    public function isFailed(): bool
+    {
+        return $this->error !== null;
+    }
+
+    public function isInvalid(): bool
+    {
+        return $this->isFailed();
+    }
+
+    public function hasError(): bool
+    {
+        return $this->error !== null;
+    }
+
+    public function hasNoError(): bool
+    {
+        return $this->error === null;
+    }
+
+    public function unwrap(): mixed
+    {
+        if ($this->error !== null) {
+            throw $this->error;
+        }
+
+        return $this->value;
+    }
+
+    public function unwrapOr(mixed $defaultVal): mixed
+    {
+        if ($this->isSuccess()) {
+            return $this->value;
+        }
+
+        return $defaultVal;
+    }
+
+    public static function success(mixed $value): self
+    {
+        return new self(value: $value);
+    }
+
+    public static function failure(AppException $error): self
+    {
+        return new self(error: $error);
+    }
 }
 ```
 
@@ -330,8 +554,6 @@ In Phase 1, you MUST generate `.lovable/plans/pending/XX-function-signatures-aud
 
 ---
 
----
-
 ## Continuous 2-Phase Self-Loop & 2-Agent Concurrency Architecture
 
 To guarantee full execution without stopping after planning mode, the master orchestrator MUST enforce this continuous 2-phase loop:
@@ -358,6 +580,8 @@ To guarantee full execution without stopping after planning mode, the master orc
   - Rollback dirty working tree and log error details to `.lovable/plans/last-failure.md` and `.lovable/memory/issues/XX-failure.md`.
   - The next subagent spawned MUST read the previous failure log first, record it as a pending memory task, and implement the necessary fix.
 - Execute local linters and `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` ensuring `exit 0` before concluding.
+
+---
 
 ## Strict In-Repository Execution & `.lovable/` Bounding Mandate
 
@@ -399,7 +623,7 @@ To guarantee full execution without stopping after planning mode, the master orc
 - [ ] **Multi-Line Invocations (Rule 9b):** All function/method call sites with >2 arguments are formatted with exactly one argument per line and trailing commas.
 - [ ] **No Boolean Flag Parameters:** No boolean parameters used to switch behavior; split into distinct methods.
 - [ ] **Semantic Naming:** All functions start with active verbs; all boolean functions start with `is`, `has`, `can`, `should`.
-- [ ] **Single Return Types:** Multi-value `(T, error)` returns refactored to single `Result[T]` envelopes in services.
+- [ ] **Single Return Types:** Multi-value `(T, error)` returns refactored to single `Result[T]` envelopes in services with complete predicate methods (`IsSuccess()`, `IsFailed()`, `HasError()`, `HasNoError()`, `HasValidError()`).
 - [ ] **Universal `AppError`:** Zero generic `error` or `fmt.Errorf()` returns in domain logic.
 - [ ] **LF Line Endings (`\n`):** All files use Unix LF line endings. Zero CRLF (`\r\n`).
 - [ ] **UTF-8 Encoding (No BOM):** All files encoded in UTF-8 without BOM.
@@ -421,16 +645,13 @@ To guarantee full execution without stopping after planning mode, the master orc
 - [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
 - [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Rule 9a/9b Multi-Line Formatting: Verified one parameter/argument per line for all definitions and call sites with >2 arguments.
-- [ ] Result Envelope: Enforced `Result[T]` and `*AppError` across domain services.
+- [ ] Result Envelope: Enforced `Result[T]` with `IsSuccess()`, `IsFailed()`, `HasError()`, `HasNoError()`, and `*AppError` across domain services.
 - [ ] LF Line Endings & UTF-8 (No BOM): Verified Unix LF and UTF-8 across all files.
 - [ ] Blank Line Before `if`: Verified blank line before every `if` statement across all modified files.
 - [ ] Blank Line After `}`: Verified blank line after every closing brace `}` followed by code.
 - [ ] Blank Line Before `return`: Verified blank line before every `return`/`throw` in multi-line blocks.
 - [ ] Zero Nested `if`: Zero nested `if` statements (depth > 1).
-
-
-1. [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
-
+- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
 ---
