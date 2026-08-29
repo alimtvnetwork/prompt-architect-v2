@@ -3,6 +3,7 @@ import re
 import json
 import argparse
 import subprocess
+import datetime
 
 # Files that need to be bumped
 FILES_TO_BUMP = [
@@ -31,6 +32,8 @@ def set_current_version(new_version):
     with open("version.json", "r+", encoding="utf-8") as f:
         data = json.load(f)
         data["version"] = new_version
+        if "releaseDate" in data:
+            data["releaseDate"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
         f.seek(0)
         json.dump(data, f, indent=4)
         f.truncate()
