@@ -122,7 +122,7 @@ When auditing, refactoring, or authoring code, AI agents MUST cross-reference th
 
 ## Boolean Naming
 
-1. Every boolean starts with one of these prefixes: `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, `must`.
+1. Every boolean starts with one of these prefixes: is, has as prefix is only acceptable and nothing else acceptable including but not limited to can, should etc, `was`, `will`, `did`, `must`.
 2. Positive framing only. `isEnabled` yes, `isNotDisabled` no. `hasAccess` yes, `hasNoAccess` no.
 3. If the natural name is negative, invert it: replace `isNotReady` with `isReady` and flip the check site.
 4. State prefixes match tense: `is*` for current state, `has*` for possession or completion, `was*` for past state, `will*` for future/pending, `did*` for a completed action.
@@ -236,7 +236,7 @@ If this repository has a `spec/xx-error-manage/` folder, that folder is binding 
 
 ## Boolean Principles (Cross-Language)
 
-1. **Naming:** All boolean variables MUST begin with `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable) (e.g. `isValid`, `hasMatch`). Never use generic names like `active` or `loaded`.
+1. **Naming:** All boolean variables MUST begin with is, has as prefix is only acceptable and nothing else acceptable including but not limited to can, should etc (e.g. `isValid`, `hasMatch`). Never use generic names like `active` or `loaded`.
 2. **No Negative Names:** Never include negative words like `Not` or `No` in a boolean variable name. Use a positive synonym instead (e.g. `isInvalid` instead of `isNotValid`, `isPending` instead of `notReady`).
 3. **No Explicit True Checks (TOTAL BAN):** NEVER evaluate a boolean explicitly against `true` (e.g., `if isReady == true` or `if (hasMatch === true)`). This is redundant, unidiomatic, and STRICTLY FORBIDDEN. Positive booleans MUST ALWAYS be evaluated implicitly: `if isReady { ... }`.
 4. **No Mixed Polarity:** NEVER combine a positive check and a negative check in the same `if` condition (e.g., `if isA && !isB`). This is a code smell. Extract the combined condition into a single, positively named boolean that captures the actual intent (e.g. `isConflict := isA && !isB; if isConflict { ... }`).
@@ -368,7 +368,7 @@ Every file and function must be audited against these 60 atomic sub-tasks:
 - [ ] **Check 16:** Zero explicit boolean comparisons against `true` (`if isReady == true` is FORBIDDEN).
 - [ ] **Check 17:** Zero explicit boolean comparisons against `false` (`if isReady == false` is FORBIDDEN).
 - [ ] **Check 18:** No mixed polarity (`if isA && !isB` is FORBIDDEN; extract to named boolean).
-- [ ] **Check 19:** Positive boolean prefixes: `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, `must`.
+- [ ] **Check 19:** Positive boolean prefixes: is, has as prefix is only acceptable and nothing else acceptable including but not limited to can, should etc, `was`, `will`, `did`, `must`.
 - [ ] **Check 20:** No negative boolean variables (`isNotReady`, `disableCache` are FORBIDDEN).
 - [ ] **Check 21:** No inverted success checks (`!response.isSuccess` banned; use `response.isFail`).
 - [ ] **Check 22:** Zero boolean positional flag parameters on functions.

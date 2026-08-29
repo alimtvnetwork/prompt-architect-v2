@@ -14,7 +14,7 @@ emits.
 | ID | Rule | Spec source | Check script | Phase 1 langs |
 |----|------|-------------|--------------|---------------|
 | CODE-RED-001 | No nested `if` | `01-cross-language/04-code-style/` | `checks/nested-if/<lang>.py` | go, ts |
-| CODE-RED-002 | Boolean naming (`is`/`has` (`can`/`should` are not acceptable)/Was/Will) | `01-cross-language/02-boolean-principles/` | `checks/boolean-naming/<lang>.py` | go, ts |
+| CODE-RED-002 | Boolean naming (is, has as prefix is only acceptable and nothing else acceptable including but not limited to can, should etc/Was/Will) | `01-cross-language/02-boolean-principles/` | `checks/boolean-naming/<lang>.py` | go, ts |
 | CODE-RED-003 | No magic strings | `01-cross-language/04-code-style/` | `checks/magic-strings/<lang>.py` | go, ts |
 | CODE-RED-004 | **Function length hard cap — ≤ 15 lines** (redundant safety net under CODE-RED-005) | `01-cross-language/04-code-style/` | `checks/function-length/<lang>.py` | go, ts, php |
 | CODE-RED-005 | **Function length strict — ≤ 8 lines** (binding cap per coding-guidelines.md rule #1) | `01-cross-language/04-code-style/` | `checks/function-length-prefer8/<lang>.py` + `eslint-plugins/coding-guidelines/index.js#preferFunctionLines` | go, ts, php, python, rust, eslint |

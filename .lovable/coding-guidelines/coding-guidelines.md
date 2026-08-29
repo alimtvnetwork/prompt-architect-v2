@@ -265,7 +265,7 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 - [ ] **Error Handling (R7 & `spec/03-error-manage/`):** No silent failures or swallowed errors. Every error/failure is wrapped with operation context (`apperror.Wrap`). Never invert success booleans (`!isSuccess` is banned; use explicit `isFail`).
 - [ ] **Magic Strings/Numbers (R8 & `spec/02-coding-guidelines/01-cross-language/26-magic-values-and-immutability.md`):** No magic strings or numbers. Extract named constants. Consult `.lovable/strictly-avoid.md`.
 - [ ] **Naming & Casing (R1, R2 & `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`):** PascalCase everywhere. Acronyms (`Id`, `Json`, `Url`, `Ip`, `Http`) are PascalCase, never all-caps (e.g. `UserId`, not `UserID`). JSON/serialization keys are PascalCase (`{"UserId": "123", "IsActive": true}`).
-- [ ] **Booleans (R3, P1-P9 & `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/`):** Every boolean starts with `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, or `must`. Positive framing only. No negative booleans (`isNotReady` banned). NEVER evaluate explicitly against `true` or `false` (`if isReady == true` is banned). No mixed polarity (`if isA && !isB` is banned).
+- [ ] **Booleans (R3, P1-P9 & `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/`):** Every boolean starts with is, has as prefix is only acceptable and nothing else acceptable including but not limited to can, should etc, `was`, `will`, `did`, or `must`. Positive framing only. No negative booleans (`isNotReady` banned). NEVER evaluate explicitly against `true` or `false` (`if isReady == true` is banned). No mixed polarity (`if isA && !isB` is banned).
 - [ ] **Function Signatures & Parameter Structs (R4, R5, R9):**
   - \> 3 parameters or signature > 100 chars -> **split each line** (one parameter per line).
   - \> 4 parameters or 2+ adjacent same-typed parameters -> use a **param struct** / options object (e.g. `SwapIpParams`).
@@ -1962,7 +1962,7 @@ Every file and function must be audited against these 60 atomic sub-tasks:
 - [ ] **Check 16:** Zero explicit boolean comparisons against `true` (`if isReady == true` is FORBIDDEN).
 - [ ] **Check 17:** Zero explicit boolean comparisons against `false` (`if isReady == false` is FORBIDDEN).
 - [ ] **Check 18:** No mixed polarity (`if isA && !isB` is FORBIDDEN; extract to named boolean).
-- [ ] **Check 19:** Positive boolean prefixes: `is` or `has` (ONLY allowed prefixes; `can`, `should`, and others are NOT acceptable), `was`, `will`, `did`, `must`.
+- [ ] **Check 19:** Positive boolean prefixes: is, has as prefix is only acceptable and nothing else acceptable including but not limited to can, should etc, `was`, `will`, `did`, `must`.
 - [ ] **Check 20:** No negative boolean variables (`isNotReady`, `disableCache` are FORBIDDEN).
 - [ ] **Check 21:** No inverted success checks (`!response.isSuccess` banned; use `response.isFail`).
 - [ ] **Check 22:** Zero boolean positional flag parameters on functions.
