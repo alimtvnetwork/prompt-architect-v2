@@ -102,6 +102,10 @@ Before finalizing any code modification, you MUST manually verify the following:
 - [ ] Naming & Casing (R1, R2): PascalCase everywhere. Acronyms (Id, Json, Url) are Pascal case, never all-caps (e.g., `UserId`, not `UserID`).
 - [ ] Blank Lines (R13-R20): One blank line before every `return`/`throw`. One blank line after closing `}`. Never two blank lines in a row.
 
+## Language-Specific Requirements
+
+- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
+
 ## End of Tunnel Release & Version Bump (Mandatory)
 
 When EVERYTHING is completely finished and fixed (at the very end of the tunnel), you MUST trigger a release.

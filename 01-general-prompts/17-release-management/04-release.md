@@ -210,6 +210,7 @@ To solve this, you MUST operate using these two principles:
 
 ## Execution Checklist
 
+- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
 - [ ] I have successfully pinned the new version in the root `readme.md` (FATAL IF MISSED).
 - [ ] I have successfully updated the changelog.
 - [ ] Discover current version from disk.
