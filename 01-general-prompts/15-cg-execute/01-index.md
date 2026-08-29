@@ -58,7 +58,7 @@ Prompts are sequenced according to priority. Error management, control-flow flat
 ### 1. The Exhaustive Violation Ledger (Phase 1 Mandate)
 
 - Phase 1 audit plans (`.lovable/plans/pending/XX-*-audit.md`) MUST include a markdown table tracking every single violation:
-  `| Violation ID | File Path | Line Number | Exact Snippet | Planned Fix | Status (PENDING/DONE) |`
+  `| Violation Id | File Path | Line Number | Exact Snippet | Planned Fix | Status (PENDING/DONE) |`
 - Never group files into vague summaries like "various files in pkg/". Every file and line must be explicitly numbered.
 
 ### 2. The Disk Reality Verification Gate (Phase 2 Mandate)
