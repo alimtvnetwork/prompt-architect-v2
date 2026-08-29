@@ -40,6 +40,15 @@ try {
     if (-not (Test-Path $AiFixScriptsTarget)) { New-Item -ItemType Directory -Force -Path $AiFixScriptsTarget | Out-Null }
     Copy-Item -Path "$TempDir\.lovable\ai-fix-scripts\*" -Destination $AiFixScriptsTarget -Recurse -Force -ErrorAction SilentlyContinue
     
+
+    Write-Host "Copying .agents (Antigravity Skills & Rules)..." -ForegroundColor Cyan
+    $AgentsTarget = Join-Path $RepoRoot ".agents"
+    if (-not (Test-Path $AgentsTarget)) { New-Item -ItemType Directory -Force -Path $AgentsTarget | Out-Null }
+    Copy-Item -Path "$TempDir\.agents\*" -Destination $AgentsTarget -Recurse -Force -ErrorAction SilentlyContinue
+    
+    Write-Host "Copying root agents.md..." -ForegroundColor Cyan
+    Copy-Item -Path "$TempDir\agents.md" -Destination (Join-Path $RepoRoot "agents.md") -Force -ErrorAction SilentlyContinue
+
     # Generate list of imported files
     $importedFiles = Get-ChildItem -Path $TargetDir -Recurse -File | Select-Object -ExpandProperty FullName
     $relativeFiles = $importedFiles | ForEach-Object { $_.Replace($RepoRoot + "\", "").Replace("\", "/") }

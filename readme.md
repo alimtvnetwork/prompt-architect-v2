@@ -6,12 +6,7 @@ One readme only, always lowercase `readme.md`. Never create `README.md`.
 
 1. `.lovable/memory/what-to-read.md` — routing table: which file to read for what.
 2. `.lovable/memory/prompt-library.md` — full prompt storage and formatting rules.
-3. `01-general-prompts/01-prompt-library-setup/01-prompt-library-setup.md` — original spec.
-
-## Folder structure
-
-```text
-01-general-prompts/             library of all general reusable prompts
+3. `01-general-prompts/             library of all general reusable prompts
   00-folder-structure/          prompts regarding folder layout
   01-prompt-library-setup/      prompts for setting up prompt indexing and architecture
   02-core-workflow/             general lifecycle prompts (initial unified prompt, plan/next steps)
@@ -35,6 +30,8 @@ One readme only, always lowercase `readme.md`. Never create `README.md`.
 02-pwsh-prompts/                PowerShell specific prompts
 <project-name>-prompts/         prompts that name a project
   01-<prompt-slug>.md
+.agents/                        Antigravity Skills & Rules for progressive disclosure
+  skills/                       modular runbook skills for the AI
 assets/                         images and assets supplied with prompts
 spec/                           specifications (hyphenated: spec/<NN>-<slug>/)
   01-spec-authoring-guide/      spec authoring standards
@@ -43,12 +40,16 @@ spec/                           specifications (hyphenated: spec/<NN>-<slug>/)
   04-database-conventions/      database schema & query rules
   21-app/                       app domain specifications & routes
 .lovable/                       configuration, memory, and indexes
-  memory/                       what-to-read.md, prompt-library.md
+  ai-fix-scripts/               Automated scripts (e.g. 02-guideline-autofixer.py)
+  memory/                       what-to-read.md, prompt-library.md, naming-conventions.md
   temp-scripts/                 scratch space for automation scripts (gitignored)
   temp-agents/                  scratch space for active sub-agent states (gitignored)
+  release/                      automation scripts for git releases
   prompts.md                    canonical index of all saved prompts
+agents.md                       global configuration rules for Antigravity agents
 readme.md                       this file
 src/                            application code
+
 ```
 
 *(Note: Spec folder sequence numbers and placements follow `spec/<NN>-<slug>/` but can switch between projects; AI agents dynamically discover and read all nested markdown files).*

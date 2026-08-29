@@ -35,5 +35,4 @@ To survive massive checklists and complex codebases, you MUST operate using thes
 
 ## 4. Lowercase File Naming Convention
 
-- **Strict Lowercase:** All files, scripts, and documentation generated or modified by the AI must use strictly lowercase naming (e.g., `readme.md`, `01-file-manipulator.py`).
-- **The System Exception:** The Antigravity engine natively relies on case-sensitive system files. You MUST keep **`SKILL.md`**, **`AGENTS.md`**, and **`GEMINI.md`** fully capitalized. Lowercasing these system files will break the progressive disclosure engine.
+- **Strict Lowercase (No Exceptions):** All files, scripts, documentation, and system files generated or modified by the AI MUST use strictly lowercase naming (e.g., `readme.md`, `01-file-manipulator.py`, `agents.md`, `skill.md`). There are absolutely no exceptions for uppercase letters in filenames.

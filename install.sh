@@ -33,6 +33,15 @@ if [ $? -eq 0 ]; then
     echo "Copying ai-fix-scripts..."
     cp -r "$TEMP_DIR"/.lovable/ai-fix-scripts "$TARGET_DIR"/../ai-fix-scripts 2>/dev/null || true
     
+
+    echo "Copying .agents (Antigravity Skills & Rules)..."
+    AGENTS_TARGET="${REPO_ROOT}/.agents"
+    mkdir -p "$AGENTS_TARGET"
+    cp -rf "${TEMP_DIR}/.agents/"* "$AGENTS_TARGET" 2>/dev/null || true
+    
+    echo "Copying root agents.md..."
+    cp -f "${TEMP_DIR}/agents.md" "${REPO_ROOT}/agents.md" 2>/dev/null || true
+
     NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     
     python3 -c "
