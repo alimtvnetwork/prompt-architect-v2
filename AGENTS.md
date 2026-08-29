@@ -31,3 +31,9 @@ To survive massive checklists and complex codebases, you MUST operate using thes
 1. **Phase 1: Read & Understand (Isolated Loop):** Your very first action must be purely exploratory. Do NOT write code. Break down the task, read the specific files, trace the dependencies, and understand the architectural boundary. Once you understand the scope, end your turn and self-loop to begin execution.
 2. **Phase 2: Bounded Micro-Tasking (Sequential Self-Looping):** Never attempt to execute the entire checklist in one response. Treat each checklist section or file as a strict, isolated boundary. Execute *only* the first small portion, verify it, end your turn, and self-loop to process the next portion. 
 3. **Phase 3: Multi-Agent Parallelization:** If tasks are independent, you MUST spawn dedicated sub-agents to handle them concurrently. Give each sub-agent an extremely small, strictly defined bounding box (e.g., "Only edit File X"). Never give a sub-agent a generic or multi-file task.
+
+
+## 4. Lowercase File Naming Convention
+
+- **Strict Lowercase:** All files, scripts, and documentation generated or modified by the AI must use strictly lowercase naming (e.g., `readme.md`, `01-file-manipulator.py`).
+- **The System Exception:** The Antigravity engine natively relies on case-sensitive system files. You MUST keep **`SKILL.md`**, **`AGENTS.md`**, and **`GEMINI.md`** fully capitalized. Lowercasing these system files will break the progressive disclosure engine.
