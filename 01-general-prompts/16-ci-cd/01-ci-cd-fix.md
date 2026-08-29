@@ -38,11 +38,71 @@ Before any execution, check if this prompt is installed as a native Antigravity 
 
 ---
 
+## Image Input Handling (Execute First When Any Screenshot or Image Is Provided)
+
+> [!IMPORTANT]
+> **If the user provides any image — a CI/CD dashboard, a pipeline run view, a failure screenshot, or a log screenshot — you MUST process it BEFORE entering Phase 1 or Phase 2.**
+> Images are first-class diagnostic input. Treat every pixel of text in the image as ground truth.
+
+### Step I-1: Extract the Pipeline Name from the Image
+
+1. Carefully read the image. Locate and extract:
+   - The **pipeline or workflow name** visible in the UI header or breadcrumb (e.g., `"build-and-test"`, `"CI / lint"`, `"Deploy to staging"`, `"node (18.x)"`)
+   - The **job name(s)** shown in the sidebar, status board, or step list
+   - The **step name(s)** that are marked as failed (❌, red, or labeled "Failure")
+   - Any **error text, log snippets, or stack traces** visible directly in the screenshot
+2. Record all extracted names and errors. They become your primary targeting inputs for the rest of the workflow.
+
+### Step I-2: Verify Runner Coverage
+
+After identifying the pipeline and job names from the image:
+
+1. Open `.lovable/ai-fix-scripts/03-cicd-local-runner.py` if it exists.
+2. Check whether the `JOBS` dict already contains an entry whose key matches or maps to the extracted pipeline/job name.
+3. **If the pipeline is NOT covered:**
+   - Open the corresponding CI/CD configuration file (`.github/workflows/*.yml` or equivalent).
+   - Locate the exact job definition by name.
+   - Extract its full step list.
+   - Apply the Docker Translation Rule (see Phase 1 Step 3).
+   - Add the new job entry to the `JOBS` dict and save the updated runner script.
+   - Log the addition: `"Added job '<name>' from image input to 03-cicd-local-runner.py"`.
+4. **If the pipeline IS already covered:** proceed without modification.
+
+### Step I-3: Fix Errors Visible in the Image
+
+1. For every error, failure message, or stack trace extracted from the image in Step I-1:
+   - Identify the exact source file, line number, and symbol named in the error.
+   - Open that file in the codebase and apply the surgical fix.
+   - Do NOT wait for the runner to surface the same error — fix it now based on the image evidence.
+2. After applying all image-derived fixes, run the guideline autofixer on all modified files:
+   ```text
+   python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
+   ```
+
+### Step I-4: Run the Runner and Verify
+
+1. Run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py`.
+2. Capture the full output and exit code.
+3. If exit code is non-zero, continue into Phase 2 with the combined evidence (image errors + runner output).
+4. If exit code is 0, skip Phase 2 and proceed directly to Phase 3 (RCA) and End of Tunnel.
+
+### Step I-5: RCA for Image-Derived Failures (Mandatory)
+
+For every error extracted from the image that required a fix, write a 4-part RCA file:
+
+- Path: `.lovable/memory/issues/XX-<slug>.md` (next sequential number)
+- Sections: **Why it happened / How it happened / Root Cause / Code Fix**
+- Update `.lovable/memory/issues/index.md` to register the new entry.
+- Append any new forbidden pattern to `.lovable/strictly-avoid.md`.
+
+---
+
 ## Phase 1: Local Runner Script Generation (Steps 1 to PHASE_1_STEPS)
 
 > [!IMPORTANT]
 > **This entire phase is dedicated to one goal ONLY: creating `.lovable/ai-fix-scripts/03-cicd-local-runner.py`.**
 > Do NOT attempt to fix code in this phase. Read, understand, and generate the script.
+> If Image Input Handling (above) already updated the runner, verify the update is complete and move on.
 
 ### Step 1: Check for Existing Script
 
