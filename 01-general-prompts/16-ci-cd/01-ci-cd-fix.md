@@ -1,4 +1,4 @@
-# Instruction (must follow): Autonomous CI/CD Fix Loop (with Local Runner & RCA)
+# Instruction (must follow): Autonomous CI/CD Fix Loop (Fix with RCA & End Aliasing)
 
 Trigger Keywords & Aliases: `fix with RCA`, `fix`, `fix, fix`, `CI/CD fix`, `cicd fix`
 
@@ -31,6 +31,42 @@ To fix CI/CD rapidly without waiting 10-15 minutes for remote GitHub Actions or 
 3. **Execute Local Runner Immediately:** Run `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` as your first diagnostic action. Capture all failing commands and stack traces in your context window.
 
 ---
+
+
+## Actionable Items & Checklist
+
+### 1. Pre-Flight & Past RCA Ingestion
+
+- [ ] /learn past failure patterns in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`.
+- [ ] Read the provided CI/CD error log carefully.
+- [ ] Identify the exact file, line, function, and dependency causing the failure.
+- [ ] Formulate a one-sentence Root Cause Analysis followed by the full causal chain.
+
+### 2. Memory Update (Mandatory)
+
+- [ ] Create a new issue file at `.lovable/cicd-issues/01-<slug>.md`.
+- [ ] Document: Error Summary, Root Cause Analysis, Solution Applied, and "What NOT to Repeat".
+- [ ] Update `.lovable/cicd-issues/index.md` in the same operation.
+- [ ] If a hard rule was broken, append a one-line prohibition to `.lovable/strictly-avoid.md`.
+
+## Rules & Constraints (Non-Negotiable)
+
+1. Analyze First & Read Past RCAs: Do not blindly change code. First read recent RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`. Then trace the provided CI/CD error to the exact file, line, and dependency, performing a complete Root Cause Analysis (RCA).
+2. Update Memory & Avoid List: The RCA and solution must be permanently recorded. Write the details to `.lovable/cicd-issues/01-<slug>.md` (sequenced as `01-`, `02-`, etc.) and register it in `.lovable/cicd-issues/index.md` (or `.lovable/cicd-index.md`). If a new forbidden pattern is identified, append it to `.lovable/strictly-avoid.md`.
+3. Commit the Fix: Once the code is fixed, invoke the standard commit-fix procedure. Group changes logically with a clean, descriptive commit message (`fix(ci): <description>`).
+4. Iterative Looping: If the pipeline fails again after your fix, the user will provide the new error. You must repeat this exact process—RCA, memory update, code fix, verification, commit, push—until the CI/CD run succeeds.
+5. No Blind Overwrites: When updating memory, never delete or truncate existing history. Always append.
+6. Anti-Hallucination Contract: If the cause is ambiguous or missing from logs, stop and ask clarifying questions instead of guessing.
+
+## Actionable Items & Checklist
+
+
+### CI/CD Local Runner Execution (Mandatory)
+
+- [ ] Check if `.lovable/ai-fix-scripts/02-cicd-local-runner.py` exists.
+- [ ] If missing or if forced by the user, parse the CI/CD configurations and generate the script, strictly stripping Docker wrappers to ensure native local execution.
+- [ ] `/goal` **Local Verification Loop:** You MUST run this local script repeatedly, reading its output, and fixing any errors you find. You must loop this execution as a core `/goal` until the script passes with absolutely zero errors.
+
 
 ## Phase 2: Autonomous Self-Looping Fix Cycle (DO NOT STOP)
 
@@ -86,9 +122,6 @@ Before committing, verify all modified files adhere to the project's coding stan
 - [ ] **Return New Line Concept (R13-R16):** One blank line before every `return`, `throw`, or `raise` (unless only statement in block). One blank line after closing `}`. Never two blank lines in a row.
 - [ ] **No Explicit True Checks:** NEVER use `== true` or `=== true` (e.g., write `if isReady`, never `if isReady == true`).
 - [ ] **No Mixed Polarity:** NEVER combine positive and negative checks in a single condition (`if isA && !isB` is banned; extract to a named boolean).
-- [ ] **Function Length:** Hard cap of 15 lines per function. Flatten all nested conditionals.
-- [ ] **Error Management:** No swallowed errors. Wrap all propagated errors with operation context (`apperror.Wrap`).
-- [ ] **Go Generate Sync:** If Go constants, enums, or stringers were modified, run `go generate ./...` in the relevant directory and commit the generated files.
 - [ ] **Strict Lowercase Naming:** All files must be lowercase (`readme.md`, `agents.md`, `skill.md`).
 
 ---
