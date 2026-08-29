@@ -1,6 +1,6 @@
 # Instruction (must follow): Memory Consolidation — Consolidate Completed Plans & Re-Sequence Milestones
 
-Trigger Keywords & Aliases: `consolidate-plans`, `consolidate completed plans`, `clean completed plans`, `resequence completed plans`, `merge plans`, `archive completed plans`, `cleanup plans completed`
+Trigger Keywords & Aliases: `consolidate-plans`, `consolidate completed plans`, `clean completed plans`, `resequence completed plans`, `merge plans`, `archive completed plans`, `cleanup plans completed`, `memory consolidation`
 
 ```text
 N = 200
@@ -8,9 +8,9 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, analyze, group, consolidate, and re-sequence all completed plan files within `.lovable/plans/completed/` into clean, cohesive milestone summaries, while strictly preserving 100% of architectural specifications, root-cause analyses, and decision logs with zero data loss or truncation until 100% green without stopping.
+/goal Autonomously scan, analyze, cluster, consolidate, and re-sequence all completed plan files within `.lovable/plans/completed/` into clean, cohesive milestone summaries, while strictly preserving 100% of architectural specifications, root-cause analyses, error contracts, and decision logs with zero data loss or truncation until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan `.lovable/plans/completed/`, `.lovable/plans/index.md`, and recent memory logs. Group related micro-task files by feature domain or milestone epic. Write the master consolidation plan in `.lovable/plans/pending/XX-completed-plans-consolidation.md` with an exhaustive inventory mapping table (`| Source Files | Target Consolidated File | Feature / Domain Theme | Status |`), verify that zero core specs or architectural rules will be lost, and decompose into granular subtasks in `.lovable/plans/subtasks/XX-completed-plans/`.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan `.lovable/plans/completed/`, `.lovable/plans/index.md`, and recent memory logs. Group related micro-task files by feature domain or milestone epic. Write the master consolidation plan in `.lovable/plans/pending/XX-completed-plans-consolidation.md` with an exhaustive inventory mapping table (`| Source Files | Target Consolidated File | Feature / Domain Theme | Preserved Specifications | Status |`), verify that zero core specs or architectural rules will be lost, and decompose into granular subtasks in `.lovable/plans/subtasks/XX-completed-plans/`.
 - [ ] /goal Second N/2 steps (Phase 2): Create unified milestone summary documents for each cluster, remove redundant source files with `git rm`, re-sequence all files in `.lovable/plans/completed/` to continuous numeric prefixes (`01-`, `02-`, `03-`, ...) using `python .lovable/ai-fix-scripts/01-file-manipulator.py fix-seq-files`, update `.lovable/plans/index.md` and `.lovable/memory/00-index.md`, verify with relative path and header spacing linters, and verify local CI quality gates exit with code 0 (`exit 0`).
 - [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
@@ -30,16 +30,33 @@ A project that runs hundreds of autonomous agent turns quickly produces dozens o
 
 ---
 
-### 1. The Core Objectives (Why We Consolidate)
+### 1. The Core Architecture (Why, What & How)
 
-1. **Context Window Protection:** Agents reading historical plans must not be flooded with 50 individual 5-line subtask files.
-2. **Cohesive Milestone Memory:** Related subtasks (e.g. `01-auth-model.md`, `02-auth-token.md`, `03-auth-endpoint.md`) belong together in a single narrative document (`01-authentication-system.md`).
-3. **100% Spec & Architecture Preservation (The Prime Directive):** Merging files MUST NEVER summarize away core architectural contracts, error codes, schema models, or bug RCAs. Every critical decision is preserved verbatim.
-4. **Monotonic, Continuous Re-Sequencing:** Remaining files in `.lovable/plans/completed/` MUST be re-numbered continuously (`01-`, `02-`, `03-`, ...) with strictly lowercase filenames.
+#### A. WHY We Consolidate
+
+1. **Context Window Overflow Prevention:** AI agents loading memory or plans must not be forced to consume 50k tokens reading 80 individual 3-line task files.
+2. **Elimination of Cognitive Fragmentation:** Individual bugfix notes and micro-steps scatter information. Grouping them into milestone epics gives future agents immediate, unified domain context.
+3. **Search & Retrieval Velocity:** Consolidated documents allow instant retrieval of completed milestones without traversing dozens of orphaned filenames.
+
+#### B. WHAT We Produce
+
+1. **Unified Milestone Documents:** Cohesive documents (e.g. `01-authentication-system.md`, `02-ci-cd-pipeline.md`, `03-database-migrations.md`) replacing scattered subtasks (`01-task-a.md`, `02-task-b.md`).
+2. **Zero-Loss Architectural Ledger:** Every domain contract, interface constraint, error envelope, and RCA link is preserved verbatim.
+3. **Monotonic, Continuous Numbering:** The entire directory `.lovable/plans/completed/` is ordered strictly continuously (`01-`, `02-`, `03-`, ...) with lowercase names and zero sequence gaps.
+
+#### C. HOW We Execute (Mechanics)
+
+1. Scan `.lovable/plans/completed/` and `.lovable/plans/index.md`.
+2. Build an AST / topic cluster mapping table in `.lovable/plans/pending/XX-completed-plans-consolidation.md`.
+3. Create the consolidated milestone documents.
+4. Execute `git rm` on the superseded micro-task files.
+5. Re-sequence all remaining files in `.lovable/plans/completed/` using `python .lovable/ai-fix-scripts/01-file-manipulator.py fix-seq-files`.
+6. Update `.lovable/plans/index.md` and `.lovable/memory/00-index.md`.
+7. Verify all relative links with `python linter-scripts/check-relative-paths.py`.
 
 ---
 
-### 2. Standard Consolidated Milestone Structure
+### 2. Standard Consolidated Milestone Template
 
 Every consolidated file generated inside `.lovable/plans/completed/` MUST adhere to this uniform layout:
 
@@ -114,6 +131,36 @@ Every consolidated file generated inside `.lovable/plans/completed/` MUST adhere
 
 ---
 
+## 4. Phase 1 Actionable Checklist (Discovery, Audit & Planning)
+
+You MUST verify and check off every item during Phase 1:
+
+- [ ] **Completed Plans Directory Scanned:** Recursively inspected all files in `.lovable/plans/completed/`.
+- [ ] **Domain & Feature Clusters Identified:** Grouped isolated tasks into coherent milestones (e.g. Auth, DB, CI/CD, UI).
+- [ ] **Zero-Data-Loss Audit:** Verified that no core architectural rules, schema models, error envelopes, or RCA logs will be discarded during consolidation.
+- [ ] **Master Audit Spec Written:** Created `.lovable/plans/pending/XX-completed-plans-consolidation.md` containing the full mapping ledger table.
+- [ ] **Subtasks Generated:** Created discrete subtasks in `.lovable/plans/subtasks/XX-completed-plans/`.
+- [ ] **Strict Relative Git Paths:** All markdown links in the consolidation spec use relative Git paths (zero `file:///` URIs, zero drive letters).
+- [ ] **No Code Disruption:** Verified that Phase 1 only creates planning specs and makes zero source code deletions.
+
+---
+
+## 5. Phase 2 Actionable Checklist (Execution, Re-Sequencing & Verification)
+
+You MUST verify and check off every item during Phase 2:
+
+- [ ] **Consolidated Files Created:** Generated unified milestone summaries matching the standard template in `.lovable/plans/completed/`.
+- [ ] **Merged Files Cleanly Removed:** Executed `git rm` on superseded micro-task files.
+- [ ] **Continuous Monotonic Re-Sequencing:** Executed `python .lovable/ai-fix-scripts/01-file-manipulator.py fix-seq-files .lovable/plans/completed/` to ensure contiguous `01-`, `02-`, `03-` numbering without gaps.
+- [ ] **Strict Lowercase Naming:** Verified all filenames in `.lovable/plans/completed/` use lowercase alphanumeric characters and hyphens.
+- [ ] **Index Documentation Synchronized:** Updated `.lovable/plans/index.md` and `.lovable/memory/00-index.md` to reflect the updated file catalog.
+- [ ] **Universal File Hygiene:** Verified Unix LF line endings (`\n`), UTF-8 (no BOM), and single terminating newline at EOF across all created/modified files.
+- [ ] **Markdown Spacing Compliance:** Verified exactly one blank line before and after headings (MD022/MD032) and zero double blank lines (`\n\n\n`).
+- [ ] **Linter Verification:** Executed `python linter-scripts/check-relative-paths.py` and `python linter-scripts/check-markdown-header-spacing.py` with exit code 0.
+- [ ] **Disk Reality Check:** Verified working tree status with `git status --porcelain` and `git diff --stat`.
+
+---
+
 ## Strict In-Repository Execution & `.lovable/` Bounding Mandate
 
 > [!IMPORTANT]
@@ -121,7 +168,7 @@ Every consolidated file generated inside `.lovable/plans/completed/` MUST adhere
 >
 > 1. **In-Codebase Execution Only:** Whenever a Python script (runner, autofixer, linter, test aggregator) is executed or created, it MUST be executed **strictly within the repository root** (current working directory), NEVER outside the codebase or against external arbitrary directories.
 > 2. **Strict Folder Bounding (`.lovable/`):** All AI scripts, local runners, autofixers, helper utilities, memory issue logs, and planning files MUST be created inside the `.lovable/` folder:
->    - Python AI Scripts: `.lovable/ai-fix-scripts/` (e.g. `01-file-manipulator.py`, `02-guideline-autofixer.py`, `03-cicd-local-runner.py`, `04-relative-path-fixer.py`).
+>    - Python AI Scripts: `.lovable/ai-fix-scripts/` (e.g. `01-file-manipulator.py`, `02-guideline-autofixer.py`, `03-cicd-local-runner.py`, `04-relative-path-fixer.py`, `06-cli-help-auditor.py`).
 >    - RCA & Issue Logs: `.lovable/memory/issues/` and `.lovable/cicd-issues/`.
 >    - Execution Plans & Subtasks: `.lovable/plans/pending/`, `.lovable/plans/subtasks/`.
 >    - Coding Guidelines Mirror: `.lovable/coding-guidelines/`.

@@ -94,6 +94,50 @@ func init() {
 }
 ```
 
+```go
+// ✅ REQUIRED: Nested Subcommand Tree Example (e.g., gitmap ssh join, ssh keygen, ssh test)
+package cmd
+
+import (
+    "github.com/spf13/cobra"
+)
+
+var sshCmd = &cobra.Command{
+    Use:   "ssh [command]",
+    Short: "Manage SSH keys, agent forwarding, and remote node connections",
+    Long: `Provides a comprehensive suite of SSH subcommands to generate keys,
+join clusters, verify tunnel connectivity, and configure authorized keys.`,
+    Example: `  # Join a cluster via SSH tunnel
+  gitmap ssh join --host node-01.internal --port 22
+
+  # Test SSH key authentication
+  gitmap ssh test --key ~/.ssh/id_ed25519 --user git`,
+    Args: cobra.NoArgs,
+}
+
+var sshJoinCmd = &cobra.Command{
+    Use:   "join",
+    Short: "Connect and join a remote cluster node via SSH tunnel",
+    Example: "  gitmap ssh join --host node-01.internal --port 22",
+    RunE:  runSshJoin,
+}
+
+var sshTestCmd = &cobra.Command{
+    Use:   "test",
+    Short: "Verify SSH key connectivity and credentials against a remote host",
+    Example: "  gitmap ssh test --key ~/.ssh/id_ed25519 --user git",
+    RunE:  runSshTest,
+}
+
+func init() {
+    rootCmd.AddCommand(sshCmd)
+    // Mandatory: Register all nested subcommands to parent sshCmd
+    sshCmd.AddCommand(sshJoinCmd)
+    sshCmd.AddCommand(sshTestCmd)
+}
+```
+
+
 ---
 
 #### 2b. TypeScript / Node.js (Commander.js)
