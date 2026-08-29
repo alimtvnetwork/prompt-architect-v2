@@ -212,26 +212,29 @@ The same rules apply to TypeScript, PHP, Rust, C#, PowerShell, and Python. Only 
 > NOTE: Conflict with folder-level `spec/02-coding-guidelines/`, `spec/coding-guidelines/`, `spec/03-error-manage` or similar guideline folders. The folder-level spec wins over this file if those exist.
 > However, if they do not exist, follow the rules below strictly.
 
-## Core Rules & Non-Negotiable Checklist for AI
+## Core Rules & Non-Negotiable Checklist for AI (with File References)
 
-- [ ] **Language/Runtime**: TypeScript, PHP, Python, Go.
-- [ ] **Enums**: TypeScript string unions are banned. All Enums must end with the `Type` suffix.
-- [ ] **Error Handling (R7)**: No silent failures or swallowed errors. Every error/failure is propagated with context. Use explicit boolean states (e.g. `isFail`), do not invert success booleans (e.g. `!isSuccess`).
-- [ ] **Magic Strings/Numbers (R8)**: No magic strings or numbers except for loggers. Extract named constants. See `.lovable/strictly-avoid.md`.
-- [ ] **Naming & Casing (R1, R2)**: PascalCase everywhere. Acronyms (Id, Json, Url) are Pascal case, never all-caps (e.g. `UserId`, not `UserID`). JSON/serialization keys are Pascal case.
-- [ ] **Booleans (R3)**: Every boolean starts with `is` or `has` (e.g., `isEnabled`, `hasAdminRole`).
-- [ ] **Function Signatures (R4, R5, R9)**:
+- [ ] **Language & Runtime Standards:** Strict enforcement across Go (`spec/02-coding-guidelines/03-golang/`), TypeScript/React (`spec/02-coding-guidelines/02-typescript/`), Python (`spec/02-coding-guidelines/06-python/`), PHP (`spec/02-coding-guidelines/04-php/`), and C# (`spec/02-coding-guidelines/07-csharp/`).
+- [ ] **Enums (`spec/02-coding-guidelines/01-cross-language/04-code-style/`):** TypeScript string unions are banned. All Enum names MUST end with the `Type` suffix (e.g. `UserRoleType`). Switch/match statements on enums must be exhaustive.
+- [ ] **Error Handling (R7 & `spec/03-error-manage/`):** No silent failures or swallowed errors. Every error/failure is wrapped with operation context (`apperror.Wrap`). Never invert success booleans (`!isSuccess` is banned; use explicit `isFail`).
+- [ ] **Magic Strings/Numbers (R8 & `spec/02-coding-guidelines/01-cross-language/26-magic-values-and-immutability.md`):** No magic strings or numbers. Extract named constants. Consult `.lovable/strictly-avoid.md`.
+- [ ] **Naming & Casing (R1, R2 & `spec/02-coding-guidelines/01-cross-language/11-key-naming-pascalcase.md`):** PascalCase everywhere. Acronyms (`Id`, `Json`, `Url`, `Ip`, `Http`) are PascalCase, never all-caps (e.g. `UserId`, not `UserID`). JSON/serialization keys are PascalCase (`{"UserId": "123", "IsActive": true}`).
+- [ ] **Booleans (R3, P1-P9 & `spec/02-coding-guidelines/01-cross-language/02-boolean-principles/`):** Every boolean starts with `is`, `has`, `can`, `should`, `was`, `will`, `did`, or `must`. Positive framing only. No negative booleans (`isNotReady` banned). NEVER evaluate explicitly against `true` or `false` (`if isReady == true` is banned). No mixed polarity (`if isA && !isB` is banned).
+- [ ] **Function Signatures & Parameter Structs (R4, R5, R9):**
   - \> 3 parameters or signature > 100 chars -> **split each line** (one parameter per line).
-  - \> 4 parameters or 2+ adjacent same-typed parameters -> use a **param struct** / options object.
-  - Call > 100 chars or > 4 args -> one argument per line.
-- [ ] **Unused Parameters (R6)**: Every parameter must be used, or explicitly discarded with a comment.
-- [ ] **Import Grouping (R18)**: Imports grouped stdlib / third-party / first-party absolute / first-party relative.
-- [ ] **Blank Lines (R13-R20)**:
-  - **MUST FOLLOW**: New line blank line concept.
-  - One blank line before every `return` / `throw` (unless only statement in block).
-  - One blank line after closing `}` (unless next line is `}`, `else`, `case`, `catch`).
-  - **Never two blank lines in a row, anywhere**. No empty lines padded inside braces.
-- [ ] **Single Source of Truth for Versions**: Do not hardcode version numbers across files. Use a root-level JSON file (e.g. `version.json`) as the single source of truth and inject/read it dynamically.
+  - \> 4 parameters or 2+ adjacent same-typed parameters -> use a **param struct** / options object (e.g. `SwapIpParams`).
+  - Call > 100 chars or > 4 args -> one argument per line (mirrors R4 at call site).
+- [ ] **Unused Parameters (R6):** Every parameter must be used, or explicitly discarded with `_` and a trailing explanatory comment.
+- [ ] **Import Grouping (R18):** Imports grouped: stdlib -> third-party -> first-party absolute -> first-party relative, separated by exactly one blank line.
+- [ ] **The Return New Line & Whitespace Concept (R13-R20 & `spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`):**
+  - **R13 (Blank Line Before Return/Throw):** Exactly ONE blank line before every `return`, `throw`, `raise`, or early exit when preceded by other statements. Exception: If `return` is the ONLY statement in the block or function body, NO blank line is placed.
+  - **R14 (Blank Line After Closing `}`):** Exactly ONE blank line after closing `}`, unless the next line is `}`, `else`, `case`, `catch`, or `finally`.
+  - **R15 (No Double Blanks):** **Never two blank lines in a row, anywhere**.
+  - **R16 (No Padded Braces):** No blank line immediately after `{` and no blank line immediately before `}`.
+  - **R17 (Top-Level Separation):** Exactly one blank line between top-level declarations (functions, classes, types).
+- [ ] **Automated Tooling Execution:** Run `.lovable/ai-fix-scripts/02-guideline-autofixer.py` to auto-fix whitespace and booleans. Validate with `go run linter-scripts/validate-guidelines.go` or `python linter-scripts/validate-guidelines.py`.
+- [ ] **Single Source of Truth for Versions (`version.json`):** Do not hardcode version numbers across files. Use root `version.json` as the sole authority dynamically read across all languages.
+- [ ] **Strict Lowercase Filenames (`agents.md`):** All files, scripts, and docs generated by AI MUST use strictly lowercase naming (`readme.md`, `agents.md`, `skill.md`).
 
 > **See Full Guide**: For complete rules and multi-language examples, see `.lovable/coding-guidelines/01-ai-code-review-guide.md`
 

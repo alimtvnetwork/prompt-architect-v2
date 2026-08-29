@@ -48,6 +48,7 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 
 ## Checklist (execute phase)
 
+0. Automated Pre-Pass: Run `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <target-dir>` to automatically clean up return new lines (R13-R16) and remove explicit `== true` checks.
 1. Read pending tasks from the `.lovable/plans/subtasks/01-coding-guideline-fixes/` folder.
 2. For each task:
    - Locate the affected source file.
@@ -60,8 +61,7 @@ Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step
 3. Commit each fix using the CI/CD fix workflow:
    - Run `git add <modified files>`.
    - Commit with message `fix(coding-guidelines): resolve <issue‑id>`.
-   - If any file changed, bump a minor version tag (`git tag -a vX.Y.Z -m "minor release"`).
-   - Push commits and tags (`git push origin main && git push origin --tags`).
+   - Push commits to remote branch (`git push origin main`). No automatic version bumps unless explicitly commanded by user.
 4. Update the pending task file to mark it as completed.
 5. If no pending tasks remain, output a summary of all fixes applied.
 

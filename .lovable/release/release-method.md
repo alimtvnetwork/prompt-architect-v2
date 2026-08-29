@@ -7,10 +7,12 @@ This document defines exactly where and how versions are tracked and updated in 
 > The `bump_versions.py` script and this document are shipped out-of-the-box via the prompt architect installer as a baseline. When starting a new project, AIs **MUST** update the `FILES_TO_BUMP` array in the Python script and the list below to explicitly match the files of the new repository.
 
 ## Versioning Scheme
+
 The project follows Semantic Versioning (Major.Minor.Patch).
 The **canonical** source of truth for the current version is `version.json` (or `package.json`).
 
 ## Files Requiring Version Bumps
+
 When a release occurs, the version string (both plain `1.X.X` and prefixed `v1.X.X`) MUST be updated in the following explicit file paths. **Do NOT run global unbounded searches.**
 
 - `version.json`
@@ -30,15 +32,19 @@ When a release occurs, the version string (both plain `1.X.X` and prefixed `v1.X
 - `spec/19-main-worker-service/25-inherited-rules.md`
 
 ## Automation Script
+
 The python script `.lovable/release/bump_versions.py` automates this process. It has two operating modes:
 
 ### Standard Mode
+
 `python .lovable/release/bump_versions.py --type <major|minor|patch>`
 Calculates the new version and safely applies regex replacements only to the files listed above. It does not run any git commands.
 
 ### Full Release Mode
+
 `python .lovable/release/bump_versions.py --type <major|minor|patch> --create-release`
 Performs the version replacement, then automates the entire git release process. It prevents you from getting stranded on a branch by executing this complete loop:
+
 1. Detects your current active branch (e.g., `main`).
 2. Creates and checks out a new branch (`release/vX.Y.Z`).
 3. Commits the changes.

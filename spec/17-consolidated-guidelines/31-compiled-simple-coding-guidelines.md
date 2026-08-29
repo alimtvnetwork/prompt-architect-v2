@@ -88,6 +88,43 @@ auto-reject on the same tier as RULE 0.
 
 ---
 
+
+## The Return New Line & Whitespace Concept (Mandatory Standards)
+
+The return new line standard is strictly checked across all languages (Go, TypeScript, Python, Rust, C#, PHP).
+
+### Rule R13: Blank Line Before `return` / `throw` / `raise`
+
+- **Multi-statement blocks:** Exactly ONE blank line before every `return`, `throw`, `raise`, or early exit when preceded by other statements in the block.
+- **Single-statement blocks (Exception):** If `return` or `throw` is the ONLY statement in the block or function body, NO blank line is placed before it.
+
+```go
+// Single-statement: tight against brace
+func GetPort() int {
+    return 8080
+}
+
+// Multi-statement: blank line required before return
+func Process(val int) int {
+    doubled := val * 2
+    offset := getOffset()
+
+    return doubled + offset
+}
+```
+
+### Rule R14: Blank Line After Closing `}` Brace
+
+- Exactly ONE blank line after a closing brace `}`, unless followed by `}`, `else`, `case`, `catch`, or `finally`.
+
+### Rule R15: Never Two Blank Lines in a Row
+
+- Never place two consecutive blank lines anywhere in any file.
+
+### Rule R16: No Padded Braces
+
+- No blank line immediately after an opening `{` brace, and no blank line immediately before a closing `}` brace.
+
 ## Line-Gap and Whitespace Style
 
 1. One blank line before every `return` or `throw`, unless it is the only statement in the block.
