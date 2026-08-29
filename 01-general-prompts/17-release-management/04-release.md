@@ -109,7 +109,21 @@ Past release turns were sloppy: guessed the version, bumped PATCH instead of MIN
 
 8. Tag, commit, and push (if git-tracked). Commit message: `release: vX.Y.Z <headline>`. Tag: `git tag vX.Y.Z`. You MUST push the commit and tag to the remote repository (e.g., `git push` followed by `git push origin vX.Y.Z`). Because you synced and committed pending changes in Pre-flight, the working tree should only contain release-related file changes.
 
-9. Report previous version, new version, bump tier, and the exact files changed. No filler.
+9. **Publish Platform Release with Quick Install One-Liners (FATAL IF MISSED ON GITHUB/GITLAB):**
+   When creating the GitHub / GitLab release (via `bump_versions.py --create-release` or CLI):
+   - You MUST assemble a release notes file (e.g. `.lovable/release/release-notes-vX.Y.Z.md` or `/tmp/release-body.md`) containing:
+     1. **Quick Install One-Liners:**
+        - Binary repos: `irm https://github.com/<owner>/<repo>/releases/download/vX.Y.Z/install.ps1 | iex` (PowerShell) and `curl -fsSL https://github.com/<owner>/<repo>/releases/download/vX.Y.Z/install.sh | bash` (Bash).
+        - Script/Prompt repos: `Invoke-WebRequest ...` (PowerShell) and `curl -sL ... | bash -s -- ".lovable/prompts" "vX.Y.Z"` (Bash).
+     2. **Extracted Changelog:** The exact `[vX.Y.Z]` section from `changelog.md`.
+   - Pass this file via `--notes-file`:
+     ```bash
+     gh release create "vX.Y.Z" --title "vX.Y.Z" --notes-file ".lovable/release/release-notes-vX.Y.Z.md" --generate-notes
+     ```
+   - **STRICT PROHIBITION:** NEVER execute `gh release create <tag> --generate-notes` without `--notes-file`. Bare `--generate-notes` dumps commit hashes only and strips the installation one-liners!
+   - Verify the published release page on GitHub/GitLab contains the copy-pasteable install one-liners.
+
+10. Report previous version, new version, bump tier, and the exact files changed. No filler.
 
 ## Issue logging (MUST, when anything goes wrong)
 
@@ -140,6 +154,9 @@ Then link it from the `### Issues` bullet under the changelog entry.
 - [ ] Version-sync check (if it exists) exited 0; otherwise a targeted search confirms allow-list only.
 - [ ] Pre-flight Git sync completed (`git status`, commit pending changes, `git pull`).
 - [ ] Commit + tag created (if git-tracked) with `release: vX.Y.Z <headline>` and `vX.Y.Z`, AND successfully pushed to Git.
+- [ ] Release notes file generated containing Quick Install One-Liners (PowerShell & Bash) and changelog.
+- [ ] GitHub/GitLab release created via `gh release create --notes-file` or `glab release create --notes-file` (NEVER bare `--generate-notes`).
+- [ ] Release description on GitHub/GitLab verified to contain the Quick Install one-liners, NOT just raw commit hashes.
 - [ ] Report includes previous version, new version, tier, and exact file list.
 - [ ] No em dashes.
 

@@ -33,3 +33,7 @@ dist-ssr
 /.gitmap/backup
 .gitmap/release-assets
 release-assets
+
+# Python
+__pycache__/
+*.py[cod]

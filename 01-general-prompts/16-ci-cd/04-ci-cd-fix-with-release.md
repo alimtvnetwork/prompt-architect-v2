@@ -348,18 +348,90 @@ Update `.lovable/cicd-issues/index.md` in the same operation. Never delete exist
 
 ### Step R-2: Bump the Version
 
+### Step R-2: Bump the Version & Assemble Release Body
+
 **Primary path — use the exact script at this path:**
 
 ```text
 python .lovable/release/bump_versions.py --type minor --create-release
 ```
 
-The `--create-release` flag handles: creating the `release/vX.Y.Z` git branch, committing, tagging `vX.Y.Z`, pushing, and creating the GitHub/GitLab release via `gh release create` or `glab release create`.
+The `--create-release` flag handles:
+
+1. Creating the `release/vX.Y.Z` git branch
+2. Updating all version pin sites
+3. Assembling the release notes file with **Quick Install One-Liners** and changelog
+4. Committing, tagging `vX.Y.Z`, and pushing
+5. Creating the GitHub/GitLab release via `gh release create` (with `--notes-file`) or `glab release create`
+
+---
+
+### MANDATORY: Release Page Install One-Liners (FATAL IF MISSED ON GITHUB/GITLAB)
+
+> [!CAUTION]
+> **NEVER run `gh release create <tag> --generate-notes` ALONE.**
+> Running `--generate-notes` without a structured `--notes-file` is a FATAL DEFECT: GitHub will only display commit hashes (as seen in broken release pages) and completely omits the installation one-liners!
+>
+> Every published GitHub / GitLab release page MUST have the **Quick Install One-Liners** prominently placed right at the top of the release body!
+
+Before calling `gh release create` or `glab release create`, the release automation MUST assemble a release notes file (e.g. `.lovable/release/release-notes-vX.Y.Z.md` or `/tmp/release-body.md`) containing:
+
+#### 1. Quick Install One-Liners by Project Type
+
+**For Binary / Download Asset Repositories (e.g., Go/Rust/C CLI tools like `gitmap`):**
+
+```markdown
+## Quick Install vX.Y.Z
+
+### Windows (PowerShell 5.1+)
+```powershell
+irm https://github.com/<owner>/<repo>/releases/download/vX.Y.Z/install.ps1 | iex
+```
+
+### Linux / macOS (Bash)
+
+```bash
+curl -fsSL https://github.com/<owner>/<repo>/releases/download/vX.Y.Z/install.sh | bash
+```
+```
+
+**For Script / Meta-Repositories (e.g., `prompt-architect`):**
+
+```markdown
+## Quick Install vX.Y.Z
+
+### Windows (PowerShell)
+```powershell
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.ps1 -OutFile install.ps1; .\install.ps1 -TargetDir ".lovable/prompts" -Version "vX.Y.Z"
+```
+
+### Unix / Bash
+
+```bash
+curl -sL https://raw.githubusercontent.com/<owner>/<repo>/vX.Y.Z/install.sh | bash -s -- ".lovable/prompts" "vX.Y.Z"
+```
+```
+
+#### 2. Changelog Section for vX.Y.Z
+
+Directly below the Quick Install block, include the extracted `[vX.Y.Z]` section from `changelog.md`.
+
+#### 3. Platform Release Command
+
+Pass the generated notes file via `--notes-file`:
+
+```bash
+gh release create "vX.Y.Z" --title "vX.Y.Z" --notes-file ".lovable/release/release-notes-vX.Y.Z.md" --generate-notes
+```
+
+*(Note: `--generate-notes` may be appended so GitHub adds commit logs below the install one-liners and changelog, but `--notes-file` is MANDATORY).*
+
+---
 
 **Fallback chain (if `.lovable/release/bump_versions.py` is missing):**
 
-1. **Fallback 1:** Read `.lovable/release/release-method.md` to identify all version pin sites. Regenerate `bump_versions.py` from that documentation. Review and update its internal `FILES_TO_BUMP` array to match this repository's actual architecture. Run it.
-2. **Fallback 2:** If `release-method.md` is also missing, walk the repository with Python `os.walk` (ignoring `.git`, `node_modules`, `.venv`) to discover all version pin sites. Write `release-method.md` documenting them. Generate `bump_versions.py` with the correct `FILES_TO_BUMP`, `git checkout -b`, `git commit`, `git tag`, `git push`, and `gh`/`glab` release logic. Run it.
+1. **Fallback 1:** Read `.lovable/release/release-method.md` to identify all version pin sites. Regenerate `bump_versions.py` from that documentation. Ensure it generates the release notes file with the Quick Install one-liners before running `gh release create`.
+2. **Fallback 2:** If `release-method.md` is also missing, walk the repository with Python `os.walk` (ignoring `.git`, `node_modules`, `.venv`) to discover all version pin sites. Write `release-method.md` documenting them. Generate `bump_versions.py` with the correct `FILES_TO_BUMP`, release notes generator, `git checkout -b`, `git commit`, `git tag`, `git push`, and `gh release create ... --notes-file` logic. Run it.
 3. **Fallback 3:** If discovery fails, stop and ask the user to specify the version pin sites explicitly.
 
 > [!CAUTION]
@@ -425,8 +497,10 @@ Include: previous version, new version, step number and name, command run, full 
 - [ ] Changelog entry added with real bullets. No `TBD` or empty entries.
 - [ ] All markdown filenames in repo are strictly lowercase.
 - [ ] `### Issues` block present in changelog if any step failed, with links.
+- [ ] Release notes file generated containing Quick Install One-Liners (PowerShell & Bash) and changelog.
 - [ ] Release commit tagged `vX.Y.Z` and pushed to remote.
-- [ ] GitHub/GitLab release created via `gh release create` or `glab release create`.
+- [ ] GitHub/GitLab release created via `gh release create --notes-file` or `glab release create --notes-file` (NEVER bare `--generate-notes`).
+- [ ] Release description on GitHub/GitLab verified to contain the Quick Install one-liners, NOT just raw commit hashes.
 - [ ] Report posted in chat: previous version, new version, bump tier, exact files changed.
 
 ---

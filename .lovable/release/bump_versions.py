@@ -69,6 +69,66 @@ def update_files(old_version, new_version):
                 f.write(new_content)
             print(f"Bumped version in {file_path}")
 
+def get_repo_slug():
+    """Extracts owner/repo from git remote origin url."""
+    try:
+        url = subprocess.run(["git", "config", "--get", "remote.origin.url"], capture_output=True, text=True, check=True).stdout.strip()
+        m = re.search(r'github\.com[:/]([^/]+/[^/.]+)', url)
+        if m:
+            return m.group(1)
+    except Exception:
+        pass
+    return "alimtvnetwork/prompt-architect-v2"
+
+def extract_changelog_section(version):
+    """Extracts changelog entry for version from changelog.md if present."""
+    if not os.path.exists("changelog.md"):
+        return ""
+    try:
+        with open("changelog.md", "r", encoding="utf-8") as f:
+            content = f.read()
+        pattern = rf'## \[?v?{re.escape(version)}\]?[^\n]*\n(.*?)(?=\n## \[?v?\d|\Z)'
+        match = re.search(pattern, content, re.DOTALL)
+        if match:
+            return match.group(0).strip()
+    except Exception as e:
+        print(f"Warning extracting changelog: {e}")
+    return ""
+
+def build_release_notes_file(new_version):
+    """Assembles structured release notes with mandatory Quick Install one-liners and changelog."""
+    v_string = f"v{new_version}"
+    repo_slug = get_repo_slug()
+    repo_name = repo_slug.split('/')[-1] if '/' in repo_slug else repo_slug
+
+    is_binary_repo = os.path.exists("linter-scripts/installer-templates") or os.path.exists("spec/16-generic-release")
+
+    lines = [f"# {repo_name} {v_string}\n"]
+    lines.append("## Quick Install (One-Liners)\n")
+
+    if is_binary_repo:
+        lines.append("### Windows (PowerShell 5.1+)\n```powershell\n"
+                     f"irm https://github.com/{repo_slug}/releases/download/{v_string}/install.ps1 | iex\n```\n")
+        lines.append("### Linux / macOS (Bash)\n```bash\n"
+                     f"curl -fsSL https://github.com/{repo_slug}/releases/download/{v_string}/install.sh | bash\n```\n")
+    else:
+        lines.append("### Windows (PowerShell)\n```powershell\n"
+                     f"Invoke-WebRequest -Uri https://raw.githubusercontent.com/{repo_slug}/{v_string}/install.ps1 -OutFile install.ps1; .\\install.ps1 -TargetDir \".lovable/prompts\" -Version \"{v_string}\"\n```\n")
+        lines.append("### Unix / Bash\n```bash\n"
+                     f"curl -sL https://raw.githubusercontent.com/{repo_slug}/{v_string}/install.sh | bash -s -- \".lovable/prompts\" \"{v_string}\"\n```\n")
+
+    changelog_entry = extract_changelog_section(new_version)
+    if changelog_entry:
+        lines.append(f"\n{changelog_entry}\n")
+
+    notes_path = os.path.join(".lovable", "release", f"release-notes-{v_string}.md")
+    os.makedirs(os.path.dirname(notes_path), exist_ok=True)
+    with open(notes_path, "w", encoding="utf-8", newline='\n') as f:
+        f.write("\n".join(lines))
+
+    print(f"Generated release notes at {notes_path}")
+    return notes_path
+
 def handle_git_release(new_version):
     v_string = f"v{new_version}"
     branch_name = f"release/{v_string}"
@@ -84,7 +144,10 @@ def handle_git_release(new_version):
         print(f"Current branch is {current_branch}. Creating release branch: {branch_name}")
         subprocess.run(["git", "checkout", "-b", branch_name], check=True)
         
-        print("Committing version bump...")
+        # Build release notes with Quick Install one-liners before commit so it is tracked
+        notes_path = build_release_notes_file(new_version)
+
+        print("Committing version bump and release notes...")
         subprocess.run(["git", "add", "."], check=True)
         subprocess.run(["git", "commit", "-m", f"chore(release): bump version to {new_version}"], check=True)
         
@@ -98,13 +161,13 @@ def handle_git_release(new_version):
         # Detect CLI for platform release
         try:
             subprocess.run(["gh", "--version"], capture_output=True, check=True)
-            print("GitHub CLI detected. Creating GitHub Release...")
-            subprocess.run(["gh", "release", "create", v_string, "--generate-notes"], check=True)
+            print(f"GitHub CLI detected. Creating GitHub Release with {notes_path}...")
+            subprocess.run(["gh", "release", "create", v_string, "--title", v_string, "--notes-file", notes_path, "--generate-notes"], check=True)
         except (subprocess.CalledProcessError, FileNotFoundError):
             try:
                 subprocess.run(["glab", "--version"], capture_output=True, check=True)
-                print("GitLab CLI detected. Creating GitLab Release...")
-                subprocess.run(["glab", "release", "create", v_string], check=True)
+                print(f"GitLab CLI detected. Creating GitLab Release with {notes_path}...")
+                subprocess.run(["glab", "release", "create", v_string, "--name", v_string, "--notes-file", notes_path], check=True)
             except (subprocess.CalledProcessError, FileNotFoundError):
                 print("No gh or glab CLI detected. Skipping platform release creation.")
                 
