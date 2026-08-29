@@ -12,7 +12,7 @@ def log(msg, verbose=False, is_verbose_msg=False):
         print(msg)
 
 def get_safe_path(path_str):
-    """Safely handle Windows MAX_PATH limitations by using \\?\ prefix for absolute paths."""
+    r"""Safely handle Windows MAX_PATH limitations by using \\?\ prefix for absolute paths."""
     abs_path = os.path.abspath(path_str)
     if os.name == 'nt' and not abs_path.startswith('\\\\?\\'):
         return '\\\\?\\' + abs_path

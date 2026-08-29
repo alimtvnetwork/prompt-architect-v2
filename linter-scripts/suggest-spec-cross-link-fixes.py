@@ -309,11 +309,11 @@ def apply_fixes(sugs: list[dict], min_conf: float) -> tuple[int, int]:
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Suggest or auto-fix broken spec cross-references.")
-    p.add_argument("--root", default="spec")
-    p.add_argument("--repo-root", default=".")
+    p.add_argument("--root", default="spec", help="Directory root containing spec files to check")
+    p.add_argument("--repo-root", default=".", help="Root of the git repository for resolving relative paths")
     p.add_argument("--apply", action="store_true", help="Rewrite files in place when confidence >= threshold")
-    p.add_argument("--min-confidence", type=float, default=DEFAULT_MIN_CONFIDENCE)
-    p.add_argument("--json", action="store_true")
+    p.add_argument("--min-confidence", type=float, default=DEFAULT_MIN_CONFIDENCE, help="Minimum confidence threshold for auto-applying fixes")
+    p.add_argument("--json", action="store_true", help="Emit results in structured JSON format")
     p.add_argument("--github", action="store_true", help="Emit GitHub Actions annotations")
     return p.parse_args()
 

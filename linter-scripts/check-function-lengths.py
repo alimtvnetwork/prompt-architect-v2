@@ -208,7 +208,8 @@ def main() -> int:
                         help="absolute hard ceiling (default 25)")
     parser.add_argument("--strict", action="store_true",
                         help="treat WARN tier (9–15 lines) as a failure")
-    parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--verbose", action="store_true",
+                        help="print every checked function with its tier")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()

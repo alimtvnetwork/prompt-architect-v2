@@ -1,0 +1,340 @@
+# Instruction (must follow): Execute Coding Guidelines — CLI Commands, Help Text Parity & Help UI Architecture
+
+Trigger Keywords & Aliases: `cg-cli`, `cg-help`, `cg-execute cli`, `audit cli commands`, `audit help text`, `cli help parity`, `enforce cli help`, `fix cli help`, `cli help ui audit`
+
+```text
+N = 200
+```
+
+N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously scan, discover, plan, refactor, and fix all CLI command registrations, help text descriptions, command flag coverage, subcommand routing, and Help UI parity across all command-line binaries and scripts in the repository, ensuring 100% of implemented commands, subcommands, flags, and options are documented with clear usage examples in `--help` outputs until 100% green without stopping.
+
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan the codebase to discover and catalog every CLI entry point, command, subcommand, flag, positional argument, and standalone script. Inspect the `--help`, `-h`, and help UI outputs to identify missing command registrations, undocumented flags, absent usage examples, and malformed help formatters. Write the master audit spec in `.lovable/plans/pending/XX-cli-commands-help-audit.md` with an exhaustive Command-to-Help parity ledger table, decompose into granular subtasks in `.lovable/plans/subtasks/XX-cli-commands-help/`, and verify/create the CLI help parity linter/auditor (`.lovable/ai-fix-scripts/06-cli-help-auditor.py`).
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each CLI command definition, router, and flag configuration file. Implement missing help descriptions, register unlisted subcommands into the root help catalog, standardize Help UI formatting (Usage, Description, Commands, Flags, Examples), add invalid-command suggestion handlers, enforce <= 8–15 line function decomposition and 100-line file caps, run CLI parity linters, and verify local CI quality gates exit with code 0 (`exit 0`).
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/01-cross-language/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+
+```text
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Discover Commands, Check Help Parity, Write .lovable/plans/pending/ Ledger Spec, Subtasks, Auditor Script)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit CLI Files, Register Commands, Format Help UI, Add Usage Examples, Verify Local CI)
+```
+
+N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Dedicated Section: CLI Command Architecture, Help Parity & UI Standards
+
+A command-line tool or script is only as usable as its discoverability. Undocumented commands, missing subcommands in help text, and incomplete flag descriptions frustrate users, break automation, and cause cognitive overload.
+
+---
+
+### 1. Mandatory CLI Command & Help Parity Principles
+
+1. **100% Command & Subcommand Discoverability:**
+   - Every executable subcommand implemented in code MUST be registered and displayed in the root `--help` / `-h` command list.
+   - Zero "secret", orphaned, or unlisted commands unless explicitly marked and documented as internal debug flags.
+2. **Comprehensive Flag & Option Documentation:**
+   - Every flag (e.g. `--config`, `-v`, `--timeout`) MUST have a human-readable description, expected data type, default value (if any), and shorthand alias.
+3. **Usage Examples in Help Text:**
+   - Every command and subcommand MUST include at least one concrete, real-world usage example in its `--help` output (e.g. `Example: mycli user create --email user@example.com --role admin`).
+4. **Standard Help UI Layout:**
+   - Help text MUST follow a clean, consistent hierarchical layout:
+     - `NAME / USAGE:` Binary name and syntax synopsis.
+     - `DESCRIPTION:` 1–2 sentence explanation of command purpose.
+     - `COMMANDS / SUBCOMMANDS:` Alphabetical or logical list of available subcommands with 1-line summaries.
+     - `OPTIONS / FLAGS:` Formatted table of supported flags and options.
+     - `EXAMPLES:` Practical terminal invocations.
+5. **Help Invocation Parity:**
+   - All standard help flags MUST work identically: `--help`, `-h`, `help <command>`, and invoking the binary without required arguments should display help or a concise error pointing to `--help`.
+6. **Unknown Command Error Handling:**
+   - If an invalid command is passed, the CLI MUST output a clear error message, suggest closest matching commands if available, and direct the user to `--help`.
+
+---
+
+### 2. Multi-Language CLI Help Implementations
+
+#### 2a. Go (Cobra CLI Framework)
+
+```go
+// ❌ WRONG: Missing Short/Long descriptions, missing examples, unregistered subcommands
+var userCmd = &cobra.Command{
+    Use: "user",
+    Run: func(cmd *cobra.Command, args []string) {
+        // ...
+    },
+}
+
+// ✅ CORRECT: Complete command definition with Short, Long, Example, and Flags
+package cmd
+
+import (
+    "github.com/spf13/cobra"
+)
+
+var userCmd = &cobra.Command{
+    Use:   "user [command]",
+    Short: "Manage system user accounts and credentials",
+    Long: `Provides administrative commands to create, inspect, update,
+and revoke user accounts and role-based access controls.`,
+    Example: `  # Create a new administrator account
+  mycli user create --username alice --role admin
+
+  # List active users with JSON output
+  mycli user list --status active --format json`,
+    Args: cobra.NoArgs,
+}
+
+func init() {
+    rootCmd.AddCommand(userCmd)
+    userCmd.AddCommand(userCreateCmd)
+    userCmd.AddCommand(userListCmd)
+    userCmd.AddCommand(userDeleteCmd)
+}
+```
+
+---
+
+#### 2b. TypeScript / Node.js (Commander.js)
+
+```typescript
+// ❌ WRONG: Squeezed commands without descriptions or examples
+program
+    .command('audit')
+    .action(runAudit);
+
+// ✅ CORRECT: Fully documented command with description, options, and help examples
+import { Command } from 'commander';
+
+export function registerAuditCommand(program: Command): void {
+    program
+        .command('audit')
+        .description('Scan codebase for coding guideline and architectural violations')
+        .option('-c, --config <path>', 'Path to custom audit configuration file', 'architect.config.json')
+        .option('-f, --format <type>', 'Output format: text, json, or markdown', 'text')
+        .option('--strict', 'Treat guideline warnings as blocking build errors', false)
+        .addHelpText('after', `
+Examples:
+  $ mycli audit
+  $ mycli audit --format markdown --strict
+  $ mycli audit --config ./config/strict-rules.json
+`)
+        .action(async (options) => {
+            await executeAudit(options);
+        });
+}
+```
+
+---
+
+#### 2c. Python (Click / Argparse)
+
+```python
+# ❌ WRONG: Undocumented arguments and missing help
+import click
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+@click.argument("target")
+def build(target):
+    pass
+
+# ✅ CORRECT: Rich help metadata, options documentation, and epilog examples
+import click
+
+@click.group(
+    help="Prompt Architect CLI — Multi-agent engineering tooling and automation."
+)
+@click.version_option(version="1.35.0", prog_name="prompt-architect")
+def cli() -> None:
+    """Root entry point for Prompt Architect commands."""
+    pass
+
+@cli.command(
+    name="build",
+    short_help="Compile and package target artifacts.",
+    help="Builds specified target modules into standalone release packages."
+)
+@click.argument("target", type=click.STRING)
+@click.option(
+    "-o", "--output",
+    type=click.Path(),
+    default="dist/",
+    show_default=True,
+    help="Directory where compiled release artifacts will be written."
+)
+@click.option(
+    "--optimize/--no-optimize",
+    default=True,
+    show_default=True,
+    help="Enable compiler optimizations and minification."
+)
+def build(target: str, output: str, optimize: bool) -> None:
+    """Execute the build pipeline for the given target."""
+    execute_build(target, output, optimize)
+```
+
+---
+
+#### 2d. PHP (Symfony Console)
+
+```php
+// ❌ WRONG: Missing help text and argument descriptions
+class MigrateCommand extends Command {
+    protected static $defaultName = 'db:migrate';
+}
+
+// ✅ CORRECT: Expressive configure() with full help, arguments, and options
+namespace App\Commands;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+
+class MigrateCommand extends Command {
+    protected static $defaultName = 'db:migrate';
+
+    protected function configure(): void {
+        $this
+            ->setDescription('Executes pending database schema migrations')
+            ->setHelp(<<<'EOF'
+The <info>%command.name%</info> command runs all outstanding database migrations:
+
+  <info>php %command.full_name%</info>
+
+To roll back the last migration batch:
+
+  <info>php %command.full_name% --rollback</info>
+EOF
+            )
+            ->addOption(
+                'rollback',
+                'r',
+                InputOption::VALUE_NONE,
+                'Roll back the most recent batch of executed migrations'
+            )
+            ->addOption(
+                'dry-run',
+                null,
+                InputOption::VALUE_NONE,
+                'Simulate schema execution without persisting database changes'
+            );
+    }
+}
+```
+
+---
+
+## 3. The Phase 1 CLI Command Audit Ledger Format
+
+In Phase 1, you MUST generate `.lovable/plans/pending/XX-cli-commands-help-audit.md` containing the following master inventory table:
+
+```markdown
+| Command / Script | Implemented Subcommands | Registered in Help UI? | Flag Coverage % | Missing Help Text / Examples | Planned Fix | Status |
+|---|---|:---:|:---:|---|---|:---:|
+| `cmd/user.go` | `create`, `list`, `delete` | ⚠️ Missing `delete` | 60% | Missing example for `user create` | Register `userDeleteCmd` and add examples | PENDING |
+| `src/cli/audit.ts` | `audit` | ✅ YES | 80% | Missing description for `--strict` | Document `--strict` option in command | PENDING |
+| `scripts/deploy.py` | `deploy` | ❌ NO | 0% | Missing `--help` parser in script | Migrate to `argparse` with complete help | PENDING |
+```
+
+---
+
+## Strict In-Repository Execution & `.lovable/` Bounding Mandate
+
+> [!IMPORTANT]
+> **STRICT IN-REPOSITORY EXECUTION & `.lovable/` STORAGE CONTRACT:**
+>
+> 1. **In-Codebase Execution Only:** Whenever a Python script (runner, autofixer, linter, test aggregator) is executed or created, it MUST be executed **strictly within the repository root** (current working directory), NEVER outside the codebase or against external arbitrary directories.
+> 2. **Strict Folder Bounding (`.lovable/`):** All AI scripts, local runners, autofixers, helper utilities, memory issue logs, and planning files MUST be created inside the `.lovable/` folder:
+>    - Python AI Scripts: `.lovable/ai-fix-scripts/` (e.g. `01-file-manipulator.py`, `02-guideline-autofixer.py`, `03-cicd-local-runner.py`, `04-relative-path-fixer.py`, `05-naming-autofixer.py`, `06-cli-help-auditor.py`).
+>    - RCA & Issue Logs: `.lovable/memory/issues/` and `.lovable/cicd-issues/`.
+>    - Execution Plans & Subtasks: `.lovable/plans/pending/`, `.lovable/plans/subtasks/`.
+>    - Coding Guidelines Mirror: `.lovable/coding-guidelines/`.
+> 3. **Worker Pool & Log Aggregation Architecture:** All local runners and test orchestrators must use a concurrent worker pool (2–3 workers via `ThreadPoolExecutor`), announce enqueued tasks upfront, show real-time progress, handle failures gracefully without cancelling sibling workers, and print a consolidated final summary with full stdout/stderr error logs for failed jobs.
+> 4. **`force` Keyword Support:** If the user wrote `force`, `force rebuild`, or `force create` on top of the prompt or trigger: **ALWAYS recreate/regenerate the Python runner script from scratch**, regardless of whether the file already exists on disk.
+> 5. **No External or Random File Creation:** NEVER write scripts, temporary test scripts, or scratch files to root, `/tmp`, global system paths, or outside the repository boundary.
+
+---
+
+## AI Fix Scripts Memory (Reusable Tooling)
+
+- [ ] `/goal` **Reuse First:** I have rigorously scanned and `/learn`ed `.lovable/ai-fix-scripts/index.md` to check if a helper script already exists before writing any new temporary code.
+- [ ] **Strict In-Repository Execution:** All Python scripts (`.lovable/ai-fix-scripts/*.py`) MUST be executed strictly within the codebase repository root, NEVER outside the codebase.
+- [ ] **Strict .lovable/ Folder Storage:** All AI scripts, local runners, autofixers, and helper utilities MUST be created inside `.lovable/ai-fix-scripts/`. NEVER create scripts in root or external paths.
+- [ ] **CLI Help Auditor Script:** Use `python .lovable/ai-fix-scripts/06-cli-help-auditor.py` to scan for CLI entry points, parse `--help` outputs, and verify command registrations.
+- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
+- [ ] **Commit & Track:** All new helper scripts were written strictly to `.lovable/ai-fix-scripts/` and committed to Git for future reuse.
+- [ ] **Index Documentation:** I have updated `.lovable/ai-fix-scripts/index.md` using sequential script naming (e.g. `06-cli-help-auditor.py`). For every script, I have included a `<details>` collapsible tag explaining exactly why the script is there and what it does.
+
+---
+
+## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
+
+- [ ] Git working tree is clean before new code changes.
+- [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
+- [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
+- [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
+- [ ] **Strict Relative Git Paths:** All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths (`D:\...`, `C:\...`) or `file:///` URIs.
+- [ ] **100% CLI Command Coverage in Help:** Every implemented command and subcommand is registered and visible in `--help`.
+- [ ] **Flag Documentation:** All flags/options have descriptions, types, and defaults documented.
+- [ ] **Usage Examples:** Every command help includes at least one concrete terminal example.
+- [ ] **Standard Help UI:** Follows clean Name, Usage, Commands, Options, and Examples layout.
+- [ ] **LF Line Endings (`\n`):** All files use Unix LF line endings. Zero CRLF (`\r\n`).
+- [ ] **UTF-8 Encoding (No BOM):** All files encoded in UTF-8 without BOM.
+- [ ] **Single Trailing Newline:** Every file ends with exactly one terminating newline (`\n`).
+- [ ] **Blank Line Before `if`:** Exactly one blank line precedes every `if` statement (unless at the very top of a block).
+- [ ] **Blank Line After `}`:** Exactly one blank line follows every closing brace `}` (unless closing the enclosing block).
+- [ ] **Blank Line Before `return`:** Exactly one blank line precedes `return` / `throw` in multi-line blocks.
+- [ ] **Zero Double Blank Lines:** No `\n\n\n` in code or markdown.
+- [ ] **Markdown Heading Spacing:** Exactly one blank line before and after headings (no leading blank line on line 1).
+- [ ] **Zero Nested `if`:** All conditionals flattened to depth 0 using guard clauses and early returns.
+- [ ] **Function Sizing:** All functions <= 8 lines preferred (hard cap 15 lines).
+- [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
+- [ ] `python linter-scripts/check-newline-styling.py` and `python linter-scripts/check-markdown-header-spacing.py` exited with code 0.
+- [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
+
+---
+
+## Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
+
+/goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
+
+- [ ] Strict Relative Git Paths: All file paths, markdown links, citations, and subtask references in plans, specs, and memory logs are strictly relative to the git repository root. Zero absolute paths or `file:///` URIs.
+- [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] CLI Help Parity: All commands, subcommands, and flags are documented in `--help`.
+- [ ] LF Line Endings & UTF-8 (No BOM): Verified Unix LF and UTF-8 across all files.
+- [ ] Blank Line Before `if`: Verified blank line before every `if` statement across all modified files.
+- [ ] Blank Line After `}`: Verified blank line after every closing brace `}` followed by code.
+- [ ] Blank Line Before `return`: Verified blank line before every `return`/`throw` in multi-line blocks.
+- [ ] Zero Nested `if`: Zero nested `if` statements (depth > 1).
+- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+- [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
+
+---
+
+## Mandatory Linter & CI/CD Integration
+
+1. **Linter Scripts:** `linter-scripts/check-newline-styling.py`, `linter-scripts/check-function-lengths.py`, `linter-scripts/check-markdown-header-spacing.py`
+2. **Local Run Command:** `python .lovable/ai-fix-scripts/06-cli-help-auditor.py`
+3. **Autofixer Command:** `python .lovable/ai-fix-scripts/02-guideline-autofixer.py <file>`
+4. **CI/CD Integration (`.github/workflows/ci.yml`):**
+   ```yaml
+   - name: Validate CLI Commands & Help Parity
+     run: |
+       python .lovable/ai-fix-scripts/06-cli-help-auditor.py
+       python linter-scripts/check-newline-styling.py
+       python linter-scripts/check-markdown-header-spacing.py
+   ```
+5. **Runner Registration (`.lovable/ai-fix-scripts/03-cicd-local-runner.py`):**
+   ```python
+   JOBS = {
+       "CLI Help Parity Check": [sys.executable, ".lovable/ai-fix-scripts/06-cli-help-auditor.py"],
+       "Newline Styling Check": [sys.executable, "linter-scripts/check-newline-styling.py"],
+       "Markdown Header Check": [sys.executable, "linter-scripts/check-markdown-header-spacing.py"],
+   }
+   ```
