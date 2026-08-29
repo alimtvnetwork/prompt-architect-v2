@@ -406,13 +406,15 @@ Before entering Phase 1 or Phase 2:
 
 ---
 
-## STRICT AVOIDANCE: Never Disable CI/CD
+## STRICT AVOIDANCE: Never Disable CLI Linting, Static Analysis, or CI/CD Checks (No Shortcut Cheating)
 
 > [!CAUTION]
-> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.**
-> Never comment out, bypass, delete CI/CD steps, or add `|| true` to force a pass.
-> Your job is to fix the source code so the CI/CD passes legitimately.
-> Disabling CI/CD is an auto-reject failure.
+> **TOTAL BAN ON DISABLING, SKIPPING, OR BYPASSING CLI LINTERS AND CI/CD GATES:**
+>
+> - **NEVER** disable, comment out, delete, or skip any CLI linting command (`golangci-lint`, `eslint`, `markdownlint`, `tsc`, `pytest`, `phpstan`, `mypy`, `check-*.py`), build step, or test suite.
+> - **NEVER** add `|| true`, `continue-on-error: true`, `# nolint`, `// eslint-disable`, or ignore flags to "quickly win the race" or fake a pipeline pass.
+> - **Your job is to legitimately fix the underlying source code.** If resolving complex lint errors or test failures requires multiple sub-steps, sub-agents, or nested self-looping turns, you MUST execute all necessary turns until the code is 100% clean and compliant.
+> - Disabling or bypassing any CI/CD or CLI lint check is an automatic and immediate rejection.
 
 ---
 
@@ -427,6 +429,8 @@ Before entering Phase 1 or Phase 2:
 
 Run `.lovable/ai-fix-scripts/02-guideline-autofixer.py` on all modified files, then verify:
 
+- [ ] **No Disabling CLI Linting (Zero Bypassing):** All CLI linters and CI/CD quality gates executed fully without `|| true`, `continue-on-error`, or suppression comments. Code was legitimately fixed.
+- [ ] **Legitimate Multi-Step Self-Looping:** If complex errors occurred, I performed dedicated, single-step self-loop iterations to resolve each underlying failure instead of taking shortcuts.
 - [ ] **Return New Line (R13-R16):** One blank line before every `return`/`throw` (unless sole statement). One blank line after closing `}`. Never two blank lines in a row.
 - [ ] **No Explicit True Checks:** NEVER write `== true` or `=== true`. Write `if isReady`, not `if isReady == true`.
 - [ ] **No Mixed Polarity:** NEVER write `if isA && !isB`. Extract to a named boolean.
@@ -441,8 +445,10 @@ Run `.lovable/ai-fix-scripts/02-guideline-autofixer.py` on all modified files, t
 
 When `03-cicd-local-runner.py` exits with code 0:
 
-- [ ] **Local CI Runner 100% Green:** All jobs in `03-cicd-local-runner.py` passed (exit code = 0).
+- [ ] **Zero Linting/CI/CD Bypass:** Confirmed that NO CLI linters, static analysis tools, or test scripts were disabled, commented out, skipped, or bypassed with `|| true`.
+- [ ] **Local CI Runner 100% Green:** All jobs in `03-cicd-local-runner.py` passed legitimately (exit code = 0).
 - [ ] **RCA Documented:** All encountered failures have memory files in `.lovable/memory/issues/`.
+- [ ] **Antigravity Skill Updated:** Verified `.agents/skills/ci-cd-fix/skill.md` is present and synchronized with the latest rules.
 - [ ] **Stage & Commit:** Group all related fixes into a single descriptive commit: `fix(ci): resolve <summary>`.
 - [ ] **Push to Remote:** Push the commit to the current branch.
 - [ ] **File Change Summary (MANDATORY):** In chat, list every file changed, what specifically changed inside it, and why. This summary is critical.

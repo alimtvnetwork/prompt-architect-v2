@@ -213,11 +213,15 @@ Also append any new forbidden patterns to `.lovable/strictly-avoid.md`.
 
 ---
 
-## STRICT AVOIDANCE: Never Disable CI/CD
+## STRICT AVOIDANCE: Never Disable CLI Linting, Static Analysis, or CI/CD Checks (No Shortcut Cheating)
 
 > [!CAUTION]
-> **NEVER** comment out, bypass, delete CI/CD steps, or add `|| true` to force a pass.
-> Fix the source code. Disabling CI/CD is an auto-reject failure.
+> **TOTAL BAN ON DISABLING, SKIPPING, OR BYPASSING CLI LINTERS AND CI/CD GATES:**
+>
+> - **NEVER** disable, comment out, delete, or skip any CLI linting command (`golangci-lint`, `eslint`, `markdownlint`, `tsc`, `pytest`, `phpstan`, `mypy`, `check-*.py`), build step, or test suite.
+> - **NEVER** add `|| true`, `continue-on-error: true`, `# nolint`, `// eslint-disable`, or ignore flags to "quickly win the race" or fake a pipeline pass.
+> - **Your job is to legitimately fix the underlying source code.** If resolving complex lint errors or test failures requires multiple sub-steps, sub-agents, or nested self-looping turns, you MUST execute all necessary turns until the code is 100% clean and compliant.
+> - Disabling or bypassing any CI/CD or CLI lint check is an automatic and immediate rejection.
 
 ---
 
@@ -230,6 +234,8 @@ Also append any new forbidden patterns to `.lovable/strictly-avoid.md`.
 
 ## Non-Negotiable Coding Standards
 
+- [ ] **No Disabling CLI Linting (Zero Bypassing):** All CLI linters and CI/CD quality gates executed fully without `|| true`, `continue-on-error`, or suppression comments. Code was legitimately fixed.
+- [ ] **Legitimate Multi-Step Self-Looping:** If complex errors occurred, I performed dedicated, single-step self-loop iterations to resolve each underlying failure instead of taking shortcuts.
 - [ ] **Return New Line (R13-R16):** Blank line before `return`/`throw` (unless sole statement). Blank line after `}`. Never two blank lines in a row.
 - [ ] **No Explicit True Checks:** Never `== true`. Write `if isReady`.
 - [ ] **No Mixed Polarity:** Never `if isA && !isB`. Extract to a named boolean.
@@ -239,6 +245,7 @@ Also append any new forbidden patterns to `.lovable/strictly-avoid.md`.
 
 ## End of Tunnel Checklist
 
+- [ ] **Zero Linting/CI/CD Bypass:** Confirmed that NO CLI linters, static analysis tools, or test scripts were disabled, commented out, skipped, or bypassed with `|| true`.
 - [ ] `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
 - [ ] All failures documented in `.lovable/memory/issues/XX-<slug>.md`.
 - [ ] Changes committed: `fix(ci): resolve <summary>`.
