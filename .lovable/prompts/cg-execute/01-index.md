@@ -1,8 +1,39 @@
-# Coding Guideline Execution Suite (`cg-execute`) — Index & Catalog
+# Instruction (must follow): Coding Guideline Execution Suite (`cg-execute`) — Index & Catalog
 
-Welcome to the **Coding Guideline Execution Prompts (`cg-execute`)** suite. This catalog registers all specialized, sequenced prompts designed to enforce, audit, and autonomously refactor codebases against the master coding standards.
+```text
+N = 200
+```
 
-Every prompt in this suite is engineered with the standardized **N-Step Autonomous Self-Loop Architecture** (`N = 200` by default), splitting work equally between deep scanning/spec writing/skill creation (Phase 1) and autonomous subtask execution with automated linter enforcement (Phase 2).
+N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute coding standard compliance across the repository by executing the prioritized suite of guideline prompts, verifying/creating linters, and maintaining continuous N-step self-loops until 100% green without a single failure.
+
+- [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all active files, listing all coding standard spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
+- [ ] /goal Second N/2 steps will be given to execute the created subtasks following coding guidelines and error management properly, running linters, and verifying all local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+
+```text
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Skill Creation, Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Autonomous Execution, Refactoring, Linter Verification, Local CI Runner Verification)
+```
+
+---
+
+## Phase 0: Antigravity Skill Bootstrap (Memory Optimization)
+
+Before executing the tasks below, you must check if this prompt suite is already installed as native Antigravity Skills.
+
+1. Check if `.agents/skills/coding-guidelines/skill.md` exists in the workspace. If it does NOT exist, you MUST create it now.
+2. Extract the core instructions of this suite and save it into that `skill.md` using standard YAML frontmatter:
+   ```yaml
+   ---
+   name: coding-guidelines
+   description: >-
+     Master orchestrator for auditing, refactoring, and enforcing cross-language coding guidelines, error management, schema standards, and code hygiene.
+   ---
+   ```
+3. Once installed, rely on progressive disclosure for future runs. Do not keep the entire prompt in active memory if not needed.
 
 ---
 
@@ -12,25 +43,19 @@ Prompts are sequenced according to priority. Error management and reliability mu
 
 | Sequence | File | Title | Trigger Keywords | Focus Area | Linter Hook (`linter-scripts/`) |
 |:---:|---|---|---|---|---|
-| **01** | [`01-index.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/01-index.md) | Prompts Catalog & Registry | `cg-index`, `cg-execute index` | Master overview, lifecycle architecture, prompt routing | — |
-| **02** | [`02-error-management.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/02-error-management.md) | Error Management & Architecture | `cg-error`, `cg-execute error`, `audit error` | `AppError` context wrappers, zero swallowed errors, universal `{ data, errors, meta }` response envelopes, anti-panic/exit rules | `check-mws-error-codes.py`, `validate-guidelines.py` |
-| **03** | [`03-boolean-and-naming.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/03-boolean-and-naming.md) | Booleans, Naming & Enums | `cg-boolean`, `cg-execute boolean`, `audit boolean` | Positive boolean prefixes (`is`, `has`, `can`, `should`), no `== true`, no mixed polarity (`if a && !b`), semantic naming, `*Type` enum suffix | `check-enum-and-boolean.mjs`, `02-guideline-autofixer.py` |
-| **04** | [`04-data-and-schema.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/04-data-and-schema.md) | Database & Data Schema Rules | `cg-schema`, `cg-execute schema`, `audit schema` | PascalCase tables, camelCase columns, `{TableName}Id` primary/foreign keys, Mermaid ERDs, SQLite/ORM explicit relations | `check-schema-guidelines.py` |
-| **05** | [`05-react-frontend-guidelines.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/05-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines), `useEffect` minimization, immutable state updates, named object hook returns (tuple ban) | `check-frontend-guidelines.mjs` |
-| **06** | [`06-code-hygiene.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/06-code-hygiene.md) | Code Hygiene & Project Architecture | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 300 lines), struct/class caps ($\le$ 120 lines), dedicated definition files, zero committed build artifacts/binaries, lowercase files | `check-file-sizes.py`, `check-placeholder-comments.py` |
-| **07** | [`07-style-guidelines.md`](file:///d:/work/02-prompts/prompt-architect/01-general-prompts/15-cg-execute/07-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), 15-line function caps, flattening nested `if`, MD022/MD032 markdown spacing | `check-function-lengths.py`, `check-newline-styling.py` |
+| **01** | [`01-index.md`](./01-index.md) | Prompts Catalog & Registry | `cg-index`, `cg-execute index` | Master overview, lifecycle architecture, prompt routing | — |
+| **02** | [`02-error-management.md`](./02-error-management.md) | Error Management & Architecture | `cg-error`, `cg-execute error`, `audit error` | `AppError` context wrappers, zero swallowed errors, universal `{ data, errors, meta }` response envelopes, anti-panic/exit rules | `check-mws-error-codes.py`, `validate-guidelines.py` |
+| **03** | [`03-boolean-and-naming.md`](./03-boolean-and-naming.md) | Booleans, Naming & Enums | `cg-boolean`, `cg-execute boolean`, `audit boolean` | Positive boolean prefixes (`is`, `has`, `can`, `should`), no `== true`, no mixed polarity (`if a && !b`), semantic naming, `*Type` enum suffix | `check-enum-and-boolean.mjs`, `02-guideline-autofixer.py` |
+| **04** | [`04-data-and-schema.md`](./04-data-and-schema.md) | Database & Data Schema Rules | `cg-schema`, `cg-execute schema`, `audit schema` | PascalCase tables, camelCase columns, `{TableName}Id` primary/foreign keys, Mermaid ERDs, SQLite/ORM explicit relations | `check-schema-guidelines.py` |
+| **05** | [`05-react-frontend-guidelines.md`](./05-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines), `useEffect` minimization, immutable state updates, named object hook returns (tuple ban) | `check-frontend-guidelines.mjs` |
+| **06** | [`06-code-hygiene.md`](./06-code-hygiene.md) | Code Hygiene & Project Architecture | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 300 lines), struct/class caps ($\le$ 120 lines), dedicated definition files, zero committed build artifacts/binaries, lowercase files | `check-file-sizes.py`, `check-placeholder-comments.py` |
+| **07** | [`07-style-guidelines.md`](./07-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), 15-line function caps, flattening nested `if`, MD022/MD032 markdown spacing | `check-function-lengths.py`, `check-newline-styling.py` |
 
 ---
 
 ## Standardized N-Step Self-Loop Architecture
 
 Every prompt in this suite operates using a strict two-phase loop budget:
-
-```text
-N = 200
-PHASE_1_STEPS = N / 2   (Steps 1 .. 100: Ingest specs, scan codebase, create .agents/skills/ skill, write .lovable/plans/pending/ spec, break down into .lovable/plans/subtasks/, verify/create linter script)
-PHASE_2_STEPS = N / 2   (Steps 101 .. 200: Autonomous subtask execution, surgical fixes, linter run, CI local runner verification, move completed plans to .lovable/plans/completed/)
-```
 
 ### Phase 1: Scan, Spec & Subtasks (Steps 1 to N/2)
 
@@ -54,7 +79,7 @@ PHASE_2_STEPS = N / 2   (Steps 101 .. 200: Autonomous subtask execution, surgica
 
 Every prompt in this suite enforces that code standards must be mechanically verified by automated tooling:
 
-1. **Specific Linter Script:** Each prompt names the exact file in `linter-scripts/` responsible for validating its rules.
+1. **Specific Linter Script:** Each prompt names the exact relative path in `linter-scripts/` responsible for validating its rules.
 2. **Auto-Creation Mandate:** If the linter script does not exist, the executing agent is strictly commanded to create it using Python/Node.js/Go.
 3. **Local Execution:** The prompt provides the exact local command to execute the linter with zero external overhead.
 4. **CI/CD Integration:** The prompt provides the exact configuration snippet to wire the linter script into `.github/workflows/ci.yml` and register it inside `03-cicd-local-runner.py` under the `JOBS` dictionary.

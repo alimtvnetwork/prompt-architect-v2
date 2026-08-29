@@ -2,13 +2,13 @@
 
 Trigger Keywords & Aliases: `cg-schema`, `cg-execute schema`, `audit schema`, `fix schema guidelines`, `enforce database standards`
 
-/goal Autonomously orchestrate and execute database and data schema compliance across the entire repository by decomposing violations into subtasks, generating Mermaid ERD diagrams, verifying/creating schema linters, and running a continuous N-step self-loop until 100% green without a single failure.
-
 ```text
 N = 200
 ```
 
 N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute database and data schema compliance across the entire repository by decomposing violations into subtasks, generating Mermaid ERD diagrams, verifying/creating schema linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 - [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all SQL, migrations, and ORM files, listing all schema spec files with why and how, creating the Antigravity skill, generating Mermaid ERDs, and breaking down into microscopic subtasks for N/2 steps.
 - [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring tables to PascalCase, columns to camelCase, primary keys to `{TableName}Id` integers, JSON keys to PascalCase, running the schema linter, and verifying all local CI gates exit with code 0.
@@ -62,19 +62,31 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ---
 
-## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
 
-You MUST read and enforce every single file in `spec/04-database-conventions/`:
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
-| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
-|---|---|---|
-| [`spec/04-database-conventions/00-overview.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/00-overview.md) | Authoritative database architectural foundation | All schema definitions, migrations, and queries must follow SQLite-first, strongly-typed conventions. |
-| [`spec/04-database-conventions/01-naming-conventions.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/01-naming-conventions.md) | Strict casing and primary key rules | Tables and entities in **PascalCase** (`UserAccount`), columns and fields in **camelCase** (`userId`, `createdAt`), primary keys MUST be `{TableName}Id` integer auto-increment (`UserAccountId`). No UUID primary keys. |
-| [`spec/04-database-conventions/02-schema-design.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/02-schema-design.md) | Standardized metadata and join constraints | Entity & Reference tables MUST include `Description TEXT NULL`. Transactional tables MUST include `Notes TEXT NULL` and `Comments TEXT NULL`. `Type`/`Status` columns use join tables or registered enums, never free-form strings. |
-| [`spec/04-database-conventions/03-orm-and-views.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/03-orm-and-views.md) | Explicit ORM mapping and relation integrity | Explicitly declare foreign key references, cascade rules, and indexes. Never rely on implicit unconstrained relations. |
-| [`spec/04-database-conventions/05-relationship-diagrams.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/05-relationship-diagrams.md) | Living visual documentation | Every database change MUST include an updated Mermaid ERD diagram showing entities, primary/foreign keys, and relationships. |
-| [`spec/04-database-conventions/06-rest-api-format.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/06-rest-api-format.md) | JSON transport serialization | JSON payload keys MUST be **PascalCase** (e.g. `{ "UserAccountId": 101, "EmailAddress": "..." }`). |
-| [`spec/04-database-conventions/07-split-db-pattern.md`](file:///d:/work/02-prompts/prompt-architect/spec/04-database-conventions/07-split-db-pattern.md) | High-performance split database partitioning | If data tier uses split databases (e.g. Core vs Analytics/History), keep schemas modular and isolated. |
+- [ ] **`spec/04-database-conventions/00-overview.md`**
+  - **Why:** Authoritative database architectural foundation.
+  - **How:** All schema definitions, migrations, and queries must follow SQLite-first, strongly-typed conventions.
+- [ ] **`spec/04-database-conventions/01-naming-conventions.md`**
+  - **Why:** Strict casing and primary key rules.
+  - **How:** Tables and entities in **PascalCase** (`UserAccount`), columns and fields in **camelCase** (`userId`, `createdAt`), primary keys MUST be `{TableName}Id` integer auto-increment (`UserAccountId`). No UUID primary keys.
+- [ ] **`spec/04-database-conventions/02-schema-design.md`**
+  - **Why:** Standardized metadata and join constraints.
+  - **How:** Entity & Reference tables MUST include `Description TEXT NULL`. Transactional tables MUST include `Notes TEXT NULL` and `Comments TEXT NULL`. `Type`/`Status` columns use join tables or registered enums, never free-form strings.
+- [ ] **`spec/04-database-conventions/03-orm-and-views.md`**
+  - **Why:** Explicit ORM mapping and relation integrity.
+  - **How:** Explicitly declare foreign key references, cascade rules, and indexes. Never rely on implicit unconstrained relations.
+- [ ] **`spec/04-database-conventions/05-relationship-diagrams.md`**
+  - **Why:** Living visual documentation.
+  - **How:** Every database change MUST include an updated Mermaid ERD diagram showing entities, primary/foreign keys, and relationships.
+- [ ] **`spec/04-database-conventions/06-rest-api-format.md`**
+  - **Why:** JSON transport serialization.
+  - **How:** JSON payload keys MUST be **PascalCase** (e.g. `{ "UserAccountId": 101, "EmailAddress": "..." }`).
+- [ ] **`spec/04-database-conventions/07-split-db-pattern.md`**
+  - **Why:** High-performance split database partitioning.
+  - **How:** If data tier uses split databases (e.g. Core vs Analytics/History), keep schemas modular and isolated.
 
 ---
 

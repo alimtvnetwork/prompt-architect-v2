@@ -2,13 +2,13 @@
 
 Trigger Keywords & Aliases: `cg-style`, `cg-execute style`, `audit style`, `fix formatting`, `enforce newline styling`
 
-/goal Autonomously orchestrate and execute coding style, newline formatting, and function size compliance across the entire repository by decomposing violations into subtasks, running automated autofixers, verifying/creating style linters, and running a continuous N-step self-loop until 100% green without a single failure.
-
 ```text
 N = 200
 ```
 
 N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute coding style, newline formatting, and function size compliance across the entire repository by decomposing violations into subtasks, running automated autofixers, verifying/creating style linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 - [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all source files for newline styling (R13-R16), function length (> 15 lines), nested `if`s, listing all style spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
 - [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring functions to $\le$ 15 lines, flattening nested conditionals, applying Return New Line rules, running style linters and autofixers, and verifying all local CI gates exit with code 0.
@@ -62,17 +62,25 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ---
 
-## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
 
-You MUST read and enforce every single file in `spec/02-coding-guidelines/01-cross-language/04-code-style/`:
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
-| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
-|---|---|---|
-| [`spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md) | The Return New Line Concept (R13-R16) | Exactly ONE blank line before `return`, `throw`, or `raise` (unless sole statement in block). Exactly ONE blank line after closing `}` (unless followed by `}`, `else`, `catch`). NEVER two blank lines in a row. |
-| [`spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md) | Function length & readability limits | Hard cap of **15 lines per function** (target $\le$ 8 lines). Decompose long functions into single-responsibility helpers. |
-| [`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md) | Elimination of nested conditional pyramids | Use guard clauses and early returns to flatten all nested `if` statements ($> 1$ level deep). |
-| [`spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md) | Multi-line call and signature wrapping | Function signatures with $> 3$ parameters or $> 100$ characters MUST be split into one parameter per line with trailing comma. |
-| [`spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md) | Concrete code formatting examples | Cross-language reference demonstrating compliant whitespace for Go, TypeScript, PHP, Python, and C#. |
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`**
+  - **Why:** The Return New Line Concept (R13-R16).
+  - **How:** Exactly ONE blank line before `return`, `throw`, or `raise` (unless sole statement in block). Exactly ONE blank line after closing `}` (unless followed by `}`, `else`, `catch`). NEVER two blank lines in a row.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`**
+  - **Why:** Function length & readability limits.
+  - **How:** Hard cap of **15 lines per function** (target $\le$ 8 lines). Decompose long functions into single-responsibility helpers.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
+  - **Why:** Elimination of nested conditional pyramids.
+  - **How:** Use guard clauses and early returns to flatten all nested `if` statements ($> 1$ level deep).
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/05-multi-line-formatting.md`**
+  - **Why:** Multi-line call and signature wrapping.
+  - **How:** Function signatures with $> 3$ parameters or $> 100$ characters MUST be split into one parameter per line with trailing comma.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/21-newline-styling-examples.md`**
+  - **Why:** Concrete code formatting examples.
+  - **How:** Cross-language reference demonstrating compliant whitespace for Go, TypeScript, PHP, Python, and C#.
 
 ---
 

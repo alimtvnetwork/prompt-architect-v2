@@ -2,13 +2,13 @@
 
 Trigger Keywords & Aliases: `cg-boolean`, `cg-execute boolean`, `audit boolean`, `fix boolean naming`, `enforce enum standards`
 
-/goal Autonomously orchestrate and execute boolean, naming, and enum compliance across the entire repository by decomposing violations into subtasks, verifying/creating boolean linters, and running a continuous N-step self-loop until 100% green without a single failure.
-
 ```text
 N = 200
 ```
 
 N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute boolean, naming, and enum compliance across the entire repository by decomposing violations into subtasks, verifying/creating boolean linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 - [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all active files, listing all boolean & naming spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
 - [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring booleans to positive prefixes, eliminating explicit `== true` comparisons, removing mixed polarity, enforcing `*Type` enum suffixes, running the boolean linter, and verifying all local CI gates exit with code 0.
@@ -62,19 +62,31 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ---
 
-## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
 
-You MUST read and enforce every single file in `spec/02-coding-guidelines/01-cross-language/` relating to booleans and naming:
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
-| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
-|---|---|---|
-| [`spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md) | Absolute ban on explicit true comparisons | Positive booleans MUST ALWAYS be evaluated implicitly: `if isReady { ... }`. NEVER write `if isReady == true` or `if (isValid === true)`. |
-| [`spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/12-no-negatives.md) | Eliminates cognitive load from double negatives | Positive framing only (`isEnabled` not `isNotDisabled`). If the domain state is negative, invert the variable name and flip the check site. |
-| [`spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md) | Eliminates generic garbage names | All booleans must start with `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`. Zero generic names (`temp`, `data`, `obj`, `item`, `input100`). |
-| [`spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md) | Prevents cryptic boolean argument calls | No boolean flag parameters on functions (`render(true)` is banned; split into `renderExpanded()` and `renderCollapsed()`). |
-| [`spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md) | Standardized enum suffix and extraction | Every enum MUST end with `Type` (e.g. `UserRoleType`). All enum comparisons must be against named symbols, never raw magic strings. |
-| [`spec/02-coding-guidelines/01-cross-language/10-function-naming.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/10-function-naming.md) | Semantic, behavior-driven function contracts | Function names must start with active verbs (`FetchUser`, `ValidateSession`, `CalculateDiscount`). |
-| [`spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md) | Behavior-driven unit testing | Test names must be strictly semantic: `Test<Function>_<Behavior>` (e.g. `TestUpdateUser_RejectsInvalidEmail`). Generic names like `TestHandleComp100` are auto-reject failures. |
+- [ ] **`spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md`**
+  - **Why:** Absolute ban on explicit true comparisons.
+  - **How:** Positive booleans MUST ALWAYS be evaluated implicitly: `if isReady { ... }`. NEVER write `if isReady == true` or `if (isValid === true)`.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`**
+  - **Why:** Eliminates cognitive load from double negatives.
+  - **How:** Positive framing only (`isEnabled` not `isNotDisabled`). If domain state is negative, invert variable name and flip check site.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`**
+  - **Why:** Eliminates generic garbage names.
+  - **How:** All booleans must start with `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`. Zero generic names (`temp`, `data`, `obj`, `item`, `input100`).
+- [ ] **`spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`**
+  - **Why:** Prevents cryptic boolean argument calls.
+  - **How:** No boolean flag parameters on functions (`render(true)` is banned; split into `renderExpanded()` and `renderCollapsed()`).
+- [ ] **`spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`**
+  - **Why:** Standardized enum suffix and extraction.
+  - **How:** Every enum MUST end with `Type` (e.g. `UserRoleType`). All enum comparisons must be against named symbols, never raw magic strings.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/10-function-naming.md`**
+  - **Why:** Semantic, behavior-driven function contracts.
+  - **How:** Function names must start with active verbs (`FetchUser`, `ValidateSession`, `CalculateDiscount`).
+- [ ] **`spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`**
+  - **Why:** Behavior-driven unit testing.
+  - **How:** Test names must be strictly semantic: `Test<Function>_<Behavior>` (e.g. `TestUpdateUser_RejectsInvalidEmail`). Generic names like `TestHandleComp100` are auto-reject failures.
 
 ---
 

@@ -2,13 +2,13 @@
 
 Trigger Keywords & Aliases: `cg-error`, `cg-execute error`, `audit error`, `fix error guidelines`, `enforce error management`
 
-/goal Autonomously orchestrate and execute error management compliance across the entire repository by decomposing violations into subtasks, verifying/creating error linters, and running a continuous N-step self-loop until 100% green without a single failure.
-
 ```text
 N = 200
 ```
 
 N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute error management compliance across the entire repository by decomposing violations into subtasks, verifying/creating error linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 - [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all active files, listing all error management spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
 - [ ] /goal Second N/2 steps will be given to execute the created subtasks, refactoring error handling to follow `AppError` context wrapping and universal envelopes, running the error linter, and verifying all local CI gates exit with code 0.
@@ -62,21 +62,37 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ---
 
-## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
 
-You MUST read and enforce every single file in `spec/03-error-manage/`. Here is the exact contract of why each file exists and how you must follow it:
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
-| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
-|---|---|---|
-| [`spec/03-error-manage/00-overview.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/00-overview.md) | Authoritative error management foundation across all services | Never swallow errors; every `catch` logs with operation name and key inputs, then rethrows or returns a typed error. |
-| [`spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/01-error-handling-reference.md) | Universal cross-language `AppError` and `AppException` structure | Implement `apperror.Wrap(err, "OpName", ctx)` in Go, `throw new AppError(cause, { op, ctx })` in TS, and `AppException` in C#/PHP; preserve the root cause and causal stack. |
-| [`spec/03-error-manage/02-error-architecture/02-go-delegation-fix.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/02-go-delegation-fix.md) | Prevents nil pointer panics and raw error leaks in Go routines | Never delegate errors to uninitialized handlers; use explicit, typed error delegation channels with mutex guards. |
-| [`spec/03-error-manage/02-error-architecture/03-notification-colors.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/03-notification-colors.md) | Standardized error severity and UI feedback mapping | Map log levels strictly: `debug` (trace), `info` (lifecycle), `warn` (recoverable/amber), `error` (user-visible failure/red), `fatal` (process exit). |
-| [`spec/03-error-manage/02-error-architecture/04-error-modal/01-copy-formats/07-envelope-error-response.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/04-error-modal/01-copy-formats/07-envelope-error-response.md) | Universal API response contract across all endpoints | Every HTTP/RPC response MUST return the standard envelope: `{ "data": T, "errors": [AppError], "meta": Meta }`. Never return raw un-enveloped error text. |
-| [`spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md) | Centralized UI error presentation | Frontend errors flow exclusively through a single global error store and universal error modal; no per-component alert boxes or unhandled promise rejections. |
-| [`spec/03-error-manage/03-error-code-registry/`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/03-error-code-registry/) | Stable error code registry and catalog | All error codes must be registered constants (e.g. `ErrCodeNotFound`, `INVALID_PAYLOAD`). No ad-hoc string literals invented at the throw site. |
-| [`spec/03-error-manage/01-error-resolution/02-debugging-cheat-sheet.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/01-error-resolution/02-debugging-cheat-sheet.md) | Rapid triage and systematic root-cause discovery | Follow the 4-part RCA pattern: Symptoms, Root Cause (1 sentence), Fix Applied, and Regression Prevention. |
-| [`spec/03-error-manage/01-error-resolution/04-verification-patterns/01-frontend-backend-sync.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/01-error-resolution/04-verification-patterns/01-frontend-backend-sync.md) | Bidirectional integration verification | Before claiming an integration works, verify both directions: inspect backend response payloads and test frontend error rendering. One side is not enough. |
+- [ ] **`spec/03-error-manage/00-overview.md`**
+  - **Why:** Authoritative error management foundation across all services.
+  - **How:** Never swallow errors; every `catch` logs with operation name and key inputs, then rethrows or returns a typed error.
+- [ ] **`spec/03-error-manage/02-error-architecture/01-error-handling-reference.md`**
+  - **Why:** Universal cross-language `AppError` and `AppException` structure.
+  - **How:** Implement `apperror.Wrap(err, "OpName", ctx)` in Go, `throw new AppError(cause, { op, ctx })` in TS, and `AppException` in C#/PHP; preserve the root cause and causal stack.
+- [ ] **`spec/03-error-manage/02-error-architecture/02-go-delegation-fix.md`**
+  - **Why:** Prevents nil pointer panics and raw error leaks in Go routines.
+  - **How:** Never delegate errors to uninitialized handlers; use explicit, typed error delegation channels with mutex guards.
+- [ ] **`spec/03-error-manage/02-error-architecture/03-notification-colors.md`**
+  - **Why:** Standardized error severity and UI feedback mapping.
+  - **How:** Map log levels strictly: `debug` (trace), `info` (lifecycle), `warn` (recoverable/amber), `error` (user-visible failure/red), `fatal` (process exit).
+- [ ] **`spec/03-error-manage/02-error-architecture/04-error-modal/01-copy-formats/07-envelope-error-response.md`**
+  - **Why:** Universal API response contract across all endpoints.
+  - **How:** Every HTTP/RPC response MUST return the standard envelope: `{ "data": T, "errors": [AppError], "meta": Meta }`. Never return raw un-enveloped error text.
+- [ ] **`spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md`**
+  - **Why:** Centralized UI error presentation.
+  - **How:** Frontend errors flow exclusively through a single global error store and universal error modal; no per-component alert boxes or unhandled promise rejections.
+- [ ] **`spec/03-error-manage/03-error-code-registry/`**
+  - **Why:** Stable error code registry and catalog.
+  - **How:** All error codes must be registered constants (e.g. `ErrCodeNotFound`, `INVALID_PAYLOAD`). No ad-hoc string literals invented at the throw site.
+- [ ] **`spec/03-error-manage/01-error-resolution/02-debugging-cheat-sheet.md`**
+  - **Why:** Rapid triage and systematic root-cause discovery.
+  - **How:** Follow the 4-part RCA pattern: Symptoms, Root Cause (1 sentence), Fix Applied, and Regression Prevention.
+- [ ] **`spec/03-error-manage/01-error-resolution/04-verification-patterns/01-frontend-backend-sync.md`**
+  - **Why:** Bidirectional integration verification.
+  - **How:** Before claiming an integration works, verify both directions: inspect backend response payloads and test frontend error rendering. One side is not enough.
 
 ---
 

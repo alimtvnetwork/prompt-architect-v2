@@ -2,13 +2,13 @@
 
 Trigger Keywords & Aliases: `cg-react`, `cg-execute react`, `audit react`, `fix frontend guidelines`, `enforce react standards`
 
-/goal Autonomously orchestrate and execute React and frontend architecture compliance across the entire repository by decomposing violations into subtasks, verifying/creating frontend linters, and running a continuous N-step self-loop until 100% green without a single failure.
-
 ```text
 N = 200
 ```
 
 N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute React and frontend architecture compliance across the entire repository by decomposing violations into subtasks, verifying/creating frontend linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 - [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all `.tsx`, `.jsx`, and `.ts` frontend files, listing all React & frontend spec files with why and how, creating the Antigravity skill, generating component hierarchy diagrams, and breaking down into microscopic subtasks for N/2 steps.
 - [ ] /goal Second N/2 steps will be given to execute the created subtasks, decomposing monolithic components ($\le$ 100 lines), eliminating redundant `useEffect` hooks, converting custom hook tuple returns to named objects, running the frontend linter, and verifying all local CI gates exit with code 0.
@@ -62,18 +62,28 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ---
 
-## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
 
-You MUST read and enforce every single file in `spec/02-coding-guidelines/02-typescript/` and `spec/07-design-system/`:
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
-| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
-|---|---|---|
-| [`spec/02-coding-guidelines/02-typescript/08-typescript-standards-reference.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/02-typescript/08-typescript-standards-reference.md) | Authoritative TypeScript standards | Strict typing, zero `any`, explicit function return types, and discriminated unions for polymorphic data. |
-| [`spec/02-coding-guidelines/02-typescript/14-state-management.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/02-typescript/14-state-management.md) | Immutable state & hook conventions | Custom React hooks MUST NOT return tuples (`[state, setState]` is banned). Custom hooks MUST return named property objects (`{ userProfile, isLoading, onUpdate }`). |
-| [`spec/02-coding-guidelines/02-typescript/09-promise-await-patterns.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/02-typescript/09-promise-await-patterns.md) | Async lifecycle safety in React | Handle all async flows with `try/catch` and `AppError` wrappers; avoid unhandled promises in `useEffect`. |
-| [`spec/07-design-system/01-design-principles.md`](file:///d:/work/02-prompts/prompt-architect/spec/07-design-system/01-design-principles.md) | Modular UI architecture & sizing caps | Hard 100-line cap per React component file. Decompose large UI blocks into single-responsibility child components. |
-| [`spec/07-design-system/02-theme-variable-architecture.md`](file:///d:/work/02-prompts/prompt-architect/spec/07-design-system/02-theme-variable-architecture.md) | Theme token usage | Zero hardcoded hex color codes in components. Consume CSS theme custom properties and semantic tokens. |
-| [`spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md`](file:///d:/work/02-prompts/prompt-architect/spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md) | Centralized UI error modal | Route all unhandled UI exceptions and API error responses to the global error store; display via the standard error modal. |
+- [ ] **`spec/02-coding-guidelines/02-typescript/08-typescript-standards-reference.md`**
+  - **Why:** Authoritative TypeScript standards.
+  - **How:** Strict typing, zero `any`, explicit function return types, and discriminated unions for polymorphic data.
+- [ ] **`spec/02-coding-guidelines/02-typescript/14-state-management.md`**
+  - **Why:** Immutable state & hook conventions.
+  - **How:** Custom React hooks MUST NOT return tuples (`[state, setState]` is banned). Custom hooks MUST return named property objects (`{ userProfile, isLoading, onUpdate }`).
+- [ ] **`spec/02-coding-guidelines/02-typescript/09-promise-await-patterns.md`**
+  - **Why:** Async lifecycle safety in React.
+  - **How:** Handle all async flows with `try/catch` and `AppError` wrappers; avoid unhandled promises in `useEffect`.
+- [ ] **`spec/07-design-system/01-design-principles.md`**
+  - **Why:** Modular UI architecture & sizing caps.
+  - **How:** Hard 100-line cap per React component file. Decompose large UI blocks into single-responsibility child components.
+- [ ] **`spec/07-design-system/02-theme-variable-architecture.md`**
+  - **Why:** Theme token usage.
+  - **How:** Zero hardcoded hex color codes in components. Consume CSS theme custom properties and semantic tokens.
+- [ ] **`spec/03-error-manage/02-error-architecture/04-error-modal/02-react-components/02-error-store.md`**
+  - **Why:** Centralized UI error modal.
+  - **How:** Route all unhandled UI exceptions and API error responses to the global error store; display via standard error modal.
 
 ---
 

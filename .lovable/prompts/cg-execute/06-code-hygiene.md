@@ -2,13 +2,13 @@
 
 Trigger Keywords & Aliases: `cg-hygiene`, `cg-execute hygiene`, `audit hygiene`, `fix file sizes`, `enforce code hygiene`
 
-/goal Autonomously orchestrate and execute code hygiene and structural architecture compliance across the entire repository by decomposing violations into subtasks, verifying/creating file size and placeholder linters, and running a continuous N-step self-loop until 100% green without a single failure.
-
 ```text
 N = 200
 ```
 
 N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously orchestrate and execute code hygiene and structural architecture compliance across the entire repository by decomposing violations into subtasks, verifying/creating file size and placeholder linters, and running a continuous N-step self-loop until 100% green without a single failure.
 
 - [ ] /goal First N/2 steps will be given for spec writing for AI as given, deep codebase scanning across all source files for line count caps (> 300 lines), struct caps (> 120 lines), uncommitted artifacts, listing all code hygiene spec files with why and how, creating the Antigravity skill, and breaking down into microscopic subtasks for N/2 steps.
 - [ ] /goal Second N/2 steps will be given to execute the created subtasks, splitting oversized files, extracting inline definitions into dedicated modules, sanitizing `.gitignore`, removing placeholders, running hygiene linters, and verifying all local CI gates exit with code 0.
@@ -62,17 +62,25 @@ Before doing anything else, you MUST write a highly detailed execution spec.
 
 ---
 
-## 3. Authoritative Spec Files Checklist — Why & How to Follow Every File
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
 
-You MUST read and enforce every single file in `spec/02-coding-guidelines/` relating to code hygiene and architecture:
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
-| Spec File Path | Why It Must Be Followed | How To Follow It (Actionable Mandate) |
-|---|---|---|
-| [`spec/02-coding-guidelines/00-canonical-size-tier.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/00-canonical-size-tier.md) | Universal size limits across all languages | Hard cap of **300 lines per file**, **120 lines per struct/class**, and **100 lines per React component**. Break large modules into focused, cohesive sub-packages. |
-| [`spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md) | Dedicated definition files | Types, interfaces, structs, enums, and constants must live in dedicated definition files (e.g. `src/types/`, `models/`, `enums/`). Never define types inline next to first use. |
-| [`spec/02-coding-guidelines/01-cross-language/29-no-generated-artifacts.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/29-no-generated-artifacts.md) | Repository cleanliness and zero commit pollution | NEVER commit build artifacts (`*.pyc`, `__pycache__`, `bin/`, `dist/`, `.test-report.*`, `.exe`, `.dll`). Proactively maintain `.gitignore`. |
-| [`spec/02-coding-guidelines/08-file-folder-naming/01-cross-language.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/08-file-folder-naming/01-cross-language.md) | Strict lowercase filesystem naming | All filenames, directory paths, and documentation files MUST use strictly lowercase naming (`readme.md`, `agents.md`, `skill.md`). Zero uppercase letters in filenames. |
-| [`spec/02-coding-guidelines/01-cross-language/08-dry-principles.md`](file:///d:/work/02-prompts/prompt-architect/spec/02-coding-guidelines/01-cross-language/08-dry-principles.md) | Don't Repeat Yourself (DRY) | Extract duplicate logic, repeated schemas, and identical validation routines into shared utility packages. |
+- [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
+  - **Why:** Universal size limits across all languages.
+  - **How:** Hard cap of **300 lines per file**, **120 lines per struct/class**, and **100 lines per React component**. Break large modules into focused, cohesive sub-packages.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`**
+  - **Why:** Dedicated definition files.
+  - **How:** Types, interfaces, structs, enums, and constants must live in dedicated definition files (e.g. `src/types/`, `models/`, `enums/`). Never define types inline next to first use.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/29-no-generated-artifacts.md`**
+  - **Why:** Repository cleanliness and zero commit pollution.
+  - **How:** NEVER commit build artifacts (`*.pyc`, `__pycache__`, `bin/`, `dist/`, `.test-report.*`, `.exe`, `.dll`). Proactively maintain `.gitignore`.
+- [ ] **`spec/02-coding-guidelines/08-file-folder-naming/01-cross-language.md`**
+  - **Why:** Strict lowercase filesystem naming.
+  - **How:** All filenames, directory paths, and documentation files MUST use strictly lowercase naming (`readme.md`, `agents.md`, `skill.md`). Zero uppercase letters in filenames.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/08-dry-principles.md`**
+  - **Why:** Don't Repeat Yourself (DRY).
+  - **How:** Extract duplicate logic, repeated schemas, and identical validation routines into shared utility packages.
 
 ---
 
