@@ -1,6 +1,6 @@
-# Instruction (must follow): Execute Coding Guidelines — Booleans, Naming & Enums
+# Instruction (must follow): Execute Coding Guidelines — Nested `if` Elimination & Guard Clauses
 
-Trigger Keywords & Aliases: `cg-boolean`, `cg-execute boolean`, `audit boolean`, `fix boolean naming`, `enforce enum standards`, `fix nested if`
+Trigger Keywords & Aliases: `cg-nested-if`, `cg-execute nested-if`, `audit nested if`, `fix nested if`, `flatten conditionals`, `enforce guard clauses`
 
 ```text
 N = 200
@@ -8,58 +8,117 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously scan, plan, refactor, and fix all boolean, naming, enum, and nested `if` violations across the codebase, modifying source files directly to enforce positive boolean prefixes, implicit checks, zero nested `if` blocks, 8–15 line function caps, and standard 100-line file limits until 100% green without stopping.
+/goal Autonomously scan, plan, refactor, and fix all nested `if` statements across the codebase, directly modifying source files to flatten conditional branching with guard clauses, early returns, inverted conditions, and function decomposition ($\le$ 8–15 lines) until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan all active codebase files for explicit `== true` checks, nested `if` conditions (depth > 1), mixed polarity (`if a && !b`), missing `is/has/can/should` prefixes, functions > 8 lines, and files > 100 coding lines. Write the master audit spec in `.lovable/plans/pending/XX-boolean-and-naming-audit.md`, break it down into `.lovable/plans/subtasks/XX-boolean-and-naming/`, and verify/create the boolean linter.
-- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, flatten nested `if`s with guard clauses, refactor boolean evaluations to implicit form, decompose functions to $\le$ 8 lines and files to $\le$ 100 lines, enforce `*Type` enum suffixes, run the boolean linter and autofixer, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all nested `if` blocks (nesting depth $> 1$), complex condition pyramids, functions $> 8$ lines, and files $> 100$ coding lines. Write the master audit spec in `.lovable/plans/pending/XX-nested-if-audit.md`, break it down into `.lovable/plans/subtasks/XX-nested-if/`, and verify/create the nested-if linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, invert conditions, introduce early guard returns, decompose multi-branch blocks into $\le 8$-line helper functions, apply proper newline gaps, run the nested-if linter, and verify local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Boolean & Nested If Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase for Nested Ifs, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Invert Conditions, Introduce Guard Clauses, Decompose Functions, Verify Local CI)
 ```
 
 N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
 
 ---
 
-## Dedicated Section: Nested `if` & Conditional Flattening Rules (Zero Tolerance)
+## Dedicated Section: Nested `if` Elimination & Guard Clause Architecture (Zero Tolerance)
 
-Nested `if` statements (an `if` block placed inside another `if` block, nesting depth $> 1$) are **strictly forbidden** across all languages (Go, TypeScript, Python, PHP, C#).
+Nested `if` statements (placing an `if` block inside another `if` block, nesting depth $> 1$) are **strictly forbidden** across all languages (Go, TypeScript, Python, PHP, C#).
 
-### Why Nested `if` Is Forbidden
+### Why Nested `if` Is Strictly Banned
 
-1. **Exponential Cognitive Complexity:** Every nested level doubles the mental states an engineer must hold in memory.
-2. **Hidden Invariant Bugs:** Deep nesting hides error returns, missing cleanup, and partial mutations.
-3. **Bloated Function Length:** Nested logic balloons function size beyond the mandatory 8-to-15 line limits.
+1. **Cognitive Load Explosion:** Every indentation layer multiplies the number of state permutations an engineer must track simultaneously.
+2. **Hidden Invariant Bugs:** Deeply nested branches frequently lead to forgotten error handlers, partial state mutations, and unhandled `else` edge cases.
+3. **Bloated Function Size:** Nested blocks prevent functions from meeting the mandatory $\le 8$ lines preferred ($\le 15$ lines max) limit.
 
-### How to Flatten Nested `if` Statements
+### Mandatory Flattening Strategies (Generic Code Patterns with Compliant Newline Gaps)
 
-1. **Guard Clauses & Early Returns:** Invert the condition and return/throw immediately. Keep the happy path at indentation depth 0.
-   ```go
-   // ❌ FORBIDDEN: Nested if
-   if isUserValid {
-       if hasPermission {
-           processOrder(order)
-       }
-   }
+#### Pattern 1: Guard Clauses with Inverted Condition
 
-   // ✅ REQUIRED: Guard clauses
-   if !isUserValid {
-       return ErrInvalidUser
-   }
-   if !hasPermission {
-       return ErrUnauthorized
-   }
+Invert the check and exit immediately with a return or error:
 
-   return processOrder(order)
-   ```
-2. **Never Combine Mixed Polarity:** NEVER combine a positive check and a negative check in the same `if` condition (e.g., `if isA && !isB`). Split into distinct guard clauses.
-3. **Decompose into Small Helper Functions ($\le 8$ lines):** If an operation requires multiple checks, extract the validation logic into a dedicated boolean helper function that returns `true`/`false`.
-4. **Canonical Sizing Rules:**
-   - **Functions:** Target $\le 8$ lines preferred; hard cap of $\le 15$ lines maximum.
-   - **Files:** Standard max $\le 100$ lines of code (recommended $\le 80$ lines).
+```go
+// ❌ FORBIDDEN: Nested if conditions (depth 2+)
+func ProcessUserSession(session *Session, token string) error {
+    if session != nil {
+        if token != "" {
+            if session.IsActive {
+                return executeSession(session)
+            }
+        }
+    }
+
+    return ErrInvalidSession
+}
+
+// ✅ REQUIRED: Inverted guard clauses with proper newline gaps (depth 0 happy path)
+func ProcessUserSession(session *Session, token string) error {
+    if session == nil {
+        return ErrInvalidSession
+    }
+
+    if token == "" {
+        return ErrInvalidToken
+    }
+
+    if !session.IsActive {
+        return ErrInactiveSession
+    }
+
+    return executeSession(session)
+}
+```
+
+#### Pattern 2: Extracting Validation Helpers ($\le 8$ lines)
+
+When multiple validations exist, extract a single-purpose boolean helper function:
+
+```typescript
+// ❌ FORBIDDEN: Nested checks inside business logic
+function handlePayment(order: Order, account: Account): void {
+    if (order.isValid) {
+        if (account.hasFunds) {
+            if (!order.isProcessed) {
+                chargeAccount(account, order.amount);
+            }
+        }
+    }
+}
+
+// ✅ REQUIRED: Extracted helper and guard clauses
+function canProcessOrder(order: Order, account: Account): boolean {
+    if (!order.isValid || !account.hasFunds) {
+        return false;
+    }
+
+    return !order.isProcessed;
+}
+
+function handlePayment(order: Order, account: Account): void {
+    if (!canProcessOrder(order, account)) {
+        return;
+    }
+
+    chargeAccount(account, order.amount);
+}
+```
+
+#### Pattern 3: Total Ban on Single-Line If Statements
+
+Never collapse an `if` block onto a single line to cheat line counts. Always use explicit curly braces on their own lines:
+
+```go
+// ❌ FORBIDDEN: Single-line collapsed if statement
+if err != nil { return err }
+
+// ✅ REQUIRED: Multi-line with proper blank lines
+if err != nil {
+    return err
+}
+```
 
 ---
 
@@ -69,7 +128,7 @@ Nested `if` statements (an `if` block placed inside another `if` block, nesting 
 
 - You must give sub-agents strict, microscopic instructions.
 - If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
-- Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-boolean-and-naming/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
+- Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-nested-if/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
 
 ---
 
@@ -77,18 +136,15 @@ Nested `if` statements (an `if` block placed inside another `if` block, nesting 
 
 Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
 
-- **Actionable Scan:** Use search/grep tools across all source files to identify:
-  1. Nested `if` blocks (any `if` nested inside an outer `if`).
-  2. Explicit boolean comparisons (`== true`, `=== true`, `== false`, `=== false`).
-  3. Mixed polarity conditional chains (`&& !`, `|| !`, `and not`).
-  4. Functions exceeding 8 lines (hard cap 15 lines).
+- **Actionable Scan:** Use search/grep and AST tools across all source files to identify:
+  1. All nested `if` statements (nesting depth $> 1$).
+  2. Single-line `if` statements without curly braces or collapsed on one line.
+  3. Mixed polarity conditions (`&& !`, `|| !`) that should be split into discrete guard clauses.
+  4. Functions exceeding 8 lines (hard cap 15 lines) caused by nested conditionals.
   5. Source files exceeding 100 coding lines (rec $\le$ 80).
-  6. Boolean variables missing affirmative prefixes (`is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`).
-  7. Generic variable names (`temp`, `data`, `obj`, `item`, `input100`).
-  8. Enums missing the `Type` suffix.
-- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-boolean-and-naming-audit.md` listing every affected file and exact line number.
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-nested-if-audit.md` listing every affected file, exact line numbers, and flattening plans.
 - **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
-- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-boolean-and-naming/` (e.g. `01-flatten-nested-ifs.md`, `02-implicit-booleans-and-naming.md`).
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-nested-if/` (e.g. `01-flatten-service-handlers.md`, `02-flatten-controllers.md`).
 
 ---
 
@@ -97,32 +153,17 @@ Before modifying application code, you MUST thoroughly scan the repository and w
 You MUST read, follow, and mechanically verify every single specification file below before and during execution:
 
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
-  - **Why:** Universal sizing limits across all languages.
-  - **How:** Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line compression.
+  - **Why:** Universal size limits and zero nested `if` mandate.
+  - **How:** Zero nested `if` blocks. Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines). Zero line-compression cheating.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
-  - **Why:** Absolute zero tolerance for nested `if` statements.
-  - **How:** Flatten all nested `if`s using guard clauses, early returns, and extracted helper functions.
-- [ ] **`spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md`**
-  - **Why:** Absolute ban on explicit true comparisons.
-  - **How:** Positive booleans MUST ALWAYS be evaluated implicitly: `if isReady { ... }`. NEVER write `if isReady == true` or `if (isValid === true)`.
-- [ ] **`spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`**
-  - **Why:** Eliminates cognitive load from double negatives.
-  - **How:** Positive framing only (`isEnabled` not `isNotDisabled`). If domain state is negative, invert variable name and flip check site.
-- [ ] **`spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`**
-  - **Why:** Eliminates generic garbage names.
-  - **How:** All booleans must start with `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`. Zero generic names (`temp`, `data`, `obj`, `item`, `input100`).
-- [ ] **`spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`**
-  - **Why:** Prevents cryptic boolean argument calls.
-  - **How:** No boolean flag parameters on functions (`render(true)` is banned; split into `renderExpanded()` and `renderCollapsed()`).
-- [ ] **`spec/02-coding-guidelines/01-cross-language/27-types-folder-convention.md`**
-  - **Why:** Standardized enum suffix and extraction.
-  - **How:** Every enum MUST end with `Type` (e.g. `UserRoleType`). All enum comparisons must be against named symbols, never raw magic strings.
-- [ ] **`spec/02-coding-guidelines/01-cross-language/10-function-naming.md`**
-  - **Why:** Semantic, behavior-driven function contracts.
-  - **How:** Function names must start with active verbs (`FetchUser`, `ValidateSession`, `CalculateDiscount`).
-- [ ] **`spec/02-coding-guidelines/01-cross-language/14-test-naming-and-structure.md`**
-  - **Why:** Behavior-driven unit testing.
-  - **How:** Test names must be strictly semantic: `Test<Function>_<Behavior>` (e.g. `TestUpdateUser_RejectsInvalidEmail`). Generic names like `TestHandleComp100` are auto-reject failures.
+  - **Why:** Elimination of nested conditional pyramids and mandatory braces.
+  - **How:** Use guard clauses and early returns to flatten all nested `if` statements ($> 1$ level deep).
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/03-blank-lines-and-spacing.md`**
+  - **Why:** Spacing around guard clauses and return statements (R13-R16).
+  - **How:** Exactly one blank line before `return`/`throw` and after closing `}`.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/04-function-and-type-size.md`**
+  - **Why:** Function size limits.
+  - **How:** Target $\le 8$ lines per function. Decompose multi-condition checks into small helper functions.
 
 ---
 
@@ -130,25 +171,21 @@ You MUST read, follow, and mechanically verify every single specification file b
 
 Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
 
-- [ ] **Linter Script Identification:** Check if `linter-scripts/check-enum-and-boolean.mjs` or `linter-scripts/validate-guidelines.py` exists in the repository.
-- [ ] **Auto-Create Linter if Missing:** If no dedicated boolean linter exists, create `linter-scripts/check-enum-and-boolean.mjs` (or python equivalent) that AST-scans for:
-  1. Nested `if` statements (nesting depth > 1).
-  2. Single-line `if/else` violations (missing braces or collapsed line).
-  3. Explicit `== true`, `=== true`, `== false`, `=== false` checks.
-  4. Mixed polarity conditional joins (`&& !`, `|| !`, `and not`).
-  5. Boolean variables missing `is/has/can/should/was/will/did/must` prefixes.
-  6. Enums missing the `Type` suffix.
+- [ ] **Linter Script Identification:** Check if `linter-scripts/check-nested-ifs.py` or `linter-scripts/check-enum-and-boolean.mjs` exists in the repository.
+- [ ] **Auto-Create Linter if Missing:** If no dedicated nested-if linter exists, create `linter-scripts/check-nested-ifs.py` that AST-scans for:
+  1. `if` blocks nested inside another `if` block (depth $> 1$).
+  2. Single-line `if` statements.
 - [ ] **Local Linter Command:** Execute and verify the linter locally:
   ```bash
-  node linter-scripts/check-enum-and-boolean.mjs
+  python linter-scripts/check-nested-ifs.py
   # Run automated autofixer:
   python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
   ```
 - [ ] **CI/CD Local Runner Connection:** Register the linter script inside `.lovable/ai-fix-scripts/03-cicd-local-runner.py` under the `JOBS` dictionary:
   ```python
-  JOBS["lint:booleans"] = ["node", "linter-scripts/check-enum-and-boolean.mjs"]
+  JOBS["lint:nested-if"] = ["python", "linter-scripts/check-nested-ifs.py"]
   ```
-- [ ] **GitHub Actions Workflow Connection:** Verify that `.github/workflows/ci.yml` contains a dedicated step running the boolean linter.
+- [ ] **GitHub Actions Workflow Connection:** Verify that `.github/workflows/ci.yml` contains a dedicated step running the nested-if linter.
 
 ---
 
@@ -163,19 +200,18 @@ STEP = 0
 WHILE (STEP < PHASE_2_STEPS):
     STEP += 1
 
-    1. Read the next subtask from .lovable/plans/subtasks/XX-boolean-and-naming/
+    1. Read the next subtask from .lovable/plans/subtasks/XX-nested-if/
     2. Open and modify the actual source code files:
-       - Flatten nested if statements with guard clauses and early returns.
-       - Refactor booleans to implicit checks (if isReady { ... }).
-       - Eliminate mixed polarity (if isA && !isB -> split or extract).
-       - Decompose functions to <= 8 lines (hard cap 15 lines) and files to <= 100 lines.
+       - Invert conditions and introduce early guard returns.
+       - Eliminate all nested if blocks (nesting depth <= 1).
        - NEVER collapse if/else onto a single line to cheat line caps.
-       - Rename generic variables to domain-specific semantic identifiers.
-       - Append Type suffix to all enums and extract to dedicated files.
-    3. Run the guideline autofixer to automatically clean boolean patterns:
+       - Decompose complex validation into <= 8-line helper functions.
+       - Apply proper blank lines before return and after closing braces (R13-R16).
+       - Keep file lengths <= 100 coding lines (rec <= 80).
+    3. Run the nested-if linter:
+          python linter-scripts/check-nested-ifs.py
+    4. Run the guideline autofixer:
           python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
-    4. Run the dedicated boolean linter:
-          node linter-scripts/check-enum-and-boolean.mjs
     5. Run the local CI runner:
           python .lovable/ai-fix-scripts/03-cicd-local-runner.py
     6. IF any check fails:
@@ -184,10 +220,10 @@ WHILE (STEP < PHASE_2_STEPS):
           - Mark subtask completed and proceed to next subtask.
 
     7. When all subtasks are finished and local CI is 100% green:
-          - Move .lovable/plans/pending/XX-boolean-and-naming-audit.md to .lovable/plans/completed/
+          - Move .lovable/plans/pending/XX-nested-if-audit.md to .lovable/plans/completed/
           - Update .lovable/plans/index.md
           - Stage modified files with git add and create semantic commit:
-            git commit -m "refactor(naming): flatten nested ifs, enforce implicit booleans, and 8-line function caps"
+            git commit -m "refactor(control-flow): eliminate nested ifs and introduce guard clauses"
           - BREAK and finish turn.
 ```
 
@@ -209,19 +245,12 @@ WHILE (STEP < PHASE_2_STEPS):
 - [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
 - [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
 - [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
-- [ ] Staged files sanitized of artifact zips and temporary scratch files.
-- [ ] Coding Guidelines & Master Consolidated File: I have fully read, checked, and strictly enforced every file in `spec/02-coding-guidelines/`, as well as the master consolidated coding guideline file at `.lovable/coding-guidelines/coding-guidelines.md`.
-- [ ] /learn and apply as a /goal `.lovable/coding-guidelines/coding-guidelines.md` and also make sure the agent rules are created in the repo to read in the future quickly.
 - [ ] Zero Nested Ifs: NO nested `if` blocks exist; all flattened with guard clauses.
 - [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
 - [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
 - [ ] NO Line-Compression Cheating: No single-line `if/else`, no deleted blank lines (R13-R16).
-- [ ] Boolean Conventions: All boolean variables MUST begin with `is`, `has`, `can`, or `should` (e.g., `isReady`, `hasData`). NEVER use explicit true/false comparisons (e.g., `if isReady == true` is FORBIDDEN, use `if isReady`). NEVER use negative booleans (e.g., `isNotReady`, `disableCache`). NEVER invert success checks (e.g., `!response.isSuccess` is banned; use `response.isFail`).
-- [ ] Anti-Garbage Naming (Non-Negotiable): I have strictly verified that absolutely NO generic garbage variable names (e.g., `comp_100.go`, `temp`, `data`, `obj`, `Input100`, `TestHandleComp100`) were written. All names are highly semantic and domain-specific.
-- [ ] Semantic Tests: All unit test names are strictly semantic and behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`). `TestHandleComp100` is an immediate failure.
-- [ ] Enum Suffix: All enums end with `Type` suffix.
-- [ ] Fast-forward commits created and pushed without rewriting published git history.
-- [ ] Continuous loop maintained; only pausing to ask for "continue" on critical unrecoverable failures.
+- [ ] `python linter-scripts/check-nested-ifs.py` exited with code 0.
+- [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
 
 ---
 
@@ -229,16 +258,11 @@ WHILE (STEP < PHASE_2_STEPS):
 
 /goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
 
-- [ ] Master Guidelines: I have fully read and strictly enforced every file in `spec/02-coding-guidelines/` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
 - [ ] Zero Nested Ifs: Absolutely zero nested `if`s (flattened with guard clauses).
 - [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
 - [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
 - [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
-- [ ] Boolean Conventions: All booleans begin with `is`, `has`, `can`, or `should` (e.g., `isFail`, `hasData`). NO negatives (`!isSuccess` is banned, use `isFail`).
-- [ ] Implicit Booleans: Zero explicit `== true` / `=== true` checks.
-- [ ] Semantic Naming: Absolutely NO generic garbage names (`temp`, `data`, `obj`, `comp_100`). All unit tests are behavior-driven (e.g., `TestUpdateUser_RejectsInvalidEmail`).
-- [ ] Formatting: Signatures > 3 parameters or > 100 chars are split to one parameter per line. Newlines around every Markdown header (MD022) and lists are surrounded by blank lines (MD032).
-- [ ] Acronyms & Magic Strings: Acronyms are PascalCase (`UserId` not `UserID`). Magic strings/numbers are extracted to constants.
 - [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
 - [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
 
@@ -305,6 +329,6 @@ To survive massive checklists and complex codebases, you MUST operate using thes
 
 ## Metadata
 
-- slug: cg-boolean-and-naming
+- slug: cg-nested-if
 - priority: high
 - status: active

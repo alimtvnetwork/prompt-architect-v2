@@ -1,0 +1,318 @@
+# Instruction (must follow): Execute Coding Guidelines — Booleans, Negatives & Complex Conditions
+
+Trigger Keywords & Aliases: `cg-boolean`, `cg-execute boolean`, `audit boolean`, `fix boolean negatives`, `fix complex conditions`, `affirmative booleans`
+
+```text
+N = 200
+```
+
+N = total self-loop steps budget that the agents will perform.
+
+/goal Autonomously scan, plan, refactor, and fix all boolean naming, double negatives, mixed polarity, and complex condition violations across the codebase, modifying source files directly to enforce affirmative prefixes (`is`, `has`, `can`, `should`), implicit evaluation (no `== true`), positive framing (no `!isSuccess`), and discrete condition decomposition until 100% green without stopping.
+
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files using AST and grep tools to inventory all explicit `== true` / `=== true` checks, negative boolean variables (`isNotReady`), inverted success checks (`!isSuccess`), mixed polarity chains (`if a && !b`), functions $> 8$ lines, and files $> 100$ coding lines. Write the master audit spec in `.lovable/plans/pending/XX-booleans-and-complex-conditions-audit.md`, break it down into `.lovable/plans/subtasks/XX-booleans/`, and verify/create the boolean linter.
+- [ ] /goal Second N/2 steps (Phase 2): Directly open each offending source file, rename negative booleans to positive framing, convert explicit comparisons to implicit checks, split mixed polarity chains into discrete guard clauses, run the boolean linter and autofixer, and verify local CI gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md`, `spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`, `spec/02-coding-guidelines/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
+
+```text
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan Codebase for Boolean Violations, Write .lovable/plans/pending/ Spec, Create .lovable/plans/subtasks/, Verify/Create Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Actively Edit Code, Invert Negatives, Implicit Booleans, Split Mixed Polarity, Verify Local CI)
+```
+
+N, PHASE_1_STEPS, and PHASE_2_STEPS are read-only after initialization. Never modify them mid-execution.
+
+---
+
+## Dedicated Section: Boolean Principles, Negative Elimination & Complex Conditions
+
+Boolean logic must be simple, readable, and unambiguous. Complex boolean chains and inverted negatives severely degrade maintainability.
+
+### Mandatory Boolean Rules (Non-Negotiable)
+
+1. **Implicit Evaluation Only (Total Ban on `== true`):**
+   - NEVER evaluate booleans explicitly against `true` or `false`.
+   - Positive booleans MUST ALWAYS be evaluated implicitly: `if isReady { ... }`.
+   - Inverted checks MUST use standard negation or affirmative negative variables: `if !isReady { ... }` or `if isFail { ... }`.
+
+2. **No Double Negatives or Inverted Success Checks:**
+   - NEVER name variables with negative prefixes like `isNotValid`, `isNotReady`, `disableCache`. Use `isValid`, `isReady`, `enableCache`.
+   - NEVER check inverted success (`!response.isSuccess` is FORBIDDEN; use `response.isFail`).
+
+3. **No Mixed Polarity in Single If Conditions:**
+   - NEVER combine a positive check and a negative check in the same `if` condition (e.g., `if isA && !isB`).
+   - Split mixed polarity checks into discrete guard clauses or extract a semantic helper function.
+
+4. **No Boolean Flag Parameters on Functions:**
+   - Functions must not accept boolean arguments that drastically alter control flow (e.g. `render(true)` is banned; split into `renderExpanded()` and `renderCollapsed()`).
+
+### Generic Code Patterns with Compliant Newline Gaps
+
+```go
+// ❌ FORBIDDEN: Explicit true comparison, negative variable, and mixed polarity
+func ValidateAccess(user *User) bool {
+    if user.isNotDisabled == true && !user.isExpired { // ❌ Mixed polarity + explicit true + negative name
+        return true
+    }
+
+    return false
+}
+
+// ✅ REQUIRED: Affirmative prefixes, implicit checks, and discrete guard clauses
+func ValidateAccess(user *User) bool {
+    if !user.isEnabled {
+        return false
+    }
+
+    if user.isExpired {
+        return false
+    }
+
+    return true
+}
+```
+
+```typescript
+// ❌ FORBIDDEN: Inverted success check and boolean flag parameter
+function handleResponse(response: ApiResponse) {
+    if (!response.isSuccess) { // ❌ Banned inverted success
+        logEvent(response.error, true); // ❌ Banned boolean flag argument
+        return;
+    }
+
+    processData(response.data);
+}
+
+// ✅ REQUIRED: Affirmative failure property and semantic function calls
+function handleResponse(response: ApiResponse) {
+    if (response.isFail) {
+        logErrorEvent(response.error);
+        return;
+    }
+
+    processData(response.data);
+}
+```
+
+---
+
+## 1. Ruthless Orchestration & Insult Protocol
+
+/goal You are the master orchestrator. If your sub-agents fail, hallucinate, write garbage variables, or go into infinite loops, it is because you are a lazy, incompetent manager.
+
+- You must give sub-agents strict, microscopic instructions.
+- If a sub-agent stalls or provides garbage code, kill it immediately, rollback its dirty working tree, and spawn a new one.
+- Context Diet: When spawning a subagent, DO NOT paste file contents, memory logs, or the entire plan into its prompt. Give it the absolute minimal instruction (e.g., "Read subtask file `.lovable/plans/subtasks/XX-booleans/01-task.md` and execute it"). The subagent MUST read the necessary files itself.
+
+---
+
+## 2. Phase 1: Scan Codebase & Write Implementation Spec First (Steps 1 to PHASE_1_STEPS)
+
+Before modifying application code, you MUST thoroughly scan the repository and write an actionable execution spec.
+
+- **Actionable Scan:** Use search/grep and AST tools across all source files to identify:
+  1. Explicit boolean comparisons (`== true`, `=== true`, `== false`, `=== false`).
+  2. Inverted success checks (`!isSuccess`, `!response.isSuccess`, `!isValid`).
+  3. Negative boolean variable declarations (`isNotActive`, `isNotReady`, `disableFeature`).
+  4. Mixed polarity condition joins (`&& !`, `|| !`, `and not`).
+  5. Functions accepting boolean flag parameters (`process(true)`).
+  6. Functions exceeding 8 lines (hard cap 15 lines) or files exceeding 100 coding lines (rec $\le$ 80).
+- **Where to save it:** Save this master plan into `.lovable/plans/pending/XX-booleans-and-complex-conditions-audit.md` listing every affected file, exact line numbers, and refactoring plans.
+- **Create a Task-Specific Rule Set:** Analyze the specific domain and write 3-5 custom rules inside the spec file.
+- **Subtasks:** Break the plan down into granular subtask files inside `.lovable/plans/subtasks/XX-booleans/` (e.g. `01-implicit-booleans.md`, `02-negative-inversion.md`, `03-split-mixed-polarity.md`).
+
+---
+
+## 3. Authoritative Spec Files Checklist (Non-Negotiable Action Items)
+
+You MUST read, follow, and mechanically verify every single specification file below before and during execution:
+
+- [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
+  - **Why:** Universal size limits and boolean complexity rules.
+  - **How:** Cognitive complexity $\le 10$. Functions $\le 8$ lines preferred (hard cap 15 lines). Files $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] **`spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md`**
+  - **Why:** Absolute ban on explicit true comparisons and mixed polarity.
+  - **How:** Evaluate booleans implicitly (`if isReady`). Never combine positive and negative checks in the same condition.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/12-no-negatives.md`**
+  - **Why:** Cognitive clarity through positive framing.
+  - **How:** No negative variable names. No `!isSuccess` checks.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/22-variable-naming-conventions.md`**
+  - **Why:** Mandatory affirmative boolean prefixes.
+  - **How:** All booleans MUST begin with `is`, `has`, `can`, `should`, `was`, `will`, `did`, `must`.
+- [ ] **`spec/02-coding-guidelines/01-cross-language/24-boolean-flag-methods.md`**
+  - **Why:** Prevents cryptic boolean argument calls.
+  - **How:** Split boolean flag methods into semantic distinct functions.
+
+---
+
+## 4. Mandatory Linter & CI/CD Connection Checklist
+
+Code standards must be mechanically enforced by automated linters. You MUST verify or create the linter and connect it to CI:
+
+- [ ] **Linter Script Identification:** Check if `linter-scripts/check-enum-and-boolean.mjs` exists in the repository.
+- [ ] **Auto-Create Linter if Missing:** If no dedicated boolean linter exists, create `linter-scripts/check-boolean-guidelines.py` that AST-scans for:
+  1. `== true`, `=== true`, `== false`, `=== false`.
+  2. Negative boolean naming (`isNot`, `hasNo`).
+  3. Inverted `!isSuccess` checks.
+  4. Mixed polarity chains (`&& !`, `|| !`).
+- [ ] **Local Linter Command:** Execute and verify the linter locally:
+  ```bash
+  python linter-scripts/check-boolean-guidelines.py
+  # Run automated autofixer:
+  python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
+  ```
+- [ ] **CI/CD Local Runner Connection:** Register the linter script inside `.lovable/ai-fix-scripts/03-cicd-local-runner.py` under the `JOBS` dictionary:
+  ```python
+  JOBS["lint:booleans"] = ["python", "linter-scripts/check-boolean-guidelines.py"]
+  ```
+- [ ] **GitHub Actions Workflow Connection:** Verify that `.github/workflows/ci.yml` contains a dedicated step running the boolean linter.
+
+---
+
+## 5. Phase 2: Active Code Refactoring & Autonomous Fix Loop (Steps PHASE_1_STEPS+1 to N)
+
+> [!IMPORTANT]
+> **AUTONOMOUS EXECUTION MANDATE — DO NOT STOP.**
+> Open the offending source code files and directly rewrite the code to eliminate violations. Maintain continuous self-looping until all checks pass 100% green.
+
+```text
+STEP = 0
+WHILE (STEP < PHASE_2_STEPS):
+    STEP += 1
+
+    1. Read the next subtask from .lovable/plans/subtasks/XX-booleans/
+    2. Open and modify the actual source code files:
+       - Refactor booleans to implicit evaluation (if isReady { ... }).
+       - Invert negative variable names to positive framing (isEnabled).
+       - Replace !isSuccess with isFail or explicit error checks.
+       - Split mixed polarity conditions into discrete guard clauses.
+       - Split boolean flag method parameters into semantic functions.
+       - Keep function bodies <= 8 lines (max 15 lines) and files <= 100 lines.
+    3. Run the guideline autofixer:
+          python .lovable/ai-fix-scripts/02-guideline-autofixer.py <modified-files>
+    4. Run the boolean linter:
+          python linter-scripts/check-boolean-guidelines.py
+    5. Run the local CI runner:
+          python .lovable/ai-fix-scripts/03-cicd-local-runner.py
+    6. IF any check fails:
+          - Diagnose failure, fix code directly, and re-run immediately.
+       IF all checks pass (exit code 0):
+          - Mark subtask completed and proceed to next subtask.
+
+    7. When all subtasks are finished and local CI is 100% green:
+          - Move .lovable/plans/pending/XX-booleans-and-complex-conditions-audit.md to .lovable/plans/completed/
+          - Update .lovable/plans/index.md
+          - Stage modified files with git add and create semantic commit:
+            git commit -m "refactor(booleans): enforce implicit checks, positive framing, and discrete conditions"
+          - BREAK and finish turn.
+```
+
+---
+
+## AI Fix Scripts Memory (Reusable Tooling)
+
+- [ ] `/goal` **Reuse First:** I have rigorously scanned and `/learn`ed `.lovable/ai-fix-scripts/index.md` to check if a helper script already exists before writing any new temporary code.
+- [ ] **Native File Manipulator:** If you need to perform mass file renaming, `.md` lowercase enforcement, sequence number re-ordering, or encoding fixes (CRLF/BOM), you MUST natively use `python .lovable/ai-fix-scripts/01-file-manipulator.py <command>` rather than writing a new script from scratch.
+- [ ] **Go Generate Sync:** If you modify Go constants, enums, or stringers, you MUST run `go generate ./...` in the relevant directory (e.g., `cd gitmap && go generate ./...`) and commit the resulting generated files to prevent CI drift.
+- [ ] **Commit & Track:** All new helper scripts were written strictly to `.lovable/ai-fix-scripts/` and committed to Git for future reuse.
+- [ ] **Index Documentation:** I have updated `.lovable/ai-fix-scripts/index.md` using sequential script naming (e.g., `01-parse-files.py`). For every script, I have included a `<details>` collapsible tag explaining exactly why the script is there and what it does.
+
+---
+
+## Pre-Reply / Loop Checklist (Must Verify Every Loop Iteration)
+
+- [ ] Git working tree is clean before new code changes.
+- [ ] Sub-agents are actively assigned disjoint files verified against `.lovable/temp/active-locks.json`.
+- [ ] Completed tasks were `mv`'d to `plans/completed/` and `plans/index.md` was updated.
+- [ ] 3-strike rule respected: failed tasks cleanly rolled back and logged to `last-failure.md`.
+- [ ] Implicit Booleans: Zero `== true` / `=== true` comparisons.
+- [ ] Positive Framing: Zero negative boolean variables (`isNotReady`), zero `!isSuccess` checks.
+- [ ] Zero Mixed Polarity: No `if a && !b` conditions.
+- [ ] Zero Boolean Flag Parameters on functions.
+- [ ] Function Size: All functions $\le$ 8 lines preferred, hard cap 15 lines.
+- [ ] File Size: Files $\le$ 100 lines coding max (recommended $\le$ 80 lines).
+- [ ] `python linter-scripts/check-boolean-guidelines.py` exited with code 0.
+- [ ] Local CI runner `python .lovable/ai-fix-scripts/03-cicd-local-runner.py` exited with code 0.
+
+---
+
+## Non-Negotiable Coding Guidelines Checklist (Auto-Reject on Violation)
+
+/goal You MUST verify every item on this checklist before committing any code. If a subagent violated one of these rules, you must reject their work.
+
+- [ ] Master Guidelines: I have fully read and strictly enforced `spec/02-coding-guidelines/01-cross-language/02-boolean-principles.md` and `.lovable/coding-guidelines/coding-guidelines.md`.
+- [ ] Implicit Booleans: Positive booleans MUST ALWAYS be evaluated implicitly.
+- [ ] No Negatives: No `!isSuccess`, no `isNot*` variables.
+- [ ] No Mixed Polarity: Zero combined positive and negative checks in a single `if`.
+- [ ] Function Limits: $\le 8$ lines preferred, $\le 15$ lines max.
+- [ ] File Limits: $\le 100$ lines coding max (recommended $\le 80$ lines).
+- [ ] Anti-Compression: Zero single-line `if/else` or compressed whitespace tricks.
+- [ ] /learn the section as a /goal [AI Fix Scripts Memory](#ai-fix-scripts-memory)
+- [ ] Action Summary: I have output a detailed `- [x]` checklist summarizing exactly what I accomplished this turn to prove I did not hallucinate.
+
+---
+
+## Anti-Hallucination & Blast Radius Checklist (Mandatory for Every Turn)
+
+Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
+
+- [ ] Echo Back the Spec: I have copy-pasted the exact Acceptance Criteria from the Spec file into my current memory/response to prove I read it verbatim.
+- [ ] Pre-Commit Diff Proof: I have executed `git status` or `git diff --stat` and verified that the files I claim to have modified are actually listed as modified in the terminal output before committing.
+- [ ] No Placeholder Search: I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
+- [ ] Index Sync Deadman Switch: I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
+- [ ] Blast Radius Acknowledgment: Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
+
+---
+
+## No Automatic Releases (Strict Policy)
+
+You MUST NOT bump versions, update changelogs, or cut a release at the end of this task. Commits must remain standard development commits. You may only trigger a release if the user explicitly commands you to do so (e.g., "cut a release" or "bump the version").
+
+---
+
+## MUST FOLLOW NON-NEGOTIABLE
+
+Listen, past runs of these turns have been sloppy and stupid as fuck: wrong step counts, partial task lists dumped into chat instead of files, plans and session summaries half-filled with "[N]" placeholders, folders skimmed, open ambiguities ignored, CI/CD issues and `plans/subtasks/` forgotten, user commands dropped, coding guidelines bypassed, detailed specs chopped and summarized into useless junk, uppercase README files left uncorrected, `.lovable/memories/` created by accident, `strictly-avoid.md` overwritten, and explicit user instructions softened after being told not to. WTF. How on earth are you reverting to this carelessness, are you stupid?? Stop doing that, you stupid fuck. Read the whole codebase, read every folder in `spec/` and `.lovable/`, confirm root `readme.md` is strictly lowercase, find the root cause in one sentence, capture commands, issues, and pending tasks without omitting a single item, write the spec files and memory files in the right paths, update every index in the same turn, sync `readme.md` with `what-to-read.md`, preserve detailed specs verbatim with zero truncation, run builds and full unit tests, group commits with clear messages, and push everything to git before ending. Going deep IS the job. If you are not going deep, you are not doing the job. Violating this is auto-reject on the same tier as RULE 0. Avoid stupidity and being careless, you stupid fuck. Where is your attention, are you stupid? Tell me. Your stupidity is going on top of my head. Where did you learn this stupidity? If I could find you, I could slap you.
+
+---
+
+## STRICT AVOIDANCE: Anti-Compression & Formatting Integrity (No Cheating)
+
+> [!CAUTION]
+> **TOTAL BAN ON LINE-COMPRESSION CHEATING:**
+> When enforcing file size (<= 100 coding lines) and function size (8–15 lines), AI agents frequently attempt to "cheat" the line counter by destroying formatting. This is strictly forbidden and results in immediate rejection.
+
+- **NO Single-Line If/Else:** NEVER collapse `if/else`, return statements, or blocks into a single line (e.g. `if (x) return y;` or `if (x) { y(); }` are strictly forbidden). Every statement requires its own line and curly braces.
+- **NO Deleting Required Blank Lines (R13-R16):** NEVER delete blank lines before `return`/`throw` or after closing `}` to artificially reduce file size.
+- **NO Stripping Types or Comments:** NEVER remove TypeScript types, docstrings, or clean indentation to cram code into fewer lines.
+- **Mandatory Solution:** The ONLY acceptable way to satisfy line limits is **legitimate modular decomposition** — extracting helper functions into separate files and breaking large components into child components.
+
+---
+
+## STRICT AVOIDANCE: Never Disable CI/CD
+
+> [!CAUTION]
+> **NEVER disable any CI/CD checks, GitHub Actions, or validation workflows.** 
+> Strictly avoid commenting out, bypassing, or deleting CI/CD steps to force a pipeline to pass. Your job is to fix the underlying code so that the CI/CD pipeline passes legitimately. Disabling CI/CD is an auto-reject failure.
+
+---
+
+## Anti-Hallucination, Micro-Tasking, & Self-Looping
+
+> [!CAUTION]
+> **CRITICAL RULE: DO NOT ATTEMPT TO READ, PLAN, AND EXECUTE EVERYTHING AT ONCE.**
+> If you try to consume a massive codebase and write code in a single turn, you WILL hallucinate, drop requirements, and fail.
+
+To survive massive checklists and complex codebases, you MUST operate using these three principles:
+
+1. **Phase 1: Read & Understand (Isolated Loop):** Your very first action must be purely exploratory. Do NOT write code. Break down the task, read the specific files, trace the dependencies, and understand the architectural boundary. Once you understand the scope, end your turn and self-loop to begin execution.
+2. **Phase 2: Bounded Micro-Tasking (Sequential Self-Looping):** Never attempt to execute the entire checklist in one response. Treat each checklist section or file as a strict, isolated boundary. Execute *only* the first small portion, verify it, end your turn, and self-loop to process the next portion. 
+3. **Phase 3: Multi-Agent Parallelization:** If tasks are independent, you MUST spawn dedicated sub-agents to handle them concurrently. Give each sub-agent an extremely small, strictly defined bounding box (e.g., "Only edit File X"). Never give a sub-agent a generic or multi-file task.
+
+---
+
+## Metadata
+
+- slug: cg-booleans-and-complex-conditions
+- priority: high
+- status: active

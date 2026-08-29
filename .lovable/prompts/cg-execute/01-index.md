@@ -22,18 +22,20 @@ PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Active Code Refactoring, Linter Verif
 
 ## Prompts Catalog & Execution Order
 
-Prompts are sequenced according to priority. Error management and reliability must always precede syntax and whitespace styling:
+Prompts are sequenced according to priority. Error management, control-flow flattening, and core semantics precede presentation styling:
 
 | Sequence | File | Title | Trigger Keywords | Focus Area | Linter Hook (`linter-scripts/`) |
 |:---:|---|---|---|---|---|
 | **01** | [`01-index.md`](./01-index.md) | Prompts Catalog & Registry | `cg-index`, `cg-execute index` | Master overview, lifecycle architecture, prompt routing | — |
 | **02** | [`02-error-management.md`](./02-error-management.md) | Error Management & Architecture | `cg-error`, `cg-execute error`, `audit error` | `AppError` context wrappers, zero dual-handling (leafs return `error`, callers handle exits), typed exit enums, specialized exit helpers, universal envelopes | `check-mws-error-codes.py`, `validate-guidelines.py` |
-| **03** | [`03-boolean-and-naming.md`](./03-boolean-and-naming.md) | Booleans, Naming & Enums | `cg-boolean`, `cg-execute boolean`, `audit boolean` | Positive prefixes (`is`, `has`, `can`, `should`), no `== true`, zero nested `if`s (flatten with guard clauses), 8–15 line function caps, `*Type` enum suffix | `check-enum-and-boolean.mjs`, `02-guideline-autofixer.py` |
-| **04** | [`04-data-and-schema.md`](./04-data-and-schema.md) | Database & Data Schema Rules | `cg-schema`, `cg-execute schema`, `audit schema` | PascalCase tables, camelCase columns, `{TableName}Id` primary/foreign keys, Mermaid ERDs, SQLite/ORM explicit relations, zero nested `if`s | `check-schema-guidelines.py` |
-| **05** | [`05-react-frontend-guidelines.md`](./05-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines, rec $\le$ 80), functions ($\le$ 8–15 lines), zero nested `if`s, `useEffect` minimization, immutable state, named hook objects | `check-frontend-guidelines.mjs` |
-| **06** | [`06-code-hygiene.md`](./06-code-hygiene.md) | Code Hygiene & Project Architecture | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 100 lines coding max, rec $\le$ 80), functions ($\le$ 8–15 lines), parameter reduction via specialized helpers, struct caps ($\le$ 120 lines) | `check-file-sizes.py`, `check-placeholder-comments.py` |
-| **07** | [`07-style-guidelines.md`](./07-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), zero nested `if`s, $\le$ 8–15 line function caps, MD022/MD032 spacing | `check-function-lengths.py`, `check-newline-styling.py` |
-| **08** | [`08-testing-and-coverage.md`](./08-testing-and-coverage.md) | Integration, E2E & Branch Test Coverage | `cg-test`, `cg-execute test`, `audit tests`, `write e2e tests` | Three-part semantic naming (`TestUnit_Scenario_Outcome`), $\le$ 8-line function decomposition, zero nested `if`s, positive/negative/error branch coverage | `check-test-coverage.py`, `03-cicd-local-runner.py` |
+| **03** | [`03-nested-if-and-guard-clauses.md`](./03-nested-if-and-guard-clauses.md) | Nested `if` Elimination & Guard Clauses | `cg-nested-if`, `cg-execute nested-if`, `audit nested if` | Zero tolerance for nested `if`s (depth $> 1$), condition inversion, early guard returns, validation helper extraction | `check-nested-ifs.py`, `02-guideline-autofixer.py` |
+| **04** | [`04-booleans-and-complex-conditions.md`](./04-booleans-and-complex-conditions.md) | Booleans, Negatives & Complex Conditions | `cg-boolean`, `cg-execute boolean`, `audit boolean` | Affirmative prefixes (`is`, `has`), zero `== true`, positive framing (ban `!isSuccess` / `isNot*`), elimination of mixed polarity (`if a && !b`) | `check-boolean-guidelines.py`, `check-enum-and-boolean.mjs` |
+| **05** | [`05-constants-and-enums.md`](./05-constants-and-enums.md) | Constants, Enums & Magic Literal Elimination | `cg-enums`, `cg-constants`, `cg-execute enums` | Mandatory `*Type` enum suffix, zero magic string/integer literals, centralized constants packages, typed enum function arguments | `check-enum-guidelines.py` |
+| **06** | [`06-data-and-schema.md`](./06-data-and-schema.md) | Database & Data Schema Rules | `cg-schema`, `cg-execute schema`, `audit schema` | PascalCase tables, camelCase columns, `{TableName}Id` primary/foreign keys, Mermaid ERDs, SQLite/ORM explicit relations, zero nested `if`s | `check-schema-guidelines.py` |
+| **07** | [`07-react-frontend-guidelines.md`](./07-react-frontend-guidelines.md) | React & Frontend Architecture | `cg-react`, `cg-execute react`, `audit react` | Component size caps ($\le$ 100 lines, rec $\le$ 80), functions ($\le$ 8–15 lines), zero nested `if`s, `useEffect` minimization, immutable state, named hook objects | `check-frontend-guidelines.mjs` |
+| **08** | [`08-code-hygiene.md`](./08-code-hygiene.md) | Code Hygiene, File Caps & Parameter Reduction | `cg-hygiene`, `cg-execute hygiene`, `audit hygiene` | File caps ($\le$ 100 lines coding max, rec $\le$ 80), functions ($\le$ 8–15 lines), parameter reduction via specialized helpers, struct caps ($\le$ 120 lines) | `check-file-sizes.py`, `check-placeholder-comments.py` |
+| **09** | [`09-style-guidelines.md`](./09-style-guidelines.md) | Coding Style, Formatting & Line-Gaps | `cg-style`, `cg-execute style`, `audit style` | Return New Line concept (R13-R16: blank line before `return`/`throw`, blank line after `}`), zero nested `if`s, $\le$ 8–15 line function caps, MD022/MD032 spacing | `check-function-lengths.py`, `check-newline-styling.py` |
+| **10** | [`10-testing-and-coverage.md`](./10-testing-and-coverage.md) | Integration, E2E & Branch Test Coverage | `cg-test`, `cg-execute test`, `audit tests`, `write e2e tests` | Three-part semantic naming (`TestUnit_Scenario_Outcome`), $\le$ 8-line function decomposition, zero nested `if`s, positive/negative/error branch coverage | `check-test-coverage.py`, `03-cicd-local-runner.py` |
 
 ---
 
@@ -96,5 +98,5 @@ Every prompt in this suite enforces that code standards must be mechanically ver
 ## Metadata
 
 - slug: cg-execute-index
-- version: 1.0.0
+- version: 2.0.0
 - status: active
