@@ -39,6 +39,8 @@ Prompts are sequenced according to priority. Error management, control-flow flat
 | **11** | [`11-testing-and-coverage.md`](./11-testing-and-coverage.md) | Integration, E2E & Branch Test Coverage | `cg-test`, `cg-execute test`, `audit tests`, `write e2e tests` | Three-part semantic naming (`TestUnit_Scenario_Outcome`), <= 8-line function decomposition, zero nested if statements, positive/negative/error branch coverage | `check-test-coverage.py`, `03-cicd-local-runner.py` |
 | **12** | [`12-relative-paths.md`](./12-relative-paths.md) | Strict Relative Git Paths & Absolute Path Elimination | `cg-relative-paths`, `cg-execute relative-paths`, `fix absolute paths`, `fix file paths` | Total ban on absolute paths (`D:\...`, `/home/...`) and `file:///` URIs, automatic conversion to relative Git paths | `check-relative-paths.py`, `04-relative-path-fixer.py` |
 | **13** | [`13-cli-commands-and-help.md`](./13-cli-commands-and-help.md) | CLI Commands, Help Text Parity & Help UI Architecture | `cg-cli`, `cg-help`, `cg-execute cli`, `audit cli commands` | 100% command/subcommand registration in `--help`, flag descriptions, terminal usage examples, structured Help UI layout | `06-cli-help-auditor.py` |
+| **14** | [`14-function-signatures-and-return-types.md`](./14-function-signatures-and-return-types.md) | Function Naming, Single Return Types & Result Envelopes | `cg-functions`, `cg-signatures`, `cg-return-types`, `cg-execute functions` | Semantic verb/predicate prefixes, single `Result[T]` return envelope, universal `*AppError` wrapping, zero generic `(T, error)` | `check-function-lengths.py`, `check-mws-error-codes.py` |
+
 
 
 ---
