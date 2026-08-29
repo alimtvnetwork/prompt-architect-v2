@@ -24,6 +24,18 @@ To rapidly diagnose and verify CI/CD issues without waiting for remote pipelines
 2. **Rebuild / Generation Logic**: If the file is missing, or if the user explicitly tells you to "force rebuild" it, your *first* action must be to deeply analyze the project's CI/CD runner configuration files (e.g., GitHub Actions YAML, GitLab CI, etc.). Extract how the project runs tests, builds, and linters, and autonomously write `02-cicd-local-runner.py` to automate these exact steps.
 3. **The Docker Translation Rule (CRITICAL)**: CI/CD pipelines typically execute inside Docker containers (e.g., `docker run ...` or containerized steps). Your generated Python script MUST strip out the Docker layers and translate the commands so they execute directly and natively on the local machine (as the local environment already has the necessary dependencies). Never attempt to invoke Docker in the local runner.
 
+
+## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
+
+> [!CAUTION]
+> **CRITICAL RULE: DO NOT ATTEMPT TO DO EVERYTHING AT ONCE.**
+> You have massive checklists and strict architectural guidelines. If you try to execute all tasks in a single response, you WILL hallucinate, drop requirements, and fail the task. 
+
+To solve this, you MUST operate using these two principles:
+
+1. **Sequential Self-Looping:** Break the instructions down. Treat each checklist section or task as a completely separate execution step. Complete *only* the first section, verify it, end your turn, and self-loop (continue execution) to process the next checklist item one by one.
+2. **Multi-Agent Parallelization:** To solve tasks faster, you are highly encouraged to spawn 2 or more sub-agents concurrently to handle independent tasks. If tasks are dependent on one another (e.g., sequential coding guideline audits), you must process them strictly one by one in your self-loop.
+
 ## Rules & Constraints (Non-Negotiable)
 
 1. Analyze First & Read Past RCAs: Do not blindly change code. First read recent RCAs in `.lovable/cicd-issues/` and `.lovable/strictly-avoid.md`. Then trace the provided CI/CD error to the exact file, line, and dependency, performing a complete Root Cause Analysis (RCA).

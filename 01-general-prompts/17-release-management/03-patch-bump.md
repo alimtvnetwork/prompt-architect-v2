@@ -34,7 +34,20 @@ You must update `version.json`, `changelog.md`, and `readme.md` at a minimum dur
 - [ ] Group all completed work into a single logical commit.
 - [ ] Push the commit to the remote repository.
 
-### Execution Checklist
+#
+
+## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
+
+> [!CAUTION]
+> **CRITICAL RULE: DO NOT ATTEMPT TO DO EVERYTHING AT ONCE.**
+> You have massive checklists and strict architectural guidelines. If you try to execute all tasks in a single response, you WILL hallucinate, drop requirements, and fail the task. 
+
+To solve this, you MUST operate using these two principles:
+
+1. **Sequential Self-Looping:** Break the instructions down. Treat each checklist section or task as a completely separate execution step. Complete *only* the first section, verify it, end your turn, and self-loop (continue execution) to process the next checklist item one by one.
+2. **Multi-Agent Parallelization:** To solve tasks faster, you are highly encouraged to spawn 2 or more sub-agents concurrently to handle independent tasks. If tasks are dependent on one another (e.g., sequential coding guideline audits), you must process them strictly one by one in your self-loop.
+
+## Execution Checklist
 
 - Test File Ban: You MUST NOT read, scan, or modify test files (e.g., `*_test.*`, `*.spec.*`, `test/*`) when discovering or updating versions. Test files contain mock data, and updating mock data corrupts the tests.
 - Release Architecture Memory: You must dynamically build a map of how the release works in this codebase (where the version lives, how it propagates) and write it to `.lovable/memory/release-architecture-map.md`. You must then enqueue this file inside `.lovable/memory/what-to-read.md` and link it in the root `readme.md`.

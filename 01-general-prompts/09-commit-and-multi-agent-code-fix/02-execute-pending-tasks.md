@@ -57,6 +57,18 @@ Once ALL pending tasks have been completed and marked `✅ Done`:
 
 ---
 
+
+## Anti-Hallucination & Checklist Execution (Strict Sequential Self-Looping)
+
+> [!CAUTION]
+> **CRITICAL RULE: DO NOT ATTEMPT TO DO EVERYTHING AT ONCE.**
+> You have massive checklists and strict architectural guidelines. If you try to execute all tasks in a single response, you WILL hallucinate, drop requirements, and fail the task. 
+
+To solve this, you MUST operate using these two principles:
+
+1. **Sequential Self-Looping:** Break the instructions down. Treat each checklist section or task as a completely separate execution step. Complete *only* the first section, verify it, end your turn, and self-loop (continue execution) to process the next checklist item one by one.
+2. **Multi-Agent Parallelization:** To solve tasks faster, you are highly encouraged to spawn 2 or more sub-agents concurrently to handle independent tasks. If tasks are dependent on one another (e.g., sequential coding guideline audits), you must process them strictly one by one in your self-loop.
+
 ## Actionable Items & Checklist (All Must Be True)
 
 - [ ] Self-loop continuously until every pending task is completed; do not stop until the queue is completely empty.
