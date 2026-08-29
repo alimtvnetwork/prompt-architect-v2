@@ -3,7 +3,7 @@
 Trigger Keywords & Aliases: `fix and release`, `ci release`, `fix CI/CD and release`, `cicd fix release`
 
 ```text
-N = 200
+N = 20
 ```
 
 N = total self-loop steps budget. The user may override this number when triggering the prompt.
