@@ -6,16 +6,16 @@ N = 200
 
 N = total self-loop steps budget that the agents will perform.
 
-/goal Autonomously orchestrate and execute coding standard compliance across the repository by directly scanning files, generating audit specs, actively refactoring source code, and verifying with automated linters until 100% green without stopping.
+/goal Autonomously orchestrate and execute coding standard compliance across the repository by directly scanning files, generating verifiable audit specs, actively refactoring source code, and verifying with automated linters until 100% green without stopping.
 
-- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using search and read tools, catalog every violation, write the master audit spec in `.lovable/plans/pending/`, decompose into granular subtasks in `.lovable/plans/subtasks/`, and verify/create the dedicated linter script.
-- [ ] /goal Second N/2 steps (Phase 2): Directly edit and refactor the actual source code files, eliminate all guideline violations, execute the linter and test suites, and verify all local CI quality gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /goal First N/2 steps (Phase 1): Deeply scan the target codebase using search and read tools, catalog every violation into an exhaustive ledger table, write the master audit spec in `.lovable/plans/pending/`, decompose into granular subtasks in `.lovable/plans/subtasks/`, and verify/create the dedicated linter script.
+- [ ] /goal Second N/2 steps (Phase 2): Directly edit and refactor the actual source code files, eliminate all guideline violations, execute the linter and test suites, verify changes with `git status`/`git diff`, and verify all local CI quality gates exit with code 0.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
-PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec in .lovable/plans/pending/, Subtasks in .lovable/plans/subtasks/, Linter Hook)
-PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Active Code Refactoring, Linter Verification, Local CI Runner Verification, Plan Completion)
+PHASE_1_STEPS = N / 2   (Steps 1 .. N/2: Scan, Spec with Violation Ledger in .lovable/plans/pending/, Subtasks, Linter Hook)
+PHASE_2_STEPS = N / 2   (Steps N/2+1 .. N: Active Code Refactoring, Disk Verification, Linter Verification, Local CI Runner Verification, Plan Completion)
 ```
 
 ---
@@ -49,6 +49,38 @@ Prompts are sequenced according to priority. Error management, control-flow flat
 
 ---
 
+## Anti-Hallucination & Verifiable Execution Protocol (Zero-Drift Mandate)
+
+> [!CAUTION]
+> **TOTAL BAN ON GHOST DIFFS, CODE TRUNCATION, AND FABRICATED PASSES:**
+> AI agents frequently hallucinate progress by outputting chat diffs without modifying disk, omitting violations from memory, or inserting lazy stubs (`// ... rest of code ...`). Every step must be mechanically grounded in disk reality.
+
+### 1. The Exhaustive Violation Ledger (Phase 1 Mandate)
+
+- Phase 1 audit plans (`.lovable/plans/pending/XX-*-audit.md`) MUST include a markdown table tracking every single violation:
+  `| Violation ID | File Path | Line Number | Exact Snippet | Planned Fix | Status (PENDING/DONE) |`
+- Never group files into vague summaries like "various files in pkg/". Every file and line must be explicitly numbered.
+
+### 2. The Disk Reality Verification Gate (Phase 2 Mandate)
+
+- Before claiming a file was refactored, the agent MUST run `git status --porcelain` or `git diff --stat`.
+- If a file claimed as modified does NOT show as modified on disk in git, the turn is an immediate hallucination failure.
+
+### 3. Absolute Ban on Code Truncation & Stubs
+
+- NEVER write placeholder comments like `// ... existing code ...`, `/* unchanged */`, `TODO`, `FIXME`, or `[N]`.
+- All file edits MUST be 100% complete and functionally working.
+
+### 4. Grounded Command Veracity
+
+- NEVER claim a linter or test suite passed without executing the actual command via tool calls and capturing `exit code 0`. Fabricating test outputs results in an immediate strike.
+
+### 5. Spec Citation Requirement
+
+- Every refactoring action must cite the authoritative specification path from `spec/` to prove compliance.
+
+---
+
 ## Standardized N-Step Self-Loop Architecture
 
 Every prompt in this suite operates using a strict two-phase loop budget:
@@ -57,7 +89,7 @@ Every prompt in this suite operates using a strict two-phase loop budget:
 
 1. **Memory Ingestion:** Ingest `.lovable/coding-guidelines/coding-guidelines.md`, `.lovable/strictly-avoid.md`, and recent issues in `.lovable/memory/issues/`.
 2. **Violation Scan:** Perform a comprehensive scan across all active codebase files using grep and AST inspection to detect violations specific to the guideline section.
-3. **Master Spec Creation:** Write `.lovable/plans/pending/XX-<slug>-audit.md` capturing the full violation inventory, affected files, line numbers, and acceptance criteria.
+3. **Master Spec Creation:** Write `.lovable/plans/pending/XX-<slug>-audit.md` capturing the full violation ledger, affected files, line numbers, and acceptance criteria.
 4. **Subtask Decomposition:** Break down the master plan into granular subtasks in `.lovable/plans/subtasks/XX-<slug>/01-task.md`, `02-task.md`, etc.
 5. **Linter Hook Verification:** Check if the automated linter script exists in `linter-scripts/`. If missing, generate the linter script and connect it to `.lovable/ai-fix-scripts/03-cicd-local-runner.py` and CI/CD pipelines.
 

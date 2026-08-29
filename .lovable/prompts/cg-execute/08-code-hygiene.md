@@ -12,7 +12,7 @@ N = total self-loop steps budget that the agents will perform.
 
 - [ ] /goal First N/2 steps (Phase 1): Deeply scan all repository source files for line counts exceeding 100 coding lines (rec $\le$ 80), functions exceeding 8–15 lines, repeated constant arguments across call sites, structs/classes exceeding 120 lines, inline type/enum definitions, and committed build artifacts. Write the master audit spec in `.lovable/plans/pending/XX-code-hygiene-audit.md`, break it down into `.lovable/plans/subtasks/XX-code-hygiene/`, and verify/create the hygiene linters.
 - [ ] /goal Second N/2 steps (Phase 2): Directly open each offending file, split large modules into cohesive sub-packages ($\le$ 80–100 lines), decompose long functions ($\le$ 8 lines), extract repeated parameters into specialized helper functions, extract definitions to dedicated files, update `.gitignore`, run hygiene linters, and verify local CI gates exit with code 0.
-- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
+- [ ] /learn Ingest `.lovable/memory/00-index.md`, `.lovable/strictly-avoid.md`, `spec/02-coding-guidelines/00-canonical-size-tier.md`, `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`, `spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`, `spec/02-coding-guidelines/08-file-folder-naming/`, and `.lovable/coding-guidelines/coding-guidelines.md` before taking action and also create agent rules in the repo if required to or missing from rules set of agent memory.
 - [ ] /learn `.lovable/coding-guidelines/coding-guidelines.md` and it is must and /goal apply the guidelines in coding every aspect.
 
 ```text
@@ -124,6 +124,12 @@ You MUST read, follow, and mechanically verify every single specification file b
 - [ ] **`spec/02-coding-guidelines/00-canonical-size-tier.md`**
   - **Why:** Universal size limits across all languages.
   - **How:** Files $\le 100$ lines coding max (recommended $\le 80$ lines). Functions $\le 8$ lines preferred, hard cap 15 lines. Structs/classes $\le 120$ lines. Zero line-compression cheating.
+- [ ] **`spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`**
+  - **Why:** Comprehensive catalog of forbidden vs required generation patterns.
+  - **How:** Strictly follow AH-N1 to AH-T2 rules. Zero ghost diffs, zero truncation stubs (`// ...`), zero unverified claims.
+- [ ] **`spec/02-coding-guidelines/06-ai-optimization/05-citation-requirement.md`**
+  - **Why:** Grounded rule enforcement and traceability.
+  - **How:** Cite authoritative spec files for every code modification made.
 - [ ] **`spec/02-coding-guidelines/01-cross-language/04-code-style/01-braces-and-nesting.md`**
   - **Why:** Zero tolerance for nested conditionals.
   - **How:** Flatten all nested `if` statements with guard clauses and early returns.
@@ -256,8 +262,11 @@ WHILE (STEP < PHASE_2_STEPS):
 Before you commit code or end your turn, you MUST mechanically check off these items. If you fail to do this, your work will be rejected.
 
 - [ ] Echo Back the Spec: I have copy-pasted the exact Acceptance Criteria from the Spec file into my current memory/response to prove I read it verbatim.
-- [ ] Pre-Commit Diff Proof: I have executed `git status` or `git diff --stat` and verified that the files I claim to have modified are actually listed as modified in the terminal output before committing.
-- [ ] No Placeholder Search: I ran a regex search for `TODO` and `\[.*\]` in my modified files and confirmed I left zero placeholders behind. I actually wrote the implementation.
+- [ ] Exhaustive Violation Ledger: I have maintained an exact markdown table ledger in `.lovable/plans/pending/` tracking every single violation `| ID | File | Line | Snippet | Planned Fix | Status |` and reconciled every item.
+- [ ] Pre-Commit Diff Proof (Disk Reality Check): I have executed `git status --porcelain` and `git diff --stat` and verified that every file I claim to have modified is actually listed as modified in the terminal output before committing.
+- [ ] Zero Truncation / No Placeholder Search: I ran a regex search for `TODO`, `FIXME`, `\[.*\]`, `// ...`, and `/* ... */` in my modified files and confirmed I left zero placeholders or truncated stubs behind. I actually wrote the complete implementation.
+- [ ] Verifiable Tool Execution: I did not fabricate test/linter passes. I executed the actual linter script and test runner via tool calls and captured `exit code 0`.
+- [ ] Spec Citation Grounding: Every refactoring action cites the exact authoritative rule in `spec/` (e.g. `spec/02-coding-guidelines/06-ai-optimization/01-anti-hallucination-rules.md`).
 - [ ] Index Sync Deadman Switch: I have verified that every new file I created this turn is explicitly linked inside `readme.md` and enqueued in `.lovable/what-to-read.md`. I did not leave any orphaned files.
 - [ ] Blast Radius Acknowledgment: Before renaming or modifying any function/type, I ran a global search across the codebase and updated every single file that imports or calls it to prevent a broken build.
 
