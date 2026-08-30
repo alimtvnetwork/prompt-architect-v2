@@ -96,14 +96,40 @@ section may be enhanced (formatting, phase grouping, sharper wording; never drop
 
 Assets/images -> `assets/`. Specs -> `spec/` (app spec in `spec/21-app/`). Ask if unclear.
 
-## Application
+## 📖 About Prompt Architect & Why It Was Invented
 
-TanStack Start, TypeScript, React, Tailwind CSS.
+Prompt Architect was created by **[Md. Alim Ul Karim](https://alimkarim.com/)** out of a deep and relatable frustration: while modern AI coding assistants are immensely powerful, software engineers were spending an exhausting amount of time **babysitting, hand-holding, and constantly correcting AI agents** instead of focusing on high-level system architecture and solving core business problems.
 
-```sh
-npm i
-npm run dev
-```
+Left unconstrained, AI coding models frequently:
+- **Produce compressed, dense code** that skips necessary vertical line gaps around control structures (`if`, `for`, `return`) and parameter struct instantiations.
+- **Hallucinate completion** by running superficial checks or creating planning documents without refactoring actual source code files.
+- **Scatter magic literals and loose booleans** across the codebase instead of using type-safe enums (`*Type`) and affirmative prefixes (`is`, `has`).
+- **Swallow errors or return raw generic tuples** `(T, error)` instead of structured, predictable `Result[T]` envelopes and contextual `*AppError` wrappers.
+- **Overload function signatures** with 4–6 loose arguments instead of clean, value-based parameter structs.
+
+### How Prompt Architect Empowers Software Engineers
+
+Prompt Architect bridges the gap between AI speed and enterprise-grade software engineering standards. It provides a complete meta-framework of:
+1. **Deterministic, Self-Looping AI Runbooks:** Guides agents through structured phases (Phase 1: Deep Inventory & Spec Writing, Phase 2: Parallel Batch Execution) with strict 5–8 file micro-batching to prevent context exhaustion and hallucination.
+2. **Ironclad Cross-Language Coding Standards:** Enforces zero nested `if` statements (flattened to depth 0), implicit positive booleans (`is`/`has` ONLY), single return types, <= 8–15 line function caps, and clean Git diff readability.
+3. **Automated AI Quality Gates & Autofixers:** Pre-packaged with Python linters and autofixers (`.lovable/ai-fix-scripts/`) that automatically verify and repair formatting, line endings, error codes, and relative paths.
+4. **Complete Multi-Language Error & Envelope System:** Production-grade `Result[T]` and `*AppError` implementations across Go, TypeScript, Python, PHP, C#, and Rust.
+
+---
+
+## 👤 Author & Lead Architect
+
+**Md. Alim Ul Karim**  
+*Creator & Lead Architect • Chief Software Engineer • Top 1% Crossover Status*
+
+- 🌐 **Personal Website:** [alimkarim.com](https://alimkarim.com/)
+- 💼 **LinkedIn:** [linkedin.com/in/alimkarim](https://www.linkedin.com/in/alimkarim)
+- 💻 **Stack Overflow:** [stackoverflow.com/users/513511/md-alim-ul-karim](https://stackoverflow.com/users/513511/md-alim-ul-karim)
+- 🔍 **Google Profile:** [Alim Ul Karim on Google](https://www.google.com/search?q=Alim+Ul+Karim)
+
+Alim is a veteran system architect with 20+ years of professional software engineering experience across enterprise systems, fintech, distributed cloud infrastructures, and developer tooling. His core philosophy — **consistency over cleverness, convention over configuration, and deterministic constraints over manual babysitting** — is the foundational bedrock behind Prompt Architect and the `coding-guidelines` ecosystem.
+
+---
 
 ## Installation & Import
 
@@ -116,7 +142,7 @@ Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/ali
 
 # Import a specific version into a specific folder
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1 -OutFile install.ps1
-.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.36.0"
+.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.37.0"
 ```
 
 **Using Bash (macOS/Linux):**
@@ -127,7 +153,7 @@ curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/mai
 # Import a specific version into a specific folder
 curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh
 chmod +x install.sh
-./install.sh ".lovable/prompts" "v1.36.0"
+./install.sh ".lovable/prompts" "v1.37.0"
 ```
 
 
