@@ -67,20 +67,22 @@ Do not repeat any of that stupidity. Writing memory IS the work this turn. Go de
 Walk `.lovable/` recursively. Read all of these if they exist; note missing and create them per the templates in this prompt:
 
 1. `.lovable/memory/00-index.md` — master memory index
-2. `.lovable/coding-guidelines/coding-guidelines.md` or `spec/02-coding-guidelines/` — coding rules
-3. `.lovable/plans/index.md` and every file under `plans/pending/` (`01-<slug>.md`) and `plans/subtasks/`; skim `plans/completed/`
-4. `.lovable/plan.md` if the project uses the single-file variant
-5. `.lovable/suggestions.md` and `.lovable/suggestions/index.md`
-6. `.lovable/strictly-avoid.md`
-7. `.lovable/cicd-index.md` and every file under `.lovable/cicd-issues/`
-8. `.lovable/issues/`, `.lovable/pending-issues/`, `.lovable/solved-issues/`
-9. `.lovable/spec/commands/` — every file
-10. `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/` — every file
-11. `.lovable/prompts/index.md` or `.lovable/prompts.md`
-12. `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`)
-13. `.lovable/memory/workflow/` — current workflow state
-14. `spec/` — recursively traverse all subfolders and nested `.md` files, including `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, or any domain-specific spec folder. Note: sequence numbers and folder placements in `spec/<NN>-<slug>/` may switch across projects.
-15. Root `readme.md` — confirm strictly lowercase `readme.md`
+2. `.lovable/lovable-folder-structure.md` — canonical `.lovable/` folder map
+3. `.lovable/coding-guidelines/coding-guidelines.md` or `spec/02-coding-guidelines/` — master coding guidelines
+4. `.lovable/ai-fix-scripts/` — automation tools (`01-file-manipulator.py`, `02-guideline-autofixer.py`, `03-cicd-local-runner.py`, `index.md`)
+5. `.lovable/plans/index.md` and every file under `plans/pending/` (`01-<slug>.md`) and `plans/subtasks/`; skim `plans/completed/`
+6. `.lovable/plans/last-failure.md` — failure recovery record
+7. `.lovable/suggestions.md` and `.lovable/suggestions/index.md`
+8. `.lovable/strictly-avoid.md`
+9. `.lovable/cicd-index.md` and every file under `.lovable/cicd-issues/`
+10. `.lovable/issues/`, `.lovable/pending-issues/`, `.lovable/solved-issues/`
+11. `.lovable/spec/commands/` — every file
+12. `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/` — every file
+13. `.lovable/prompts.md` + `.lovable/prompts/` (including `cg-execute/`, `execute/`, `ci-cd/`)
+14. `.lovable/memory/what-to-read.md` (or `.lovable/what-to-read.md`)
+15. `.agents/skills/` (`<slug>/skill.md`) and `.agents/rules/`
+16. `spec/` — recursively traverse all subfolders and nested `.md` files (`spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`).
+17. Root `readme.md` — confirm strictly lowercase `readme.md`
 
 ## Phase 1: Audit the Session (Internal)
 
@@ -137,14 +139,14 @@ Flip header metadata:
 + Status: resolved
 ```
 
-Resolved ambiguities are binding decisions. You will never ask about them again.
+Then edit `.lovable/ambiguous-questions/index.md` to reflect the move.
 
-## Phase 4: Issues and CI/CD Logging
+## Phase 4: Capture New Institutional Knowledge
 
-- General bugs: `.lovable/issues/01-<slug>.md`.
-- Solved bugs: `.lovable/solved-issues/01-<slug>.md` with root cause and fix diff.
-- Strictly-avoid entries in `.lovable/strictly-avoid.md` reference the solved file: `- [Pattern]: [why forbidden]. See: .lovable/solved-issues/01-<slug>.md`.
-- CI/CD issues: `.lovable/cicd-issues/01-<slug>.md`, indexed in `.lovable/cicd-index.md`. Scan the index before adding a new one, no duplicates.
+1. If a new convention, architectural rule, or pattern was decided, create `.lovable/memory/01-<slug>.md` (or `.lovable/memory/learned/01-<slug>.md`) and register in `.lovable/memory/00-index.md`.
+2. If an anti-pattern or forbidden action occurred, append to `.lovable/strictly-avoid.md`.
+3. If an automated script was added or updated, register in `.lovable/ai-fix-scripts/index.md`.
+4. If a prompt or coding guideline was added/updated, update corresponding Antigravity skill in `.agents/skills/<slug>/skill.md` or rule in `.agents/rules/<slug>.md`.
 
 ## Phase 5: Verbatim Spec Capture and Consolidation Rules
 
@@ -187,63 +189,55 @@ Before you reply, check every item:
 
 If any check fails, fix the file immediately. Do not emit the completion block until all checks pass.
 
-## Final Response Template
+## Completion Confirmation
+
+After writing memory, emit this exact block:
 
 ```
-Memory Update Complete.
+Memory update complete.
 
-Session Summary:
-- Tasks completed: [X]
-- Tasks pending: [Y]
-- New memory files created: [Z]
-- Issues resolved: [N]
-- Issues opened: [M]
-- Suggestions added: [S]
-- Suggestions implemented: [T]
+- Memory files updated: [X]
+- Plans updated: [P]
+- Ambiguities resolved: [R]
 - Open ambiguities: [K]
-- Resolved ambiguities this session: [R]
-
-Files modified:
-- [every file touched this run]
-
-Inconsistencies found and fixed:
-- [list, or "None"]
-
-Next AI can pick up from: [current state + next logical step]
+- Skills updated: [S]
+- Rules updated: [U]
+- Root README in sync: YES
 ```
+
+---
 
 ## Checklist Before Replying (Every Box)
 
-- [ ] Walked `.lovable/` recursively; read every pre-flight file that exists; noted the missing ones
-- [ ] Audited the session for Done / Pending / Learned / Wrong / Recent Directives
-- [ ] Every new memory file placed under a topic folder, never at the memory root
-- [ ] `memory/index.md` updated in the same op as every new/moved memory file
-- [ ] Plans lifecycle honored: `pending/` -> `completed/` via `mv`, `plans/index.md` updated
-- [ ] `suggestions.md` tracker updated; verbatim captures under `.lovable/suggestions/` with `index.md`
-- [ ] Issues routed correctly: `pending-issues/` / `solved-issues/` / `cicd-issues/`; `cicd-index.md` updated; no duplicates
-- [ ] `strictly-avoid.md` appended (not overwritten) with links to solved files
-- [ ] Verbatim user directives and recent conversations captured under `.lovable/memory/` or `.lovable/memory/learned/`
-- [ ] Confirmed that detailed/important specs were NOT consolidated or shortened
-- [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed and committed/pushed if needed)
-- [ ] Ambiguities moved via `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/` with `## Resolution` block
-- [ ] `.lovable/memory/what-to-read.md` present, changelog-prepended with UTC ISO 8601 timestamp, list in sync with Pre-flight and `readme.md`
-- [ ] Root `readme.md` updated: folder structure, canonical read-list pointer, in sync with `what-to-read.md`
-- [ ] `coding-guidelines.md` and `prompts/index.md` (or `prompts.md`) present
-- [ ] Consistency validation passed (Phase 7)
-- [ ] Final response block emitted verbatim with real numbers, not `[X]` placeholders
-- [ ] No em dashes, no softened wording, no execution beyond file writes, lowercase readme fix, and `mv`
+1. [ ] Walked `.lovable/` recursively; read every pre-flight file that exists; noted the missing ones.
+2. [ ] Audited the session for Done / Pending / Learned / Wrong / Recent Directives.
+3. [ ] Every new memory file placed under a topic folder, never at the memory root.
+4. [ ] `memory/00-index.md` updated in the same op as every new/moved memory file.
+5. [ ] Plans lifecycle honored: `pending/` -> `completed/` via `mv`, `plans/index.md` updated.
+6. [ ] `suggestions.md` tracker updated; verbatim captures under `.lovable/suggestions/` with `index.md`.
+7. [ ] Issues routed correctly: `pending-issues/` / `solved-issues/` / `cicd-issues/`; `cicd-index.md` updated; no duplicates.
+8. [ ] `strictly-avoid.md` appended (not overwritten) with links to solved files.
+9. [ ] Verbatim user directives and recent conversations captured under `.lovable/memory/` or `.lovable/memory/learned/`.
+10. [ ] Confirmed that detailed/important specs were NOT consolidated or shortened.
+11. [ ] Confirmed root readme is strictly lowercase `readme.md` (auto-fixed and committed/pushed if needed).
+12. [ ] Ambiguities moved via `mv` from `01-new-ambiguity/` to `02-ambiguity-resolved/` with `## Resolution` block.
+13. [ ] `.lovable/memory/what-to-read.md` present, changelog-prepended with UTC ISO 8601 timestamp, list in sync with Pre-flight and `readme.md`.
+14. [ ] Root `readme.md` updated: folder structure, canonical read-list pointer, in sync with `what-to-read.md`.
+15. [ ] `coding-guidelines.md` and `prompts/index.md` (or `prompts.md`) present.
+16. [ ] Final response block emitted verbatim with real numbers, not `[X]` placeholders.
+17. [ ] No em dashes, no softened wording, no execution beyond file writes, lowercase readme fix, and `mv`.
 
 ---
 
 ## Actionable Items & Checklist
 
-- [ ] Read the overarching main task plan.
-- [ ] Ensure the git repository starts completely clean.
-- [ ] Complete all work on the current branch only.
-- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
-- [ ] Group all completed work into a single logical commit.
-- [ ] Push the commit to the remote repository.
-- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
+1. [ ] Read the overarching main task plan.
+2. [ ] Ensure the git repository starts completely clean.
+3. [ ] Complete all work on the current branch only.
+4. [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+5. [ ] Group all completed work into a single logical commit.
+6. [ ] Push the commit to the remote repository.
+7. [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
 
 
 ## STRICT AVOIDANCE: Never Disable CI/CD

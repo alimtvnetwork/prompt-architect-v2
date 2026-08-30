@@ -1,11 +1,12 @@
-# Repository Guide (Transition Notice: Moving to Coding Guidelines)
+# Repository Guide (Transition Notice: Moving to Coding Guidelines v24)
 
 > [!IMPORTANT]
-> **REPOSITORY STATUS: MIGRATION & TRANSITION TO `coding-guidelines`**
+> **REPOSITORY STATUS: MIGRATION & TRANSITION TO `coding-guidelines-v24`**
 >
-> Active development, maintenance, and the authoritative versions of all prompts, coding standards, and AI runbooks have **moved to the `coding-guidelines` meta-repository**.
+> Active development, maintenance, and the authoritative versions of all prompts, coding standards, automation scripts, and AI runbooks have **moved to the [`coding-guidelines-v24`](https://github.com/alimtvnetwork/coding-guidelines-v24) meta-repository**.
 >
-> Work in this repository (`prompt-architect`) is now finalized. To adopt or sync the latest prompts, coding standards, and automation scripts, refer directly to the `coding-guidelines` repository.
+> Work in this repository (`prompt-architect`) is finalized. To adopt or sync the latest prompts, coding standards, and automation scripts, refer directly to the canonical repository:
+> 👉 **[https://github.com/alimtvnetwork/coding-guidelines-v24](https://github.com/alimtvnetwork/coding-guidelines-v24)**
 
 One readme only, always lowercase `readme.md`. Never create `README.md`.
 
@@ -142,7 +143,7 @@ Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/ali
 
 # Import a specific version into a specific folder
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1 -OutFile install.ps1
-.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.38.0"
+.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.39.0"
 ```
 
 **Using Bash (macOS/Linux):**
@@ -153,7 +154,7 @@ curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/mai
 # Import a specific version into a specific folder
 curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh
 chmod +x install.sh
-./install.sh ".lovable/prompts" "v1.38.0"
+./install.sh ".lovable/prompts" "v1.39.0"
 ```
 
 

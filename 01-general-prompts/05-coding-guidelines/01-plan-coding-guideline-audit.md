@@ -62,14 +62,16 @@ For every issue found:
 - How many places does it need to be fixed?
 - Fallout Check: If we change this, what else breaks? Will it break the CI/CD pipeline? Will it break tests? Map the entire blast radius.
 
-## 4. Enqueueing Tasks for Sub-Agents
+## 4. Enqueueing Tasks for Sub-Agents (Bounded 5–8 Files Batches)
 
-Your final output must be a massively detailed plan stored at `.lovable/plans/pending/01-coding-guideline-fixes.md` and granular subtask files written to `.lovable/plans/subtasks/01-coding-guideline-fixes/01-<subslug>.md`.
-The plan must break the work down so granularly (exactly `N` steps) that 3 concurrent sub-agents can be spawned later to safely execute the fixes.
+Your final output must be a massively detailed plan stored at `.lovable/plans/pending/01-coding-guideline-fixes.md` and granular subtask batch files written to `.lovable/plans/subtasks/01-coding-guideline-fixes/batch-01.md`, `batch-02.md`, etc.
+The plan must partition all discovered violations into **bounded micro-batches of strictly 5–8 files each** so that 2 concurrent sub-agents (max 2 threads each) can safely execute without context exhaustion or truncation:
 
-- Step 1..N: Exact file, exact line, exact boolean to rename, exact enum to extract. Keep the writing concise but hyper-specific. Do not write too much fluff.
-- Do NOT fix the code in this turn. Your job is ONLY to plan, audit, and enqueue.
-- Anti-Hallucination: If referenced guidelines or files are missing, ask clarifying questions rather than guessing.
+1. [ ] **Batch Partitioning:** Group all codebase files needing fixes into 5–8 file chunks in `.lovable/plans/subtasks/01-coding-guideline-fixes/`.
+2. [ ] **Exact Line Locations:** List exact file, exact line, exact boolean to rename, exact parameter struct to introduce, and exact enum to extract.
+3. [ ] **Strict Planning Mode:** Do NOT fix the code in this turn. Your job is ONLY to plan, audit, and enqueue.
+4. [ ] **Auto-Looping Hand-Off:** Once Phase 1 planning subtasks are written, the master orchestrator MUST self-loop directly into execution mode.
+5. [ ] **Anti-Hallucination:** If referenced guidelines or files are missing, ask clarifying questions rather than guessing.
 
 ---
 

@@ -67,20 +67,22 @@ Do not repeat any of that stupidity. Writing memory IS the work this turn. Go de
 Walk `.lovable/` recursively. Read all of these if they exist; note missing and create them per the templates in this prompt:
 
 1. `.lovable/memory/00-index.md` — master memory index
-2. `.lovable/coding-guidelines/coding-guidelines.md` or `spec/02-coding-guidelines/` — coding rules (see §Coding guidelines)
-3. `.lovable/plans/index.md` and every file under `plans/pending/` (`01-<slug>.md`) and `plans/subtasks/`; skim `plans/completed/`
-4. `.lovable/plan.md` if the project uses the single-file variant
-5. `.lovable/suggestions.md` and `.lovable/suggestions/index.md`
-6. `.lovable/strictly-avoid.md`
-7. `.lovable/cicd-index.md` and every file under `.lovable/cicd-issues/`
-8. `.lovable/issues/`, `.lovable/pending-issues/`, `.lovable/solved-issues/`
-9. `.lovable/spec/commands/` — every file
-10. `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/` — every file
-11. `.lovable/prompts/index.md` or `.lovable/prompts.md`
-12. `.lovable/memory/what-to-read.md` (and ensure `.lovable/ai-fix-scripts/index.md` is linked)
-13. `.lovable/memory/workflow/` — current workflow state
-14. `spec/` — recursively traverse all subfolders and nested `.md` files, including `spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`, or any domain-specific spec folder. Note: sequence numbers and folder placements in `spec/<NN>-<slug>/` may switch across projects.
-15. Root `readme.md` — confirm strictly lowercase `readme.md`
+2. `.lovable/lovable-folder-structure.md` — canonical `.lovable/` folder map
+3. `.lovable/coding-guidelines/coding-guidelines.md` or `spec/02-coding-guidelines/` — master coding guidelines
+4. `.lovable/ai-fix-scripts/` — automation tools (`01-file-manipulator.py`, `02-guideline-autofixer.py`, `03-cicd-local-runner.py`, `index.md`)
+5. `.lovable/plans/index.md` and every file under `plans/pending/` (`01-<slug>.md`) and `plans/subtasks/`; skim `plans/completed/`
+6. `.lovable/plans/last-failure.md` — failure recovery record
+7. `.lovable/suggestions.md` and `.lovable/suggestions/index.md`
+8. `.lovable/strictly-avoid.md`
+9. `.lovable/cicd-index.md` and every file under `.lovable/cicd-issues/`
+10. `.lovable/issues/`, `.lovable/pending-issues/`, `.lovable/solved-issues/`
+11. `.lovable/spec/commands/` — every file
+12. `.lovable/ambiguous-questions/01-new-ambiguity/` and `02-ambiguity-resolved/` — every file
+13. `.lovable/prompts.md` + `.lovable/prompts/` (including `cg-execute/`, `execute/`, `ci-cd/`)
+14. `.lovable/memory/what-to-read.md` (and ensure `.lovable/ai-fix-scripts/index.md` is linked)
+15. `.agents/skills/` (`<slug>/skill.md`) and `.agents/rules/`
+16. `spec/` — recursively traverse all subfolders and nested `.md` files (`spec/01-spec-authoring-guide/`, `spec/02-coding-guidelines/`, `spec/03-error-manage/`, `spec/04-database-conventions/`, `spec/21-app/`).
+17. Root `readme.md` — confirm strictly lowercase `readme.md`
 
 ## Phase 1: Audit the Session (Internal)
 
@@ -139,54 +141,22 @@ Flip header metadata:
 
 Resolved ambiguities are binding decisions. You will never ask about them again.
 
-## Phase 4: Issues and CI/CD Logging
+Then edit `.lovable/ambiguous-questions/index.md` to reflect the move.
 
-- General bugs: `.lovable/issues/01-<slug>.md`.
-- Solved bugs: `.lovable/solved-issues/01-<slug>.md` with root cause and fix diff.
-- Strictly-avoid entries in `.lovable/strictly-avoid.md` reference the solved file: `- [Pattern]: [why forbidden]. See: .lovable/solved-issues/01-<slug>.md`.
-- CI/CD issues: `.lovable/cicd-issues/01-<slug>.md`, indexed in `.lovable/cicd-index.md`. Scan the index before adding a new one, no duplicates.
+## Phase 4: Capture New Institutional Knowledge
+
+1. If a new convention, architectural rule, or pattern was decided, create `.lovable/memory/01-<slug>.md` (or `.lovable/memory/learned/01-<slug>.md`) and register in `.lovable/memory/00-index.md`.
+2. If an anti-pattern or forbidden action occurred, append to `.lovable/strictly-avoid.md`.
+3. If an automated script was added or updated, register in `.lovable/ai-fix-scripts/index.md`.
+4. If a prompt or coding guideline was added/updated, update corresponding Antigravity skill in `.agents/skills/<slug>/skill.md` or rule in `.agents/rules/<slug>.md`.
 
 ## Phase 5: Verbatim Spec Capture and Consolidation Rules
 
-1. Verbatim spec capture and learning persistence:
-   - Every sizeable user directive, decision, architectural rule, or spec from the session is saved verbatim under `.lovable/memory/01-<slug>.md` or `.lovable/memory/learned/01-<slug>.md`.
-   - Reference from `memory/index.md`.
-   - Reflect in `plan.md` / `plans/index.md` if it changes the roadmap.
-   - Never paraphrase. Quote the user.
+1. Capture user instructions verbatim without softening.
+2. Preserve detailed specs in full with 0 truncation.
+3. Update `.lovable/memory/what-to-read.md` and root `readme.md`.
 
-2. Consolidation policy:
-   - Simple / minor tasks: Consolidation is encouraged for simple, repetitive, or ephemeral tasks into existing logs or overarching session files to prevent cluttering the repository.
-   - Detailed / high-value specs: STRICTLY FORBIDDEN TO CONSOLIDATE. Any spec containing detailed requirements, edge cases, domain architecture (`spec/21-app/`), error-handling matrices (`spec/03-error-manage/`), coding rules (`spec/02-coding-guidelines/`), or user instructions must NEVER be merged, summarized, or shortened.
-
-3. New user command / convention: `.lovable/spec/commands/01-<slug>.md`.
-
-## Phase 6: `.lovable/memory/what-to-read.md` and Root `readme.md`
-
-Must exist after this run. Create it if missing; update it (never blindly overwrite) if present. This file acts as a dynamic roadmap; both reading phases and writing phases must update it to guide future AI sessions based on current progress.
-
-Prepend a new entry to the `## Changelog` section:
-
-```markdown
-- YYYY-MM-DDTHH:MM:SSZ, <one-sentence summary of what changed this turn>
-```
-
-Sync root `readme.md` with `.lovable/memory/what-to-read.md`.
-
-## Phase 7: Consistency Validation (Self-Test Before Completion)
-
-Before you reply, check every item:
-
-- [ ] `.lovable/plans/index.md` lists every file in `pending/` and `completed/`?
-- [ ] Every file in `completed/` has `Status: completed` in its frontmatter?
-- [ ] `.lovable/memory/00-index.md` lists every file in `memory/`?
-- [ ] `01-new-ambiguity/` contains ONLY open questions?
-- [ ] Every file in `02-ambiguity-resolved/` has `## Resolution` + `Status: resolved`?
-- [ ] `cicd-index.md` matches `cicd-issues/` exactly?
-- [ ] No file exists under `memories/` (plural)?
-- [ ] Root readme is strictly lowercase `readme.md`?
-- [ ] `.lovable/ai-fix-scripts/index.md` is updated and synced?
-
-If any check fails, fix the file immediately. Do not emit the completion block until all checks pass.
+---
 
 ## Completion Confirmation
 
@@ -203,6 +173,8 @@ Reply with this exact markdown block, real numbers only:
 - Issues logged this turn: [N]
 - CI/CD issues logged this turn: [N]
 - Memory files written: [N]
+- Skills updated: [S]
+- Rules updated: [U]
 - Suggestions logged: [N]
 - Commands logged: [N]
 - Root readme lowercase verified: [Yes/No]
@@ -221,13 +193,13 @@ Next turn will read this state cleanly.
 
 ## Actionable Items & Checklist
 
-- [ ] Read the overarching main task plan.
-- [ ] Ensure the git repository starts completely clean.
-- [ ] Complete all work on the current branch only.
-- [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
-- [ ] Group all completed work into a single logical commit.
-- [ ] Push the commit to the remote repository.
-- [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
+1. [ ] Read the overarching main task plan.
+2. [ ] Ensure the git repository starts completely clean.
+3. [ ] Complete all work on the current branch only.
+4. [ ] Ensure `.gitignore` explicitly excludes test reports, artifacts, and compiled binaries.
+5. [ ] Group all completed work into a single logical commit.
+6. [ ] Push the commit to the remote repository.
+7. [ ] **File Change Summary:** Provide a highly detailed summary in the chat listing exactly which files were changed, what specific changes were made inside them, and why they were changed. The summary is VERY important.
 
 
 ## STRICT AVOIDANCE: Never Disable CI/CD
