@@ -142,7 +142,7 @@ Invoke-Expression "& { $(Invoke-RestMethod https://raw.githubusercontent.com/ali
 
 # Import a specific version into a specific folder
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.ps1 -OutFile install.ps1
-.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.37.0"
+.\install.ps1 -TargetDir ".lovable/prompts" -Version "v1.38.0"
 ```
 
 **Using Bash (macOS/Linux):**
@@ -153,7 +153,7 @@ curl -sL https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/mai
 # Import a specific version into a specific folder
 curl -sO https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/install.sh
 chmod +x install.sh
-./install.sh ".lovable/prompts" "v1.37.0"
+./install.sh ".lovable/prompts" "v1.38.0"
 ```
 
 
@@ -245,3 +245,18 @@ Below is a complete list of all prompts available in the `01-general-prompts` di
 | **21-old-execute-prompts**<br>`02-execute-robust-loop.md` | 02 Execute Robust Loop | [View](https://github.com/alimtvnetwork/prompt-architect-v2/blob/main/01-general-prompts/21-old-execute-prompts/02-execute-robust-loop.md) | [Raw Text](https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/01-general-prompts/21-old-execute-prompts/02-execute-robust-loop.md) |
 | **21-old-execute-prompts**<br>`04-fix-subtask-naming-convention.md` | 04 Fix Subtask Naming Convention | [View](https://github.com/alimtvnetwork/prompt-architect-v2/blob/main/01-general-prompts/21-old-execute-prompts/04-fix-subtask-naming-convention.md) | [Raw Text](https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/01-general-prompts/21-old-execute-prompts/04-fix-subtask-naming-convention.md) |
 | **22-ai-fix-script-prompts**<br>`01-python-file-manipulator.md` | 01 Python File Manipulator | [View](https://github.com/alimtvnetwork/prompt-architect-v2/blob/main/01-general-prompts/22-ai-fix-script-prompts/01-python-file-manipulator.md) | [Raw Text](https://raw.githubusercontent.com/alimtvnetwork/prompt-architect-v2/main/01-general-prompts/22-ai-fix-script-prompts/01-python-file-manipulator.md) |
+
+---
+
+## 👤 Author & Lead Architect
+
+**Md. Alim Ul Karim**  
+*Creator & Lead Architect • Chief Software Engineer • Top 1% Crossover Status*
+
+- 🌐 **Personal Website:** [alimkarim.com](https://alimkarim.com/)
+- 💼 **LinkedIn:** [linkedin.com/in/alimkarim](https://www.linkedin.com/in/alimkarim)
+- 💻 **Stack Overflow:** [stackoverflow.com/users/513511/md-alim-ul-karim](https://stackoverflow.com/users/513511/md-alim-ul-karim)
+- 🔍 **Google Profile:** [Alim Ul Karim on Google](https://www.google.com/search?q=Alim+Ul+Karim)
+
+Alim is a veteran system architect with 20+ years of professional software engineering experience across enterprise systems, fintech, distributed cloud infrastructures, and developer tooling. His core philosophy — **consistency over cleverness, convention over configuration, and deterministic constraints over manual babysitting** — is the foundational bedrock behind Prompt Architect and the `coding-guidelines` ecosystem.
+
