@@ -41,8 +41,8 @@ To survive massive checklists and complex codebases, you MUST operate using thes
 
 - **Strict Relative Git Paths:** All file paths, markdown links, citations, subtask paths (`.lovable/plans/subtasks/`), and memory logs MUST be strictly relative paths starting from the git repository root (e.g., `spec/02-coding-guidelines/04-error-handling.md`, `.lovable/plans/subtasks/01-task.md`, `cmd/main.go`).
 - **TOTAL BAN:** NEVER write absolute filesystem paths (e.g., `D:\work\...`, `C:\Users\...`, `/home/...`) or absolute file URIs (`file:///d:/...`, `file:///C:/...`) inside ANY repository files, plans, specs, comments, or documentation.
-  - ❌ **BAD:** `[SSH Commands](file:///d:/work/gitmap/.lovable/spec/commands/01-ssh-commands.md)`
-  - ❌ **BAD:** `Target File: D:\work\gitmap\cmd\login.go`
+  - ❌ **BAD:** `[SSH Commands](file:///d:/.../.lovable/spec/commands/01-ssh-commands.md)`
+  - ❌ **BAD:** `Target File: D:\...\cmd\login.go`
   - ✅ **GOOD:** `[SSH Commands](.lovable/spec/commands/01-ssh-commands.md)`
   - ✅ **GOOD:** `Target File: cmd/login.go`
 
