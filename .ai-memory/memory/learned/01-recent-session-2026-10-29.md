@@ -41,6 +41,7 @@ These local commits are still unpushed because GitHub denied `alimtvnetwork`:
 ## Last 30 commits in this repo
 
 ```text
+69387a1 docs(memory) - record the 2026-10-29 warm-up and git session.
 03be798 updates
 c0b3604 feat(prompts): upgrade read/write memory prompts with modern folder structure, skill/rule auto-generation, and release v1.39.0
 0e54bd9 docs(readme): add author and lead architect section and release v1.38.0
@@ -70,5 +71,4 @@ a84feee docs: enrich 01-consolidate-completed-plans.md and 13-cli-commands-and-h
 a84ae68 docs(cg-execute): expand 10-style-guidelines.md with comprehensive multi-language before/after examples for newlines, line-gaps, and style rules
 3cd4ba8 docs(cg-execute): enrich 10-style-guidelines.md with before/after newline and style gallery
 c7ffd20 feat(cg-execute): add prompt 05-naming-conventions-and-boolean-prefixes.md, register 05-naming-autofixer.py, and update specs
-1a58bba fix(ci-cd): migrate shell scripts to Python-first harness, create smoke_installer.py, and document RCA in memory
 ```
