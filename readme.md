@@ -261,3 +261,9 @@ Below is a complete list of all prompts available in the `01-general-prompts` di
 
 Alim is a veteran system architect with 20+ years of professional software engineering experience across enterprise systems, fintech, distributed cloud infrastructures, and developer tooling. His core philosophy — **consistency over cleverness, convention over configuration, and deterministic constraints over manual babysitting** — is the foundational bedrock behind Prompt Architect and the `coding-guidelines` ecosystem.
 
+
+## Memory
+
+- .ai-memory/memory/readme.md
+- .ai-memory/memory/learned/01-recent-session-2026-10-29.md
+- .ai-memory/plans/readme.md
